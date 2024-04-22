@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93a1081a05478c489068d748aa6386f, type: 3}
+  m_Name: Pump
+  m_EditorClassIdentifier: 
+  displayName: Pump
+  damage: 10
+  image: {fileID: 21300000, guid: e36e1c47ca0cd7f439a957a274b824a2, type: 3}
+  id: 4
+  holdToAttack: 0
+  _pickUpSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  magazineSize: 5
+  reloadTime: 4
+  firingRate: 1
+  spread: 1
+  bulletForce: 10
+  ammoType: 3
+  bulletPrefab: {fileID: 477208312691641933, guid: adbcf7b6bfa5aee46b8e4c2c6a86e48a, type: 3}
+  ammoInMagazine: 0
+  reloading: 0
+  shootSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  emptySE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  _reloadingSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
