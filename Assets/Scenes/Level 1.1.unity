@@ -42724,6 +42724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponInventorySize: 3
+  spawnDistance: 1.4
   startWeapons: []
   startLightBullets: 200
   startMediumBullets: 0
@@ -46096,11 +46097,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8296656216943595189, guid: 244e4d67bbae591418824d0de855a800, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62.629826
+      value: 62.66
       objectReference: {fileID: 0}
     - target: {fileID: 8296656216943595189, guid: 244e4d67bbae591418824d0de855a800, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.1326127
+      value: 6.07
       objectReference: {fileID: 0}
     - target: {fileID: 8296656216943595189, guid: 244e4d67bbae591418824d0de855a800, type: 3}
       propertyPath: m_LocalPosition.z

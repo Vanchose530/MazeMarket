@@ -18,9 +18,13 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private int weaponInventorySize;
 
+    [SerializeField] private float spawnDistance = 5.0f;
+
     private int weaponInventoryId;
 
     private IEnumerator reloadingCoroutine;
+
+    const string PATH_TO_WEAPON_PREFABS = "Items\\Weapons\\";
 
     [Header("Start Items")]
     public List<Weapon> startWeapons;
@@ -233,7 +237,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (weapons.Count == 0)
         {
-            RemoveWeapon();
+            toMeleeWeapon();
         }
         else
         {
@@ -280,15 +284,23 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     public void RemoveWeapon()
     {
         if (currentWeapon != null)
-            currentWeapon.onAttack -= SetCooldown;
+            currentWeapon.onAttack -= SetCooldown; 
         UnityEngine.Debug.Log("logged G");
 
+        CreateDrop();
         currentWeapon = null;
-
+        
         StopGunReloading();
         SetGunOrMelee();
 
+
         GameEventsManager.instance.playerWeapons.WeaponChanged();
+    }
+
+    private void CreateDrop()
+    {
+        UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
+        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + Player.instance.transform.forward * spawnDistance,Quaternion.identity);
     }
 
     private void SetGunOrMelee()
@@ -440,9 +452,18 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         }
     }
 
-   // toMeleeWeapon == RemoveWeapon
+   // toMeleeWeapon -> старый ремув веапон
     public void toMeleeWeapon()
     {
-        RemoveWeapon();
+        if (currentWeapon != null)
+            currentWeapon.onAttack -= SetCooldown;
+        UnityEngine.Debug.Log("logged 4");
+
+        currentWeapon = null;
+
+        StopGunReloading();
+        SetGunOrMelee();
+
+        GameEventsManager.instance.playerWeapons.WeaponChanged();
     }
 }

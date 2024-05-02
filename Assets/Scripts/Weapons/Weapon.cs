@@ -18,13 +18,13 @@ public abstract class Weapon : ScriptableObject
     [SerializeField] private SoundEffect _pickUpSE;
     public SoundEffect pickUpSE { get { return _pickUpSE; } }
 
-    private void OnValidate()
+    /*private void OnValidate()
     {
         #if UNITY_EDITOR
         displayName = this.name;
         UnityEditor.EditorUtility.SetDirty(this);
         #endif
-    }
+    }*/
 
     abstract public void Attack(Transform attackPointPosition);
 }
