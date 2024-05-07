@@ -18,7 +18,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private int weaponInventorySize;
 
-    [SerializeField] private float spawnDistance = 2.0f;
+    [SerializeField] private float dropDistance = 2.0f;
 
     private int weaponInventoryId = 0;
 
@@ -154,6 +154,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     // проверка инвентаря на "полность" для подбора предметов
     public bool IsGunSlotsFull()
     {
+        if (weaponInventoryId > weapons.Count) return true;
         if (weapons.Count < weaponInventorySize) return false;
         if (weapons.Count == weaponInventorySize)
             if (currentWeapon == null) return false;
@@ -294,15 +295,17 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         {
             currentWeapon.onAttack -= SetCooldown;
 
-            if (Player.instance.CheckObstacles()) 
+            if (Player.instance.CheckObstacles(dropDistance)) 
             {
                 UnityEngine.Debug.Log("Cant drop it here");
                 return;
             }
             CreateDrop();
+            Destroy(currentWeapon);
+            Destroy(weapons[weaponInventoryId]);
             currentWeapon = null;
             weapons[weaponInventoryId] = null;
-
+            
             StopGunReloading();
             SetGunOrMelee();
 
@@ -317,7 +320,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         UnityEngine.Debug.Log("weapon in id " + weaponInventoryId);
         UnityEngine.Debug.Log(currentWeapon.name);
         UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
-        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * spawnDistance, Quaternion.identity);
+        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance, Quaternion.identity);
     }
 
     private void SetGunOrMelee()
@@ -486,6 +489,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         UnityEngine.Debug.Log("logged 4");
 
         currentWeapon = null;
+        weaponInventoryId = 100;
 
         StopGunReloading();
         SetGunOrMelee();

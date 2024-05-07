@@ -321,7 +321,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 bodyAnimator.SetTrigger("Attack");
             }
 
-            if (CheckObstacles())
+            if (CheckObstacles(attackPoint.localPosition.y))
             {
                 PlayerWeaponsManager.instance.currentWeapon.Attack(secondAttackPoint);
             }
@@ -352,9 +352,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
-    public bool CheckObstacles()
+    public bool CheckObstacles(float distance)
     {
-        var hits = Physics2D.RaycastAll(rb.position, InputManager.instance.lookDirection, attackPoint.localPosition.y);
+        var hits = Physics2D.RaycastAll(rb.position, InputManager.instance.lookDirection, distance);
 
         foreach(var hit in hits)
         {

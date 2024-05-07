@@ -17,6 +17,7 @@ public class Gun : Weapon
     [HideInInspector] public int ammoInMagazine;
     [HideInInspector] public bool reloading;
     [SerializeField] private int bulletsPerShot = 1; // нужен для дробовика
+    [SerializeField] private float deltaBulletForce = 0;
 
     [Header("Gun Sound Effects")]
     [SerializeField] private SoundEffect shootSE;
@@ -36,7 +37,12 @@ public class Gun : Weapon
                 Rigidbody2D brb = bullet.GetComponent<Rigidbody2D>();
 
                 bullet.GetComponent<Bullet>().SetBulletParameters(damage);
-                brb.AddForce(bullet.transform.up * bulletForce, ForceMode2D.Impulse); 
+                float bulletAcceleration = 0;
+                if (deltaBulletForce != 0) 
+                { 
+                    bulletAcceleration = UnityEngine.Random.Range(-deltaBulletForce, deltaBulletForce); 
+                }
+                brb.AddForce(bullet.transform.up * (bulletForce + bulletAcceleration), ForceMode2D.Impulse); 
 
                 AudioManager.instance.PlaySoundEffect(shootSE, (1 / firingRate) * 1.5f);
             }
