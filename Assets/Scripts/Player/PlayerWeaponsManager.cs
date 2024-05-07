@@ -10,7 +10,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 {
     public static PlayerWeaponsManager instance { get; private set; }
 
-    public List<Weapon> weapons { get; private set; }
+    public List<Weapon> weapons { get; /*private*/ set; } // чтобы игрок мог переносить информацию между сценами private модификатор закоментирован
 
     public Weapon currentWeapon { get; private set; }
     public Gun currentGun { get; private set; }
@@ -24,14 +24,12 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private IEnumerator reloadingCoroutine;
 
-    const string PATH_TO_WEAPON_PREFABS = "Items\\Weapons\\";
-
-    [Header("Start Items")]
-    public List<Weapon> startWeapons;
-    public int startLightBullets;
-    public int startMediumBullets;
-    public int startHeavyBullets;
-    public int startShells;
+    //[Header("Start Items")]
+    //public List<Weapon> startWeapons;
+    //public int startLightBullets;
+    //public int startMediumBullets;
+    //public int startHeavyBullets;
+    //public int startShells;
 
     int lightBullets;
     int mediumBullets;
@@ -53,30 +51,30 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        lightBullets = startLightBullets;
-        mediumBullets = startMediumBullets;
-        heavyBullets = startHeavyBullets;
-        shells = startShells;
+        //lightBullets = startLightBullets;
+        //mediumBullets = startMediumBullets;
+        //heavyBullets = startHeavyBullets;
+        //shells = startShells;
 
         SetGunOrMelee();
 
-        if (startWeapons != null)
-        {
-            foreach (Weapon weapon in startWeapons)
-            {
-                var w = Instantiate(weapon);
+        //if (startWeapons != null)
+        //{
+        //    foreach (Weapon weapon in startWeapons)
+        //    {
+        //        var w = Instantiate(weapon);
 
-                try
-                {
-                    Gun g = (Gun)w;
+        //        try
+        //        {
+        //            Gun g = (Gun)w;
 
-                    g.ammoInMagazine = g.magazineSize;
-                }
-                catch (System.InvalidCastException) { }
+        //            g.ammoInMagazine = g.magazineSize;
+        //        }
+        //        catch (System.InvalidCastException) { }
                 
-                weapons.Add(w);
-            }
-        }
+        //        weapons.Add(w);
+        //    }
+        //}
     }
 
     private void OnEnable()

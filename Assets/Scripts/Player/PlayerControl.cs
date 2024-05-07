@@ -91,7 +91,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Run"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""6580bf1b-82d7-4347-8fe2-e58c3710b267"",
                     ""expectedControlType"": ""Button"",
@@ -157,6 +157,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""name"": ""MeleeWeaponChoosen"",
                     ""type"": ""Button"",
                     ""id"": ""60ba3311-f881-4911-8bbe-f583d3488acb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""f04aa4e7-221f-4192-ab7c-8f47c0758e39"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -402,7 +411,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Run"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -413,7 +422,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Run"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -568,6 +577,28 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MeleeWeaponChoosen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef9f0083-81d7-4365-9989-3d18bc447d2a"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9d7d33eb-fbd1-4aff-9d77-337d560df59e"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -864,7 +895,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Default_Reload = m_Default.FindAction("Reload", throwIfNotFound: true);
         m_Default_ChangeWeapon = m_Default.FindAction("Change Weapon", throwIfNotFound: true);
         m_Default_RemoveWeapon = m_Default.FindAction("Remove Weapon", throwIfNotFound: true);
-        m_Default_Run = m_Default.FindAction("Run", throwIfNotFound: true);
+        m_Default_Dash = m_Default.FindAction("Dash", throwIfNotFound: true);
         m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
         m_Default_Inventory = m_Default.FindAction("Inventory", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
@@ -872,6 +903,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Default_SecondWeaponChoosen = m_Default.FindAction("SecondWeaponChoosen", throwIfNotFound: true);
         m_Default_ThirdWeaponChoosen = m_Default.FindAction("ThirdWeaponChoosen", throwIfNotFound: true);
         m_Default_MeleeWeaponChoosen = m_Default.FindAction("MeleeWeaponChoosen", throwIfNotFound: true);
+        m_Default_Run = m_Default.FindAction("Run", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Move = m_Menu.FindAction("Move", throwIfNotFound: true);
@@ -944,7 +976,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Reload;
     private readonly InputAction m_Default_ChangeWeapon;
     private readonly InputAction m_Default_RemoveWeapon;
-    private readonly InputAction m_Default_Run;
+    private readonly InputAction m_Default_Dash;
     private readonly InputAction m_Default_Interact;
     private readonly InputAction m_Default_Inventory;
     private readonly InputAction m_Default_Pause;
@@ -952,6 +984,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_SecondWeaponChoosen;
     private readonly InputAction m_Default_ThirdWeaponChoosen;
     private readonly InputAction m_Default_MeleeWeaponChoosen;
+    private readonly InputAction m_Default_Run;
     public struct DefaultActions
     {
         private @PlayerControl m_Wrapper;
@@ -963,7 +996,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Default_Reload;
         public InputAction @ChangeWeapon => m_Wrapper.m_Default_ChangeWeapon;
         public InputAction @RemoveWeapon => m_Wrapper.m_Default_RemoveWeapon;
-        public InputAction @Run => m_Wrapper.m_Default_Run;
+        public InputAction @Dash => m_Wrapper.m_Default_Dash;
         public InputAction @Interact => m_Wrapper.m_Default_Interact;
         public InputAction @Inventory => m_Wrapper.m_Default_Inventory;
         public InputAction @Pause => m_Wrapper.m_Default_Pause;
@@ -971,6 +1004,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @SecondWeaponChoosen => m_Wrapper.m_Default_SecondWeaponChoosen;
         public InputAction @ThirdWeaponChoosen => m_Wrapper.m_Default_ThirdWeaponChoosen;
         public InputAction @MeleeWeaponChoosen => m_Wrapper.m_Default_MeleeWeaponChoosen;
+        public InputAction @Run => m_Wrapper.m_Default_Run;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1001,9 +1035,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @RemoveWeapon.started += instance.OnRemoveWeapon;
             @RemoveWeapon.performed += instance.OnRemoveWeapon;
             @RemoveWeapon.canceled += instance.OnRemoveWeapon;
-            @Run.started += instance.OnRun;
-            @Run.performed += instance.OnRun;
-            @Run.canceled += instance.OnRun;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -1025,6 +1059,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @MeleeWeaponChoosen.started += instance.OnMeleeWeaponChoosen;
             @MeleeWeaponChoosen.performed += instance.OnMeleeWeaponChoosen;
             @MeleeWeaponChoosen.canceled += instance.OnMeleeWeaponChoosen;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
         }
 
         private void UnregisterCallbacks(IDefaultActions instance)
@@ -1050,9 +1087,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @RemoveWeapon.started -= instance.OnRemoveWeapon;
             @RemoveWeapon.performed -= instance.OnRemoveWeapon;
             @RemoveWeapon.canceled -= instance.OnRemoveWeapon;
-            @Run.started -= instance.OnRun;
-            @Run.performed -= instance.OnRun;
-            @Run.canceled -= instance.OnRun;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -1074,6 +1111,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @MeleeWeaponChoosen.started -= instance.OnMeleeWeaponChoosen;
             @MeleeWeaponChoosen.performed -= instance.OnMeleeWeaponChoosen;
             @MeleeWeaponChoosen.canceled -= instance.OnMeleeWeaponChoosen;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
         }
 
         public void RemoveCallbacks(IDefaultActions instance)
@@ -1154,7 +1194,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnChangeWeapon(InputAction.CallbackContext context);
         void OnRemoveWeapon(InputAction.CallbackContext context);
-        void OnRun(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
@@ -1162,6 +1202,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnSecondWeaponChoosen(InputAction.CallbackContext context);
         void OnThirdWeaponChoosen(InputAction.CallbackContext context);
         void OnMeleeWeaponChoosen(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

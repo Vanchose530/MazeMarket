@@ -58,12 +58,18 @@ public class RoomManager : MonoBehaviour, IDataPersistence
         onPlayerEnterRoom -= StartNextWave;
     }
 
+    private void OnValidate()
+    {
+        if (virtualCamera != null && virtualCamera.enabled)
+            virtualCamera.enabled = false;
+    }
+
     private void Awake()
     {
         nextWaveIndex = 0;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         foreach (var trirgger in triggers)
         {
@@ -80,6 +86,8 @@ public class RoomManager : MonoBehaviour, IDataPersistence
             miasma.Unlock(time : 0.01f, destroy : false);
         }
 
+        yield return new WaitForSeconds(0.1f);
+
         virtualCamera.Follow = Player.instance.followCameraPoint;
         virtualCamera.enabled = false;
 
@@ -91,6 +99,8 @@ public class RoomManager : MonoBehaviour, IDataPersistence
     {
         if (onPlayerEnterRoom != null && !roomPassed)
             onPlayerEnterRoom();
+
+        virtualCamera.enabled = true;
     }
 
     public void LoadData(GameData data)
@@ -121,6 +131,8 @@ public class RoomManager : MonoBehaviour, IDataPersistence
             onPlayerPassRoom();
 
         roomPassed = true;
+
+        virtualCamera.enabled = false;
     }
 
     public void UpdateEnemyCount()

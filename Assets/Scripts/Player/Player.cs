@@ -35,7 +35,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     }
 
     [Header("Movement")]
-    public float speed = 3f;
+    public float normalSpeed = 3f;
+    private float currentSpeed;
     private Vector2 _moveDirection;
     private bool move;
     public Vector2 moveDirection
@@ -48,13 +49,18 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             else
                 move = false;
 
-            rb.velocity = value.normalized * speed;
+            rb.velocity = value.normalized * currentSpeed;
+
+            _moveDirection = value;
         }
     }
 
+    [Header("Runing")]
+    [SerializeField] private float runSpeedModifier = 1.2f;
+    [SerializeField] private float runStaminaWaste = 1;
+
     [Header("Dashing")]
     public float dashForce;
-    public int maxDashCount;
     public float dashingTime;
     private float _dashingTimeBuffer;
     private float dashingTimeBuffer
@@ -83,6 +89,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
     private bool dashing;
+
+    [Header("Stamina")]
+    public float maxStamina = 1f;
     public float staminaRecoverySpeed = 1f;
     float _stamina;
     float stamina
@@ -90,12 +99,30 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         get { return _stamina; }
         set
         {
-            if (value < 0)
+            if (value <= 0)
+            {
                 _stamina = 0;
-            else if (value > maxDashCount)
-                _stamina = maxDashCount;
+                canUseStamina = false;
+                //StartCoroutine(StaminaZero());
+            }
+            else if (value >= maxStamina)
+            {
+                _stamina = maxStamina;
+                canUseStamina = true;
+            }
             else
                 _stamina = value;
+        }
+    }
+
+    bool _canUseStamina = true;
+    bool canUseStamina
+    {
+        get { return _canUseStamina; }
+        set
+        {
+            HPStaminaManager.instance.canUseStamina = value;
+            _canUseStamina = value;
         }
     }
 
@@ -122,6 +149,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private GameObject damageEffect;
     [SerializeField] private TrailRenderer dashTrail;
 
+    [Header("Interactable Objects Detect")]
+    [SerializeField] private InteractableObjectsDetector interactableObjectsDetector;
+
     [Header("Sound Effects")]
     [SerializeField] private GameObject punchSound;
     [SerializeField] private GameObject damageSound;
@@ -144,6 +174,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    [HideInInspector] public Vector2 startPosition; // эти два поля относятся к сохранению игрока
+    [HideInInspector] public string levelName; // возможно их стоит перенести в другой скрипт
+
     private void OnValidate()
     {
         if (_rb == null)
@@ -152,6 +185,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             bodyAnimator = GetComponent<Animator>();
         if (dashTrail == null)
             dashTrail = GetComponentInChildren<TrailRenderer>();
+        if (interactableObjectsDetector == null)
+            interactableObjectsDetector = GetComponentInChildren<InteractableObjectsDetector>();
+            
     }
 
     private void Awake()
@@ -160,7 +196,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         instance = this;
 
         health = maxHealth;
-        stamina = maxDashCount;
+        stamina = maxStamina;
+
+        currentSpeed = normalSpeed;
 
         rb = _rb;
         legsAnimator = legs.GetComponent<Animator>();
@@ -172,8 +210,25 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Update()
     {
+        if (InputManager.instance.GetRunPressed(true) && canUseStamina)
+        {
+            currentSpeed = normalSpeed * runSpeedModifier;
+            dashTrail.emitting = true;
+
+            if (moveDirection != Vector2.zero)
+                stamina -= runStaminaWaste * Time.deltaTime;
+        }
+        else
+        {
+            currentSpeed = normalSpeed;
+            dashTrail.emitting = false;
+        }
+
         if (!dashing)
             moveDirection = InputManager.instance.moveDirection;
+
+        if (InputManager.instance.GetInteractPressed() && interactableObjectsDetector.interactable != null)
+            interactableObjectsDetector.interactable.Interact(this);
 
         Attack();
 
@@ -193,7 +248,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         GameEventsManager.instance.playerWeapons.onWeaponChanged += AnimateChangedWeapon;
         // GameEventsManager.instance.input.onAttackPressed += Attack;
-        GameEventsManager.instance.input.onRunPressed += Dash;
+        GameEventsManager.instance.input.onDashPressed += Dash;
         GameEventsManager.instance.input.onReloadPressed += ReloadGun;
     }
 
@@ -201,18 +256,68 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         GameEventsManager.instance.playerWeapons.onWeaponChanged -= AnimateChangedWeapon;
         // GameEventsManager.instance.input.onAttackPressed -= Attack;
-        GameEventsManager.instance.input.onRunPressed -= Dash;
+        GameEventsManager.instance.input.onDashPressed -= Dash;
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
+    }
+
+    private IEnumerator OnLevelWasLoaded(int level)
+    {
+        yield return new WaitForSecondsRealtime(0.01f);
+
+        if (PlayerDataKeeper.instance.playerData != null)
+            LoadPlayerData();
+    }
+
+    public void SavePlayerData(Vector2 nextLevelStartPosition)
+    {
+        PlayerData newData = new PlayerData();
+
+        newData.heath = health;
+        newData.nextLevelStartPosition = nextLevelStartPosition;
+
+        newData.lightBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.LightBullets);
+        newData.mediumBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.MediumBullets);
+        newData.heavyBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.HeavyBullets);
+        newData.shells = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.Shells);
+
+        newData.weapons = PlayerWeaponsManager.instance.weapons;
+
+        PlayerDataKeeper.instance.playerData = newData;
+    }
+
+    void LoadPlayerData()
+    {
+        PlayerData dataToLoad = PlayerDataKeeper.instance.playerData;
+
+        health = dataToLoad.heath;
+        transform.position = dataToLoad.nextLevelStartPosition;
+
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.LightBullets, dataToLoad.lightBullets);
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.MediumBullets, dataToLoad.mediumBullets);
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.HeavyBullets, dataToLoad.heavyBullets);
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
+
+        PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+
+        PlayerDataKeeper.instance.ClearData();
     }
 
     public void LoadData(GameData data)
     {
         this.health = data.playerHealth;
+
+        this.startPosition = data.startPosition;
+        this.levelName = data.levelName;
+
+        if (levelName == SceneManager.GetActiveScene().name)
+            transform.position = this.startPosition;
     }
 
     public void SaveData(ref GameData data)
     {
         data.playerHealth = this.health;
+        data.startPosition = this.startPosition;
+        data.levelName = this.levelName;
     }
 
     public void TakeDamage(int damage, Transform attack = null)
@@ -332,9 +437,19 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    private void RunEnable()
+    {
+        currentSpeed = normalSpeed * runSpeedModifier;
+    }
+
+    private void RunDisable()
+    {
+        currentSpeed = normalSpeed;
+    }
+
     private void Dash()
     {
-        if (stamina >= 1)
+        if (canUseStamina && stamina >= maxStamina / 2)
         {
             if (InputManager.instance.moveDirection.magnitude != 0)
             {
@@ -389,7 +504,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         if (dashingTimeBuffer > 0)
             dashingTimeBuffer -= Time.deltaTime;
 
-        if (stamina != maxDashCount)
+        if (stamina != maxStamina)
             stamina += Time.deltaTime * staminaRecoverySpeed;
     }
 
@@ -398,10 +513,19 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         HPStaminaManager.instance.hpSlider.value = (float)health / (float)maxHealth;
         //hpSlider.value = (float)health / (float)maxHealth;
 
-        HPStaminaManager.instance.staminaSlider.value = stamina / maxDashCount;
+        HPStaminaManager.instance.staminaSlider.value = stamina / maxStamina;
         //staminaSlider.value = stamina / maxDashCount;
     }
 
+    private IEnumerator StaminaZero()
+    {
+        canUseStamina = false;
+        while (stamina < maxStamina)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        canUseStamina = true;
+    }
     private void OnDrawGizmosSelected()
     {
         if(attackPoint == null) return; 

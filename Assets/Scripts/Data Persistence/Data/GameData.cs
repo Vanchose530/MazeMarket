@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameData
 {
     public Vector2 startPosition;
+    public string levelName;
 
     public int playerHealth;
 
@@ -16,7 +17,7 @@ public class GameData
 
     public int keyCardCount;
 
-    public SerializableDictionary<string, int> playerWeapons;
+    public SerializableDictionary<string, int> playerWeapons; // string - weapon name, int - ammo in magazine
 
     public List<string> collectedItemsId;
 

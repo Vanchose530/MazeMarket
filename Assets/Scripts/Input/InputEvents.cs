@@ -10,13 +10,17 @@ public class InputEvents
             onAttackPressed();
     }
 
+    public event Action onDashPressed;
+
+    public void DashPressed()
+    {
+        if (onDashPressed != null)
+            onDashPressed();
+    }
+
     public event Action onRunPressed;
 
-    public void RunPressed()
-    {
-        if (onRunPressed != null)
-            onRunPressed();
-    }
+    public void RunPressed() => onRunPressed?.Invoke();
 
     public event Action onInteractPressed;
 
