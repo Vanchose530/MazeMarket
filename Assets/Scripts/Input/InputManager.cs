@@ -35,6 +35,7 @@ public class InputManager : MonoBehaviour
     public Vector2 mousePosition { get; private set; }
 
     private bool attackPressed;
+    private bool dashPressed;
     private bool runPressed;
     private bool interactPressed;
     private bool reloadPressed;
@@ -56,7 +57,16 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if (inputHandler == InputHandlers.KeyboardAndMouse)
+        {
             mousePosition = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        }
+        else if (inputHandler == InputHandlers.Gamepad)
+        {
+            if (moveDirection == Vector2.zero)
+            {
+                runPressed = false; // для бега на геймпаде
+            }
+        }
     }
 
     private void SetStartHandling()
@@ -139,16 +149,40 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void RunPressed(InputAction.CallbackContext context)
+    public void DashPressed(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            runPressed = true;
-            GameEventsManager.instance.input.RunPressed();
+            dashPressed = true;
+            GameEventsManager.instance.input.DashPressed();
         }
         else if (context.canceled)
         {
-            runPressed = false;
+            dashPressed = false;
+        }
+    }
+
+    public void RunPressed(InputAction.CallbackContext context)
+    {
+        if (inputHandler == InputHandlers.KeyboardAndMouse)
+        {
+            if (context.performed)
+            {
+                runPressed = true;
+                GameEventsManager.instance.input.RunPressed();
+            }
+            else if (context.canceled)
+            {
+                runPressed = false;
+            }
+        }
+        else if (inputHandler == InputHandlers.Gamepad)
+        {
+            if (context.performed)
+            {
+                runPressed = true;
+                GameEventsManager.instance.input.RunPressed();
+            }
         }
     }
 
@@ -241,6 +275,20 @@ public class InputManager : MonoBehaviour
         {
             bool result = attackPressed;
             attackPressed = false;
+            return result;
+        }
+    }
+
+    public bool GetDashPressed(bool hold = false)
+    {
+        if (hold)
+        {
+            return dashPressed;
+        }
+        else
+        {
+            bool result = dashPressed;
+            dashPressed = false;
             return result;
         }
     }

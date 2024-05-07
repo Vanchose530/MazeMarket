@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private bool goingThroughtEnemyes;
 
     [Header("Effects")]
-    [SerializeField] private GameObject bulletsAftereffects;
+    [SerializeField] private GameObject bulletsAfterEffects;
     [SerializeField] private SoundEffect bulletHitSE;
 
     [Header("Ignore")]
@@ -70,7 +70,7 @@ public class Bullet : MonoBehaviour
         }
         else
         { 
-            EffectsManager.instance.PlayEffect(bulletsAftereffects, gameObject.transform.transform.position, gameObject.transform.rotation, 0.3f);
+            EffectsManager.instance.PlayEffect(bulletsAfterEffects, gameObject.transform.transform.position, gameObject.transform.rotation, 0.3f);
             // EffectsManager.instance.PlaySoundEffect(bulletHitSoundPrefab, gameObject.transform.position, 3f, 0.7f, 0.9f);
             AudioManager.instance.PlaySoundEffect(bulletHitSE, transform.position, 3f);
         }
@@ -88,7 +88,7 @@ public class Bullet : MonoBehaviour
         else
         {
             rb.velocity = Vector2.zero;
-            EffectsManager.instance.PlayEffect(bulletsAftereffects, gameObject.transform.transform.position, gameObject.transform.rotation, 0.3f);
+            EffectsManager.instance.PlayEffect(bulletsAfterEffects, gameObject.transform.transform.position, gameObject.transform.rotation, 0.3f);
             AudioManager.instance.PlaySoundEffect(bulletHitSE, transform.position, 3f);
             Destroy(gameObject);
         }

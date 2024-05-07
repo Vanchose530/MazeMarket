@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayButtonPressed()
     {
-        SceneManager.LoadScene("Level 1.1");
+        SceneManager.LoadScene("Demo Level 1.1");
     }
 
     public void OptionsButtonPressed()

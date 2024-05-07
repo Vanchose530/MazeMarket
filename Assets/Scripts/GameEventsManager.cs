@@ -23,6 +23,7 @@ public class GameEventsManager : MonoBehaviour
     public PauseEvents pause { get; private set; }
     public PlayerEvents player { get; private set; }
     public PlayerWeaponsEvents playerWeapons { get; private set; }
+    public InteractableObjectsEvents interactableObjects { get; private set; }
 
     private void Awake()
     {
@@ -30,5 +31,6 @@ public class GameEventsManager : MonoBehaviour
         pause = new PauseEvents();
         player = new PlayerEvents();
         playerWeapons = new PlayerWeaponsEvents();
+        interactableObjects = new InteractableObjectsEvents();
     }
 }

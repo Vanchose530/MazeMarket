@@ -69,7 +69,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Run",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "6580bf1b-82d7-4347-8fe2-e58c3710b267",
                     "expectedControlType": "Button",
@@ -135,6 +135,15 @@
                     "name": "MeleeWeaponChoosen",
                     "type": "Button",
                     "id": "60ba3311-f881-4911-8bbe-f583d3488acb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "f04aa4e7-221f-4192-ab7c-8f47c0758e39",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -380,7 +389,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Run",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -391,7 +400,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Run",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -546,6 +555,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MeleeWeaponChoosen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef9f0083-81d7-4365-9989-3d18bc447d2a",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d7d33eb-fbd1-4aff-9d77-337d560df59e",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
