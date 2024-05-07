@@ -38,6 +38,9 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     int heavyBullets;
     int shells;
 
+    [Header("Cant drop weapon")]
+    [SerializeField] private LayerMask cantDropWeaponLayer;
+
     public float currentWeaponCooldown { get; private set; }
 
     private void Awake()
@@ -295,7 +298,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         {
             currentWeapon.onAttack -= SetCooldown;
 
-            if (Player.instance.CheckObstacles(dropDistance)) 
+            if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer)) 
             {
                 UnityEngine.Debug.Log("Cant drop it here");
                 return;
@@ -320,7 +323,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         UnityEngine.Debug.Log("weapon in id " + weaponInventoryId);
         UnityEngine.Debug.Log(currentWeapon.name);
         UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
-        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance, Quaternion.identity);
+        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance, Player.instance.transform.rotation);
     }
 
     private void SetGunOrMelee()
