@@ -18,9 +18,9 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private int weaponInventorySize;
 
-    [SerializeField] private float spawnDistance = 5.0f;
+    [SerializeField] private float spawnDistance = 2.0f;
 
-    private int weaponInventoryId;
+    private int weaponInventoryId = 0;
 
     private IEnumerator reloadingCoroutine;
 
@@ -154,13 +154,18 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     // проверка инвентаря на "полность" для подбора предметов
     public bool IsGunSlotsFull()
     {
-        return (weapons.Count == weaponInventorySize);
+        if (weapons.Count < weaponInventorySize) return false;
+        if (weapons.Count == weaponInventorySize)
+            if (currentWeapon == null) return false;
+        return true;
     }
 
     public void AddWeapon(Weapon newWeapon)
     {
-        weapons.Add(newWeapon);
-
+        if (weapons.Count == weaponInventorySize) weapons[weaponInventoryId] = newWeapon; 
+        else 
+            weapons.Add(newWeapon);
+            weaponInventoryId = weapons.Count;
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown;
 
@@ -285,22 +290,26 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown; 
-        UnityEngine.Debug.Log("logged G");
+        UnityEngine.Debug.Log("logged T");
 
         CreateDrop();
         currentWeapon = null;
-        
+        weapons[weaponInventoryId] = null;
+
         StopGunReloading();
         SetGunOrMelee();
 
 
         GameEventsManager.instance.playerWeapons.WeaponChanged();
+        InventoryUIManager.instance.UpdateWeaponSlots();
     }
 
     private void CreateDrop()
     {
+        UnityEngine.Debug.Log("weapon in id " + weaponInventoryId);
+        UnityEngine.Debug.Log(currentWeapon.name);
         UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
-        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + Player.instance.transform.forward * spawnDistance,Quaternion.identity);
+        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * spawnDistance, Quaternion.identity);
     }
 
     private void SetGunOrMelee()
@@ -413,13 +422,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if(currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
-            
-            currentWeapon = weapons[0];
+            weaponInventoryId = 0;
+
+            currentWeapon = weapons[weaponInventoryId];
             currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
         }
+        else toMeleeWeapon();
     }
     public void toSecondWeapon()
     {
@@ -428,13 +439,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
+            weaponInventoryId = 1;
 
-            currentWeapon = weapons[1];
+            currentWeapon = weapons[weaponInventoryId];
             currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
         }
+        else toMeleeWeapon();
     }
     public void toThirdWeapon()
     {
@@ -443,13 +456,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
+            weaponInventoryId = 2;
 
-            currentWeapon = weapons[2];
+            currentWeapon = weapons[weaponInventoryId];
             currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
         }
+        else toMeleeWeapon();
     }
 
    // toMeleeWeapon -> старый ремув веапон
