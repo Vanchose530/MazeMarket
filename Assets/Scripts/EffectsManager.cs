@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour
 {
-    public static EffectsManager instance { get; private set; }
-
-    private void Awake()
+    static EffectsManager _instance;
+    public static EffectsManager instance
     {
-        if (instance != null)
-            Debug.LogWarning("Find more than one Effects Manager in scene");
-
-        instance = this;
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new GameObject().AddComponent<EffectsManager>();
+                _instance.name = _instance.GetType().ToString();
+                DontDestroyOnLoad(_instance.gameObject);
+            }
+            return _instance;
+        }
     }
 
     public void PlayEffect(GameObject effectPrefab, Transform effectTransform, float effectExistTime = 20f)

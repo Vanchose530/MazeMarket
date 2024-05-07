@@ -11,8 +11,14 @@ public class InteractableObjectsDetector : MonoBehaviour
         get { return _interactable; }
         private set
         {
+            if (_interactable != null)
+                GameEventsManager.instance.interactableObjects.CanNotInteractObject();
             _interactable?.CanNotInteract(playerOwner);
+
             _interactable = value;
+
+            if (_interactable != null)
+                GameEventsManager.instance.interactableObjects.CanInteractObject();
             _interactable?.CanInteract(playerOwner);
         }
     }
@@ -27,6 +33,18 @@ public class InteractableObjectsDetector : MonoBehaviour
             playerOwner = GetComponentInParent<Player>();
         if (circleCollider == null)
             circleCollider = GetComponent<CircleCollider2D>();
+    }
+
+    private void OnEnable()
+    {
+        GameEventsManager.instance.interactableObjects.onCanInteractObject += EnableHint;
+        GameEventsManager.instance.interactableObjects.onCanNotInteractObject += DisableHint;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.interactableObjects.onCanInteractObject -= EnableHint;
+        GameEventsManager.instance.interactableObjects.onCanNotInteractObject -= DisableHint;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -63,4 +81,7 @@ public class InteractableObjectsDetector : MonoBehaviour
             }
         }
     }
+
+    private void EnableHint() => HintsUIM.instance.enableInteractHint = true;
+    private void DisableHint() => HintsUIM.instance.enableInteractHint = false;
 }

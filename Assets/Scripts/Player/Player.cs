@@ -174,6 +174,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    [HideInInspector] public Vector2 startPosition; // эти два поля относятся к сохранению игрока
+    [HideInInspector] public string levelName; // возможно их стоит перенести в другой скрипт
+
     private void OnValidate()
     {
         if (_rb == null)
@@ -210,8 +213,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         if (InputManager.instance.GetRunPressed(true) && canUseStamina)
         {
             currentSpeed = normalSpeed * runSpeedModifier;
-            stamina -= runStaminaWaste * Time.deltaTime;
             dashTrail.emitting = true;
+
+            if (moveDirection != Vector2.zero)
+                stamina -= runStaminaWaste * Time.deltaTime;
         }
         else
         {
@@ -255,14 +260,64 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
     }
 
+    private IEnumerator OnLevelWasLoaded(int level)
+    {
+        yield return new WaitForSecondsRealtime(0.01f);
+
+        if (PlayerDataKeeper.instance.playerData != null)
+            LoadPlayerData();
+    }
+
+    public void SavePlayerData(Vector2 nextLevelStartPosition)
+    {
+        PlayerData newData = new PlayerData();
+
+        newData.heath = health;
+        newData.nextLevelStartPosition = nextLevelStartPosition;
+
+        newData.lightBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.LightBullets);
+        newData.mediumBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.MediumBullets);
+        newData.heavyBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.HeavyBullets);
+        newData.shells = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.Shells);
+
+        newData.weapons = PlayerWeaponsManager.instance.weapons;
+
+        PlayerDataKeeper.instance.playerData = newData;
+    }
+
+    void LoadPlayerData()
+    {
+        PlayerData dataToLoad = PlayerDataKeeper.instance.playerData;
+
+        health = dataToLoad.heath;
+        transform.position = dataToLoad.nextLevelStartPosition;
+
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.LightBullets, dataToLoad.lightBullets);
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.MediumBullets, dataToLoad.mediumBullets);
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.HeavyBullets, dataToLoad.heavyBullets);
+        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
+
+        PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+
+        PlayerDataKeeper.instance.ClearData();
+    }
+
     public void LoadData(GameData data)
     {
         this.health = data.playerHealth;
+
+        this.startPosition = data.startPosition;
+        this.levelName = data.levelName;
+
+        if (levelName == SceneManager.GetActiveScene().name)
+            transform.position = this.startPosition;
     }
 
     public void SaveData(ref GameData data)
     {
         data.playerHealth = this.health;
+        data.startPosition = this.startPosition;
+        data.levelName = this.levelName;
     }
 
     public void TakeDamage(int damage, Transform attack = null)
