@@ -165,7 +165,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         if (weapons.Count == weaponInventorySize) weapons[weaponInventoryId] = newWeapon; 
         else 
             weapons.Add(newWeapon);
-            weaponInventoryId = weapons.Count;
+            weaponInventoryId = weapons.Count - 1;
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown;
 
@@ -288,19 +288,27 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     public void RemoveWeapon()
     {
-        if (currentWeapon != null)
-            currentWeapon.onAttack -= SetCooldown; 
         UnityEngine.Debug.Log("logged T");
 
-        CreateDrop();
-        currentWeapon = null;
-        weapons[weaponInventoryId] = null;
+        if (currentWeapon != null)
+        {
+            currentWeapon.onAttack -= SetCooldown;
 
-        StopGunReloading();
-        SetGunOrMelee();
+            if (Player.instance.CheckObstacles()) 
+            {
+                UnityEngine.Debug.Log("Cant drop it here");
+                return;
+            }
+            CreateDrop();
+            currentWeapon = null;
+            weapons[weaponInventoryId] = null;
+
+            StopGunReloading();
+            SetGunOrMelee();
 
 
-        GameEventsManager.instance.playerWeapons.WeaponChanged();
+            GameEventsManager.instance.playerWeapons.WeaponChanged();
+        }
         InventoryUIManager.instance.UpdateWeaponSlots();
     }
 
@@ -425,10 +433,11 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             weaponInventoryId = 0;
 
             currentWeapon = weapons[weaponInventoryId];
-            currentWeapon.onAttack += SetCooldown;
+            if(currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            InventoryUIManager.instance.UpdateWeaponSlots();
         }
         else toMeleeWeapon();
     }
@@ -442,10 +451,11 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             weaponInventoryId = 1;
 
             currentWeapon = weapons[weaponInventoryId];
-            currentWeapon.onAttack += SetCooldown;
+            if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            InventoryUIManager.instance.UpdateWeaponSlots();
         }
         else toMeleeWeapon();
     }
@@ -459,10 +469,11 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             weaponInventoryId = 2;
 
             currentWeapon = weapons[weaponInventoryId];
-            currentWeapon.onAttack += SetCooldown;
+            if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            InventoryUIManager.instance.UpdateWeaponSlots();
         }
         else toMeleeWeapon();
     }

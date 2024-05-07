@@ -352,7 +352,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
-    private bool CheckObstacles()
+    public bool CheckObstacles()
     {
         var hits = Physics2D.RaycastAll(rb.position, InputManager.instance.lookDirection, attackPoint.localPosition.y);
 

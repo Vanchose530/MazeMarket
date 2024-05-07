@@ -16,6 +16,7 @@ public class Gun : Weapon
     [SerializeField] private GameObject bulletPrefab;
     [HideInInspector] public int ammoInMagazine;
     [HideInInspector] public bool reloading;
+    [SerializeField] private int bulletsPerShot = 1; // нужен для дробовика
 
     [Header("Gun Sound Effects")]
     [SerializeField] private SoundEffect shootSE;
@@ -27,18 +28,19 @@ public class Gun : Weapon
     {
         if(ammoInMagazine > 0 && !reloading)
         {
-            Vector3 bulletAngle = attackPoint.eulerAngles;
-            bulletAngle.z += UnityEngine.Random.Range(-spread, spread);
+            for(int shotNumber = 0; shotNumber < bulletsPerShot; shotNumber++){
+                Vector3 bulletAngle = attackPoint.eulerAngles;
+                bulletAngle.z += UnityEngine.Random.Range(-spread, spread);
 
-            GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.Euler(bulletAngle));
-            Rigidbody2D brb = bullet.GetComponent<Rigidbody2D>();
+                GameObject bullet = Instantiate(bulletPrefab, attackPoint.position, Quaternion.Euler(bulletAngle));
+                Rigidbody2D brb = bullet.GetComponent<Rigidbody2D>();
 
-            bullet.GetComponent<Bullet>().SetBulletParameters(damage);
-            brb.AddForce(bullet.transform.up * bulletForce, ForceMode2D.Impulse); 
+                bullet.GetComponent<Bullet>().SetBulletParameters(damage);
+                brb.AddForce(bullet.transform.up * bulletForce, ForceMode2D.Impulse); 
 
+                AudioManager.instance.PlaySoundEffect(shootSE, (1 / firingRate) * 1.5f);
+            }
             ammoInMagazine--;
-
-            AudioManager.instance.PlaySoundEffect(shootSE, (1 / firingRate) * 1.5f);
         }
         else if (!reloading)
         {
