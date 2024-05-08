@@ -170,6 +170,24 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrenadeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7623010-71ab-4386-ad7c-483be7bbf6fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Health"",
+                    ""type"": ""Button"",
+                    ""id"": ""09e74936-0e1c-46d8-ae47-1021cdfcf829"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -601,6 +619,28 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2606e45d-d3c6-4ac5-b1ac-49be72325f10"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrenadeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78ac4eac-7db9-4924-a474-1de0ae696a58"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Health"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -904,6 +944,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Default_ThirdWeaponChoosen = m_Default.FindAction("ThirdWeaponChoosen", throwIfNotFound: true);
         m_Default_MeleeWeaponChoosen = m_Default.FindAction("MeleeWeaponChoosen", throwIfNotFound: true);
         m_Default_Run = m_Default.FindAction("Run", throwIfNotFound: true);
+        m_Default_GrenadeAttack = m_Default.FindAction("GrenadeAttack", throwIfNotFound: true);
+        m_Default_Health = m_Default.FindAction("Health", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Move = m_Menu.FindAction("Move", throwIfNotFound: true);
@@ -985,6 +1027,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_ThirdWeaponChoosen;
     private readonly InputAction m_Default_MeleeWeaponChoosen;
     private readonly InputAction m_Default_Run;
+    private readonly InputAction m_Default_GrenadeAttack;
+    private readonly InputAction m_Default_Health;
     public struct DefaultActions
     {
         private @PlayerControl m_Wrapper;
@@ -1005,6 +1049,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @ThirdWeaponChoosen => m_Wrapper.m_Default_ThirdWeaponChoosen;
         public InputAction @MeleeWeaponChoosen => m_Wrapper.m_Default_MeleeWeaponChoosen;
         public InputAction @Run => m_Wrapper.m_Default_Run;
+        public InputAction @GrenadeAttack => m_Wrapper.m_Default_GrenadeAttack;
+        public InputAction @Health => m_Wrapper.m_Default_Health;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1062,6 +1108,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @GrenadeAttack.started += instance.OnGrenadeAttack;
+            @GrenadeAttack.performed += instance.OnGrenadeAttack;
+            @GrenadeAttack.canceled += instance.OnGrenadeAttack;
+            @Health.started += instance.OnHealth;
+            @Health.performed += instance.OnHealth;
+            @Health.canceled += instance.OnHealth;
         }
 
         private void UnregisterCallbacks(IDefaultActions instance)
@@ -1114,6 +1166,12 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @GrenadeAttack.started -= instance.OnGrenadeAttack;
+            @GrenadeAttack.performed -= instance.OnGrenadeAttack;
+            @GrenadeAttack.canceled -= instance.OnGrenadeAttack;
+            @Health.started -= instance.OnHealth;
+            @Health.performed -= instance.OnHealth;
+            @Health.canceled -= instance.OnHealth;
         }
 
         public void RemoveCallbacks(IDefaultActions instance)
@@ -1203,6 +1261,8 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnThirdWeaponChoosen(InputAction.CallbackContext context);
         void OnMeleeWeaponChoosen(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnGrenadeAttack(InputAction.CallbackContext context);
+        void OnHealth(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

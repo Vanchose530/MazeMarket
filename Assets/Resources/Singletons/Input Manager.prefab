@@ -322,6 +322,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f04aa4e7-221f-4192-ab7c-8f47c0758e39
     m_ActionName: Default/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5704315211181369578}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: GrenadeAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b7623010-71ab-4386-ad7c-483be7bbf6fd
+    m_ActionName: Default/GrenadeAttack[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5704315211181369578}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: HealthBottle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 09e74936-0e1c-46d8-ae47-1021cdfcf829
+    m_ActionName: Default/Health[/Keyboard/y]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Default

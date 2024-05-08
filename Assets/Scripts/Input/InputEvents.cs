@@ -130,4 +130,20 @@ public class InputEvents
         if (onMeleeWeaponChoosen != null)
             onMeleeWeaponChoosen();
     }
+    public event Action onGrenadeAttack;
+
+    public void GrenadeAttack() 
+    {
+        if (onGrenadeAttack!=null) {
+            onGrenadeAttack();
+        }
+    }
+    public event Action onHealthBottle;
+
+    public void HealthBottle() {
+        if (onHealthBottle != null)
+        {
+            onHealthBottle();
+        }
+    }
 }
