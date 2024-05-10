@@ -45,6 +45,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundEffect(SoundEffect soundEffect, float soundEffectExistTime = 20f)
     {
+        if (soundEffect.sound == null)
+        {
+            Debug.LogWarning("There is no sound in sound effect. Cant play this");
+            return;
+        }
+
         var audioSource = new GameObject().AddComponent<AudioSource>();
 
         audioSource.clip = soundEffect.sound;
@@ -52,12 +58,20 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = soundEffect.volume;
         audioSource.outputAudioMixerGroup = mixerGroupSFX;
 
-        var effect = Instantiate(audioSource);
-        Destroy(effect, soundEffectExistTime);
+        audioSource.Play();
+
+        StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffectExistTime));
+        // Destroy(audioSource.gameObject, soundEffectExistTime);
     }
 
     public void PlaySoundEffect(SoundEffect soundEffect, Vector2 soundEffectPosition, float soundEffectExistTime = 20f)
     {
+        if (soundEffect.sound == null)
+        {
+            Debug.LogWarning("There is no sound in sound effect. Cant play this");
+            return;
+        }
+
         var audioSource = new GameObject().AddComponent<AudioSource>();
 
         audioSource.clip = soundEffect.sound;
@@ -65,8 +79,15 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = soundEffect.volume;
         audioSource.outputAudioMixerGroup = mixerGroupSFX;
 
-        var effect = Instantiate(audioSource, soundEffectPosition, Quaternion.identity);
-        Destroy(effect, soundEffectExistTime);
+        audioSource.Play();
+
+        //if (soundEffectExistTime == 0)
+        //{
+        //    StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffect.sound.length));
+        //}
+
+        StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffectExistTime));
+        // Destroy(audioSource.gameObject, soundEffectExistTime);
     }
 
     public AudioSource GetSoundEffectAS(SoundEffect soundEffect)
@@ -104,5 +125,11 @@ public class AudioManager : MonoBehaviour
             currentLevelMusic.clip = music;
             currentLevelMusic.Play();
         }
+    }
+
+    IEnumerator DestroyObjectAfterRealTime(GameObject obj, float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        Destroy(obj);
     }
 }
