@@ -32,7 +32,7 @@ public class BloodFountain : MonoBehaviour,IInteractable
             player.isEmptyBottle = false;
             player.isGrenade = true;
             StartCoroutine(InteractAction());
-            isFull = false;
+            // isFull = false;
         }
     }
 

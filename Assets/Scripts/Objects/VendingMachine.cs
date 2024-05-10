@@ -5,13 +5,14 @@ using UnityEngine;
 public class VendingMachine : MonoBehaviour, IInteractable
 {
     [Header("Color")]
-    [SerializeField] private SpriteRenderer sp;
     [SerializeField] private Color canInteractColor;
     [SerializeField] private Color interactColor;
     [SerializeField] private Color emptyVendingMachine;
     private Color baseColor;
 
-    
+    [Header("Setup")]
+    [SerializeField] private SpriteRenderer sp;
+
     bool canInteract = false;
 
 
