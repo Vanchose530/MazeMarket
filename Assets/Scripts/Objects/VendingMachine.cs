@@ -1,3 +1,4 @@
+using SpriteGlow;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,10 @@ using UnityEngine;
 public class VendingMachine : MonoBehaviour, IInteractable
 {
     [Header("Color")]
-    [SerializeField] private Color canInteractColor;
+    [SerializeField] private Color baseColor;
     [SerializeField] private Color interactColor;
-    [SerializeField] private Color emptyVendingMachine;
-    private Color baseColor;
+    [SerializeField] private SpriteGlowEffect spriteGlow;
+    
 
     [Header("Setup")]
     [SerializeField] private SpriteRenderer sp;
@@ -17,27 +18,22 @@ public class VendingMachine : MonoBehaviour, IInteractable
 
 
     // Start is called before the first frame update
-    private void OnValidate()
-    {
-        sp = GetComponent<SpriteRenderer>();
-    }
     void Start()
     {
-        baseColor = new Color(sp.color.r, sp.color.g, sp.color.b);
+        spriteGlow.EnableInstancing = true;
     }
 
     // Update is called once per frame
     
     public void CanInteract(Player player)
     {
-        sp.color = canInteractColor;
+        spriteGlow.EnableInstancing = false;
         canInteract = true;
     }
 
     public void CanNotInteract(Player player)
     {
-       
-        sp.color = baseColor;
+        spriteGlow.EnableInstancing = true;
         canInteract = false;
         
     }
@@ -53,11 +49,17 @@ public class VendingMachine : MonoBehaviour, IInteractable
     }
     private IEnumerator InteractAction()
     {
-        sp.color = interactColor;
+        spriteGlow.GlowColor = interactColor;
 
         yield return new WaitForSecondsRealtime(0.5f);
-        if (canInteract)
-            sp.color = canInteractColor;
-
+        if (canInteract) {
+            spriteGlow.GlowColor = baseColor;
+            spriteGlow.EnableInstancing = false;
+        }
+        else
+        {
+            spriteGlow.GlowColor = baseColor;
+            spriteGlow.EnableInstancing = true;
+        }
     }
 }

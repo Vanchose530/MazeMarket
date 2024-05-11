@@ -1,3 +1,4 @@
+using SpriteGlow;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,69 +6,58 @@ using UnityEngine;
 public class BloodFountain : MonoBehaviour,IInteractable
 {
     [Header("Color")]
-    [SerializeField] private SpriteRenderer sp;
-    [SerializeField] private Color canInteractColor;
+    [SerializeField] private Color baseColor;
     [SerializeField] private Color interactColor;
-    [SerializeField] private Color emptyFountain;
-    private Color baseColor;
+    [SerializeField] private SpriteGlowEffect spriteGlow;
+
 
     bool canInteract = false;
-    bool isEmpty = false;
-    bool isFull = true;
 
-    private void OnValidate()
+
+    void Start()
     {
-        sp = GetComponent<SpriteRenderer>();
+        spriteGlow.EnableInstancing = true;
     }
 
-    private void Start()
-    {
-        baseColor = new Color(sp.color.r, sp.color.g, sp.color.b);
-    }
-
-    public void Interact(Player player)
-    {
-        if (isFull && !player.isEstos)
-        {
-            player.isEmptyBottle = false;
-            player.isGrenade = true;
-            StartCoroutine(InteractAction());
-            // isFull = false;
-        }
-    }
+    // Update is called once per frame
 
     public void CanInteract(Player player)
     {
-        sp.color = canInteractColor;
+        spriteGlow.EnableInstancing = false;
         canInteract = true;
     }
 
     public void CanNotInteract(Player player)
     {
-        if (isEmpty)
-        {
-            sp.color = emptyFountain;
-            canInteract = false;
-        }
-        else {
-            sp.color = baseColor;
-            canInteract = false;
-        }
-        
+        spriteGlow.EnableInstancing = true;
+        canInteract = false;
+
     }
 
+    public void Interact(Player player)
+    {
+        if (!player.isGrenade && !player.isEstos)
+        {
+            player.isEmptyBottle = false;
+            player.isGrenade = true;
+            StartCoroutine(InteractAction());
+        }
+    }
     private IEnumerator InteractAction()
     {
-        sp.color = interactColor;
-        
+        spriteGlow.GlowColor = interactColor;
+
         yield return new WaitForSecondsRealtime(0.5f);
         if (canInteract)
-            sp.color = canInteractColor;
-        else {
-            sp.color = emptyFountain;
-            isEmpty = true;
+        {
+            spriteGlow.GlowColor = baseColor;
+            spriteGlow.EnableInstancing = false;
         }
-            
+        else
+        {
+            spriteGlow.GlowColor = baseColor;
+            spriteGlow.EnableInstancing = true;
+        }
     }
-    
+
 }
