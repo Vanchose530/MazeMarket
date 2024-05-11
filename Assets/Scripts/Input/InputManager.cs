@@ -43,6 +43,8 @@ public class InputManager : MonoBehaviour
     private bool changeWeaponPressed;
     private bool removeWeaponPressed;
     private bool pausePressed;
+    private bool grenadeAttack;
+    private bool healthBottle;
 
     private bool chooseWeapon;
     private bool chooseWeapon2;
@@ -381,6 +383,56 @@ public class InputManager : MonoBehaviour
         else if (context.canceled)
         {
             chooseWeapon4 = false;
+        }
+    }
+    public void GrenadeAttack(InputAction.CallbackContext context) 
+    {
+        if (context.performed)
+        {
+            grenadeAttack = true;
+            GameEventsManager.instance.input.GrenadeAttack();
+        }
+        else if (context.canceled)
+        {
+            grenadeAttack = false;
+        }
+    }
+    public bool GetGrenadeAttack(bool hold = false)
+    {
+        if (hold)
+        {
+            return grenadeAttack;
+        }
+        else
+        {
+            bool result = grenadeAttack;
+            grenadeAttack = false;
+            return result;
+        }
+    }
+    public void HealthBottle(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            healthBottle = true;
+            GameEventsManager.instance.input.HealthBottle();
+        }
+        else if (context.canceled)
+        {
+            healthBottle = false;
+        }
+    }
+    public bool GetHealthBottle(bool hold = false)
+    {
+        if (hold)
+        {
+            return healthBottle;
+        }
+        else
+        {
+            bool result = healthBottle;
+            healthBottle = false;
+            return result;
         }
     }
 
