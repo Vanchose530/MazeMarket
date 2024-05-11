@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VendingMachine : MonoBehaviour, IInteractable
+public class DemonsBloodFountain : MonoBehaviour, IInteractable
 {
     [Header("Interact Cooldown")]
     [SerializeField] private float interactCooldown = 0.5f;
@@ -31,7 +31,7 @@ public class VendingMachine : MonoBehaviour, IInteractable
 
         glowBaseColor = interactSpriteGlow.GlowColor;
     }
-    
+
     public void CanInteract(Player player)
     {
         interactSpriteGlow.enabled = true;
@@ -47,7 +47,7 @@ public class VendingMachine : MonoBehaviour, IInteractable
         if (canInteract && !player.isGrenade && !player.isEstos)
         {
             player.isEmptyBottle = false;
-            player.isEstos = true;
+            player.isGrenade = true;
 
             if (interactSE != null)
                 AudioManager.instance.PlaySoundEffect(interactSE, transform.position);
@@ -65,4 +65,5 @@ public class VendingMachine : MonoBehaviour, IInteractable
         interactSpriteGlow.GlowColor = glowBaseColor;
         canInteract = true;
     }
+
 }

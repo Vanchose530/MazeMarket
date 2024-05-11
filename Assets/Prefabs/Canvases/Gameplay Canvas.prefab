@@ -1540,8 +1540,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -747.5325, y: 85.714294}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -802, y: 36}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8666449915662827323
 CanvasRenderer:
@@ -1596,6 +1596,7 @@ MonoBehaviour:
   emptyBottle: {fileID: 21300000, guid: ab4ad5388fd54d441845667d512097cd, type: 3}
   grenade: {fileID: 21300000, guid: 3686bfa88da055a45bad3ff9758adb95, type: 3}
   healthBottle: {fileID: 21300000, guid: 774e417714078d2429ac2fdd44507278, type: 3}
+  image: {fileID: 3572728007014416914}
 --- !u!1 &2821744138019751185
 GameObject:
   m_ObjectHideFlags: 0

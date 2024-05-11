@@ -117,7 +117,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     }
 
     bool _canUseStamina = true;
-    bool isHit = false;
+    bool isHeal = false;
     [Header("Grenade")]
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private float forceGrenade = 300f;
@@ -164,7 +164,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [Header("Sound Effects")]
     [SerializeField] private GameObject punchSound;
     [SerializeField] private GameObject damageSound;
-    [SerializeField] private SoundEffect dashSoundEffect;
+    [SerializeField] private SoundEffect dashSE;
+    [SerializeField] private SoundEffect grenadeThrowSE;
 
     [Header("Physics")]
     [SerializeField] private Rigidbody2D _rb;
@@ -239,12 +240,15 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
         if (InputManager.instance.GetInteractPressed() && interactableObjectsDetector.interactable != null)
             interactableObjectsDetector.interactable.Interact(this);
-        HealthBottleDrink();
-        if (!isHit)
+
+        //HealthBottleDrink();
+
+        if (!isHeal)
         {
             Attack();
-            GrenadeAttack();
+            //GrenadeAttack();
         }
+
         Animate();
         UpdateUI(); // затратно делать каждый кадр
         RotatePlayer();
@@ -263,6 +267,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         // GameEventsManager.instance.input.onAttackPressed += Attack;
         GameEventsManager.instance.input.onDashPressed += Dash;
         GameEventsManager.instance.input.onReloadPressed += ReloadGun;
+
+        GameEventsManager.instance.input.onGrenadeAttack += UseBottle;
     }
 
     private void OnDisable()
@@ -271,6 +277,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         // GameEventsManager.instance.input.onAttackPressed -= Attack;
         GameEventsManager.instance.input.onDashPressed -= Dash;
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
+
+        GameEventsManager.instance.input.onGrenadeAttack -= UseBottle;
     }
 
     public void LoadData(GameData data)
@@ -423,7 +431,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 rb.AddForce(Vector2.up * dashForce * rb.mass, ForceMode2D.Impulse);
             }
             
-            AudioManager.instance.PlaySoundEffect(dashSoundEffect, dashingTime);
+            AudioManager.instance.PlaySoundEffect(dashSE, dashingTime);
 
             dashingTimeBuffer = dashingTime;
             stamina--;
@@ -454,25 +462,27 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         bodyAnimator.SetFloat("Reloading Multiplier", 1 / PlayerWeaponsManager.instance.currentGun.reloadTime);
         bodyAnimator.SetTrigger("Reload");
     }
-    public void GrenadeAttack() {
-        if (isGrenade && InputManager.instance.GetGrenadeAttack()) {
+    //public void GrenadeAttack()
+    //{
+    //    if (InputManager.instance.GetGrenadeAttack() && isGrenade)
+    //    {
+    //        Vector3 bulletAngle = followCameraPoint.eulerAngles;
+    //        GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
+    //        Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
+    //        grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
 
-            Vector3 bulletAngle = followCameraPoint.eulerAngles;
-            GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
-            Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
-            grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
-
-            isGrenade =false;
-            isEmptyBottle = true;
+    //        isGrenade = false;
+    //        isEmptyBottle = true;
             
-        }
-    }
-    public void HealthBottleDrink() {
-        if (InputManager.instance.GetHealthBottle() && isEstos)
-        {
-            StartCoroutine("HealthBottleDrinkCouroutine");
-        }
-    }
+    //    }
+    //}
+    //public void HealthBottleDrink()
+    //{
+    //    if (InputManager.instance.GetHealthBottle() && isEstos)
+    //    {
+    //        StartCoroutine("HealthBottleDrinkCouroutine");
+    //    }
+    //}
 
     private void CountTimeVariables()
     {
@@ -497,13 +507,37 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         HPStaminaManager.instance.staminaSlider.value = stamina / maxStamina;
         //staminaSlider.value = stamina / maxDashCount;
     }
-    private IEnumerator HealthBottleDrinkCouroutine() {
-        isHit = true;
-        yield return new WaitForSeconds(timeToHeal);
-        instance.health += hpToHeal;
+
+    private void UseBottle() // в дальнейшем использование бутылок будет реализовано разными кнопками
+    {
+        if (isGrenade && !isHeal)
+        {
+            Vector3 bulletAngle = followCameraPoint.eulerAngles;
+            GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
+            Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
+            grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
+
+            isGrenade = false;
+            isEmptyBottle = true;
+
+        }
+        else if (isEstos)
+        {
+            StartCoroutine("HealthBottleDrinkCouroutine");
+        }
+    }
+
+    private IEnumerator HealthBottleDrinkCouroutine()
+    {
+        isHeal = true;
         isEstos = false;
         isEmptyBottle = true;
-        isHit = false;
+
+        yield return new WaitForSeconds(timeToHeal);
+
+        instance.health += hpToHeal;
+
+        isHeal = false;
     }
 
     private IEnumerator StaminaZero()

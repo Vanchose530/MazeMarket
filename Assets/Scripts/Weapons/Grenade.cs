@@ -19,8 +19,9 @@ public class Grenade : MonoBehaviour
     [SerializeField] private int explotionDamage = 10;
     [SerializeField] private bool damagePlayer = false;
 
-    [Header("Effect")]
+    [Header("Effects")]
     [SerializeField] private GameObject explotionEffectPrefab;
+    [SerializeField] private SoundEffect explotionSE;
 
     [Header("Setup")]
     [SerializeField] Rigidbody2D rb;
@@ -37,9 +38,17 @@ public class Grenade : MonoBehaviour
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explotionRadius);
 
-        var effect = Instantiate(explotionEffectPrefab, transform.position, transform.rotation);
-        effect.transform.localScale = effect.transform.localScale * explotionRadius;
-        Destroy(effect, 0.25f);
+        if (explotionEffectPrefab != null)
+        {
+            var effect = Instantiate(explotionEffectPrefab, transform.position, transform.rotation);
+            effect.transform.localScale = effect.transform.localScale * explotionRadius;
+            Destroy(effect, 0.25f);
+        }
+        
+        if (explotionSE != null)
+        {
+            AudioManager.instance.PlaySoundEffect(explotionSE, transform.position);
+        }
 
         foreach (Collider2D hit in colliders)
         {

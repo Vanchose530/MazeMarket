@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e50ec70792aa1cd4bb784b91b05f9368
+guid: b010507d2d4b5bc458fee81afca49af3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -94,19 +94,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Server
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -136,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: floor2_0
+      name: demons_blood_fountain_UpScaled_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 160
-        width: 160
-        height: 160
+        y: 640
+        width: 640
+        height: 640
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3172d0790d3cf4f408ed88484d64f47a
-      internalID: 1848342379
+      spriteID: 8917f33401adca549822d538bdcf5474
+      internalID: 869302614
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor2_1
+      name: demons_blood_fountain_UpScaled_1
       rect:
         serializedVersion: 2
-        x: 160
-        y: 160
-        width: 160
-        height: 160
+        x: 640
+        y: 640
+        width: 640
+        height: 640
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +158,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac91a37e9abb61342b3a21f25b0bd090
-      internalID: 827620364
+      spriteID: 6dcd3e2a83fcaaa4dab7b5793fb9c131
+      internalID: 551683156
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor2_2
+      name: demons_blood_fountain_UpScaled_2
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 640
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ab2e4a1375dedb4394c40a98ba8909d
+      internalID: 2113281796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: demons_blood_fountain_UpScaled_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 160
-        height: 160
+        width: 640
+        height: 640
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +200,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ce7b9016057d89428ed449baf322072
-      internalID: -2128133505
+      spriteID: dcc2113fcc2e39746b70baf52ec30fd7
+      internalID: -1015686007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor2_3
+      name: demons_blood_fountain_UpScaled_4
       rect:
         serializedVersion: 2
-        x: 160
+        x: 640
         y: 0
-        width: 160
-        height: 160
+        width: 640
+        height: 640
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,8 +221,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 308fc2cca885c474aa07b5899f478c6e
-      internalID: -1137132930
+      spriteID: 920a67295a7e6a145b6b9817ed32b268
+      internalID: -1134619041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: demons_blood_fountain_UpScaled_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 640
+        height: 640
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 488e31fab1ff8214bbe306a4dff89490
+      internalID: -1090420475
       vertices: []
       indices: 
       edges: []
@@ -230,10 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      floor2_0: 1848342379
-      floor2_1: 827620364
-      floor2_2: -2128133505
-      floor2_3: -1137132930
+      demons_blood_fountain_UpScaled_0: 869302614
+      demons_blood_fountain_UpScaled_1: 551683156
+      demons_blood_fountain_UpScaled_2: 2113281796
+      demons_blood_fountain_UpScaled_3: -1015686007
+      demons_blood_fountain_UpScaled_4: -1134619041
+      demons_blood_fountain_UpScaled_5: -1090420475
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
