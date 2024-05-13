@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 {
@@ -184,7 +185,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (weapons.Count == weaponInventorySize)
         {
-            weapons[weaponInventoryId] = newWeapon;
+            try
+            { 
+                if (currentWeapon.displayName != newWeapon.displayName)
+                weapons[weaponInventoryId] = newWeapon;
+            }
+            catch(NullReferenceException ignored) 
+            {
+                if (currentWeapon == null) weapons[weaponInventoryId] = newWeapon;
+            }
         }
         else
             weapons.Add(newWeapon);
@@ -192,7 +201,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown;
 
-        currentWeapon = newWeapon;
+        currentWeapon = weapons[weaponInventoryId];
         StopGunReloading();
         SetGunOrMelee();
 
@@ -313,16 +322,17 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         UnityEngine.Debug.Log("logged T");
 
+        if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
+        {
+            UnityEngine.Debug.Log("Cant drop it here");
+            HintsUIM.instance.ShowDropHint();
+            return;
+        }
+
         if (currentWeapon != null)
         {
             currentWeapon.onAttack -= SetCooldown;
 
-            if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer)) 
-            {
-                UnityEngine.Debug.Log("Cant drop it here");
-                HintsUIM.instance.ShowDropHint();
-                return;
-            }
             CreateDrop();
             Destroy(currentWeapon);
             Destroy(weapons[weaponInventoryId]);
