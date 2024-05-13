@@ -47,8 +47,8 @@ public class HintsUIM : MonoBehaviour
     public void ShowDropHint() => StartCoroutine(CanNotDropItem(saveHintTime));
     IEnumerator CanNotDropItem(float time)
     {
-        saveHintAnimator.Play("Show");
+        dropHintAnimator.Play("Show");
         yield return new WaitForSecondsRealtime(time);
-        saveHintAnimator.Play("Hide");
+        dropHintAnimator.Play("Hide");
     }
 }

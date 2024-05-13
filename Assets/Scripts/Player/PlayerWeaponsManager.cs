@@ -160,14 +160,33 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         if (weaponInventoryId > weapons.Count) return true;
         if (weapons.Count < weaponInventorySize) return false;
         if (weapons.Count == weaponInventorySize)
+        {
+            SwitchToNullWeapon();
             if (currentWeapon == null) return false;
+        }
         return true;
+    }
+
+    private void SwitchToNullWeapon()
+    {
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i] == null)
+            {
+                currentWeapon = weapons[i];
+                weaponInventoryId = i;
+                return;
+            }
+        }
     }
 
     public void AddWeapon(Weapon newWeapon)
     {
-        if (weapons.Count == weaponInventorySize) weapons[weaponInventoryId] = newWeapon; 
-        else 
+        if (weapons.Count == weaponInventorySize)
+        {
+            weapons[weaponInventoryId] = newWeapon;
+        }
+        else
             weapons.Add(newWeapon);
             weaponInventoryId = weapons.Count - 1;
         if (currentWeapon != null)
@@ -493,7 +512,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         UnityEngine.Debug.Log("logged 4");
 
         currentWeapon = null;
-        weaponInventoryId = 100;
+        weaponInventoryId = 100; // большое значение чтобы в этот "слот" пушек не брать
 
         StopGunReloading();
         SetGunOrMelee();
