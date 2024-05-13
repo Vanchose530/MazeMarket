@@ -24,13 +24,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private IEnumerator reloadingCoroutine;
 
-    //[Header("Start Items")]
-    //public List<Weapon> startWeapons;
-    //public int startLightBullets;
-    //public int startMediumBullets;
-    //public int startHeavyBullets;
-    //public int startShells;
-
+    const string PATH_TO_WEAPON_PREFABS = "Items\\Weapons\\";
+    /*
+    [Header("Start Items")]
+    public List<Weapon> startWeapons;
+    public int startLightBullets;
+    public int startMediumBullets;
+    public int startHeavyBullets;
+    public int startShells;
+    */
     int lightBullets;
     int mediumBullets;
     int heavyBullets;
@@ -299,6 +301,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer)) 
             {
                 UnityEngine.Debug.Log("Cant drop it here");
+                HintsUIM.instance.ShowDropHint();
                 return;
             }
             CreateDrop();
