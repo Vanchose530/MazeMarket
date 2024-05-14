@@ -305,6 +305,10 @@ MonoBehaviour:
   dashingTime: 0.07
   maxStamina: 1
   staminaRecoverySpeed: 0.9
+  grenadePrefab: {fileID: 8314972605054049927, guid: 0ea0c991740ccac4099f372e2217fdeb, type: 3}
+  forceGrenade: 3
+  hpToHeal: 10
+  timeToHeal: 2
   attackPoint: {fileID: 6939753730445181469}
   secondAttackPoint: {fileID: 1042710718863370343}
   attackRange: 0.5
@@ -318,12 +322,22 @@ MonoBehaviour:
   interactableObjectsDetector: {fileID: 983159606032103209}
   punchSound: {fileID: 8797459062646210151, guid: 45b6ffc994fa8a64c8ff99e7d20d5123, type: 3}
   damageSound: {fileID: 5341204480864620632, guid: af9548430dd567840b9e4fc804a35376, type: 3}
-  dashSoundEffect:
-    sound: {fileID: 8300000, guid: aaea435eeab1bb24790f055b6c9da23b, type: 3}
-    volume: 0.1
+  dashSE:
+    sound: {fileID: 0}
+    volume: 0.5
     minPitch: 1
-    maxPitch: 1.1
+    maxPitch: 1
+  grenadeThrowSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
   _rb: {fileID: 2702732625081450782}
+  isEmptyBottle: 1
+  isGrenade: 0
+  isEstos: 0
+  startPosition: {x: 0, y: 0}
+  levelName: 
 --- !u!1 &3123425842530604282
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviour, IDataPersistence
 
     [Header("Camera")]
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private bool staticCamera;
 
     [Header("Entering Room")]
     [SerializeField] private LockMiasma[] lockMiasmas;
@@ -88,7 +89,12 @@ public class RoomManager : MonoBehaviour, IDataPersistence
 
         yield return new WaitForSeconds(0.1f);
 
-        virtualCamera.Follow = Player.instance.followCameraPoint;
+        if (!staticCamera)
+        {
+            // virtualCamera.LookAt = Player.instance.followCameraPoint;
+            virtualCamera.Follow = Player.instance.followCameraPoint;
+        }
+        
         virtualCamera.enabled = false;
 
         if (id == null || id == "")
@@ -106,7 +112,8 @@ public class RoomManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         if (data.passedRoomsId.Contains(id))
-            roomPassed = true;
+            Destroy(gameObject);
+            // roomPassed = true;
     }
 
     public void SaveData(ref GameData data)

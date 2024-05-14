@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb073fd2e21e8a47961406e6d64468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explotionRadius: 1
+  explotionRadius: 1.5
   forceGrenadeThrow: 20000
   mintMiasmaLayerNumber:
     serializedVersion: 2
@@ -348,6 +348,11 @@ MonoBehaviour:
   explotionDamage: 80
   damagePlayer: 0
   explotionEffectPrefab: {fileID: 8713384375094285788, guid: 4f02081fabb777848802b5977cc7ee23, type: 3}
+  explotionSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
   rb: {fileID: 8869500415100963453}
 --- !u!50 &8869500415100963453
 Rigidbody2D:
