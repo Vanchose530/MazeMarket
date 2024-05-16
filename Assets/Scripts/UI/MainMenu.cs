@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private string levelToLoadName;
     [SerializeField] private GameObject firstChoice;
 
     private void Start()
@@ -17,7 +18,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayButtonPressed()
     {
-        SceneManager.LoadScene("Demo Level 1.1");
+        SceneManager.LoadScene(levelToLoadName);
     }
 
     public void OptionsButtonPressed()

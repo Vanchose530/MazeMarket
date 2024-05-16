@@ -633,6 +633,17 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""216b2e9f-a378-453e-aba4-1b8d702102ab"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrenadeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""78ac4eac-7db9-4924-a474-1de0ae696a58"",
                     ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
