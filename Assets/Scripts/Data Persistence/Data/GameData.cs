@@ -30,10 +30,12 @@ public class GameData
         playerHealth = 10000;
         lightBulletsCount = 200;
         mediumBulletsCount = 120;
-        heavyBulletsCount = 50;
+        heavyBulletsCount = 30;
         shellsCount = 40;
         keyCardCount = 0;
         playerWeapons = new SerializableDictionary<string, int>();
+        playerWeapons.Add("Handgun", 12);
+
         collectedItemsId = new List<string>();
         unlockedDoorsId = new List<string>();
         passedRoomsId = new List<string>();

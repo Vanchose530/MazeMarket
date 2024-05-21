@@ -68,6 +68,7 @@ public abstract class Enemy : MonoBehaviour
     {
         if (onEnemyDeath != null)
             onEnemyDeath();
+        SimpleScoreCounter.instance.AddDefeatedEnemy(); // для счёта кол-ва поверженных врагов, подобную логику стоит размещать в событиях
     }
 
     public virtual void ExecutePath(bool aStar = true)

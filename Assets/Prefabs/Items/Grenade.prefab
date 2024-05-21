@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 425183201229709540}
   - component: {fileID: 3329625146346086160}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grenade Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8859538284576692281}
   - component: {fileID: 7663821687159523548}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 4741287875060019772}
   - component: {fileID: 8869500415100963453}
   - component: {fileID: -1996782989725673496}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,12 +339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb073fd2e21e8a47961406e6d64468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explotionRadius: 1.5
+  explotionRadius: 2
   forceGrenadeThrow: 20000
   mintMiasmaLayerNumber:
     serializedVersion: 2
     m_Bits: 131072
-  timeToExplotion: 2
+  timeToExplotion: 1
   explotionDamage: 80
   damagePlayer: 0
   explotionEffectPrefab: {fileID: 8713384375094285788, guid: 4f02081fabb777848802b5977cc7ee23, type: 3}

@@ -29,7 +29,7 @@ public class MovingToTheNextLevel : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        player.SavePlayerData(nextLevelStartPosition);
+        // player.SavePlayerData(nextLevelStartPosition);
         SceneManager.LoadScene(nextLevelName);
     }
 }

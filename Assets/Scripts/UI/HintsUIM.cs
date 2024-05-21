@@ -17,6 +17,8 @@ public class HintsUIM : MonoBehaviour
     [SerializeField] private Animator saveHintAnimator;
     [SerializeField] private float saveHintTime = 4f;
 
+    [SerializeField] private Animator reloadingHintAnimator;
+
     private void Awake()
     {
         if (instance != null)
@@ -28,6 +30,23 @@ public class HintsUIM : MonoBehaviour
     {
         enableInteractHint = false;
         saveHintAnimator.Play("Hide");
+        reloadingHintAnimator.Play("Hide");
+    }
+
+    private void Update()
+    {
+        // подобную логику не стоит реализовывать через update
+
+        if (PlayerWeaponsManager.instance.currentGun != null
+            && PlayerWeaponsManager.instance.currentGun.ammoInMagazine == 0
+            && PlayerWeaponsManager.instance.GetAmmoByType(PlayerWeaponsManager.instance.currentGun.ammoType) != 0)
+        {
+            reloadingHintAnimator.Play("Show");
+        }
+        else
+        {
+            reloadingHintAnimator.Play("Hide");
+        }
     }
 
     public void ShowSaveHint() => StartCoroutine(SaveHint(saveHintTime));
