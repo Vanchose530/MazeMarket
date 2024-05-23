@@ -1,6 +1,7 @@
 using SpriteGlow;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DemonsBloodFountain : MonoBehaviour, IInteractable
@@ -44,10 +45,10 @@ public class DemonsBloodFountain : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        if (canInteract && !player.isGrenade && !player.isEstos)
+        if (canInteract && PlayerInventory.instance.countEmptyBottle > 0)
         {
-            player.isEmptyBottle = false;
-            player.isGrenade = true;
+            PlayerInventory.instance.countGrenadeBottle++;
+            PlayerInventory.instance.countEmptyBottle--;
 
             if (interactSE != null)
                 AudioManager.instance.PlaySoundEffect(interactSE, transform.position);

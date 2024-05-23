@@ -7,6 +7,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Linq;
 
 public class Player : MonoBehaviour, IDamagable, IDataPersistence
 {
@@ -170,11 +171,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [Header("Physics")]
     [SerializeField] private Rigidbody2D _rb;
 
-    [Header("Bottle")]
-    public bool isEmptyBottle = true;
-    public bool isGrenade = false;
-    public bool isEstos = false;
-
     private bool _isOnBattle = false; // параметр необходим в первую очередь для музыки
     public bool isOnBattle
     {
@@ -268,7 +264,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onDashPressed += Dash;
         GameEventsManager.instance.input.onReloadPressed += ReloadGun;
 
-        GameEventsManager.instance.input.onGrenadeAttack += UseBottle;
+        GameEventsManager.instance.input.onGrenadeAttack += UseGrenade;
+        GameEventsManager.instance.input.onHealthBottle += UseHealth;
     }
 
     private void OnDisable()
@@ -278,7 +275,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onDashPressed -= Dash;
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
 
-        GameEventsManager.instance.input.onGrenadeAttack -= UseBottle;
+        GameEventsManager.instance.input.onGrenadeAttack -= UseGrenade;
+        GameEventsManager.instance.input.onHealthBottle += UseHealth;
     }
 
     public void LoadData(GameData data)
@@ -508,30 +506,32 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         //staminaSlider.value = stamina / maxDashCount;
     }
 
-    private void UseBottle() // в дальнейшем использование бутылок будет реализовано разными кнопками
+    private void UseGrenade() // в дальнейшем использование бутылок будет реализовано разными кнопками
     {
-        if (isGrenade && !isHeal)
+        if (PlayerInventory.instance.countGrenadeBottle > 0)
         {
             Vector3 bulletAngle = followCameraPoint.eulerAngles;
             GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
             Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
             grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
-
-            isGrenade = false;
-            isEmptyBottle = true;
-
+            PlayerInventory.instance.countGrenadeBottle--;
+            PlayerInventory.instance.countEmptyBottle++;
         }
-        else if (isEstos)
+    }
+
+    private void UseHealth() {
+        if(PlayerInventory.instance.countHealthBottle > 0)
         {
             StartCoroutine("HealthBottleDrinkCouroutine");
+            PlayerInventory.instance.countHealthBottle--;
+            PlayerInventory.instance.countEmptyBottle++;
         }
     }
 
     private IEnumerator HealthBottleDrinkCouroutine()
     {
         isHeal = true;
-        isEstos = false;
-        isEmptyBottle = true;
+
 
         yield return new WaitForSeconds(timeToHeal);
 
