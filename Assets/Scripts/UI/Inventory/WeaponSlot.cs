@@ -72,9 +72,10 @@ public class WeaponSlot : MonoBehaviour
 
     private void SetWeaponInSlot()
     {
-        if ((weapon.name == "AK-47(Clone)") || (weapon.name == "Pump(Clone)"))
+        /*if ((weapon.name == "AK-47(Clone)") || (weapon.name == "Pump(Clone)"))
             weaponImage.sprite = Resources.Load<Sprite>(PATH_TO_PNGS + weapon.displayName.Replace("(Clone)", ""));
-        else weaponImage.sprite = weapon.image;
+        else weaponImage.sprite = weapon.image;*/
         weaponNameTMP.text = weapon.displayName;
+        weaponImage.sprite = weapon.image;
     }
 }

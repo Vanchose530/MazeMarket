@@ -1,11 +1,8 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Diagnostics;
-using System.Linq.Expressions;
+
 
 public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 {
@@ -20,6 +17,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     [SerializeField] private int weaponInventorySize;
 
     [SerializeField] private float dropDistance = 2.0f;
+    [SerializeField] private float dropDelayTimer = 2f;
+    private bool isDropDelay = false;
 
     private int weaponInventoryId = 0;
 
@@ -188,7 +187,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             try
             { 
                 if (currentWeapon.displayName != newWeapon.displayName)
-                weapons[weaponInventoryId] = newWeapon;
+                    weapons[weaponInventoryId] = newWeapon;
             }
             catch(NullReferenceException ignored) 
             {
@@ -198,6 +197,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         else
             weapons.Add(newWeapon);
             weaponInventoryId = weapons.Count - 1;
+
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown;
 
@@ -329,22 +329,28 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             return;
         }
 
+        if (isDropDelay)
+            return;
+
         if (currentWeapon != null)
         {
             currentWeapon.onAttack -= SetCooldown;
 
             CreateDrop();
+
+            weapons.Remove(currentWeapon);
             Destroy(currentWeapon);
-            Destroy(weapons[weaponInventoryId]);
+
             currentWeapon = null;
-            weapons[weaponInventoryId] = null;
             
             StopGunReloading();
             SetGunOrMelee();
 
 
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            
         }
+        StartCoroutine(DropDelay());
         InventoryUIManager.instance.UpdateWeaponSlots();
     }
 
@@ -354,6 +360,13 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         UnityEngine.Debug.Log(currentWeapon.name);
         UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
         Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance, Player.instance.transform.rotation);
+    }
+
+    private IEnumerator DropDelay()
+    {
+        isDropDelay = true;
+        yield return new WaitForSeconds(dropDelayTimer);
+        isDropDelay = false;
     }
 
     private void SetGunOrMelee()
