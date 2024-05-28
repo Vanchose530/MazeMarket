@@ -1,10 +1,8 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Diagnostics;
+
 
 public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 {
@@ -18,21 +16,30 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private int weaponInventorySize;
 
-    private int weaponInventoryId;
+    [SerializeField] private float dropDistance = 2.0f;
+    [SerializeField] private float dropDelayTimer = 2f;
+    private bool isDropDelay = false;
+
+    private int weaponInventoryId = 0;
 
     private IEnumerator reloadingCoroutine;
 
-    //[Header("Start Items")]
-    //public List<Weapon> startWeapons;
-    //public int startLightBullets;
-    //public int startMediumBullets;
-    //public int startHeavyBullets;
-    //public int startShells;
-
+    const string PATH_TO_WEAPON_PREFABS = "Items\\Weapons\\";
+    /*
+    [Header("Start Items")]
+    public List<Weapon> startWeapons;
+    public int startLightBullets;
+    public int startMediumBullets;
+    public int startHeavyBullets;
+    public int startShells;
+    */
     int lightBullets;
     int mediumBullets;
     int heavyBullets;
     int shells;
+
+    [Header("Cant drop weapon")]
+    [SerializeField] private LayerMask cantDropWeaponLayer;
 
     public float currentWeaponCooldown { get; private set; }
 
@@ -150,17 +157,51 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     // проверка инвентаря на "полность" для подбора предметов
     public bool IsGunSlotsFull()
     {
-        return (weapons.Count == weaponInventorySize);
+        if (weaponInventoryId > weapons.Count) return true;
+        if (weapons.Count < weaponInventorySize) return false;
+        if (weapons.Count == weaponInventorySize)
+        {
+            SwitchToNullWeapon();
+            if (currentWeapon == null) return false;
+        }
+        return true;
+    }
+
+    private void SwitchToNullWeapon()
+    {
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i] == null)
+            {
+                currentWeapon = weapons[i];
+                weaponInventoryId = i;
+                return;
+            }
+        }
     }
 
     public void AddWeapon(Weapon newWeapon)
     {
-        weapons.Add(newWeapon);
+        if (weapons.Count == weaponInventorySize)
+        {
+            try
+            { 
+                if (currentWeapon.displayName != newWeapon.displayName)
+                    weapons[weaponInventoryId] = newWeapon;
+            }
+            catch(NullReferenceException ignored) 
+            {
+                if (currentWeapon == null) weapons[weaponInventoryId] = newWeapon;
+            }
+        }
+        else
+            weapons.Add(newWeapon);
+            weaponInventoryId = weapons.Count - 1;
 
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown;
 
-        currentWeapon = newWeapon;
+        currentWeapon = weapons[weaponInventoryId];
         StopGunReloading();
         SetGunOrMelee();
 
@@ -233,7 +274,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (weapons.Count == 0)
         {
-            RemoveWeapon();
+            toMeleeWeapon();
         }
         else
         {
@@ -279,16 +320,53 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     public void RemoveWeapon()
     {
+        UnityEngine.Debug.Log("logged T");
+
+        if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
+        {
+            UnityEngine.Debug.Log("Cant drop it here");
+            HintsUIM.instance.ShowDropHint();
+            return;
+        }
+
+        if (isDropDelay)
+            return;
+
         if (currentWeapon != null)
+        {
             currentWeapon.onAttack -= SetCooldown;
-        UnityEngine.Debug.Log("logged G");
 
-        currentWeapon = null;
+            CreateDrop();
 
-        StopGunReloading();
-        SetGunOrMelee();
+            weapons.Remove(currentWeapon);
+            Destroy(currentWeapon);
 
-        GameEventsManager.instance.playerWeapons.WeaponChanged();
+            currentWeapon = null;
+            
+            StopGunReloading();
+            SetGunOrMelee();
+
+
+            GameEventsManager.instance.playerWeapons.WeaponChanged();
+            
+        }
+        StartCoroutine(DropDelay());
+        InventoryUIManager.instance.UpdateWeaponSlots();
+    }
+
+    private void CreateDrop()
+    {
+        UnityEngine.Debug.Log("weapon in id " + weaponInventoryId);
+        UnityEngine.Debug.Log(currentWeapon.name);
+        UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
+        Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance, Player.instance.transform.rotation);
+    }
+
+    private IEnumerator DropDelay()
+    {
+        isDropDelay = true;
+        yield return new WaitForSeconds(dropDelayTimer);
+        isDropDelay = false;
     }
 
     private void SetGunOrMelee()
@@ -401,13 +479,16 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if(currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
-            
-            currentWeapon = weapons[0];
-            currentWeapon.onAttack += SetCooldown;
+            weaponInventoryId = 0;
+
+            currentWeapon = weapons[weaponInventoryId];
+            if(currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            InventoryUIManager.instance.UpdateWeaponSlots();
         }
+        else toMeleeWeapon();
     }
     public void toSecondWeapon()
     {
@@ -416,13 +497,16 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
+            weaponInventoryId = 1;
 
-            currentWeapon = weapons[1];
-            currentWeapon.onAttack += SetCooldown;
+            currentWeapon = weapons[weaponInventoryId];
+            if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            InventoryUIManager.instance.UpdateWeaponSlots();
         }
+        else toMeleeWeapon();
     }
     public void toThirdWeapon()
     {
@@ -431,18 +515,31 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
+            weaponInventoryId = 2;
 
-            currentWeapon = weapons[2];
-            currentWeapon.onAttack += SetCooldown;
+            currentWeapon = weapons[weaponInventoryId];
+            if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
+            InventoryUIManager.instance.UpdateWeaponSlots();
         }
+        else toMeleeWeapon();
     }
 
-   // toMeleeWeapon == RemoveWeapon
+   // toMeleeWeapon -> старый ремув веапон
     public void toMeleeWeapon()
     {
-        RemoveWeapon();
+        if (currentWeapon != null)
+            currentWeapon.onAttack -= SetCooldown;
+        UnityEngine.Debug.Log("logged 4");
+
+        currentWeapon = null;
+        weaponInventoryId = 100; // большое значение чтобы в этот "слот" пушек не брать
+
+        StopGunReloading();
+        SetGunOrMelee();
+
+        GameEventsManager.instance.playerWeapons.WeaponChanged();
     }
 }

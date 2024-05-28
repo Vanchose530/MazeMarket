@@ -11,6 +11,8 @@ public class WeaponSlot : MonoBehaviour
     [SerializeField] private Image weaponImage;
     [SerializeField] private TextMeshProUGUI weaponNameTMP;
 
+    const string PATH_TO_PNGS = "Weapons\\Pngs\\";
+
     private Weapon _weapon;
     public Weapon weapon
     {
@@ -70,7 +72,10 @@ public class WeaponSlot : MonoBehaviour
 
     private void SetWeaponInSlot()
     {
-        weaponImage.sprite = weapon.image;
+        /*if ((weapon.name == "AK-47(Clone)") || (weapon.name == "Pump(Clone)"))
+            weaponImage.sprite = Resources.Load<Sprite>(PATH_TO_PNGS + weapon.displayName.Replace("(Clone)", ""));
+        else weaponImage.sprite = weapon.image;*/
         weaponNameTMP.text = weapon.displayName;
+        weaponImage.sprite = weapon.image;
     }
 }

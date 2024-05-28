@@ -27,7 +27,7 @@ public class GunItem : Item
 
         gun = Instantiate(gunSO);
         gun.ammoInMagazine = gun.magazineSize;
-        GetComponent<SpriteRenderer>().sprite = gun.image;
+        GetComponent<SpriteRenderer>().sprite = gunSO.image;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -44,9 +44,11 @@ public class GunItem : Item
             return;
         }
         else
+        {
             AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);
             PlayerWeaponsManager.instance.AddWeapon(gun);
             SaveCollectedItem();
-            Destroy(gameObject); 
+            Destroy(gameObject);
+        }
     }
 }

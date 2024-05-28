@@ -17,6 +17,10 @@ public class HintsUIM : MonoBehaviour
     [SerializeField] private Animator saveHintAnimator;
     [SerializeField] private float saveHintTime = 4f;
 
+    [SerializeField] private GameObject dropHint;
+    [SerializeField] private Animator dropHintAnimator;
+    [SerializeField] private float dropHintTime = 4f;
+
     private void Awake()
     {
         if (instance != null)
@@ -28,6 +32,7 @@ public class HintsUIM : MonoBehaviour
     {
         enableInteractHint = false;
         saveHintAnimator.Play("Hide");
+        dropHintAnimator.Play("Hide");
     }
 
     public void ShowSaveHint() => StartCoroutine(SaveHint(saveHintTime));
@@ -37,5 +42,13 @@ public class HintsUIM : MonoBehaviour
         saveHintAnimator.Play("Show");
         yield return new WaitForSecondsRealtime(time);
         saveHintAnimator.Play("Hide");
+    }
+
+    public void ShowDropHint() => StartCoroutine(CanNotDropItem(saveHintTime));
+    IEnumerator CanNotDropItem(float time)
+    {
+        dropHintAnimator.Play("Show");
+        yield return new WaitForSecondsRealtime(time);
+        dropHintAnimator.Play("Hide");
     }
 }

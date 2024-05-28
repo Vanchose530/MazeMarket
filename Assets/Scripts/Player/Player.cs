@@ -137,12 +137,14 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [Header("Attack")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private Transform secondAttackPoint;
+    [SerializeField] private LayerMask hideObjectLayer;
     public float attackRange = 0.5f;
     public float attackCooldown = 2f;
     float nextAttackTime = 0f;
     public float seriesAttackTime = 1f;
     float seriesAttack = 0f;
     public int damage = 5;
+
 
     int punchSide = 1;
     
@@ -452,7 +454,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 bodyAnimator.SetTrigger("Attack");
             }
 
-            if (CheckObstacles())
+            if (CheckObstacles(attackPoint.localPosition.y, hideObjectLayer))
             {
                 PlayerWeaponsManager.instance.currentWeapon.Attack(secondAttackPoint);
             }
@@ -493,17 +495,18 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
-    private bool CheckObstacles()
+    public bool CheckObstacles(float distance, LayerMask layer)
     {
-        var hits = Physics2D.RaycastAll(rb.position, InputManager.instance.lookDirection, attackPoint.localPosition.y);
+        var hits = Physics2D.RaycastAll(rb.position, InputManager.instance.lookDirection, distance);
 
         foreach(var hit in hits)
         {
-            if (hit.transform.gameObject.CompareTag("Player") || hit.transform.gameObject.layer == 9)
+            if (hit.transform.gameObject.CompareTag("Player") || hit.transform.gameObject.layer == layer)
                 continue;
+            Debug.Log("2nd atck point");
             return true;
         }
-
+        Debug.Log("1st atck point");
         return false;
     }
 
