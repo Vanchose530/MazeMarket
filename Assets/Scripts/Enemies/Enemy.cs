@@ -137,7 +137,7 @@ public abstract class Enemy : MonoBehaviour, IProfitable
             _dropMoneyCount = 0;
     }
 
-    private void DropMoneyOnDeath(int dropMoneyCount)
+    public void DropMoneyOnDeath(int dropMoneyCount)
     {
         CreateAssetsManager.instance.CreateMoney(dropMoneyCount);
     }
