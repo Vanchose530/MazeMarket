@@ -2,9 +2,10 @@ using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IProfitable
 {
     [Header("Health")]
     public int maxHealth;
@@ -12,6 +13,9 @@ public abstract class Enemy : MonoBehaviour
 
     [Header("Movement")]
     public float speed;
+
+    [Header("Reward count")]
+    [SerializeField] private int _dropMoneyCount = 0;
 
     private Vector2 _movementDirection = Vector2.zero;
     public Vector2 movementDirection
@@ -68,6 +72,9 @@ public abstract class Enemy : MonoBehaviour
     {
         if (onEnemyDeath != null)
             onEnemyDeath();
+        
+        
+        DropMoneyOnDeath(_dropMoneyCount);
     }
 
     public virtual void ExecutePath(bool aStar = true)
@@ -123,4 +130,15 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void PlayerDeath();
 
     public abstract void Spawn();
+
+    private void OnValidate()
+    {
+        if (_dropMoneyCount < 0)
+            _dropMoneyCount = 0;
+    }
+
+    private void DropMoneyOnDeath(int dropMoneyCount)
+    {
+        CreateAssetsManager.instance.CreateMoney(dropMoneyCount);
+    }
 }

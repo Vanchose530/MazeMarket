@@ -9,7 +9,7 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
 {
     public static PlayerInventory instance;
 
-    private int _keyCardCount;
+    private int _keyCardCount = 0;
 
     public int keyCardCount
     {
@@ -18,6 +18,17 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         {
             _keyCardCount = value;
             UpdateUI();
+        }
+    }
+    
+    private int _moneyCount;
+    public int moneyCount
+    {
+        get { return _moneyCount; }
+        set
+        {
+            _moneyCount = value;
+            UpdateUI ();
         }
     }
 
