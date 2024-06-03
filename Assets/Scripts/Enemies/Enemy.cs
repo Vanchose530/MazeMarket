@@ -31,6 +31,7 @@ public abstract class Enemy : MonoBehaviour, IProfitable
         set { targetOnAim = false; _target = value; }
     }
 
+    [Header("Waypoints")]
     [SerializeField] protected float nextWaypointDistance;
     [HideInInspector] public bool targetOnAim;
     protected bool walk; // TODO - нормализовать анимации отслеживая показатель walk в аниматоре
@@ -139,6 +140,6 @@ public abstract class Enemy : MonoBehaviour, IProfitable
 
     public void DropMoneyOnDeath(int dropMoneyCount)
     {
-        CreateAssetsManager.instance.CreateMoney(dropMoneyCount);
+        CreateAssetsManager.instance.CreateMoney(dropMoneyCount,transform.position, transform.rotation);
     }
 }

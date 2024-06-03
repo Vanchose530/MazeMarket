@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class Money : Item
 {
-    [SerializeField]private int _value;
+    [SerializeField] private int _value;
+    
+    [Header("Attraction")]
+    [SerializeField] private int _distanceToAttract;
+    [SerializeField] private int _attractForce;
     protected override void PickUp()
     {
         PlayerInventory.instance.moneyCount += _value;

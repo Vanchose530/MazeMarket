@@ -28,6 +28,7 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         set
         {
             _moneyCount = value;
+            Debug.Log("Set money to " + value);
             UpdateUI ();
         }
     }

@@ -46,11 +46,6 @@ public class InputManager : MonoBehaviour
     private bool grenadeAttack;
     private bool healthBottle;
 
-    private bool chooseWeapon;
-    private bool chooseWeapon2;
-    private bool chooseWeapon3;
-    private bool chooseWeapon4;
-
     private void Awake()
     {
         Invoke("SetStartHandling", 0.1f);
@@ -335,12 +330,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("1");
         if (context.performed)
         {
-            chooseWeapon = true;
             GameEventsManager.instance.input.FirstWeaponChoosen();
-        }
-        else if (context.canceled)
-        {
-            chooseWeapon = false;
         }
     }
 
@@ -349,12 +339,7 @@ public class InputManager : MonoBehaviour
         Debug.Log("2");
         if (context.performed)
         {
-            chooseWeapon2 = true;
             GameEventsManager.instance.input.SecondWeaponChoosen();
-        }
-        else if (context.canceled)
-        {
-            chooseWeapon2 = false;
         }
     }
 
@@ -363,13 +348,10 @@ public class InputManager : MonoBehaviour
         Debug.Log("3");
         if (context.performed)
         {
-            chooseWeapon3 = true;
+
             GameEventsManager.instance.input.ThirdWeaponChoosen();
         }
-        else if (context.canceled)
-        {
-            chooseWeapon3 = false;
-        }
+
     }
 
     public void MeleeWeaponChoosen(InputAction.CallbackContext context)
@@ -377,13 +359,10 @@ public class InputManager : MonoBehaviour
         Debug.Log("4");
         if (context.performed)
         {
-            chooseWeapon4 = true;
+
             GameEventsManager.instance.input.MeleeWeaponChoosen();
         }
-        else if (context.canceled)
-        {
-            chooseWeapon4 = false;
-        }
+
     }
     public void GrenadeAttack(InputAction.CallbackContext context) 
     {

@@ -20,8 +20,9 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     [SerializeField] private float dropDelayTimer = 2f;
     private bool isDropDelay = false;
 
-    private int weaponInventoryId = 0;
-
+    private int _weaponInventoryId = 0;
+    private int _magicNumToUnlockPickUp = 666;
+    
     private IEnumerator reloadingCoroutine;
 
     const string PATH_TO_WEAPON_PREFABS = "Items\\Weapons\\";
@@ -157,7 +158,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     // проверка инвентаря на "полность" для подбора предметов
     public bool IsGunSlotsFull()
     {
-        if (weaponInventoryId > weapons.Count) return true;
+        if ((_weaponInventoryId > weapons.Count) && (_weaponInventoryId != _magicNumToUnlockPickUp)) return true;
         if (weapons.Count < weaponInventorySize) return false;
         if (weapons.Count == weaponInventorySize)
         {
@@ -174,7 +175,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (weapons[i] == null)
             {
                 currentWeapon = weapons[i];
-                weaponInventoryId = i;
+                _weaponInventoryId = i;
                 return;
             }
         }
@@ -187,21 +188,21 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             try
             { 
                 if (currentWeapon.displayName != newWeapon.displayName)
-                    weapons[weaponInventoryId] = newWeapon;
+                    weapons[_weaponInventoryId] = newWeapon;
             }
             catch(NullReferenceException ignored) 
             {
-                if (currentWeapon == null) weapons[weaponInventoryId] = newWeapon;
+                if (currentWeapon == null) weapons[_weaponInventoryId] = newWeapon;
             }
         }
         else
             weapons.Add(newWeapon);
-            weaponInventoryId = weapons.Count - 1;
+            _weaponInventoryId = weapons.Count - 1;
 
         if (currentWeapon != null)
             currentWeapon.onAttack -= SetCooldown;
 
-        currentWeapon = weapons[weaponInventoryId];
+        currentWeapon = weapons[_weaponInventoryId];
         StopGunReloading();
         SetGunOrMelee();
 
@@ -284,13 +285,13 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
             try
             {
-                currentWeapon = weapons[weaponInventoryId + 1];
-                weaponInventoryId++;
+                currentWeapon = weapons[_weaponInventoryId + 1];
+                _weaponInventoryId++;
             }
             catch (System.ArgumentOutOfRangeException)
             {
-                weaponInventoryId = 0;
-                currentWeapon = weapons[weaponInventoryId];
+                _weaponInventoryId = 0;
+                currentWeapon = weapons[_weaponInventoryId];
             }
 
             currentWeapon.onAttack += SetCooldown;
@@ -356,7 +357,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private void CreateDrop()
     {
-        UnityEngine.Debug.Log("weapon in id " + weaponInventoryId);
+        UnityEngine.Debug.Log("weapon in id " + _weaponInventoryId);
         UnityEngine.Debug.Log(currentWeapon.name);
         UnityEngine.Debug.Log(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item");
         Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"), Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance, Player.instance.transform.rotation);
@@ -476,19 +477,21 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (weapons.Count >= 1)
         {
-            if(currentWeapon != null)
+            if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
-            weaponInventoryId = 0;
+            _weaponInventoryId = 0;
 
-            currentWeapon = weapons[weaponInventoryId];
-            if(currentWeapon != null) currentWeapon.onAttack += SetCooldown;
+            currentWeapon = weapons[_weaponInventoryId];
+            if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
             InventoryUIManager.instance.UpdateWeaponSlots();
         }
-        else toMeleeWeapon();
+        else 
+            _weaponInventoryId = _magicNumToUnlockPickUp; 
+        return;
     }
     public void toSecondWeapon()
     {
@@ -497,16 +500,18 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
-            weaponInventoryId = 1;
+            _weaponInventoryId = 1;
 
-            currentWeapon = weapons[weaponInventoryId];
+            currentWeapon = weapons[_weaponInventoryId];
             if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
             InventoryUIManager.instance.UpdateWeaponSlots();
         }
-        else toMeleeWeapon();
+        else 
+            _weaponInventoryId = _magicNumToUnlockPickUp; 
+        return;
     }
     public void toThirdWeapon()
     {
@@ -515,16 +520,17 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             if (currentWeapon != null)
                 currentWeapon.onAttack -= SetCooldown;
 
-            weaponInventoryId = 2;
+            _weaponInventoryId = 2;
 
-            currentWeapon = weapons[weaponInventoryId];
+            currentWeapon = weapons[_weaponInventoryId];
             if (currentWeapon != null) currentWeapon.onAttack += SetCooldown;
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
             InventoryUIManager.instance.UpdateWeaponSlots();
         }
-        else toMeleeWeapon();
+        else _weaponInventoryId = _magicNumToUnlockPickUp; 
+        return;
     }
 
    // toMeleeWeapon -> старый ремув веапон
@@ -535,7 +541,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         UnityEngine.Debug.Log("logged 4");
 
         currentWeapon = null;
-        weaponInventoryId = 100; // большое значение чтобы в этот "слот" пушек не брать
+        _weaponInventoryId = 100; // большое значение чтобы в этот "слот" пушек не брать
 
         StopGunReloading();
         SetGunOrMelee();
