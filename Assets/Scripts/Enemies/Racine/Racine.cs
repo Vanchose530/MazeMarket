@@ -106,6 +106,7 @@ public class Racine : Enemy, IDamagable
 
     private void Update()
     {
+
         if (currentState.isFinished)
         {
             if (agressive)
@@ -276,7 +277,7 @@ public class Racine : Enemy, IDamagable
     private void Move()
     {
         if (attack)
-            rb.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero; 
         else
             rb.velocity = movementDirection * speed;
     }
