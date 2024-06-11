@@ -61,10 +61,12 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.keyCardCount = data.keyCardCount;
+        //this.moneyCount = data.moneyCount; need realize
     }
 
     public void SaveData(ref GameData data)
     {
         data.keyCardCount = this.keyCardCount;
+        //data.moneyCount = this.moneyCount; need realize
     }
 }

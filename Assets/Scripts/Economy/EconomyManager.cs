@@ -27,6 +27,7 @@ public class EconomyManager : MonoBehaviour
     {
 
     }
+
     public void Deal(int cost) //нужно как-то отмечать, что мы покупаем -> зависит реализация выдачи
     {
         if (!isValidOffer(cost))

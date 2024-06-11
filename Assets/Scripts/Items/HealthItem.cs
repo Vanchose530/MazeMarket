@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthItem : Item
 {
     public int health;
-    protected override void PickUp()
+    public override void PickUp()
     {
         Player.instance.health += health;
         AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);

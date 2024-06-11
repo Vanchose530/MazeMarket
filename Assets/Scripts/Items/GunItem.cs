@@ -36,7 +36,7 @@ public class GunItem : Item
             PickUp();
     }
 
-    protected override void PickUp() 
+    public override void PickUp() 
     {
         if (PlayerWeaponsManager.instance.IsGunSlotsFull())
         {

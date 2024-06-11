@@ -4,10 +4,15 @@ public class Money : Item
 {
     [SerializeField] private int _value;
     
-    [Header("Attraction")]
+    public Money(int value)
+    {
+        _value = value;
+    }
+
+    [Header("Attraction")] //dont work now
     [SerializeField] private int _distanceToAttract;
     [SerializeField] private int _attractForce;
-    protected override void PickUp()
+    public override void PickUp()
     {
         PlayerInventory.instance.moneyCount += _value;
         AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);

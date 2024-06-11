@@ -35,5 +35,5 @@ public abstract class Item : MonoBehaviour
             Debug.LogWarning("Tryed to save collected item but it don't have unique id. Item object: " + gameObject.name);
     }
 
-    protected abstract void PickUp();
+    public abstract void PickUp();
 }

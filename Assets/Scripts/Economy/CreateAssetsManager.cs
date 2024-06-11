@@ -14,6 +14,11 @@ public class CreateAssetsManager : MonoBehaviour
         instance = this;
     }
 
+    public void CreateItem<T>(T item)
+    {
+
+    }
+
     public void CreateMoney(int count, Vector3 position, Quaternion rotation)
     {
         if (count < 1) return;

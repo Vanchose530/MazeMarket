@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KeyCardItem : Item
 {
-    protected override void PickUp()
+    public override void PickUp()
     {
         PlayerInventory.instance.keyCardCount++;
         AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);

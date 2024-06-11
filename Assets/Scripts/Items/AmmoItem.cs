@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class AmmoItem : Item
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AmmoItem"/> class. 
+    /// [GeneratedType accepts equals int of <see cref="AmmoTypes"/>]
+    /// </summary>
+    /// <param name="GeneratedType">GeneratedType accepts equals int of <see cref="AmmoTypes"/></param>
+    /// <param name="GeneretedAmmoCount"></param>
+    public AmmoItem(int GeneratedType, int GeneretedAmmoCount)
+    {
+        ammoType = (AmmoTypes) GeneratedType;
+        ammoCount = GeneretedAmmoCount;
+    }
+
     public AmmoTypes ammoType;
     public int ammoCount;
 
-    protected override void PickUp()
+    public override void PickUp()
     {
         PlayerWeaponsManager.instance.AddAmmoByType(ammoType, ammoCount);
         AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);
