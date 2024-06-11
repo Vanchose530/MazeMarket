@@ -119,12 +119,15 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     bool _canUseStamina = true;
     bool isHeal = false;
+
     [Header("Grenade")]
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private float forceGrenade = 300f;
+
     [Header("HealthBottle")]
     [SerializeField] private int hpToHeal = 10;
     [SerializeField] private float timeToHeal = 2f;
+
     bool canUseStamina
     {
         get { return _canUseStamina; }
@@ -506,20 +509,24 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         //staminaSlider.value = stamina / maxDashCount;
     }
 
-    private void UseGrenade() // в дальнейшем использование бутылок будет реализовано разными кнопками
+    private void UseGrenade()
     {
         if (PlayerInventory.instance.countGrenadeBottle > 0)
         {
+            if (grenadeThrowSE != null)
+                AudioManager.instance.PlaySoundEffect(grenadeThrowSE, transform.position, 2f);
+
             Vector3 bulletAngle = followCameraPoint.eulerAngles;
             GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
             Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
             grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
             PlayerInventory.instance.countGrenadeBottle--;
-            PlayerInventory.instance.countEmptyBottle++;
+            // PlayerInventory.instance.countEmptyBottle++;
         }
     }
 
-    private void UseHealth() {
+    private void UseHealth()
+    {
         if(PlayerInventory.instance.countHealthBottle > 0)
         {
             StartCoroutine("HealthBottleDrinkCouroutine");

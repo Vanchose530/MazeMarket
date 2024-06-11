@@ -348,6 +348,11 @@ MonoBehaviour:
   explotionDamage: 80
   damagePlayer: 0
   explotionEffectPrefab: {fileID: 8713384375094285788, guid: 4f02081fabb777848802b5977cc7ee23, type: 3}
+  explotionSE:
+    sound: {fileID: 8300000, guid: 898b924d2aef79c48905f59b2b2bba3f, type: 3}
+    volume: 1
+    minPitch: 0.9
+    maxPitch: 1.1
   rb: {fileID: 8869500415100963453}
 --- !u!50 &8869500415100963453
 Rigidbody2D:
