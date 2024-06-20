@@ -3,68 +3,55 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 public class GoplitAgressiveState : GoplitState
 {
-    [Header("Behaviour")]
-    public float attackDistance;
-    public float distanceToMissPlayer;
+    [Header("Settings")]
+    [SerializeField] private float speed;
+    [SerializeField] private float timeAttack;
+    [SerializeField] private GameObject spear;
 
-    public override void Init()
-    {
-        isFinished = false;
-
-        goplit.target = Player.instance.transform;
-
-        goplit.targetOnAim = true;
+    public override void Init() {
+        goplit.attack = true;
     }
 
-    public override void Run()
-    {
-        if (goplit.attack)
-            return;
-        goplit.ExecutePath();
-
-        float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, goplit.rb.position);
-
-        if (CheckPlayer() && distanceToPlayer < attackDistance)
-            goplit.Attack();
-
-        if (distanceToPlayer > distanceToMissPlayer)
-        {
-            goplit.agressive = false;
-            isFinished = true;
-        }
+    public override void Run() {
+        StartCoroutine("StartRun");
+        
     }
-
-    public override void Exit()
-    {
+    public IEnumerator StartRun() {
+        
+        //bodyAnimator.SetTrigger("Attack");
         goplit.movementDirection = Vector2.zero;
-    }
+        
+        yield return new WaitForSeconds(5f);
 
-    private bool CheckPlayer()
-    {
-        var hits = Physics2D.RaycastAll(goplit.rb.position, Player.instance.rb.position - goplit.rb.position, attackDistance);
-
-        foreach (var hit in hits)
+        if (goplit.attack)
         {
-            if (hit.transform.gameObject.CompareTag("Wall"))
-                return false;
-            else if (hit.transform.gameObject.CompareTag("Player"))
-                return true;
+            goplit.transform.position = Vector3.MoveTowards(goplit.transform.position, goplit.targetEnd.position, speed * Time.deltaTime);
+            timeAttack -= Time.deltaTime;
+            if (timeAttack <= 0)
+            {
+                goplit.attack = false;
+            }
+            spear.GetComponent<Collider2D>().enabled = true;
         }
+        else {
+            spear.GetComponent<Collider2D>().enabled = false;
+        }
+        
 
-        return false;
+        goplit.targetOnAim = false;
+
+        yield return new WaitForSeconds(3f);
+        spear.GetComponent<Collider2D>().enabled = false;
+        isFinished = true;
+        goplit.attack = false;
+        goplit.agressive = false;
+        goplit.recover = true;
+        //bodyAnimator.SetTrigger("Default");
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
 
-        Gizmos.DrawWireSphere(transform.position, distanceToMissPlayer);
 
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(transform.position, attackDistance);
-    }
 }
-

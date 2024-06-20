@@ -28,6 +28,7 @@ public class GoplitRecoveryState : GoplitState
     public override void Run()
     {
         float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, goplit.rb.position);
+        Debug.Log(distanceFromPlayer);
         Vector2 vectorFromPlayer = (goplit.rb.position - Player.instance.rb.position).normalized;
         Vector2 moveVector = Vector2.zero;
 
@@ -56,6 +57,8 @@ public class GoplitRecoveryState : GoplitState
         goplit.movementDirection = moveVector;
 
         CountTimeVariables();
+
+        
     }
 
     private void CountTimeVariables()
@@ -63,8 +66,10 @@ public class GoplitRecoveryState : GoplitState
         if (recoveryTime > 0)
             recoveryTime -= Time.deltaTime;
         else
+        {
             isFinished = true;
-
+            goplit.recover = false;
+        }
         if (walkInOneTurnTime > 0)
             walkInOneTurnTime -= Time.deltaTime;
     }

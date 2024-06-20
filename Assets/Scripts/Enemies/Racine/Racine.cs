@@ -153,7 +153,6 @@ public class Racine : Enemy, IDamagable
     {
         bodyAnimator.SetFloat("Preparing Multiplier", 1/preparingTime);
         bodyAnimator.SetFloat("Attack Multiplier", 1/timeToRootUp);
-
     }
 
     public override void Attack()
