@@ -7,12 +7,16 @@ using UnityEngine;
 
 public class Goplit : Enemy, IDamagable
 {
+    [Header("Attack")]
+    public float aimingTime;
+    public float timeAttack;
+    public float attackEnd;
     [Header("Target")]
     public Transform targetEnd;
     [Header ("Animators")]
-    [SerializeField] private Animator bodyAnimator;
+    public Animator bodyAnimator;
     [SerializeField] private GameObject legs;
-    //[SerializeField] private Animator legsAnimator;
+    [SerializeField] private Animator legsAnimator;
 
     [Header("Effects")]
     [SerializeField] private GameObject damageEffect;
@@ -33,8 +37,8 @@ public class Goplit : Enemy, IDamagable
             rb = GetComponent<Rigidbody2D>();
         if (seeker == null)
             seeker = GetComponent<Seeker>();
-        //if (legsAnimator == null)
-        //    legsAnimator = legs.GetComponent<Animator>();
+        if (legsAnimator == null)
+            legsAnimator = legs.GetComponent<Animator>();
 
         if (spawnState == null)
             spawnState = statesGameObject.GetComponent<GoplitSpawnState>();
@@ -56,13 +60,17 @@ public class Goplit : Enemy, IDamagable
         attack = false;
 
         recover = false;
+
+        SetAnimationSettings();
     }
     private void Start()
     {
         InvokeRepeating("UpdatePath", 0f, 0.5f);
 
-        SetState(passiveState);
-        
+        if (!alreadySpawnedOnStart)
+            SetState(spawnState);
+        else
+            SetState(passiveState);
     }
 
     private void Update()
@@ -73,7 +81,10 @@ public class Goplit : Enemy, IDamagable
             if (agressive)
                 SetState(pursuitState);
             else if (recover)
+            {
+                bodyAnimator.SetTrigger("Default");
                 SetState(recoveryState);
+            }
             else
                 SetState(passiveState);
         }
@@ -107,12 +118,19 @@ public class Goplit : Enemy, IDamagable
     private void Animate()
     {
         bodyAnimator.SetFloat("Movement Speed", rb.velocity.sqrMagnitude);
-        //legsAnimator.SetFloat("Speed", rb.velocity.magnitude);
+        legsAnimator.SetFloat("Speed", rb.velocity.magnitude);
+    }
+
+    private void SetAnimationSettings()
+    {
+        bodyAnimator.SetFloat("Preparing Multiplier",1 / aimingTime);
+        bodyAnimator.SetFloat("Attack Multiplier",1 / timeAttack);
     }
 
 
     public override void Attack()
     {
+        bodyAnimator.SetTrigger("Aiming");
         SetState(agressiveState);
         currentState.Run();
         
@@ -123,7 +141,30 @@ public class Goplit : Enemy, IDamagable
     {
         StartCoroutine("StartSpawning");
     }
+    private IEnumerator StartSpawning()
+    {
+        spawning = true;
 
+        var effect = Instantiate(EffectsStorage.instance.enemySpawnEffect, transform.position, transform.rotation);
+        effect.GetComponent<Animator>().SetFloat("Speed", 1 / spawningTime);
+
+        EffectsManager.instance.PlaySoundEffect(EffectsStorage.instance.enemySpawnEffectSound, spawningTime * 1.5f, 0.9f, 1.1f);
+
+        bodyAnimator.SetFloat("Spawning Time", 1 / spawningTime);
+        bodyAnimator.Play("Spawn");
+
+        yield return new WaitForSeconds(spawningTime);
+
+        SetState(passiveState);
+
+        EffectsManager.instance.PlaySoundEffect(EffectsStorage.instance.enemySpawnSound, 3f, 0.9f, 1.1f);
+
+        effect.GetComponent<Animator>().SetFloat("Speed", 2 / spawningTime);
+        effect.GetComponent<Animator>().Play("Disappear");
+        Destroy(effect, spawningTime / 2);
+
+        spawning = false;
+    }
     public void TakeDamage(int damage, Transform attack = null)
     {
         if (spawning)

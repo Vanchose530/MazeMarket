@@ -15,6 +15,7 @@ public class RacineAgressiveState : RacineState
         racine.target = Player.instance.transform;
 
         racine.targetOnAim = true; 
+
     }
 
     public override void Run()

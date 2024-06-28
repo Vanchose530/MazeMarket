@@ -8,29 +8,30 @@ public class GoplitAgressiveState : GoplitState
 {
     [Header("Settings")]
     [SerializeField] private float speed;
-    [SerializeField] private float timeAttack;
     [SerializeField] private GameObject spear;
 
     public override void Init() {
+        goplit.agressive = true;
         goplit.attack = true;
+        isFinished = false;
+        goplit.recover = false;
     }
 
     public override void Run() {
         StartCoroutine("StartRun");
-        
     }
     public IEnumerator StartRun() {
         
-        //bodyAnimator.SetTrigger("Attack");
-        goplit.movementDirection = Vector2.zero;
         
-        yield return new WaitForSeconds(5f);
+        goplit.movementDirection = Vector2.zero;
+        float time = goplit.timeAttack;
+        yield return new WaitForSeconds(goplit.aimingTime);
 
         if (goplit.attack)
         {
             goplit.transform.position = Vector3.MoveTowards(goplit.transform.position, goplit.targetEnd.position, speed * Time.deltaTime);
-            timeAttack -= Time.deltaTime;
-            if (timeAttack <= 0)
+            time -= Time.deltaTime;
+            if (time <= 0)
             {
                 goplit.attack = false;
             }
@@ -43,13 +44,15 @@ public class GoplitAgressiveState : GoplitState
 
         goplit.targetOnAim = false;
 
-        yield return new WaitForSeconds(3f);
+        
+        yield return new WaitForSeconds(goplit.timeAttack + goplit.attackEnd);
+
         spear.GetComponent<Collider2D>().enabled = false;
         isFinished = true;
         goplit.attack = false;
         goplit.agressive = false;
         goplit.recover = true;
-        //bodyAnimator.SetTrigger("Default");
+        
     }
 
 

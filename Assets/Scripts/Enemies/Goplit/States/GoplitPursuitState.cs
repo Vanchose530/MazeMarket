@@ -16,6 +16,8 @@ public class GoplitPursuitState : GoplitState
         goplit.target = Player.instance.transform;
 
         goplit.targetOnAim = true;
+
+        goplit.agressive = true;
     }
 
     public override void Run()
@@ -27,8 +29,10 @@ public class GoplitPursuitState : GoplitState
         float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, goplit.rb.position);
 
         if (CheckPlayer() && distanceToPlayer < attackDistance)
+        {
+            isFinished = true;
             goplit.Attack();
-
+        }
         if (distanceToPlayer > distanceToMissPlayer)
         {
             goplit.agressive = false;

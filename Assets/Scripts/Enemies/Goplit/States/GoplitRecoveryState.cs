@@ -22,6 +22,8 @@ public class GoplitRecoveryState : GoplitState
 
         recoveryTime = Random.Range(minRecoveryTime, maxRecoveryTime);
 
+        goplit.agressive = false;
+
         ResetTimeToWalkInOneTurn();
     }
 
