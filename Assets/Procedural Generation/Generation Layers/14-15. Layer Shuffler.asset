@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202e522e960c3834fafa3f6396d4b318, type: 3}
+  m_Name: 14-15. Layer Shuffler
+  m_EditorClassIdentifier: 
+  enabled: 1
+  layersToShuffle:
+  - {fileID: 11400000, guid: 50ba94fc099df8b4aad5fee9c8ae6000, type: 2}
+  - {fileID: 11400000, guid: aa10abc4c9a8bf6458b91edb44e1e2ed, type: 2}

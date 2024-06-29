@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab89b21cc49fd2439ccecee902863b1, type: 3}
+  m_Name: 10-13. Choose Bonus Layer Shuffler
+  m_EditorClassIdentifier: 
+  enabled: 1
+  layersToShuffle:
+  - {fileID: 11400000, guid: 727a1aab9db7b11409ca6c7d9f1b8ec9, type: 2}
+  - {fileID: 11400000, guid: 72033846a83c3ee47944569be1bbbe68, type: 2}
+  - {fileID: 11400000, guid: 6dd9d1710af380d4f81b31becc95b2ac, type: 2}
+  - {fileID: 11400000, guid: 801f773d8c75f7246b85e7690161bd09, type: 2}
+  checkForOneChest: 1
