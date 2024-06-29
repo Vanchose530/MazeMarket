@@ -539,7 +539,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         isHeal = true;
 
-
+        bodyAnimator.SetTrigger("Healing");
         yield return new WaitForSeconds(timeToHeal);
 
         instance.health += hpToHeal;

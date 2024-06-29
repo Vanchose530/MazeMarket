@@ -13724,6 +13724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659899c45de6546419853d4e356cd832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCountGrenadeBottle: 3
+  startCountHealthBottle: 1
+  startCountEmptyBottle: 1
 --- !u!1 &785308637
 GameObject:
   m_ObjectHideFlags: 0
@@ -21770,7 +21773,7 @@ Transform:
   m_GameObject: {fileID: 1732104864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.44, y: -1.0799999, z: -15}
+  m_LocalPosition: {x: -1.28, y: 0.00999999, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22084,7 +22087,7 @@ Transform:
   m_GameObject: {fileID: 1767476094}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.44, y: -1.0799999, z: -15}
+  m_LocalPosition: {x: -1.28, y: 0.00999999, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40787,15 +40790,17 @@ MonoBehaviour:
   interactableObjectsDetector: {fileID: 1680378253}
   punchSound: {fileID: 8797459062646210151, guid: 45b6ffc994fa8a64c8ff99e7d20d5123, type: 3}
   damageSound: {fileID: 5341204480864620632, guid: af9548430dd567840b9e4fc804a35376, type: 3}
-  dashSoundEffect:
-    sound: {fileID: 8300000, guid: aaea435eeab1bb24790f055b6c9da23b, type: 3}
-    volume: 0.1
+  dashSE:
+    sound: {fileID: 0}
+    volume: 0.5
     minPitch: 1
-    maxPitch: 1.1
+    maxPitch: 1
+  grenadeThrowSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
   _rb: {fileID: 1982221410}
-  isEmptyBottle: 1
-  isGrenade: 0
-  isEstos: 0
 --- !u!58 &1982221409
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -40940,7 +40945,7 @@ Transform:
   m_GameObject: {fileID: 1982221407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.44, y: -2.28, z: -5}
+  m_LocalPosition: {x: -1.28, y: -1.19, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
