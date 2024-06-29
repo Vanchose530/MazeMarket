@@ -40796,10 +40796,10 @@ MonoBehaviour:
     minPitch: 1
     maxPitch: 1
   grenadeThrowSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 1871b2ccc9a0ba74493b02456c6f0bf4, type: 3}
     volume: 0.5
     minPitch: 1
-    maxPitch: 1
+    maxPitch: 1.2
   _rb: {fileID: 1982221410}
 --- !u!58 &1982221409
 CircleCollider2D:
@@ -42216,37 +42216,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1590192993268535767, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: glowColor.b
-      value: 0.73333335
-      objectReference: {fileID: 0}
-    - target: {fileID: 1590192993268535767, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: glowColor.g
-      value: 0.8862746
-      objectReference: {fileID: 0}
-    - target: {fileID: 1590192993268535767, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: glowColor.r
-      value: 0.20392159
-      objectReference: {fileID: 0}
     - target: {fileID: 2005236293936406943, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5527145916691940005, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: canNotInteractGlowColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5527145916691940005, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: canNotInteractGlowColor.b
-      value: 0.48235294
-      objectReference: {fileID: 0}
-    - target: {fileID: 5527145916691940005, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: canNotInteractGlowColor.g
-      value: 0.20563242
-      objectReference: {fileID: 0}
-    - target: {fileID: 5527145916691940005, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
-      propertyPath: canNotInteractGlowColor.r
-      value: 0.08627451
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

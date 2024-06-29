@@ -313,6 +313,24 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    public void TakeDamageAlways(int damage, Transform attack = null) // получает урон всегда независимо от состояния
+    {
+        health -= damage;
+
+        EffectsManager.instance.PlaySoundEffect(damageSound, 2f, 0.8f, 1.2f);
+
+        if (attack != null)
+        {
+            var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
+            Destroy(effect, 1f);
+        }
+
+        if (health <= 0)
+        {
+            PlayerDeath();
+        }
+    }
+
     private void PlayerDeath()
     {
         health = 0;
@@ -529,6 +547,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         if(PlayerInventory.instance.countHealthBottle > 0)
         {
+            bodyAnimator.SetFloat("Healing Multiplier", 1 / timeToHeal);
             StartCoroutine("HealthBottleDrinkCouroutine");
             PlayerInventory.instance.countHealthBottle--;
             PlayerInventory.instance.countEmptyBottle++;
