@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Cinemachine;
 
-public class RoomManager : MonoBehaviour, IDataPersistence
+public class EnemyWavesManager : MonoBehaviour, IDataPersistence
 {
     [Header("Unique ID")]
     [SerializeField] private string id;
 
     [Header("Camera")]
-    [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    public CinemachineVirtualCamera virtualCamera { get { return _virtualCamera; } }
     [SerializeField] private bool staticCamera;
 
     [Header("Entering Room")]
@@ -24,8 +26,10 @@ public class RoomManager : MonoBehaviour, IDataPersistence
     [SerializeField] private float unlockExitsTime = 1f;
 
     [Header("Enemy Waves")]
-    [SerializeField] private EnemyWave[] enemyWaves;
+    [SerializeField] private List<EnemyWave> enemyWaves;
+    private List<EnemyWave> shuffledEnemyWaves;
     [SerializeField] private int enemyesToNextWave;
+    public int wavesCount = 1;
     private int nextWaveIndex;
     private bool lastWave;
 
@@ -47,6 +51,7 @@ public class RoomManager : MonoBehaviour, IDataPersistence
         onPlayerEnterRoom += CloseAllExits;
         onPlayerEnterRoom += DestroyAllTriggers;
         onPlayerEnterRoom += StartNextWave;
+        onPlayerEnterRoom += EnableVirtualCamera;
 
         onPlayerEnterRoom += () => Player.instance.isOnBattle = true;
         onPlayerPassRoom += () => Player.instance.isOnBattle = false;
@@ -57,12 +62,13 @@ public class RoomManager : MonoBehaviour, IDataPersistence
         onPlayerEnterRoom -= CloseAllExits;
         onPlayerEnterRoom -= DestroyAllTriggers;
         onPlayerEnterRoom -= StartNextWave;
+        onPlayerEnterRoom -= EnableVirtualCamera;
     }
 
     private void OnValidate()
     {
-        if (virtualCamera != null && virtualCamera.enabled)
-            virtualCamera.enabled = false;
+        if (_virtualCamera != null && _virtualCamera.enabled)
+            _virtualCamera.enabled = false;
     }
 
     private void Awake()
@@ -87,27 +93,48 @@ public class RoomManager : MonoBehaviour, IDataPersistence
             miasma.Unlock(time : 0.01f, destroy : false);
         }
 
+        shuffledEnemyWaves = GetShuffledEnemyWaves();
+
         yield return new WaitForSeconds(0.1f);
 
         if (!staticCamera)
         {
             // virtualCamera.LookAt = Player.instance.followCameraPoint;
-            virtualCamera.Follow = Player.instance.followCameraPoint;
+            _virtualCamera.Follow = Player.instance.followCameraPoint;
         }
         
-        virtualCamera.enabled = false;
+        _virtualCamera.enabled = false;
 
         if (id == null || id == "")
             Debug.LogError("For Room Manager not setted unique id. Room Manager object: " + gameObject.name);
     }
 
+    private List<EnemyWave> GetShuffledEnemyWaves()
+    {
+        System.Random random = new System.Random();
+
+        EnemyWave[] arr = enemyWaves.OrderBy(x => random.Next()).ToArray();
+
+        List<EnemyWave> res = new List<EnemyWave>();
+
+        foreach (EnemyWave wave in arr)
+        {
+            res.Add(wave);
+        }
+
+        return res;
+    }
+
     public void PlayerEnterRoom()
     {
+        if (wavesCount == 0)
+            return;
+
         if (onPlayerEnterRoom != null && !roomPassed)
             onPlayerEnterRoom();
-
-        virtualCamera.enabled = true;
     }
+
+    void EnableVirtualCamera() => _virtualCamera.enabled = true;
 
     public void LoadData(GameData data)
     {
@@ -139,7 +166,7 @@ public class RoomManager : MonoBehaviour, IDataPersistence
 
         roomPassed = true;
 
-        virtualCamera.enabled = false;
+        _virtualCamera.enabled = false;
     }
 
     public void UpdateEnemyCount()
@@ -187,10 +214,23 @@ public class RoomManager : MonoBehaviour, IDataPersistence
 
     private void StartNextWave()
     {
+        if (wavesCount == 0)
+        {
+            PassRoom();
+            return;
+        }
+
         try
         {
-            enemyWaves[nextWaveIndex].StartWave();
+            shuffledEnemyWaves[nextWaveIndex].StartWave();
             nextWaveIndex++;
+
+            if (nextWaveIndex >= wavesCount)
+            {
+                lastWave = true;
+                if (enemyCount == 0)
+                    PassRoom();
+            }
         }
         catch (System.IndexOutOfRangeException)
         {
@@ -198,6 +238,5 @@ public class RoomManager : MonoBehaviour, IDataPersistence
             if (enemyCount == 0)
                 PassRoom();
         }
-        
     }
 }

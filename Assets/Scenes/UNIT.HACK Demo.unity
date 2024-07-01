@@ -9176,6 +9176,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
+--- !u!1 &555185068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8656308564504497581, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
+  m_PrefabInstance: {fileID: 910489484}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &556253843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33544,7 +33549,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4722771836983879215, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1082859602}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8656308564504497581, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1249179672}
   m_SourcePrefab: {fileID: 100100000, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
 --- !u!114 &910489485 stripped
 MonoBehaviour:
@@ -38353,6 +38361,43 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1012330247908078332, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
   m_PrefabInstance: {fileID: 910489484}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1249179672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555185068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26437601269d1a842881337b3455cb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: b3dd2998-1289-4082-9d85-2b253a2b03da
+  virtualCamera: {fileID: 2061914634}
+  staticCamera: 0
+  lockMiasmas:
+  - {fileID: 597022564}
+  - {fileID: 597022563}
+  - {fileID: 597022562}
+  - {fileID: 597022561}
+  - {fileID: 597022560}
+  - {fileID: 1997112814}
+  - {fileID: 1997112813}
+  - {fileID: 1997112812}
+  - {fileID: 1997112811}
+  - {fileID: 1997112809}
+  doors: []
+  triggers:
+  - {fileID: 115079926}
+  closeDoorsSpeed: 2
+  lockExitsTime: 1
+  unlockExitsTime: 1
+  enemyWaves:
+  - {fileID: 910489488}
+  - {fileID: 910489485}
+  enemyesToNextWave: 0
+  wavesCount: 0
 --- !u!4 &1252664684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7497865780687341961, guid: c613d0f85c36f224bbb4678f1a2ac052, type: 3}
@@ -40059,6 +40104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659899c45de6546419853d4e356cd832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCountGrenadeBottle: 3
+  startCountHealthBottle: 1
+  startCountEmptyBottle: 1
 --- !u!1001 &1390862199
 PrefabInstance:
   m_ObjectHideFlags: 0

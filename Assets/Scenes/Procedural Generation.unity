@@ -700,6 +700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659899c45de6546419853d4e356cd832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCountGrenadeBottle: 3
+  startCountHealthBottle: 1
+  startCountEmptyBottle: 1
 --- !u!1 &877453683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1004,6 @@ MonoBehaviour:
   - {fileID: 666670146399836563, guid: fe4be5c5cff9a864292827ac2f8573ca, type: 3}
   iRoomPrefabs:
   - {fileID: 3776203444612669220, guid: d040c0b05dfa4b840b05c447a5dfb44d, type: 3}
-  - {fileID: 3776203444612669220, guid: d9462e1e80efe3e409305591c24c35a0, type: 3}
   lRoomPrefabs:
   - {fileID: 4440004522241643096, guid: 125ea007b4c00094a936d5ac3e719c9c, type: 3}
   tRoomPrefabs:

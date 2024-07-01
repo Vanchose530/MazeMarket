@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyWave : MonoBehaviour
 {
-    public RoomManager roomManager { private get; set; }
+    public EnemyWavesManager roomManager { private get; set; }
 
     private EnemySpawnPoint[] enemySpawnPoints;
 

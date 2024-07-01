@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelBuilder : MonoBehaviour
 {
+    public static LevelBuilder instance { get; private set; }
+
+    public LevelTemplate levelTemplate { get; private set; }
+
     [Header("Settings")]
     [SerializeField] private float xOffset = 0;
     [SerializeField] private float yOffset = 0;
@@ -30,9 +35,16 @@ public class LevelBuilder : MonoBehaviour
             levelGenerator = GetComponent<LevelGenerator>();
     }
 
+    private void Awake()
+    {
+        if (instance != null)
+            Debug.LogWarning("Find more than one Level Builder in scene");
+        instance = this;
+    }
+
     private void Start()
     {
-        LevelTemplate levelTemplate = levelGenerator.GenerateNewLevel();
+        levelTemplate = levelGenerator.GenerateNewLevel();
 
         BuildLevel(levelTemplate);
     }
@@ -90,13 +102,18 @@ public class LevelBuilder : MonoBehaviour
 
         Room newRoom = Instantiate(roomPrefab);
 
-        newRoom.bonusValue = roomTemplate.bonusValue;
-        newRoom.bonusType = roomTemplate.bonusType;
-        newRoom.enemyesOnRoom = roomTemplate.enemyesOnRoom;
-        newRoom.lockType = roomTemplate.lockType;
+        SetRoomInfo(newRoom, roomTemplate);
 
         SetRoomPosition(newRoom, roomTemplate.position);
-        RightRotateRoom(newRoom.transform, roomTemplate);
+        RightRotateRoom(newRoom, roomTemplate);
+    }
+
+    void SetRoomInfo(Room room, RoomTemplate roomTemplate)
+    {
+        room.bonusValue = roomTemplate.bonusValue;
+        room.bonusType = roomTemplate.bonusType;
+        room.enemyesOnRoom = roomTemplate.enemyesOnRoom;
+        room.lockType = roomTemplate.lockType;
     }
 
     void BuildStartRoom(RoomTemplate roomTemplate)
@@ -105,13 +122,8 @@ public class LevelBuilder : MonoBehaviour
 
         Room newRoom = Instantiate(roomPrefab);
 
-        newRoom.bonusValue = roomTemplate.bonusValue;
-        newRoom.bonusType = roomTemplate.bonusType;
-        newRoom.enemyesOnRoom = roomTemplate.enemyesOnRoom;
-        newRoom.lockType = roomTemplate.lockType;
-
         SetRoomPosition(newRoom, roomTemplate.position);
-        RightRotateRoom(newRoom.transform, roomTemplate);
+        RightRotateRoom(newRoom, roomTemplate);
     }
 
     void BuildEndRoom(RoomTemplate roomTemplate)
@@ -120,16 +132,11 @@ public class LevelBuilder : MonoBehaviour
 
         Room newRoom = Instantiate(roomPrefab);
 
-        newRoom.bonusValue = roomTemplate.bonusValue;
-        newRoom.bonusType = roomTemplate.bonusType;
-        newRoom.enemyesOnRoom = roomTemplate.enemyesOnRoom;
-        newRoom.lockType = roomTemplate.lockType;
-
         SetRoomPosition(newRoom, roomTemplate.position);
-        RightRotateRoom(newRoom.transform, roomTemplate);
+        RightRotateRoom(newRoom, roomTemplate);
     }
 
-    private void RightRotateRoom(Transform roomTransform, RoomTemplate roomTemplate)
+    private void RightRotateRoom(Room room, RoomTemplate roomTemplate)
     {
         int zRotation = 0;
 
@@ -181,7 +188,32 @@ public class LevelBuilder : MonoBehaviour
         //roomTransform.rotation = new Quaternion(roomTransform.gameObject.transform.rotation.x,
         //    roomTransform.gameObject.transform.rotation.y, zRotation, 0);
 
-        roomTransform.Rotate(roomTransform.rotation.x, roomTransform.rotation.y, zRotation);
+        int randRotate = 0;
+
+        if (roomTemplate.roomType == RoomType.I_room)
+        {
+            int[] rotateAngles = { 0, 180 };
+            int r = UnityEngine.Random.Range(0, rotateAngles.Length);
+            randRotate = rotateAngles[r];
+        }
+        else if (roomTemplate.roomType == RoomType.X_room)
+        {
+            int[] rotateAngles = { 0, 90, 180, 270 };
+            int r = UnityEngine.Random.Range(0, rotateAngles.Length);
+            randRotate = rotateAngles[r];
+        }
+
+        room.transform.Rotate(room.transform.rotation.x, room.transform.rotation.y, zRotation + randRotate);
+        try
+        {
+            room.enemyWavesManager.virtualCamera.transform
+                .Rotate(room.transform.rotation.x, room.transform.rotation.y, (zRotation + randRotate) * -1);
+        }
+        catch (NullReferenceException)
+        {
+            Debug.LogWarning("Room dont have Enemy Waves Manager to rotate enemy waves virtual camera!");
+        }
+        
     }
 
     private Room GetRandomRoom(List<Room> rooms)
@@ -191,7 +223,7 @@ public class LevelBuilder : MonoBehaviour
         else if (rooms.Count == 1)
             return rooms[0];
 
-        int r = Random.Range(0, rooms.Count);
+        int r = UnityEngine.Random.Range(0, rooms.Count);
 
         return rooms[r];
     }
