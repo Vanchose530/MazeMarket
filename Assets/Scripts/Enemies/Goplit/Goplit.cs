@@ -11,8 +11,10 @@ public class Goplit : Enemy, IDamagable
     public float aimingTime;
     public float timeAttack;
     public float attackEnd;
+
     [Header("Target")]
     public Transform targetEnd;
+
     [Header ("Animators")]
     public Animator bodyAnimator;
     [SerializeField] private GameObject legs;
@@ -26,11 +28,12 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] private GoplitPassiveState passiveState;
     [SerializeField] private GoplitPursuitState pursuitState;
     [SerializeField] public GoplitRecoveryState recoveryState;
-    [SerializeField] private GoplitAgressiveState agressiveState;
+    [SerializeField] private GoplitAttackState attackState;
     public GoplitState currentState { get; private set; }
 
     public bool attack { get; set; }
     public bool recover { get; set; }
+
     private void OnValidate()
     {
         if (rb == null)
@@ -48,8 +51,8 @@ public class Goplit : Enemy, IDamagable
             recoveryState = statesGameObject.GetComponent<GoplitRecoveryState>();
         if (pursuitState == null)
             pursuitState = statesGameObject.GetComponent<GoplitPursuitState>();
-        if (agressiveState == null)
-            agressiveState = statesGameObject.GetComponent<GoplitAgressiveState>();
+        if (attackState == null)
+            attackState = statesGameObject.GetComponent<GoplitAttackState>();
     }
     private void Awake()
     {
@@ -123,17 +126,16 @@ public class Goplit : Enemy, IDamagable
 
     private void SetAnimationSettings()
     {
-        bodyAnimator.SetFloat("Preparing Multiplier",1 / aimingTime);
-        bodyAnimator.SetFloat("Attack Multiplier",1 / timeAttack);
+        bodyAnimator.SetFloat("Preparing Multiplier", 1 / aimingTime);
+        bodyAnimator.SetFloat("Attack Multiplier", 1 / timeAttack);
     }
 
 
     public override void Attack()
     {
         bodyAnimator.SetTrigger("Aiming");
-        SetState(agressiveState);
+        SetState(attackState);
         currentState.Run();
-        
     }
 
 

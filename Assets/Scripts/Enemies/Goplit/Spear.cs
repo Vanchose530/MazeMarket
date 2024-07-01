@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Spear : MonoBehaviour
 {
+    const string HIGHT_OBJECTS_TAG = "Hight Decoration";
+    const string WALS_TAG = "Wall";
+
     [Header("Settings")]
     [SerializeField] private string ignoreTag;
     [SerializeField] private int damage;
     [SerializeField] private Goplit goplit;
+
     private void Awake()
     {
         gameObject.GetComponent<Collider2D>().enabled = false;
@@ -19,8 +23,14 @@ public class Spear : MonoBehaviour
             return;
 
         IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
-        goplit.attack = false;
+        
         if (obj != null)
             obj.TakeDamage(damage, transform);
+
+        if (collision.gameObject.CompareTag(HIGHT_OBJECTS_TAG) || collision.gameObject.CompareTag(WALS_TAG))
+        {
+            goplit.attack = false;
+            // логика остановки атаки
+        }
     }
 }
