@@ -7,13 +7,15 @@ using UnityEngine;
 
 public class Goplit : Enemy, IDamagable
 {
+    [Header("Spear")]
+    public GameObject spear;
     [Header("Attack")]
     public float aimingTime;
     public float timeAttack;
-    public float attackEnd;
+    public float timeAttackEnd;
 
     [Header("Target")]
-    public Transform targetEnd;
+    public Transform attackPoint;
 
     [Header ("Animators")]
     public Animator bodyAnimator;
@@ -30,10 +32,10 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] public GoplitRecoveryState recoveryState;
     [SerializeField] private GoplitAttackState attackState;
     public GoplitState currentState { get; private set; }
-
+    public bool isRush = false;
     public bool attack { get; set; }
     public bool recover { get; set; }
-
+    float time;
     private void OnValidate()
     {
         if (rb == null)
@@ -65,6 +67,8 @@ public class Goplit : Enemy, IDamagable
         recover = false;
 
         SetAnimationSettings();
+
+        
     }
     private void Start()
     {
@@ -78,7 +82,10 @@ public class Goplit : Enemy, IDamagable
 
     private void Update()
     {
-
+        if (attack && isRush)
+        {
+            currentState.Run();
+        }
         if (currentState.isFinished)
         {
             if (agressive)
@@ -91,7 +98,7 @@ public class Goplit : Enemy, IDamagable
             else
                 SetState(passiveState);
         }
-        else
+        else if(!currentState.isFinished && !attack)
         {
             currentState.Run();
         }
@@ -133,11 +140,43 @@ public class Goplit : Enemy, IDamagable
 
     public override void Attack()
     {
-        bodyAnimator.SetTrigger("Aiming");
         SetState(attackState);
-        currentState.Run();
-    }
+        time=timeAttack;
+        StartAttack();
 
+    }
+    public void StartAttack() 
+    {
+        StartCoroutine("StartAttackCoroutine");
+    }
+    public IEnumerator StartAttackCoroutine() 
+    {
+        movementDirection = Vector2.zero;
+        yield return new WaitForSeconds(aimingTime);
+        targetOnAim = false;
+        spear.GetComponent<Collider2D>().enabled = true;
+        isRush = true;
+    }
+    public void Rush() {
+        
+        movementDirection = (rb.position - (Vector2)attackPoint.position).normalized;
+        time -= Time.deltaTime;
+        if (time <= 0)
+        {
+            attack = false;
+            isRush = false;
+        }
+        
+    }
+    public void EndAttack() 
+    {
+        StartCoroutine("EndAttackCoroutine");
+    }
+    public IEnumerator EndAttackCoroutine() 
+    {
+        spear.GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(timeAttackEnd);
+    }
 
     public override void Spawn()
     {
