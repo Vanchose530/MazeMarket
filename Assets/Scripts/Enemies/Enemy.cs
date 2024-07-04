@@ -28,7 +28,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     [SerializeField] protected float nextWaypointDistance;
-    [HideInInspector] public bool targetOnAim;
+     public bool targetOnAim;
     protected bool walk; // TODO - нормализовать анимации отслеживая показатель walk в аниматоре
 
     public Path path { get; private set; }

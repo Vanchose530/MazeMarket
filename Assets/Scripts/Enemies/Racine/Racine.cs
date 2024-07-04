@@ -168,7 +168,6 @@ public class Racine : Enemy, IDamagable
         attack = true;
         bodyAnimator.SetTrigger("Attack");
         movementDirection = Vector2.zero;
-
         yield return new WaitForSeconds(preparingTime + timeToRootUp);
 
         targetOnAim = false;
