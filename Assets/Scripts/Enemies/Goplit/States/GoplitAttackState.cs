@@ -16,14 +16,20 @@ public class GoplitAttackState : GoplitState
 
         goplit.agressive = true;
         goplit.attack = true;
-        goplit.recover = false;
+
 
 
     }
 
     public override void Run()
     {
-        goplit.Rush();
+        if (goplit.isRush) {
+            goplit.Rush();
+        }
+        if (!goplit.isRush && goplit.attack) {
+            goplit.agressive = false;
+            goplit.EndAttack();
+        }
     }
 
     //public IEnumerator StartRun()

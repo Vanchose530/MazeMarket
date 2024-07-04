@@ -29,7 +29,7 @@ public class Spear : MonoBehaviour
 
         if (collision.gameObject.CompareTag(HIGHT_OBJECTS_TAG) || collision.gameObject.CompareTag(WALS_TAG))
         {
-            goplit.attack = false;
+            goplit.EndAttack();
             // логика остановки атаки
         }
     }

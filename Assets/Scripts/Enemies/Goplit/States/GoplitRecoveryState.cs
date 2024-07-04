@@ -70,7 +70,6 @@ public class GoplitRecoveryState : GoplitState
         else
         {
             isFinished = true;
-            goplit.recover = false;
         }
         if (walkInOneTurnTime > 0)
             walkInOneTurnTime -= Time.deltaTime;
