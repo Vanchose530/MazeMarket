@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Money : Item
 {
-    [SerializeField] private int _value;
+    [SerializeField] public int _value;
     
     public Money(int value)
     {

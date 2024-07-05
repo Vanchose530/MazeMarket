@@ -1,4 +1,6 @@
 using SpriteGlow;
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +24,13 @@ public class CashMachine : MonoBehaviour, IInteractable
     [SerializeField] private int _maxBottleDrop = 100;
     [SerializeField] private int _minBottleDrop = 0;
 
-    
+    [Header("Chances")]
+    [Range(0, 100)]
+    [SerializeField] private int _chanseOfMoney = 100;
+    [Range(0, 100)]
+    [SerializeField] private int _chanseOfAmmo = 20;
+    [Range(0, 100)]
+    [SerializeField] private int _chanseOfBottle = 5;
 
     [Header("Can Interact Effect")]
     [Range(0f, 10f)]
@@ -43,16 +51,29 @@ public class CashMachine : MonoBehaviour, IInteractable
     [Header("Setup")]
     [SerializeField] SpriteGlowEffect spriteGlowEffect;
 
-    //переделать на прямое влияение, без оберток "Моней и АммоИтем"
     private void GenerateLoot()
     {
-        if(_isMoneyCointains)
-            containedItems.Add(new Money(Random.Range(_minMoneyDrop, _maxMoneyDrop )));
-        if(_isAmmoContains)
-            containedItems.Add(new AmmoItem(Random.Range(0,3+1),Random.Range(_minAmmoDrop,_maxAmmoDrop)));
+        int dice = Random.Range(0, 100);
+        containedItems = new List<Item>();
+        if (_isMoneyCointains)
+            if (dice < _chanseOfMoney)
+            {
+                Money newMoney = Instantiate(new GameObject()).AddComponent<Money>();
+                newMoney._value = Random.Range(_minMoneyDrop, _maxMoneyDrop);
+                containedItems.Add(newMoney);
+            }
+        if (_isAmmoContains)
+            if (dice < _chanseOfAmmo)
+            {
+                AmmoItem newAmmo = Instantiate(new GameObject()).AddComponent<AmmoItem>();
+                newAmmo.ammoCount = Random.Range(_minAmmoDrop, _maxAmmoDrop);
+                newAmmo.ammoType = (AmmoTypes) Random.Range(0, 3 + 1);
+                containedItems.Add(newAmmo);
+            }
         /*if (_isBottleCointains)
-            containedItems.Add(new BottleItem(Random.Range(_minBottleDrop,_maxBottleDrop)); */
-            // TODO: Дописать, когда класс БоттлИтем будет существовать
+            if(dice < _chanseOfBottle)
+                containedItems.Add(new BottleItem(Random.Range(_minBottleDrop,_maxBottleDrop)); */
+        // TODO: Дописать, когда класс БоттлИтем будет существовать
     }
     // TODO: Фикс глоу лайта
     public void CanInteract(Player player)
@@ -74,8 +95,7 @@ public class CashMachine : MonoBehaviour, IInteractable
     {
         if (!_isActivated)
         {
-            GenerateLoot();
-            foreach(var item in containedItems)
+            foreach (var item in containedItems)
             {
                 item.PickUp();
             }
@@ -96,6 +116,8 @@ public class CashMachine : MonoBehaviour, IInteractable
         outlineWidthBase = spriteGlowEffect.OutlineWidth;
         alphaTreshHoldBase = spriteGlowEffect.AlphaThreshold;
 
+        GenerateLoot();
+        Debug.Log("loot generated");
     }
 
 
