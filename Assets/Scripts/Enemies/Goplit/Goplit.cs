@@ -42,7 +42,7 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] public GoplitRecoveryState recoveryState;
     [SerializeField] private GoplitAttackState attackState;
     public GoplitState currentState { get; private set; }
-    [HideInInspector] public bool isRush;
+     public bool isRush;
     public bool attack { get; set; }
 
     private bool isEndAttack;
@@ -149,8 +149,7 @@ public class Goplit : Enemy, IDamagable
     private void SetAnimationSettings()
     {
         bodyAnimator.SetFloat("Preparing Multiplier", 1 / aimingTime);
-        bodyAnimator.SetFloat("Attack Multiplier", 1 / timeAttack);
-        bodyAnimator.SetFloat("AttackEnd Multiplier", 1/timeAttackEnd);
+        bodyAnimator.SetFloat("AttackEnd Multiplier", 1 / timeAttackEnd);
     }
 
 
