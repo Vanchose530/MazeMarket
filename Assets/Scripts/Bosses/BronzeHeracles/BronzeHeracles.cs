@@ -1,6 +1,7 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,22 +12,37 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private Animator bodyAnimator;
     [SerializeField] private GameObject legs;
     //[SerializeField] private Animator legsAnimator;
+
     [Header("Weapons")]
     [SerializeField] private GameObject stone;
     [SerializeField] private GameObject arrow;
+    [SerializeField] private GameObject mace;
+
     [Header("Effects")]
     [SerializeField] private GameObject damageEffect;
+
     [Header("Attack Points")]
     [SerializeField] private Transform archerPoint;
     [SerializeField] private Transform stonePoint;
+
     [Header("Sound Effects")]
     [SerializeField] private GameObject damageSoundPrefab;
-    //[SerializeField] private GameObject punchSoundPrefab;
-    //[SerializeField] private GameObject groahSoundPrefab;
+    [Header("Alive")]
+    public bool stayOnAwake;
+    [HideInInspector] public bool stay;
+    public float alivingTime;
+
     [Header("Bow")]
     [SerializeField] private float timeTakeBow;//время доставания лука
     [SerializeField] private float aimingBow;//время доставания лука
     [SerializeField] private float timeToShootBow;//время стрельбы
+    [SerializeField] private float timeRemoveBow;//время убирания лука
+
+    [Header("Mace")]
+    [SerializeField] private float timeTakeMace;
+    [SerializeField] private float timeAttackMace;
+    [SerializeField] private float timeRemoveMace;
+
     [Header("BronzeHeracles AttackStates")]
     [SerializeField] private ArcheryState archeryState;
     [SerializeField] private MaceAttackState maceAttackState;
@@ -40,8 +56,16 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public List<BronzeHeraclesState> attackState=new List<BronzeHeraclesState>();
     
     public BronzeHeraclesState currentState { get; private set; }
-    private bool isShootBow = false;
+
+    [HideInInspector] public bool isShootBow = false;
+    [HideInInspector] public bool isRemoveBow = false;
+    [HideInInspector] public bool isTakeMace = false;
+    [HideInInspector] public bool isAttackMace = false;
+    [HideInInspector] public bool isRemoveMace = false;
     private bool isBowInHand = false;
+    private bool stand = false;
+    private bool aliving;
+    
     public bool attack { get;  set; }
     private void OnValidate()
     {
@@ -74,11 +98,17 @@ public class BronzeHeracles : Enemy, IDamagable
         attackState.Add(stoneThrowState);
 
         health = maxHealth;
+
+        aliving = false;
+
+        mace.GetComponent<Collider2D>().enabled = false;
+
+        SetAnimate();
     }
     private void Start()
     {
         InvokeRepeating("UpdatePath", 0f, 0.5f);
-        SetState(archeryState);
+        SetState(stayState);
     }
 
     
@@ -168,10 +198,50 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     private void Move()
     {
-        if (isBowInHand)
+        if (stand)
             rb.velocity = Vector2.zero;
         else
             rb.velocity = movementDirection * speed;
+    }
+    private void SetAnimate() {
+        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / aimingBow);
+        bodyAnimator.SetFloat("ShootABow Multiplier", 1 / timeToShootBow);
+        bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / timeTakeBow);
+        bodyAnimator.SetFloat("RemoveBow Multiplier", 1 / timeRemoveBow);
+        bodyAnimator.SetFloat("TakeMace Multiplier", 1 / timeTakeMace);
+        bodyAnimator.SetFloat("MaceAttack Multiplier", 1 / timeAttackMace);
+        bodyAnimator.SetFloat("RemoveMace Multiplier", 1 / timeRemoveMace);
+        bodyAnimator.SetFloat("Alive Multiplier", 1 / alivingTime);
+    }
+    public void LockRigidbody(bool lockMode)
+    {
+        if (lockMode)
+        {
+            rb.bodyType = RigidbodyType2D.Static;
+        }
+        else
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+        }
+    }
+    public void Alive()
+    {
+        if (!aliving) StartCoroutine("StartAliving");
+    }
+
+    private IEnumerator StartAliving()
+    {
+        aliving = true;
+
+        bodyAnimator.SetTrigger("Alive");
+
+        yield return new WaitForSeconds(alivingTime);
+
+        SetState(maceAttackState);
+
+        
+
+        aliving = false;
     }
     public void TakeTheBow() 
     {
@@ -179,8 +249,7 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     private IEnumerator StartTakeTheBow() 
     {
-        bodyAnimator.SetFloat("GetTheBow Multiplier", 1/timeTakeBow);
-        bodyAnimator.Play("GetTheBow");
+        bodyAnimator.SetTrigger("ShootABow");
         yield return new WaitForSeconds(timeTakeBow);
         isBowInHand = true;
     }
@@ -194,24 +263,67 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         isShootBow = true;
         movementDirection = Vector2.zero;
-        bodyAnimator.SetTrigger("ShootABow");
-        bodyAnimator.SetFloat("AimingABow Multiplier",1/aimingBow);
-        bodyAnimator.SetFloat("ShootABow Multiplier",1/timeToShootBow);
         yield return new WaitForSeconds(timeToShootBow + aimingBow);
-         
+
+        //здесь стрела летит
+
+        isShootBow = false;
     }
     public void RemoveBow() 
     {
+
         StartCoroutine("StartRemoveBow");
     }
 
     private IEnumerator StartRemoveBow() 
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(timeRemoveBow);
     }
 
-
-    public void MaceAttack() {
-    
+    public void TakeMace()
+    {
+        if (isTakeMace)
+            return;
+        StartCoroutine("StartTakeMace");
+    }
+    private IEnumerator StartTakeMace()
+    {
+        isTakeMace = true;
+        stand = true;
+        bodyAnimator.SetTrigger("Mace");
+        yield return new WaitForSeconds(timeTakeMace);
+        maceAttackState.maceTaken = true;
+        stand = false;
+        
+    }
+    public void MaceAttack() 
+    {
+        if (isAttackMace)
+            return;
+        StartCoroutine("StartMaceAttack");
+    }
+    private IEnumerator StartMaceAttack() 
+    {
+        isAttackMace = true;
+        bodyAnimator.SetTrigger("MaceAttack");
+        mace.GetComponent<Collider2D>().enabled = true;
+        yield return new WaitForSeconds(timeAttackMace);
+        mace.GetComponent<Collider2D>().enabled = false;
+        attack = false;
+    }
+    public void RemoveMace()
+    {
+        if (isRemoveMace)
+            return;
+        StartCoroutine("StartRemoveMace");
+    }
+    private IEnumerator StartRemoveMace()
+    {
+        isRemoveMace = true;
+        stand = true;
+        yield return new WaitForSeconds(timeRemoveMace);
+        bodyAnimator.SetTrigger("Default");
+        stand = false;
+        SetState(recoveryState);
     }
 }

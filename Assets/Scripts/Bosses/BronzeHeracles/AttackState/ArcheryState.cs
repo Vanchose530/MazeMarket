@@ -23,12 +23,10 @@ public class ArcheryState : BronzeHeraclesState
     public override void Run()
     {
         bronzeHeracles.ExecutePath();
-        
-        bronzeHeracles.ShootBow();
-    }
-    public override void Exit()
-    {
-       
+
+        if (!bronzeHeracles.isShootBow)
+            bronzeHeracles.ShootBow();
+
     }
 
 
