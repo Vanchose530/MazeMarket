@@ -230,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 3247662160191079325}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.72066337, w: 0.6932852}
-  m_LocalPosition: {x: 42.91, y: 28.76, z: 1}
+  m_LocalPosition: {x: 21.04, y: 25.91, z: 1}
   m_LocalScale: {x: 9.174266, y: 9.599869, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -408,9 +408,9 @@ MonoBehaviour:
   _rb: {fileID: 7456330247445833259}
   spear: {fileID: 172284209650157570}
   speedAttack: 5
-  aimingTime: 2
-  timeAttack: 2
-  timeAttackEnd: 2
+  aimingTime: 3
+  timeAttack: 3
+  timeAttackEnd: 3
   firingRate: 1
   bodyAnimator: {fileID: 6515731758922230993}
   legs: {fileID: 438779133665045033}
