@@ -13,4 +13,9 @@ public class MeleeWeapon : Weapon
     {
 
     }
+
+    public override void ToPlayerInventory()
+    {
+        
+    }
 }

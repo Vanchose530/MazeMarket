@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class Weapon : ScriptableObject
+public abstract class Weapon : InventoryObject
 {
     [HideInInspector] public Action onAttack;
 
     [Header("Wepon settings")]
-    public string displayName;
     public int damage;
-    public Sprite image;
     public int id;
     public bool holdToAttack;
 

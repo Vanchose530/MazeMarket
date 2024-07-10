@@ -16,7 +16,7 @@ public class EmptyBottleItem : Item
 
     }
 
-    protected override void PickUp()
+    public override void PickUp()
     {
         PlayerInventory.instance.countEmptyBottle++;
         SaveCollectedItem();

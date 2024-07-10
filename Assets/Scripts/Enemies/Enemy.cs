@@ -72,10 +72,10 @@ public abstract class Enemy : MonoBehaviour, IProfitable
     protected void EnemyDeathEvent()
     {
         if (onEnemyDeath != null)
+        {
+            DropMoneyOnDeath(_dropMoneyCount);
             onEnemyDeath();
-        
-        
-        DropMoneyOnDeath(_dropMoneyCount);
+        }
     }
 
     public virtual void ExecutePath(bool aStar = true)

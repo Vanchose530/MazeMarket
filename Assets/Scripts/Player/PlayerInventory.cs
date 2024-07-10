@@ -14,7 +14,7 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
     [SerializeField] private int startCountHealthBottle = 1;
     [SerializeField] private int startCountEmptyBottle = 1;
 
-    private int _keyCardCount;
+
     private int _keyCardCount = 0;
     private int _countGrenadeBottle;
     private int _countHealthBottle;
@@ -101,6 +101,8 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
             InventoryUIManager.instance.keyCardUI.SetActive(true);
             InventoryUIManager.instance.keyCardCountText = Convert.ToString(keyCardCount);
         }
+
+        InventoryUIManager.instance.moneyCountText = Convert.ToString(moneyCount);
     }
     private void UpdateUIGrenadeBottle() 
     {

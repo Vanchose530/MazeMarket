@@ -56,4 +56,12 @@ public class Gun : Weapon
         if (onAttack != null)
             onAttack();
     }
+    public override bool GetCanAddInInventory()
+    {
+        return !PlayerWeaponsManager.instance.IsGunSlotsFull();
+    }
+    public override void ToPlayerInventory()
+    {
+        PlayerWeaponsManager.instance.AddWeapon(this);
+    }
 }

@@ -1,6 +1,7 @@
 using SpriteGlow;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using UnityEngine;
 
 public class Shop : MonoBehaviour, IInteractable
@@ -8,9 +9,10 @@ public class Shop : MonoBehaviour, IInteractable
     //Базовый магаз - зашел увидел купил сколько надо и ушел. В каждом маге 3-5 "позиций"
 
 
-    public List<Item> containedItems { get; private set; }
+    public List<InventoryObject> containedItems { get; private set; }
+    public int[] magicCounterSaver = new int[] { 0,0,0,0,0}; // каждый 0 отвечает за количество товара, от p1 до p5 соответственно. при генерации товара сюда вписываются значения каунта.
 
-
+    public bool canBuyWeapon;
 
     [Header("Shop Options")]
     [SerializeField] private int _maxPositions = 5;
@@ -69,12 +71,14 @@ public class Shop : MonoBehaviour, IInteractable
             if (dice < _chanseOfAmmo) 
                 {
                     int diceWeaponCounter = Random.Range(0, 100);
-                containedItems.Add(new AmmoItem(Random.Range(0, 3 + 1), Random.Range(_minAmmoDrop, _maxAmmoDrop)));
+                //containedItems.Add(new AmmoItem(Random.Range(0, 3 + 1), Random.Range(_minAmmoDrop, _maxAmmoDrop)));
                 }
         /*if (_isBottleCointains)
             if(dice < _chanseOfBottle)
                 containedItems.Add(new BottleItem(Random.Range(_minBottleDrop,_maxBottleDrop)); */
         // TODO: Дописать, когда класс БоттлИтем будет существовать
+
+
     }
     // TODO: Фикс глоу лайта
     public void CanInteract(Player player)
@@ -94,8 +98,10 @@ public class Shop : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-
-
+        ButtonDisabler();
+        Time.timeScale = 0;
+        //open shop interface
+        ShopManagerUI.instance.GetProductsFromShop(containedItems, magicCounterSaver);
     }
 
     private void OnValidate()
@@ -114,4 +120,14 @@ public class Shop : MonoBehaviour, IInteractable
 
     }
 
+    private void ButtonDisabler()
+    {
+        foreach( InventoryObject invObject in containedItems)
+        {
+            if (!invObject.GetCanAddInInventory())
+            {
+                //buy button . disable()
+            }
+        }
+    }
 }

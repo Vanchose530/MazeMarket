@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class InventoryUIManager : MonoBehaviour
@@ -10,6 +9,9 @@ public class InventoryUIManager : MonoBehaviour
 
     [Header("General")]
     [SerializeField] private GameObject inventoryPanel;
+
+    [Header("Money")]
+    [SerializeField] private TextMeshProUGUI _moneyCountTMP;
 
     [Header("Weapons")]
     [SerializeField] private WeaponSlot[] weaponSlots;
@@ -30,6 +32,11 @@ public class InventoryUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthBottleCountTMP;
     [SerializeField] private TextMeshProUGUI emptyBottleCountTMP;
 
+    public string moneyCountText
+    {
+        get { return _moneyCountTMP.text; }
+        set { _moneyCountTMP.text = value; }
+    }
     public string keyCardCountText
     {
         get { return keyCardCountTMP.text; }

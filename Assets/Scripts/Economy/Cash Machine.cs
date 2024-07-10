@@ -73,7 +73,7 @@ public class CashMachine : MonoBehaviour, IInteractable
         /*if (_isBottleCointains)
             if(dice < _chanseOfBottle)
                 containedItems.Add(new BottleItem(Random.Range(_minBottleDrop,_maxBottleDrop)); */
-        // TODO: Дописать, когда класс БоттлИтем будет существовать
+        // TODO: Дописать, когда класс БоттлИтем будет существовать // банки не будут дропаться с касс
     }
     // TODO: Фикс глоу лайта
     public void CanInteract(Player player)
