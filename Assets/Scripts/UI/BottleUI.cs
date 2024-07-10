@@ -27,11 +27,11 @@ public class BottleUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.instance.isEmptyBottle)
-            image.sprite = emptyBottle;
-        if (Player.instance.isGrenade)
-            image.sprite = grenade;
-        if (Player.instance.isEstos)
-            image.sprite = healthBottle;
+        //if (Player.instance.isEmptyBottle)
+        //    image.sprite = emptyBottle;
+        //if (Player.instance.isGrenade)
+        //    image.sprite = grenade;
+        //if (Player.instance.isEstos)
+        //    image.sprite = healthBottle;
     }
 }

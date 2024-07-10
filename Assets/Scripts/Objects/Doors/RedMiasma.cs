@@ -10,7 +10,7 @@ public class RedMiasma : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player") {
-            collision.GetComponent<IDamagable>().TakeDamage(damage);
+            collision.GetComponent<Player>().TakeDamageAlways(damage);
         }
     }
 }
