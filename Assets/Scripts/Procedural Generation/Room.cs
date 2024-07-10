@@ -12,13 +12,20 @@ public class Room : MonoBehaviour
     [Header("Bonuses")]
     [SerializeField] private DemonsBloodFountain demonsBloodFountain;
     [SerializeField] private VendingMachine sodaMachine;
-    // сундук
-    // магазин
-    // карта
+    [SerializeField] private Map map;
+    [SerializeField] private Chest chestDefault;
+    [SerializeField] private Chest chestMedium;
+    [SerializeField] private Chest chestRare;
+    [SerializeField] private GameObject cultistsDecor;
+    [SerializeField] private Shop shop;
 
     [Header("Enemyes on Room")]
     [SerializeField] private EnemyWavesManager _enemyWavesManager;
     public EnemyWavesManager enemyWavesManager { get { return _enemyWavesManager; } }
+
+    [Header("Camera")]
+    [SerializeField] private VirtualCameraTrigger _virtualCameraTrigger;
+    public VirtualCameraTrigger virtualCameraTrigger { get { return _virtualCameraTrigger; } }
 
     public float bonusValue { get; set; }
     BonusType _bonusType;
@@ -60,6 +67,28 @@ public class Room : MonoBehaviour
             Destroy(demonsBloodFountain.gameObject);
         if (bonusType != BonusType.SodaMachine)
             Destroy(sodaMachine.gameObject);
+        if (bonusType != BonusType.Map)
+            Destroy(map.gameObject);
+        if (bonusType != BonusType.Shop)
+            Destroy(shop.gameObject);
+
+        if (bonusType != BonusType.Chest)
+        {
+            if (cultistsDecor != null)
+                Destroy(cultistsDecor.gameObject);
+
+            Destroy(chestDefault.gameObject);
+            Destroy(chestMedium.gameObject);
+            Destroy(chestRare.gameObject);
+        }
+        else
+        {
+            // в дальнейшем сделать градацию по сундукам разной редкости!
+
+            Destroy(chestDefault.gameObject);
+            // Destroy(chestMedium.gameObject);
+            Destroy(chestRare.gameObject);
+        }
     }
 
     void SetEnemyesOnRoom(EnemyesOnRoom enemyesOnRoom)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 using UnityEngine.SceneManagement;
 
 public class LevelBuilder : MonoBehaviour
@@ -28,6 +29,9 @@ public class LevelBuilder : MonoBehaviour
     [Header("Extra Rooms")]
     [SerializeField] private List<Room> startRoomPrefabs;
     [SerializeField] private List<Room> endRoomPrefabs;
+
+    [Header("Setup")]
+    [SerializeField] private AstarPath pathfinder;
 
     private void OnValidate()
     {
@@ -71,6 +75,8 @@ public class LevelBuilder : MonoBehaviour
         //{
         //    BuildTransition(transition);
         //}
+
+        pathfinder.Scan();
     }
     void SetRoomPosition(Room room, Vector2Int position)
     {
@@ -124,6 +130,14 @@ public class LevelBuilder : MonoBehaviour
 
         SetRoomPosition(newRoom, roomTemplate.position);
         RightRotateRoom(newRoom, roomTemplate);
+
+        StartCoroutine(SetStartRoomCamera(newRoom));
+    }
+
+    IEnumerator SetStartRoomCamera(Room startRoom)
+    {
+        yield return new WaitForSeconds(0.1f);
+        startRoom.virtualCameraTrigger.SetVirtualCamera();
     }
 
     void BuildEndRoom(RoomTemplate roomTemplate)
@@ -140,7 +154,7 @@ public class LevelBuilder : MonoBehaviour
     {
         int zRotation = 0;
 
-        switch (roomTemplate.roomType) // поворот некоторых комнат можно рандомить
+        switch (roomTemplate.roomType)
         {
             case RoomType.Deadlock:
                 if (roomTemplate.transitionUp != null)
@@ -204,6 +218,17 @@ public class LevelBuilder : MonoBehaviour
         }
 
         room.transform.Rotate(room.transform.rotation.x, room.transform.rotation.y, zRotation + randRotate);
+
+        try
+        {
+            room.virtualCameraTrigger.virtualCamera.transform
+                .Rotate(room.transform.rotation.x, room.transform.rotation.y, (zRotation + randRotate) * -1);
+        }
+        catch (NullReferenceException)
+        {
+            Debug.LogWarning("Room dont have Virtual Camera Trigger to rotate room virtual camera!");
+        }
+
         try
         {
             room.enemyWavesManager.virtualCamera.transform

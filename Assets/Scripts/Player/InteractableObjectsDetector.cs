@@ -37,14 +37,14 @@ public class InteractableObjectsDetector : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.instance.interactableObjects.onCanInteractObject += EnableHint;
-        GameEventsManager.instance.interactableObjects.onCanNotInteractObject += DisableHint;
+        //GameEventsManager.instance.interactableObjects.onCanInteractObject += EnableHint;
+        //GameEventsManager.instance.interactableObjects.onCanNotInteractObject += DisableHint;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.interactableObjects.onCanInteractObject -= EnableHint;
-        GameEventsManager.instance.interactableObjects.onCanNotInteractObject -= DisableHint;
+        //GameEventsManager.instance.interactableObjects.onCanInteractObject -= EnableHint;
+        //GameEventsManager.instance.interactableObjects.onCanNotInteractObject -= DisableHint;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
