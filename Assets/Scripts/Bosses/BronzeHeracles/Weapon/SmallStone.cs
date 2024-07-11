@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class SmallStone : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    [SerializeField]private int damageSmallStone;
+
     private void Start()
     {
         StartCoroutine("Delete");
@@ -13,10 +15,10 @@ public class Arrow : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<IDamagable>().TakeDamage(damage);
+            collision.gameObject.GetComponent<IDamagable>().TakeDamage(damageSmallStone);
             Destroy(gameObject);
         }
-        else 
+        else if(collision.gameObject.tag == "Walls")
         {
             Destroy(gameObject);
         }
@@ -27,4 +29,3 @@ public class Arrow : MonoBehaviour
         Destroy(gameObject);
     }
 }
-

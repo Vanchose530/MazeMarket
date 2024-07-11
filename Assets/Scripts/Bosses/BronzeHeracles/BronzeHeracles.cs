@@ -1,21 +1,23 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.Rendering;
 
 public class BronzeHeracles : Enemy, IDamagable
 {
     [Header("Animators")]
-    [SerializeField] private Animator bodyAnimator;
+    public Animator bodyAnimator;
     [SerializeField] private GameObject legs;
-    //[SerializeField] private Animator legsAnimator;
+    [SerializeField] private Animator legsAnimator;
 
     [Header("Weapons")]
-    [SerializeField] private GameObject stone;
-    [SerializeField] private GameObject arrow;
+    [SerializeField] private GameObject stonePrefab;
+    [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject mace;
 
     [Header("Effects")]
@@ -27,6 +29,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
     [Header("Sound Effects")]
     [SerializeField] private GameObject damageSoundPrefab;
+
     [Header("Alive")]
     public bool stayOnAwake;
     [HideInInspector] public bool stay;
@@ -34,14 +37,28 @@ public class BronzeHeracles : Enemy, IDamagable
 
     [Header("Bow")]
     [SerializeField] private float timeTakeBow;//время доставания лука
+    [SerializeField] private float timeNewArrow;
+    [SerializeField] private float timeWalkBow;
     [SerializeField] private float aimingBow;//время доставания лука
     [SerializeField] private float timeToShootBow;//время стрельбы
     [SerializeField] private float timeRemoveBow;//время убирания лука
+    [SerializeField] private int minCountArrow;
+    [SerializeField] private int maxCountArrow;
+    [SerializeField] private float forceArrow;
 
     [Header("Mace")]
     [SerializeField] private float timeTakeMace;
     [SerializeField] private float timeAttackMace;
     [SerializeField] private float timeRemoveMace;
+
+    [Header("Stone")]
+    [SerializeField] private float timeTakeStone;
+    [SerializeField] private float timeWalkStone;
+    [SerializeField] private float timeShootStone;
+    [SerializeField] private int minCountStone;
+    [SerializeField] private int maxCountStone;
+    [SerializeField] private float forceStone;
+
 
     [Header("BronzeHeracles AttackStates")]
     [SerializeField] private ArcheryState archeryState;
@@ -51,9 +68,9 @@ public class BronzeHeracles : Enemy, IDamagable
     [Header("BronzeHeracles State")]
     [SerializeField] private BronzeHeraclesAgressiveState agressiveState;
     [SerializeField] private BronzeHeraclesStayState stayState;
-    [SerializeField] private BronzeHeraclesRecoveryState recoveryState;
+    public BronzeHeraclesRecoveryState recoveryState;
 
-    [HideInInspector] public List<BronzeHeraclesState> attackState=new List<BronzeHeraclesState>();
+    [HideInInspector] public List<BronzeHeraclesState> attackState = new List<BronzeHeraclesState>();
     
     public BronzeHeraclesState currentState { get; private set; }
 
@@ -62,8 +79,13 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public bool isTakeMace = false;
     [HideInInspector] public bool isAttackMace = false;
     [HideInInspector] public bool isRemoveMace = false;
-    private bool isBowInHand = false;
-    private bool stand = false;
+    [HideInInspector] public bool isTakeStone = false;
+    [HideInInspector] public bool isShootStone = false;
+    [HideInInspector] public bool isTakeBow = false;
+    [HideInInspector] public bool isBowInHand = false;
+    [HideInInspector] public bool isWalkStone = false;
+    [HideInInspector] public bool isWalkBow = false;
+    public bool stand = false;
     private bool aliving;
     
     public bool attack { get;  set; }
@@ -73,8 +95,8 @@ public class BronzeHeracles : Enemy, IDamagable
             rb = GetComponent<Rigidbody2D>();
         if (seeker == null)
             seeker = GetComponent<Seeker>();
-        //if (legsAnimator == null)
-        //    legsAnimator = legs.GetComponent<Animator>();
+        if (legsAnimator == null)
+            legsAnimator = legs.GetComponent<Animator>();
 
         if (archeryState == null)
             archeryState = statesGameObject.GetComponent<ArcheryState>();
@@ -102,12 +124,13 @@ public class BronzeHeracles : Enemy, IDamagable
         aliving = false;
 
         mace.GetComponent<Collider2D>().enabled = false;
-
+        
         SetAnimate();
     }
     private void Start()
     {
         InvokeRepeating("UpdatePath", 0f, 0.5f);
+        
         SetState(stayState);
     }
 
@@ -116,7 +139,7 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         currentState.Run();
 
-        
+        Animate();
         RotateBody();
         RotateLegs();
         Move();
@@ -149,19 +172,24 @@ public class BronzeHeracles : Enemy, IDamagable
 
     protected override void PlayerDeath()
     {
-        throw new System.NotImplementedException();
+        SetState(stayState);
     }
     private void RotateBody()
     {
-        if (movementDirection == Vector2.zero)
+        if (movementDirection == Vector2.zero && !targetOnAim)
             return;
 
         float angle;
 
-        if (targetOnAim)
+        if (targetOnAim && !isShootBow)
         {
             Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
             angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        }
+        else if (targetOnAim && isShootBow)
+        {
+            Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
+            angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg) + 50;
         }
         else
         {
@@ -196,6 +224,10 @@ public class BronzeHeracles : Enemy, IDamagable
             Destroy(gameObject);
         }
     }
+    private void Animate()
+    {
+        legsAnimator.SetFloat("Speed", rb.velocity.magnitude);
+    }
     private void Move()
     {
         if (stand)
@@ -212,6 +244,10 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetFloat("MaceAttack Multiplier", 1 / timeAttackMace);
         bodyAnimator.SetFloat("RemoveMace Multiplier", 1 / timeRemoveMace);
         bodyAnimator.SetFloat("Alive Multiplier", 1 / alivingTime);
+        bodyAnimator.SetFloat("TakeStone Multiplier", 1 / timeTakeStone);
+        bodyAnimator.SetFloat("ShootStone Multiplier", 1 / timeShootStone);
+        bodyAnimator.SetFloat("WalkStone Multiplier", 1 / timeWalkStone);
+        bodyAnimator.SetFloat("NewArrow Multiplier", 1 / timeNewArrow);
     }
     public void LockRigidbody(bool lockMode)
     {
@@ -239,19 +275,44 @@ public class BronzeHeracles : Enemy, IDamagable
 
         SetState(maceAttackState);
 
-        
-
         aliving = false;
     }
-    public void TakeTheBow() 
+
+    public BronzeHeraclesState RandomState() {
+
+        int random = Random.Range(0,attackState.Count);
+        return attackState[random];
+
+    }
+
+    //Методы атак
+    public void TakeTheBow()
     {
+        if (isTakeBow)
+            return;
         StartCoroutine("StartTakeTheBow");
     }
     private IEnumerator StartTakeTheBow() 
     {
-        bodyAnimator.SetTrigger("ShootABow");
+        isTakeBow = true;
+        stand = true;
+        bodyAnimator.SetTrigger("Bow");
         yield return new WaitForSeconds(timeTakeBow);
         isBowInHand = true;
+        isTakeBow = false;
+        stand = false;
+    }
+    public void WalkBow() 
+    {
+        if (isWalkBow)
+            return;
+        StartCoroutine("StartWalkBow");
+    }
+    private IEnumerator StartWalkBow() {
+        isWalkBow = true;
+        yield return new WaitForSeconds(timeWalkBow + timeNewArrow);
+        isWalkBow = false;
+        stand = true;
     }
     public void ShootBow() 
     {
@@ -263,21 +324,35 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         isShootBow = true;
         movementDirection = Vector2.zero;
+        bodyAnimator.SetTrigger("ShootABow");
         yield return new WaitForSeconds(timeToShootBow + aimingBow);
 
-        //здесь стрела летит
-
+        Vector3 arrowAngle = archerPoint.eulerAngles;
+        GameObject arrow = Instantiate(arrowPrefab, archerPoint.position, Quaternion.Euler(arrowAngle));
+        Rigidbody2D arb = arrow.GetComponent<Rigidbody2D>();
+        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceArrow, ForceMode2D.Impulse);
+        archeryState.countArrow--;
+        yield return new WaitForSeconds(timeNewArrow);
         isShootBow = false;
+        stand = false;
     }
     public void RemoveBow() 
     {
-
+        if (isRemoveBow)
+            return;
         StartCoroutine("StartRemoveBow");
     }
 
     private IEnumerator StartRemoveBow() 
     {
+        isRemoveBow = true;
+        bodyAnimator.SetTrigger("RemoveBow");
         yield return new WaitForSeconds(timeRemoveBow);
+        isBowInHand = false;
+        stand = false;
+        bodyAnimator.SetTrigger("Default");
+        SetState(recoveryState);
+        isRemoveBow = false;
     }
 
     public void TakeMace()
@@ -325,5 +400,76 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetTrigger("Default");
         stand = false;
         SetState(recoveryState);
+    }
+    public void TakeStone() 
+    {
+        if (isTakeStone)
+            return;
+
+
+        StartCoroutine("StartTakeStone");
+        
+
+    }
+    private IEnumerator StartTakeStone() 
+    {
+        isTakeStone = true;
+        bodyAnimator.SetTrigger("Stone");
+        yield return new WaitForSeconds(timeTakeStone);
+        isTakeStone = false;
+        stoneThrowState.takenStone = true;
+    }
+    public void WalkStone()
+    {
+        if (isWalkStone)
+            return;
+
+
+        StartCoroutine("StartWalkStone");
+
+
+    }
+    private IEnumerator StartWalkStone()
+    {
+        stand = false;
+        isWalkStone = true;
+        yield return new WaitForSeconds(timeWalkStone);
+        isWalkStone = false;
+        stand = true;
+        stoneThrowState.walkStone = true;
+    }
+    public void ShootStone()
+    {
+        if (isShootStone)
+            return;
+
+
+        StartCoroutine("StartShootStone");
+
+
+    }
+    private IEnumerator StartShootStone()
+    {
+        isShootStone = true;
+        movementDirection = Vector2.zero;
+        
+        yield return new WaitForSeconds(timeShootStone);
+
+        Vector3 stoneAngle = stonePoint.eulerAngles;
+        GameObject stone = Instantiate(stonePrefab, stonePoint.position, Quaternion.Euler(stoneAngle));
+        Rigidbody2D srb = stone.GetComponent<Rigidbody2D>();
+        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+
+        isShootStone = false;
+        stoneThrowState.takenStone = false;
+        stoneThrowState.walkStone = false;
+        stoneThrowState.countStone--;
+    }
+    public int RandomStone() {
+        return Random.Range(minCountStone, maxCountStone);
+    }
+    public int RandomArrow()
+    {
+        return Random.Range(minCountArrow, maxCountArrow);
     }
 }

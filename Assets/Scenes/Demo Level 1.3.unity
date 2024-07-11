@@ -257,6 +257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 98439989}
   - component: {fileID: 98439990}
+  - component: {fileID: 98439991}
   m_Layer: 0
   m_Name: BronzeHeracles Legs
   m_TagString: Untagged
@@ -331,6 +332,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &98439991
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98439988}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 618f028836bd1164e89513a4634c0685, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &161545991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -720,11 +742,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.2
+      value: 14.67
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.5
+      value: 15.07
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1427,6 +1449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e08686b04ccff4783135742220323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maceDamage: 1
 --- !u!1 &404102330
 GameObject:
   m_ObjectHideFlags: 0
@@ -19204,11 +19227,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.2
+      value: 13.51
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.5
+      value: 15.18
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19310,7 +19333,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1023991381}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: a1ddd8198ef346f4389123106eb2a793, type: 2}
+  m_Material: {fileID: 6200000, guid: 559ae1352d36d9a44b0273c8fcd0f2c2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -19434,8 +19457,9 @@ MonoBehaviour:
   _rb: {fileID: 1023991382}
   bodyAnimator: {fileID: 1023991388}
   legs: {fileID: 98439988}
-  stone: {fileID: 3553972235781352829, guid: 6194a923ad499754eb9b522ff4eaf60b, type: 3}
-  arrow: {fileID: 4567811682034498503, guid: b97110223f76bb143b387deee28a7a92, type: 3}
+  legsAnimator: {fileID: 98439991}
+  stonePrefab: {fileID: 3553972235781352829, guid: 6194a923ad499754eb9b522ff4eaf60b, type: 3}
+  arrowPrefab: {fileID: 4567811682034498503, guid: b97110223f76bb143b387deee28a7a92, type: 3}
   mace: {fileID: 378455174}
   damageEffect: {fileID: 2642225804590499521, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
   archerPoint: {fileID: 1745468526}
@@ -19444,13 +19468,24 @@ MonoBehaviour:
   stayOnAwake: 1
   stay: 0
   alivingTime: 5
-  timeTakeBow: 3
-  aimingBow: 3
-  timeToShootBow: 3
+  timeTakeBow: 2
+  timeNewArrow: 2
+  timeWalkBow: 3
+  aimingBow: 2
+  timeToShootBow: 1
   timeRemoveBow: 1
+  minCountArrow: 1
+  maxCountArrow: 3
+  forceArrow: 4
   timeTakeMace: 1
   timeAttackMace: 3
   timeRemoveMace: 1
+  timeTakeStone: 1
+  timeWalkStone: 3
+  timeShootStone: 1
+  minCountStone: 2
+  maxCountStone: 3
+  forceStone: 4
   archeryState: {fileID: 2085666157}
   maceAttackState: {fileID: 2085666156}
   stoneThrowState: {fileID: 2085666155}
@@ -19463,6 +19498,13 @@ MonoBehaviour:
   isTakeMace: 0
   isAttackMace: 0
   isRemoveMace: 0
+  isTakeStone: 0
+  isShootStone: 0
+  isTakeBow: 0
+  isBowInHand: 0
+  isWalkStone: 0
+  isWalkBow: 0
+  stand: 0
 --- !u!114 &1023991387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20009,11 +20051,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.2
+      value: 14.13
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.5
+      value: 15.64
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20021,19 +20063,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.999999
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: -0.0014367058
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20045,7 +20087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
+      value: -0.165
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20329,7 +20371,7 @@ Transform:
   m_GameObject: {fileID: 1337336851}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.152, z: 0}
+  m_LocalPosition: {x: 0.0781, y: 0.0824, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20721,7 +20763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.5
+      value: 9.44
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -31092,6 +31134,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7906849599839830071, guid: be03ae00c2e867e46b411231a100a5e4, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.m_ColorSpace
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906849599839830071, guid: be03ae00c2e867e46b411231a100a5e4, type: 3}
+      propertyPath: InitialModule.startColor.minGradient.m_ColorSpace
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31111,11 +31161,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1226238873853126790, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.508
+      value: 17.36
       objectReference: {fileID: 0}
     - target: {fileID: 1226238873853126790, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 22.943
+      value: 22.82
       objectReference: {fileID: 0}
     - target: {fileID: 1226238873853126790, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
       propertyPath: m_LocalPosition.z
@@ -31148,6 +31198,10 @@ PrefabInstance:
     - target: {fileID: 1226238873853126790, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590192993268535767, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
+      propertyPath: glowBrightness
+      value: 1.59
       objectReference: {fileID: 0}
     - target: {fileID: 2005236293936406943, guid: 24277d8eed8b0ef4097504dffe716093, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -31248,7 +31302,7 @@ Transform:
   m_GameObject: {fileID: 1745468525}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.146, z: 0}
+  m_LocalPosition: {x: 0.213, y: 0.221, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31585,7 +31639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.5
+      value: 10.46
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -32230,11 +32284,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.8
+      value: 14.11
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.5
+      value: 14.56
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32242,7 +32296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.x
@@ -32254,7 +32308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -32266,7 +32320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214139928139404079, guid: f8da6f88a22104242a7c867dc649920d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32390,6 +32444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bronzeHeracles: {fileID: 0}
+  takenStone: 0
+  walkStone: 0
+  countStone: 0
 --- !u!114 &2085666156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32418,6 +32475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bronzeHeracles: {fileID: 0}
+  countArrow: 0
 --- !u!114 &2085666158
 MonoBehaviour:
   m_ObjectHideFlags: 0

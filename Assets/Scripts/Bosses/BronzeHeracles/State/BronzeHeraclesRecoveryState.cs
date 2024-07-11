@@ -20,6 +20,8 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
     {
         isFinished = false;
 
+        bronzeHeracles.stand = false;
+
         bronzeHeracles.targetOnAim = false;
 
         recoveryTime = Random.Range(minRecoveryTime, maxRecoveryTime);
@@ -29,7 +31,6 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
 
     public override void Run()
     {
-        Debug.Log("das");
         float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, bronzeHeracles.rb.position);
         Vector2 vectorFromPlayer = (bronzeHeracles.rb.position - Player.instance.rb.position).normalized;
         Vector2 moveVector = Vector2.zero;
@@ -66,8 +67,10 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
         if (recoveryTime > 0)
             recoveryTime -= Time.deltaTime;
         else
+        {
             isFinished = true;
-
+            bronzeHeracles.SetState(bronzeHeracles.RandomState());
+        }
         if (walkInOneTurnTime > 0)
             walkInOneTurnTime -= Time.deltaTime;
     }
