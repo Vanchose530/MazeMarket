@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    [SerializeField] private int damageArrow;
     private void Start()
     {
         StartCoroutine("Delete");
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+
+        if (obj != null)
         {
-            collision.gameObject.GetComponent<IDamagable>().TakeDamage(damage);
-            Destroy(gameObject);
-        }
-        else 
-        {
+            obj.TakeDamage(damageArrow, transform);
             Destroy(gameObject);
         }
     }

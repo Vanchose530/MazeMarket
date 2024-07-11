@@ -19,9 +19,10 @@ public class Stone : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        if (obj != null) 
         {
-            collision.gameObject.GetComponent<IDamagable>().TakeDamage(damageStone);
+            obj.TakeDamage(damageStone, transform);
             Destroy(gameObject);
         }
         else {

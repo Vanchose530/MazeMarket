@@ -113,6 +113,8 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     private void Awake()
     {
+        alreadySpawnedOnStart = false;
+
         target = null;
         attack = false;
         attackState.Add(archeryState);
@@ -208,8 +210,8 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         if (spawning)
             return;
-
-        health -= damage;
+        if (alreadySpawnedOnStart) 
+            health -= damage;
         EffectsManager.instance.PlaySoundEffect(damageSoundPrefab, transform.position, 1f, 0.9f, 1.1f);
 
         if (attack != null)
@@ -276,6 +278,8 @@ public class BronzeHeracles : Enemy, IDamagable
         SetState(maceAttackState);
 
         aliving = false;
+
+        alreadySpawnedOnStart = true;
     }
 
     public BronzeHeraclesState RandomState() {

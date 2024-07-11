@@ -16,20 +16,14 @@ public class BossManager : MonoBehaviour
     [Header("Entering Room")]
     [SerializeField] private LockMiasma[] lockMiasmas;
     [SerializeField] private GlassDoor[] doors; // двери на данный момент не используются в левел дизайне
-    [SerializeField] private RoomTrigger[] triggers;
+    [SerializeField] private BossTrigger[] triggers;
 
     [Header("Lock/Unlock Room")]
     [SerializeField] private float closeDoorsSpeed = 2f; // двери на данный момент не используются в левел дизайне
     [SerializeField] private float lockExitsTime = 1f;
     [SerializeField] private float unlockExitsTime = 1f;
 
-    [Header("Enemy Waves")]
-    [SerializeField] private EnemyWave[] enemyWaves;
-    [SerializeField] private int enemyesToNextWave;
-    private int nextWaveIndex;
-    private bool lastWave;
-
-    public int enemyCount { get; private set; }
+    [SerializeField] private GameObject bronzeHeracles;
 
     private bool roomPassed = false;
 
@@ -46,7 +40,7 @@ public class BossManager : MonoBehaviour
     {
         onPlayerEnterRoom += CloseAllExits;
         onPlayerEnterRoom += DestroyAllTriggers;
-        onPlayerEnterRoom += StartNextWave;
+
 
         onPlayerEnterRoom += () => Player.instance.isOnBattle = true;
         onPlayerPassRoom += () => Player.instance.isOnBattle = false;
@@ -56,7 +50,7 @@ public class BossManager : MonoBehaviour
     {
         onPlayerEnterRoom -= CloseAllExits;
         onPlayerEnterRoom -= DestroyAllTriggers;
-        onPlayerEnterRoom -= StartNextWave;
+
     }
 
     private void OnValidate()
@@ -65,23 +59,12 @@ public class BossManager : MonoBehaviour
             virtualCamera.enabled = false;
     }
 
-    private void Awake()
-    {
-        nextWaveIndex = 0;
-    }
-
     private IEnumerator Start()
     {
         foreach (var trirgger in triggers)
         {
-            trirgger.roomManager = this;
+            trirgger.bossManager = this;
         }
-
-        foreach (var wave in enemyWaves)
-        {
-            wave.roomManager = this;
-        }
-
         foreach (var miasma in lockMiasmas)
         {
             miasma.Unlock(time: 0.01f, destroy: false);
@@ -93,12 +76,17 @@ public class BossManager : MonoBehaviour
         {
             // virtualCamera.LookAt = Player.instance.followCameraPoint;
             virtualCamera.Follow = Player.instance.followCameraPoint;
+           
         }
 
         virtualCamera.enabled = false;
 
         if (id == null || id == "")
             Debug.LogError("For Room Manager not setted unique id. Room Manager object: " + gameObject.name);
+    }
+    private void Update()
+    {
+        BossDefeat();
     }
 
     public void PlayerEnterRoom()
@@ -121,7 +109,18 @@ public class BossManager : MonoBehaviour
         if (!data.passedRoomsId.Contains(id) && roomPassed)
             data.passedRoomsId.Add(id);
     }
+    private void CloseAllExits()
+    {
+        foreach (var miasma in lockMiasmas)
+        {
+            miasma.Lock(lockExitsTime);
+        }
 
+        foreach (var door in doors) // двери на данный момент не используются в левел дизайне
+        {
+            door.Close(closeDoorsSpeed, true);
+        }
+    }
     private void PassRoom()
     {
         foreach (var miasma in lockMiasmas)
@@ -142,41 +141,6 @@ public class BossManager : MonoBehaviour
         virtualCamera.enabled = false;
     }
 
-    public void UpdateEnemyCount()
-    {
-        int enemyCountBuffer = 0;
-
-        foreach (var wave in enemyWaves)
-        {
-            if (wave.active)
-                enemyCountBuffer += wave.enemyCount;
-        }
-
-        enemyCount = enemyCountBuffer;
-
-        if (enemyCount <= enemyesToNextWave && !lastWave)
-        {
-            StartNextWave();
-        }
-        else if (lastWave && enemyCount == 0)
-        {
-            PassRoom();
-        }
-    }
-
-    private void CloseAllExits()
-    {
-        foreach (var miasma in lockMiasmas)
-        {
-            miasma.Lock(lockExitsTime);
-        }
-
-        foreach (var door in doors) // двери на данный момент не используются в левел дизайне
-        {
-            door.Close(closeDoorsSpeed, true);
-        }
-    }
-
     private void DestroyAllTriggers()
     {
         foreach (var trigger in triggers)
@@ -184,21 +148,12 @@ public class BossManager : MonoBehaviour
             Destroy(trigger.gameObject);
         }
     }
-
-    private void StartNextWave()
-    {
-        try
+    private void BossDefeat() {
+        if (bronzeHeracles == null)
         {
-            enemyWaves[nextWaveIndex].StartWave();
-            nextWaveIndex++;
+            PassRoom();
         }
-        catch (System.IndexOutOfRangeException)
-        {
-            lastWave = true;
-            if (enemyCount == 0)
-                PassRoom();
-        }
-
     }
+
 }
-}
+

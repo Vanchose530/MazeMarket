@@ -6,10 +6,9 @@ public class Mace : MonoBehaviour
 {
     public int maceDamage = 1;
     private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.GetComponent<IDamagable>().TakeDamage(maceDamage);
-        }
+    { 
+       IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+       if (obj != null)
+        obj.TakeDamage(maceDamage, transform);
     }
 }
