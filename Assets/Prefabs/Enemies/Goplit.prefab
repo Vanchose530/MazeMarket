@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 3528469453755135059}
   - component: {fileID: 1825575740844665263}
   m_Layer: 0
-  m_Name: Statue Legs
+  m_Name: Goplit Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3247662160191079325}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.72066337, w: 0.6932852}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7206661, w: 0.6932823}
   m_LocalPosition: {x: 21.04, y: 25.91, z: 1}
   m_LocalScale: {x: 9.174266, y: 9.599869, z: 1}
   m_ConstrainProportionsScale: 0
@@ -408,18 +408,18 @@ MonoBehaviour:
   _rb: {fileID: 7456330247445833259}
   spear: {fileID: 172284209650157570}
   speedAttack: 5
-  aimingTime: 3
-  timeAttack: 3
-  timeAttackEnd: 3
+  aimingTime: 5
+  timeAttack: 5
+  timeAttackEnd: 5
   firingRate: 1
   bodyAnimator: {fileID: 6515731758922230993}
   legs: {fileID: 438779133665045033}
   legsAnimator: {fileID: 1825575740844665263}
   damageSoundSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 8fcd1ed526f39934e918083b67ebb378, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.15
   alivingEffectSoundPrefab: {fileID: 971622264450682791, guid: aff6f8f80db46d0429dd21fa2df0fa3f, type: 3}
   alivingSoundPrefab: {fileID: 7390544046064625189, guid: 01d0288251327fd45b5073fb78a306fa, type: 3}
   damageEffect: {fileID: 2642225804590499521, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
