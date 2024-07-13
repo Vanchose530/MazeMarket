@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class RacineAgressiveState : RacineState
+public class GoplitPursuitState : GoplitState
 {
     [Header("Behaviour")]
     public float attackDistance;
@@ -12,39 +13,41 @@ public class RacineAgressiveState : RacineState
     {
         isFinished = false;
 
-        racine.target = Player.instance.transform;
+        goplit.target = Player.instance.transform;
 
-        racine.targetOnAim = true; 
+        goplit.targetOnAim = true;
 
+        goplit.agressive = true;
     }
 
     public override void Run()
     {
-        if (racine.attack)
+        if (goplit.attack)
             return;
+        goplit.ExecutePath();
 
-        racine.ExecutePath(); 
-
-        float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, racine.rb.position);
+        float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, goplit.rb.position);
 
         if (CheckPlayer() && distanceToPlayer < attackDistance)
-            racine.Attack(); 
-
+        {
+            isFinished = true;
+            goplit.Attack();
+        }
         if (distanceToPlayer > distanceToMissPlayer)
         {
-            racine.agressive = false;
+            goplit.agressive = false;
             isFinished = true;
         }
     }
 
     public override void Exit()
     {
-        racine.movementDirection = Vector2.zero;
+        goplit.movementDirection = Vector2.zero;
     }
 
     private bool CheckPlayer()
     {
-        var hits = Physics2D.RaycastAll(racine.rb.position, Player.instance.rb.position - racine.rb.position, attackDistance);
+        var hits = Physics2D.RaycastAll(goplit.rb.position, Player.instance.rb.position - goplit.rb.position, attackDistance);
 
         foreach (var hit in hits)
         {
@@ -65,6 +68,7 @@ public class RacineAgressiveState : RacineState
 
         Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(transform.position, attackDistance); 
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
     }
 }
+
