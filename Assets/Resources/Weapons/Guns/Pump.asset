@@ -32,18 +32,19 @@ MonoBehaviour:
   ammoInMagazine: 0
   reloading: 0
   bulletsPerShot: 7
+  deltaBulletForce: 0
   shootSE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    sound: {fileID: 8300000, guid: a2bce446197b055498e6b026dfbabd88, type: 3}
+    volume: 0.25
+    minPitch: 0.7
+    maxPitch: 1.3
   emptySE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    sound: {fileID: 8300000, guid: 117bd0e03892ee54e955fd0a556fc4ad, type: 3}
+    volume: 1
+    minPitch: 0.85
+    maxPitch: 1.15
   _reloadingSE:
-    sound: {fileID: 0}
-    volume: 0.5
+    sound: {fileID: 8300000, guid: ce2edf90a71eac24284f4481fe8cbcaa, type: 3}
+    volume: 1
     minPitch: 1
     maxPitch: 1

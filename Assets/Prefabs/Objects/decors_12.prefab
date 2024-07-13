@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2053600364142286932}
   - component: {fileID: 3285247284334152238}
   - component: {fileID: 2649685187528682647}
+  - component: {fileID: 5056696076918211186}
   m_Layer: 0
   m_Name: decors_12
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871127106197101767}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 47.024433, y: 19.229286, z: 4.5370293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -131,6 +132,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4375, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &5056696076918211186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871127106197101767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86cf10fd9e86a42478d836537230cec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spritesToRandomize:
+  - {fileID: -1969580869, guid: 7d2990e3682555b48910583b40c35e78, type: 3}
+  - {fileID: -1714351201, guid: 7d2990e3682555b48910583b40c35e78, type: 3}
+  - {fileID: 34790643, guid: 7d2990e3682555b48910583b40c35e78, type: 3}
+  spriteRenderer: {fileID: 3285247284334152238}
 --- !u!1 &2347299210516740788
 GameObject:
   m_ObjectHideFlags: 0
