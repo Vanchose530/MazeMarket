@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryUIManager : MonoBehaviour
@@ -23,10 +24,31 @@ public class InventoryUIManager : MonoBehaviour
     [SerializeField] private GameObject _keyCardUI;
     public GameObject keyCardUI { get { return _keyCardUI; } }
     [SerializeField] private TextMeshProUGUI keyCardCountTMP;
+
+    [Header("Bottle")]
+    [SerializeField] private TextMeshProUGUI grenadeBottleCountTMP;
+    [SerializeField] private TextMeshProUGUI healthBottleCountTMP;
+    [SerializeField] private TextMeshProUGUI emptyBottleCountTMP;
+
     public string keyCardCountText
     {
         get { return keyCardCountTMP.text; }
         set { keyCardCountTMP.text = value; }
+    }
+    public string grenadeBottleCountText
+    {
+        get { return grenadeBottleCountTMP.text; }
+        set { grenadeBottleCountTMP.text = value; }
+    }
+    public string healthBottleCountText
+    {
+        get { return healthBottleCountTMP.text; }
+        set { healthBottleCountTMP.text = value; }
+    }
+    public string emptyBottleCountText
+    {
+        get { return emptyBottleCountTMP.text; }
+        set { emptyBottleCountTMP.text = value; }
     }
 
     private void Awake()
@@ -49,6 +71,7 @@ public class InventoryUIManager : MonoBehaviour
 
         UpdateAmmoCounters();
         UpdateWeaponSlots();
+
     }
 
     private void OnDisable()
@@ -62,6 +85,7 @@ public class InventoryUIManager : MonoBehaviour
     {
         HideInventory();
     }
+
 
     public void UpdateAmmoCounters()
     {
@@ -93,6 +117,7 @@ public class InventoryUIManager : MonoBehaviour
             weapSlot.CheckForChosen();
         }
     }
+
 
     private void ShowInventory()
     {

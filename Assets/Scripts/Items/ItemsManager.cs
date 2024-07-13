@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,15 @@ public class ItemsManager : MonoBehaviour, IDataPersistence
 
     [HideInInspector] public List<string> collectedItemsId;
 
+
     private void Awake()
     {
         if (instance != null)
             Debug.LogWarning("Find more than one Items Manager in scene");
         instance = this;
     }
+
+
 
     public void LoadData(GameData data)
     {

@@ -1,6 +1,8 @@
 using SpriteGlow;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class VendingMachine : MonoBehaviour, IInteractable
@@ -44,10 +46,11 @@ public class VendingMachine : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        if (canInteract && !player.isGrenade && !player.isEstos)
+        if (canInteract && PlayerInventory.instance.countEmptyBottle > 0)
         {
-            player.isEmptyBottle = false;
-            player.isEstos = true;
+            PlayerInventory.instance.countHealthBottle++;
+            PlayerInventory.instance.countEmptyBottle--;
+            
 
             if (interactSE != null)
                 AudioManager.instance.PlaySoundEffect(interactSE, transform.position);

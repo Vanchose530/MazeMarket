@@ -144,7 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c36623408fc4ad54ab818a4bdd018d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactCooldown: 2
+  interactCooldown: 0.1
+  canNotInteractGlowColor: {r: 0, g: 0, b: 0, a: 0}
   interactSpriteGlow: {fileID: 1498084975223374060}
   interactSE:
     sound: {fileID: 0}
