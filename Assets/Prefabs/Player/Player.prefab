@@ -311,6 +311,9 @@ MonoBehaviour:
   timeToHeal: 2
   attackPoint: {fileID: 6939753730445181469}
   secondAttackPoint: {fileID: 1042710718863370343}
+  hideObjectLayer:
+    serializedVersion: 2
+    m_Bits: 0
   attackRange: 0.5
   attackCooldown: 0.2
   seriesAttackTime: 0.5
@@ -328,14 +331,11 @@ MonoBehaviour:
     minPitch: 1
     maxPitch: 1
   grenadeThrowSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 1871b2ccc9a0ba74493b02456c6f0bf4, type: 3}
     volume: 0.5
     minPitch: 1
-    maxPitch: 1
+    maxPitch: 1.2
   _rb: {fileID: 2702732625081450782}
-  isEmptyBottle: 1
-  isGrenade: 0
-  isEstos: 0
   startPosition: {x: 0, y: 0}
   levelName: 
 --- !u!1 &3123425842530604282
