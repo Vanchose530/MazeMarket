@@ -539,7 +539,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
             grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
             PlayerInventory.instance.countGrenadeBottle--;
-            // PlayerInventory.instance.countEmptyBottle++;
+            PlayerInventory.instance.countEmptyBottle++;
         }
     }
 

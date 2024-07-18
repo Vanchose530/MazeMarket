@@ -10,9 +10,9 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
     public static PlayerInventory instance;
 
     [Header("Bottle")]
-    [SerializeField] private int startCountGrenadeBottle = 3;
-    [SerializeField] private int startCountHealthBottle = 1;
-    [SerializeField] private int startCountEmptyBottle = 1;
+    [SerializeField] private int startCountGrenadeBottle = 0;
+    [SerializeField] private int startCountHealthBottle = 0;
+    [SerializeField] private int startCountEmptyBottle = 5;
 
     private int _keyCardCount;
     private int _countGrenadeBottle;
@@ -70,6 +70,7 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         countHealthBottle = startCountHealthBottle;
         countEmptyBottle = startCountEmptyBottle;
     }
+
 
     private void UpdateUI()
     {
