@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a985d44623a3af244a3c3a9aec673aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  balancer:
+    elements:
+    - element: {fileID: 0}
+      chance: 0
   chanceOfAppearanceAnyItem: 80
   chanceOfAppearanceMediumItem: 10
   chanceOfAppearanceRareItem: 30

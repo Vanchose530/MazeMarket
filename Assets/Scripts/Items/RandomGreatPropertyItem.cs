@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomItem : MonoBehaviour
+public class RandomGreatPropertyItem : MonoBehaviour
 {
     [Header("Chances")]
     [Range(0, 100)]

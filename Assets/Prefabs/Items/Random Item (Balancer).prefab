@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4604502055472143412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5482006222234904283}
+  - component: {fileID: 3526710800870196831}
+  m_Layer: 0
+  m_Name: Random Item (Balancer)
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5482006222234904283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4604502055472143412}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3526710800870196831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4604502055472143412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64009dae1573a2944bc325613f9f031f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+    elements:
+    - element: {fileID: 6472613455373080933, guid: 9e861799924e404489d69d48203e1de2, type: 3}
+      chance: 100
+    - element: {fileID: 1948543134415017955, guid: a8435040f0a04124d828fa8cf6574964, type: 3}
+      chance: 80
+    - element: {fileID: 3899925204731345561, guid: 033e7a484e610754483212fdf9289445, type: 3}
+      chance: 60
+    - element: {fileID: 6138165966011049591, guid: b78692a8bdc942744ba4a26e187ae8c7, type: 3}
+      chance: 60
+    - element: {fileID: 3539247117645178881, guid: 0d949c04088d7c94e92cd33d535c528d, type: 3}
+      chance: 20
+    - element: {fileID: 3539247117645178881, guid: e850984c2d1ecc146a948942edaf9e6b, type: 3}
+      chance: 10
+    - element: {fileID: 3539247117645178881, guid: 1128f4c8cfa194e46a7f9b2147a25593, type: 3}
+      chance: 5
