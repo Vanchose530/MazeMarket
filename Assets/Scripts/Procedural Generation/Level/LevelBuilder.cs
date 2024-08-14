@@ -109,6 +109,7 @@ public class LevelBuilder : MonoBehaviour
         Room newRoom = Instantiate(roomPrefab);
 
         SetRoomInfo(newRoom, roomTemplate);
+        newRoom.miniMapRoom = MiniMapUIM.instance.BuildMiniMapRoom(roomPrefab);
 
         SetRoomPosition(newRoom, roomTemplate.position);
         RightRotateRoom(newRoom, roomTemplate);
@@ -120,6 +121,8 @@ public class LevelBuilder : MonoBehaviour
         room.bonusType = roomTemplate.bonusType;
         room.enemyesOnRoom = roomTemplate.enemyesOnRoom;
         room.lockType = roomTemplate.lockType;
+        room.roomType = roomTemplate.roomType;
+        room.positionInLevel = roomTemplate.position;
     }
 
     void BuildStartRoom(RoomTemplate roomTemplate)
@@ -127,6 +130,9 @@ public class LevelBuilder : MonoBehaviour
         Room roomPrefab = GetRandomRoom(startRoomPrefabs);
 
         Room newRoom = Instantiate(roomPrefab);
+
+        SetRoomInfo(newRoom, roomTemplate);
+        newRoom.miniMapRoom = MiniMapUIM.instance.BuildMiniMapRoom(roomPrefab);
 
         SetRoomPosition(newRoom, roomTemplate.position);
         RightRotateRoom(newRoom, roomTemplate);
@@ -145,6 +151,9 @@ public class LevelBuilder : MonoBehaviour
         Room roomPrefab = GetRandomRoom(endRoomPrefabs);
 
         Room newRoom = Instantiate(roomPrefab);
+
+        SetRoomInfo(newRoom, roomTemplate);
+        newRoom.miniMapRoom = MiniMapUIM.instance.BuildMiniMapRoom(roomPrefab);
 
         SetRoomPosition(newRoom, roomTemplate.position);
         RightRotateRoom(newRoom, roomTemplate);

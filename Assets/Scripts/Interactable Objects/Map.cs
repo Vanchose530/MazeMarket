@@ -35,8 +35,6 @@ public class Map : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        Debug.Log("Я карта");
-
         if (MapUIM.instance.mapEnable)
             MapUIM.instance.HideMap();
         else

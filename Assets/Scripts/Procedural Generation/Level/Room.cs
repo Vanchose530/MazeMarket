@@ -134,4 +134,8 @@ public class Room : MonoBehaviour
             }
         }
     }
+
+    public RoomType roomType { get; set; }
+    public Vector2Int positionInLevel { get; set; }
+    public MiniMapRoom miniMapRoom { get; set; }
 }
