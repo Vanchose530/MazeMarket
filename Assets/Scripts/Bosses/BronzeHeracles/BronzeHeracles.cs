@@ -29,6 +29,10 @@ public class BronzeHeracles : Enemy, IDamagable
 
     [Header("Sound Effects")]
     [SerializeField] private GameObject damageSoundPrefab;
+    [SerializeField] private GameObject alivingSoundPrefab;
+    [SerializeField] private GameObject shootBowSoundPrefab;
+    [SerializeField] private GameObject maceAttackSoundPrefab;
+    [SerializeField] private GameObject shootStoneSoundPrefab;
 
     [Header("Alive")]
     public bool stayOnAwake;
@@ -66,7 +70,6 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private StoneThrowState stoneThrowState;
 
     [Header("BronzeHeracles State")]
-    [SerializeField] private BronzeHeraclesAgressiveState agressiveState;
     [SerializeField] private BronzeHeraclesStayState stayState;
     public BronzeHeraclesRecoveryState recoveryState;
 
@@ -104,8 +107,6 @@ public class BronzeHeracles : Enemy, IDamagable
             maceAttackState = statesGameObject.GetComponent<MaceAttackState>();
         if (stoneThrowState == null)
             stoneThrowState = statesGameObject.GetComponent<StoneThrowState>();
-        if (agressiveState == null)
-            agressiveState = statesGameObject.GetComponent<BronzeHeraclesAgressiveState>();
         if (recoveryState == null)
             recoveryState = statesGameObject.GetComponent<BronzeHeraclesRecoveryState>();
         if (stayState == null)
@@ -273,6 +274,8 @@ public class BronzeHeracles : Enemy, IDamagable
 
         bodyAnimator.SetTrigger("Alive");
 
+        EffectsManager.instance.PlaySoundEffect(alivingSoundPrefab, alivingTime * 1.5f, 0.9f, 1.1f);
+
         yield return new WaitForSeconds(alivingTime);
 
         SetState(maceAttackState);
@@ -329,6 +332,7 @@ public class BronzeHeracles : Enemy, IDamagable
         isShootBow = true;
         movementDirection = Vector2.zero;
         bodyAnimator.SetTrigger("ShootABow");
+        EffectsManager.instance.PlaySoundEffect(shootBowSoundPrefab, timeToShootBow + aimingBow * 1.5f, 0.9f, 1.1f);
         yield return new WaitForSeconds(timeToShootBow + aimingBow);
 
         Vector3 arrowAngle = archerPoint.eulerAngles;
@@ -386,6 +390,7 @@ public class BronzeHeracles : Enemy, IDamagable
         isAttackMace = true;
         bodyAnimator.SetTrigger("MaceAttack");
         mace.GetComponent<Collider2D>().enabled = true;
+        EffectsManager.instance.PlaySoundEffect(maceAttackSoundPrefab, timeAttackMace * 1.5f, 0.9f, 1.1f);
         yield return new WaitForSeconds(timeAttackMace);
         mace.GetComponent<Collider2D>().enabled = false;
         attack = false;
@@ -456,7 +461,9 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         isShootStone = true;
         movementDirection = Vector2.zero;
-        
+
+        EffectsManager.instance.PlaySoundEffect(shootStoneSoundPrefab, timeShootStone * 1.5f, 0.9f, 1.1f);
+
         yield return new WaitForSeconds(timeShootStone);
 
         Vector3 stoneAngle = stonePoint.eulerAngles;
