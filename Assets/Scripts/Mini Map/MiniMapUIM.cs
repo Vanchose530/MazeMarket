@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,8 +35,8 @@ public class MiniMapUIM : MonoBehaviour
     [SerializeField] private float spaceBetweenRooms = 1;
 
     [Header("Setup")]
+    [SerializeField] private GameObject mapRooms;
     [SerializeField] private GameObject mapPanel;
-    // [SerializeField] private GameObject mapCanvas;
 
     public bool isMiniMapActive { get; private set; }
 
@@ -46,41 +47,116 @@ public class MiniMapUIM : MonoBehaviour
         instance = this;
 
         miniMapRooms = new List<MiniMapRoom>();
+        playerInRoomMark.transform.localScale = new Vector3(roomSizeX, roomSizeY, -10);
     }
 
     public MiniMapRoom BuildMiniMapRoom(Room room)
     {
-        MiniMapRoom buildedRoom = null;
+        MiniMapRoom prefab = null;
 
         switch (room.roomType)
         {
             case RoomType.Deadlock:
-                buildedRoom = Instantiate(deadlockMiniMapRoomPrefab, mapPanel.transform);
+                // buildedRoom = Instantiate(deadlockMiniMapRoomPrefab, mapPanel.transform);
+                prefab = deadlockMiniMapRoomPrefab;
                 break;
             case RoomType.I_room:
-                buildedRoom = Instantiate(IMiniMapRoomPrefab, mapPanel.transform);
+                // buildedRoom = Instantiate(IMiniMapRoomPrefab, mapPanel.transform);
+                prefab = IMiniMapRoomPrefab;
                 break;
             case RoomType.L_room:
-                buildedRoom = Instantiate(LMiniMapRoomPrefab, mapPanel.transform);
+                // buildedRoom = Instantiate(LMiniMapRoomPrefab, mapPanel.transform);
+                prefab = LMiniMapRoomPrefab;
                 break;
             case RoomType.T_room:
-                buildedRoom = Instantiate(TMiniMapRoomPrefab, mapPanel.transform);
+                // buildedRoom = Instantiate(TMiniMapRoomPrefab, mapPanel.transform);
+                prefab = TMiniMapRoomPrefab;
                 break;
             case RoomType.X_room:
-                buildedRoom = Instantiate(XMiniMapRoomPrefab, mapPanel.transform);
+                // buildedRoom = Instantiate(XMiniMapRoomPrefab, mapPanel.transform);
+                prefab = XMiniMapRoomPrefab;
                 break;
         }
+
+        MiniMapRoom buildedRoom = Instantiate(prefab, mapRooms.transform) as MiniMapRoom;
+
+        //try { buildedRoom.lockType = room.lockType; } catch (NullReferenceException) { }
+        //try { buildedRoom.bonusType = room.bonusType; } catch (NullReferenceException) { }
 
         buildedRoom.lockType = room.lockType;
         buildedRoom.bonusType = room.bonusType;
 
-        buildedRoom.transform.position =
+        buildedRoom.transform.localPosition =
             new Vector3(room.positionInLevel.x + xOffset, room.positionInLevel.y + yOffset)
             * spaceBetweenRooms;
+
+        buildedRoom.gameObject.transform.localScale = new Vector3(roomSizeX, roomSizeY, 1);
+
+        RightRotateMiniMapRoom(buildedRoom, room);
+
+        buildedRoom.status = MiniMapRoomStatus.Hidden;
+        buildedRoom.playerStatus = MiniMapRoomPlayerStatus.WasNotIn;
 
         miniMapRooms.Add(buildedRoom);
 
         return buildedRoom;
+    }
+
+    void RightRotateMiniMapRoom(MiniMapRoom mimiMapRoom, Room room)
+    {
+        int zRotation = 0;
+
+        RoomTemplate roomTemplate = LevelBuilder.instance.levelTemplate.levelRooms[room.positionInLevel.x, room.positionInLevel.y];
+
+        switch (roomTemplate.roomType)
+        {
+            case RoomType.Deadlock:
+                if (roomTemplate.transitionUp != null)
+                    zRotation = 180;
+                else if (roomTemplate.transitionRight != null)
+                    zRotation = 90;
+                else if (roomTemplate.transitionDown != null)
+                    zRotation = 0;
+                else if (roomTemplate.transitionLeft != null)
+                    zRotation = 270;
+                break;
+            case RoomType.I_room:
+                if (roomTemplate.transitionUp != null/* && roomTemplate.transitionDown != null*/)
+                    zRotation = 0;
+                if (roomTemplate.transitionLeft != null/* && roomTemplate.transitionRight != null*/)
+                    zRotation = 90;
+                break;
+            case RoomType.L_room:
+                if (roomTemplate.transitionUp != null && roomTemplate.transitionRight != null)
+                    zRotation = 0;
+                else if (roomTemplate.transitionRight != null && roomTemplate.transitionDown != null)
+                    zRotation = 270;
+                else if (roomTemplate.transitionDown != null && roomTemplate.transitionLeft != null)
+                    zRotation = 180;
+                else if (roomTemplate.transitionLeft != null && roomTemplate.transitionUp != null)
+                    zRotation = 90;
+                break;
+            case RoomType.T_room:
+                if (roomTemplate.transitionUp == null)
+                    zRotation = 0;
+                else if (roomTemplate.transitionRight == null)
+                    zRotation = 270;
+                else if (roomTemplate.transitionDown == null)
+                    zRotation = 180;
+                else if (roomTemplate.transitionLeft == null)
+                    zRotation = 90;
+                break;
+            case RoomType.X_room:
+                zRotation = 0;
+                break;
+        }
+
+        mimiMapRoom.transform.Rotate(mimiMapRoom.transform.rotation.x, mimiMapRoom.transform.rotation.y, zRotation);
+    }
+
+    public void SetPlayerInRoomMark(MiniMapRoom miniMapRoom)
+    {
+        playerInRoomMark.transform.position = miniMapRoom.transform.position;
     }
 
     public void ShowMiniMap()

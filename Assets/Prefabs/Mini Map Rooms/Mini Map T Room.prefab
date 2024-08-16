@@ -13,6 +13,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
+      propertyPath: redMiasmaColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
+      propertyPath: mintMiasmaColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
       propertyPath: locks.Array.data[0]
       value: 
       objectReference: {fileID: 5838133682273333224}
@@ -106,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6373356994156449855, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
       propertyPath: m_Name
-      value: Mini Map X Room Variant
+      value: Mini Map T Room
       objectReference: {fileID: 0}
     - target: {fileID: 6731422686000920579, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
       propertyPath: m_Sprite

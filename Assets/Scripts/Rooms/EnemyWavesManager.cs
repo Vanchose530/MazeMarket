@@ -18,7 +18,7 @@ public class EnemyWavesManager : MonoBehaviour, IDataPersistence
     [Header("Entering Room")]
     [SerializeField] private LockMiasma[] lockMiasmas;
     [SerializeField] private GlassDoor[] doors; // двери на данный момент не используются в левел дизайне
-    [SerializeField] private RoomTrigger[] triggers;
+    [SerializeField] private EnemyWavesTrigger[] triggers;
 
     [Header("Lock/Unlock Room")]
     [SerializeField] private float closeDoorsSpeed = 2f; // двери на данный момент не используются в левел дизайне

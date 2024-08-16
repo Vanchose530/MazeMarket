@@ -10933,25 +10933,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room Trigger (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3536173343785994569, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6791250504704115682, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4695146031483147175}
   m_SourcePrefab: {fileID: 100100000, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
 --- !u!4 &1668038652366678146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 555215512592030282, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
   m_PrefabInstance: {fileID: 1194181504016216776}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2414377088546749313 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3536173343785994569, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
+--- !u!1 &5669411368242950442 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6791250504704115682, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
   m_PrefabInstance: {fileID: 1194181504016216776}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &4695146031483147175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669411368242950442}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd13abfdec07f74a83e21400532412a, type: 3}
+  m_Script: {fileID: 11500000, guid: 651a1c5a36c134347a3940bfb497af33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1216916353936899406
@@ -15295,11 +15305,11 @@ PrefabInstance:
     - target: {fileID: 6093221349249675695, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
       propertyPath: triggers.Array.data[0]
       value: 
-      objectReference: {fileID: 2414377088546749313}
+      objectReference: {fileID: 4695146031483147175}
     - target: {fileID: 6093221349249675695, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
       propertyPath: triggers.Array.data[1]
       value: 
-      objectReference: {fileID: 4660828707438717296}
+      objectReference: {fileID: 2509473438060566744}
     - target: {fileID: 6093221349249675695, guid: 0dd6f0e12e178424088642e2a782047a, type: 3}
       propertyPath: enemyWaves.Array.data[0]
       value: 
@@ -16231,20 +16241,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room Trigger (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3536173343785994569, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6791250504704115682, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2509473438060566744}
   m_SourcePrefab: {fileID: 100100000, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
---- !u!114 &4660828707438717296 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3536173343785994569, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
+--- !u!1 &3423522633811420123 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6791250504704115682, guid: 249900adaa8023b4992eec72e14a4dea, type: 3}
   m_PrefabInstance: {fileID: 8195871722113736761}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+--- !u!114 &2509473438060566744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3423522633811420123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd13abfdec07f74a83e21400532412a, type: 3}
+  m_Script: {fileID: 11500000, guid: 651a1c5a36c134347a3940bfb497af33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8505347485099080307 stripped

@@ -56,6 +56,7 @@ public class MiniMapRoom : MonoBehaviour
             case MiniMapRoomPlayerStatus.WasIn:
                 break;
             case MiniMapRoomPlayerStatus.NowIn:
+                MiniMapUIM.instance.SetPlayerInRoomMark(this);
                 break;
         }
     }
