@@ -30,7 +30,7 @@ public class Room : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private RoomTrigger roomTrigger; // для работы мини карты
 
-    private void OnValidate()
+    private void Awake()
     {
         if (roomTrigger != null && roomTrigger.room != this)
             roomTrigger.room = this;

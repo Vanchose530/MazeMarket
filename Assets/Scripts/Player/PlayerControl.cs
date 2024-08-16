@@ -188,6 +188,15 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Map"",
+                    ""type"": ""Button"",
+                    ""id"": ""3edb9358-9df3-491d-8120-9450a234c868"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -633,12 +642,56 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e1038ec4-871c-4a97-b5a2-0a3f1863812d"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GrenadeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""78ac4eac-7db9-4924-a474-1de0ae696a58"",
                     ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Health"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""805ac95f-bc06-4c79-a087-5e102c46c612"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Health"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c940cfdd-6d02-48e4-a502-bf9924b00511"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Map"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""706f40ca-bbc5-4b77-bea1-d16f31a6c69e"",
+                    ""path"": ""<DualShockGamepad>/touchpadButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -946,6 +999,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         m_Default_Run = m_Default.FindAction("Run", throwIfNotFound: true);
         m_Default_GrenadeAttack = m_Default.FindAction("GrenadeAttack", throwIfNotFound: true);
         m_Default_Health = m_Default.FindAction("Health", throwIfNotFound: true);
+        m_Default_Map = m_Default.FindAction("Map", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Move = m_Menu.FindAction("Move", throwIfNotFound: true);
@@ -1029,6 +1083,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Run;
     private readonly InputAction m_Default_GrenadeAttack;
     private readonly InputAction m_Default_Health;
+    private readonly InputAction m_Default_Map;
     public struct DefaultActions
     {
         private @PlayerControl m_Wrapper;
@@ -1051,6 +1106,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_Default_Run;
         public InputAction @GrenadeAttack => m_Wrapper.m_Default_GrenadeAttack;
         public InputAction @Health => m_Wrapper.m_Default_Health;
+        public InputAction @Map => m_Wrapper.m_Default_Map;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1114,6 +1170,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Health.started += instance.OnHealth;
             @Health.performed += instance.OnHealth;
             @Health.canceled += instance.OnHealth;
+            @Map.started += instance.OnMap;
+            @Map.performed += instance.OnMap;
+            @Map.canceled += instance.OnMap;
         }
 
         private void UnregisterCallbacks(IDefaultActions instance)
@@ -1172,6 +1231,9 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
             @Health.started -= instance.OnHealth;
             @Health.performed -= instance.OnHealth;
             @Health.canceled -= instance.OnHealth;
+            @Map.started -= instance.OnMap;
+            @Map.performed -= instance.OnMap;
+            @Map.canceled -= instance.OnMap;
         }
 
         public void RemoveCallbacks(IDefaultActions instance)
@@ -1263,6 +1325,7 @@ public partial class @PlayerControl: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnGrenadeAttack(InputAction.CallbackContext context);
         void OnHealth(InputAction.CallbackContext context);
+        void OnMap(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

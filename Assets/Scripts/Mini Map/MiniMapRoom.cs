@@ -18,6 +18,12 @@ public class MiniMapRoom : MonoBehaviour
 
     [Header("Another")]
     [SerializeField] private Image nonColoredPart;
+    private Color nonColoredPartBaseColor;
+
+    private void Awake()
+    {
+        nonColoredPartBaseColor = nonColoredPart.color;
+    }
 
 
     // STATUSES
@@ -33,11 +39,82 @@ public class MiniMapRoom : MonoBehaviour
         switch (status)
         {
             case MiniMapRoomStatus.Hidden:
+                //coloredPart.color = new Color(0, 0, 0, 0);
+                //nonColoredPart.color = new Color(0, 0, 0, 0);
+                HideRoom();
                 break;
             case MiniMapRoomStatus.VisibleWay:
+                nonColoredPart.color = nonColoredPartBaseColor;
+                SetRoomPlayerStatusVisualization(playerStatus);
+                lockVisible = true;
                 break;
             case MiniMapRoomStatus.VisibleWayAndBonus:
+                nonColoredPart.color = nonColoredPartBaseColor;
+                SetRoomPlayerStatusVisualization(playerStatus);
+                lockVisible = true;
+                SetRighSignOnRoom();
                 break;
+        }
+    }
+
+    private void SetRighSignOnRoom()
+    {
+        Sprite sign = null;
+
+        switch (bonusType)
+        {
+            case BonusType.Chest:
+                sign = MiniMapUIM.instance.chestSign;
+                break;
+            case BonusType.DemonsBloodFountain:
+                sign = MiniMapUIM.instance.demonsBloodFountainSign;
+                break;
+            case BonusType.SodaMachine:
+                sign = MiniMapUIM.instance.sodaMachineSign;
+                break;
+            case BonusType.Shop:
+                sign = MiniMapUIM.instance.shopSign;
+                break;
+            case BonusType.Map:
+                sign = MiniMapUIM.instance.mapSign;
+                break;
+            case BonusType.None:
+                if (locks.Length == 1) // если комната является тупиковой
+                {
+                    RoomTemplate roomTemplate
+                        = LevelBuilder.instance.levelTemplate.
+                        levelRooms[positionInLevel.x, positionInLevel.y];
+
+                    if (roomTemplate == LevelBuilder.instance.levelTemplate.startRoom)
+                    {
+                        sign = MiniMapUIM.instance.startSign;
+                    }
+                    else if (roomTemplate == LevelBuilder.instance.levelTemplate.endRoom)
+                    {
+                        sign = MiniMapUIM.instance.endSign;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            break;
+        }
+
+        MiniMapUIM.instance.SetSignOnMiniMapRoom(this, sign);
+    }
+
+    void HideRoom()
+    {
+        Image[] images = GetComponentsInChildren<Image>();
+
+        foreach (var image in images)
+        {
+            image.color = new Color(0, 0, 0, 0);
         }
     }
 
@@ -49,13 +126,24 @@ public class MiniMapRoom : MonoBehaviour
     }
     private void SetRoomPlayerStatusVisualization(MiniMapRoomPlayerStatus playerStatus)
     {
+        if (status == MiniMapRoomStatus.Hidden)
+        {
+            //coloredPart.color = new Color(0, 0, 0, 0);
+            //nonColoredPart.color = new Color(0, 0, 0, 0);
+            HideRoom();
+            return;
+        }
+
         switch (playerStatus)
         {
             case MiniMapRoomPlayerStatus.WasNotIn:
+                coloredPart.color = playerWasNotInRoomColor;
                 break;
             case MiniMapRoomPlayerStatus.WasIn:
+                coloredPart.color = playerWasInRoomColor;
                 break;
             case MiniMapRoomPlayerStatus.NowIn:
+                coloredPart.color = playerWasInRoomColor;
                 MiniMapUIM.instance.SetPlayerInRoomMark(this);
                 break;
         }
@@ -74,9 +162,9 @@ public class MiniMapRoom : MonoBehaviour
         get { return _lockVisible; }
         set { _lockVisible = value; SetLockVisible(value); }
     }
-    private void SetLockVisible(bool lockVisible)
+    private void SetLockVisible(bool locksAreVisible)
     {
-        if (lockVisible)
+        if (!locksAreVisible)
         {
             foreach (var loc in locks)
             {
@@ -110,4 +198,5 @@ public class MiniMapRoom : MonoBehaviour
     }
 
     public BonusType bonusType { get; set; }
+    public Vector2Int positionInLevel { get; set; }
 }

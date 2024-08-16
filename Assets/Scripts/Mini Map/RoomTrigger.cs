@@ -12,7 +12,14 @@ public class RoomTrigger : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            room.miniMapRoom.status = MiniMapRoomStatus.VisibleWayAndBonus;
+            if (room.miniMapRoom.status != MiniMapRoomStatus.VisibleWayAndBonus)
+                room.miniMapRoom.status = MiniMapRoomStatus.VisibleWayAndBonus;
+
+            if (room.miniMapRoom.playerStatus == MiniMapRoomPlayerStatus.WasNotIn)
+            {
+                MiniMapUIM.instance.ShowRoomsNear(room);
+            }
+
             room.miniMapRoom.playerStatus = MiniMapRoomPlayerStatus.NowIn;
         }
     }

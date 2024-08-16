@@ -267,6 +267,14 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public void MapPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            GameEventsManager.instance.input.MapPressed();
+        }
+    }
+
     public bool GetAttackPressed(bool hold = false)
     {
         if (hold)

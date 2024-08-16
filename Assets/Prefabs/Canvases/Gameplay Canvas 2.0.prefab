@@ -2513,10 +2513,14 @@ MonoBehaviour:
   LMiniMapRoomPrefab: {fileID: 3155353691028177998, guid: d47f07c4c59085946a1c3fc0a097262b, type: 3}
   TMiniMapRoomPrefab: {fileID: 6901076832690360046, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
   XMiniMapRoomPrefab: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
-  startSign: {fileID: 0}
-  endSign: {fileID: 0}
-  mapSign: {fileID: 0}
-  signSize: 1
+  _startSign: {fileID: 21300000, guid: b3d80eba06e7d584baa0e5fe3f265f74, type: 3}
+  _endSign: {fileID: 21300000, guid: f28d614dfe8ea1b439bf3b762ac79f2a, type: 3}
+  _mapSign: {fileID: 21300000, guid: 4bd36b41527c67044918fe92642132cb, type: 3}
+  _chestSign: {fileID: 21300000, guid: 52e5c77145b407741a994954316d573f, type: 3}
+  _shopSign: {fileID: 21300000, guid: 7a845ad71ef0a3744aab56b3e7cb0022, type: 3}
+  _demonsBloodFountainSign: {fileID: 21300000, guid: 2a9de0170193db443a9a3f8ef708a8eb, type: 3}
+  _sodaMachineSign: {fileID: 21300000, guid: 76ff32f6c096c654c8a3c74d4577f0ea, type: 3}
+  signSize: 0.3
   playerInRoomMark: {fileID: 4823161665539559670}
   xOffset: -2.8
   yOffset: -2.8
@@ -2524,7 +2528,7 @@ MonoBehaviour:
   roomSizeY: 0.28
   spaceBetweenRooms: 28
   mapRooms: {fileID: 663803190311884861}
-  mapPanel: {fileID: 663803190311884861}
+  mapPanel: {fileID: 1694807001989185722}
 --- !u!1 &3021948799651384505
 GameObject:
   m_ObjectHideFlags: 0

@@ -146,4 +146,11 @@ public class InputEvents
             onHealthBottle();
         }
     }
+
+    public event Action onMapPressed;
+    public void MapPressed()
+    {
+        if (onMapPressed != null)
+            onMapPressed();
+    }
 }

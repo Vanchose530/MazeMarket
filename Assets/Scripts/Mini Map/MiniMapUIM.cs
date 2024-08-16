@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MiniMapUIM : MonoBehaviour
 {
@@ -14,12 +15,23 @@ public class MiniMapUIM : MonoBehaviour
     [SerializeField] private MiniMapRoom TMiniMapRoomPrefab;
     [SerializeField] private MiniMapRoom XMiniMapRoomPrefab;
 
-    List<MiniMapRoom> miniMapRooms;
+    List<MiniMapRoom> miniMapRoomsList;
 
     [Header("Signs Sprites")]
-    [SerializeField] private Sprite startSign;
-    [SerializeField] private Sprite endSign;
-    [SerializeField] private Sprite mapSign;
+    [SerializeField] private Sprite _startSign;
+    public Sprite startSign {  get { return _startSign; } }
+    [SerializeField] private Sprite _endSign;
+    public Sprite endSign { get { return _endSign; } }
+    [SerializeField] private Sprite _mapSign;
+    public Sprite mapSign { get { return _mapSign; } }
+    [SerializeField] private Sprite _chestSign;
+    public Sprite chestSign { get { return _chestSign; } }
+    [SerializeField] private Sprite _shopSign;
+    public Sprite shopSign { get { return _shopSign; } }
+    [SerializeField] private Sprite _demonsBloodFountainSign;
+    public Sprite demonsBloodFountainSign { get { return _demonsBloodFountainSign; } }
+    [SerializeField] private Sprite _sodaMachineSign;
+    public Sprite sodaMachineSign { get { return _sodaMachineSign; } }
 
     [Header("Signs Size")]
     [SerializeField] private float signSize = 1;
@@ -40,14 +52,24 @@ public class MiniMapUIM : MonoBehaviour
 
     public bool isMiniMapActive { get; private set; }
 
+    MiniMapRoom[,] miniMapRooms;
+
+    public bool mapEnable { get { return mapPanel.active; } }
+
     private void Awake()
     {
         if (instance != null)
             Debug.LogWarning("Find more than one Mini Map UI Manager in scene!");
         instance = this;
 
-        miniMapRooms = new List<MiniMapRoom>();
+        miniMapRoomsList = new List<MiniMapRoom>();
         playerInRoomMark.transform.localScale = new Vector3(roomSizeX, roomSizeY, -10);
+    }
+
+    private IEnumerator Start()
+    {
+        yield return new WaitForSeconds(0.1f);
+        HideMiniMap();
     }
 
     public MiniMapRoom BuildMiniMapRoom(Room room)
@@ -86,6 +108,8 @@ public class MiniMapUIM : MonoBehaviour
         buildedRoom.lockType = room.lockType;
         buildedRoom.bonusType = room.bonusType;
 
+        buildedRoom.positionInLevel = room.positionInLevel;
+
         buildedRoom.transform.localPosition =
             new Vector3(room.positionInLevel.x + xOffset, room.positionInLevel.y + yOffset)
             * spaceBetweenRooms;
@@ -97,7 +121,16 @@ public class MiniMapUIM : MonoBehaviour
         buildedRoom.status = MiniMapRoomStatus.Hidden;
         buildedRoom.playerStatus = MiniMapRoomPlayerStatus.WasNotIn;
 
-        miniMapRooms.Add(buildedRoom);
+        miniMapRoomsList.Add(buildedRoom);
+
+        if (miniMapRooms == null)
+        {
+            int x = LevelBuilder.instance.levelTemplate.levelRooms.GetLength(0);
+            int y = LevelBuilder.instance.levelTemplate.levelRooms.GetLength(1);
+            miniMapRooms = new MiniMapRoom[x, y];
+        }
+
+        miniMapRooms[buildedRoom.positionInLevel.x, buildedRoom.positionInLevel.y] = buildedRoom;
 
         return buildedRoom;
     }
@@ -154,6 +187,21 @@ public class MiniMapUIM : MonoBehaviour
         mimiMapRoom.transform.Rotate(mimiMapRoom.transform.rotation.x, mimiMapRoom.transform.rotation.y, zRotation);
     }
 
+    public void SetSignOnMiniMapRoom(MiniMapRoom room, Sprite sign)
+    {
+        if (sign == null)
+        {
+            Debug.LogWarning("Cant set sign on room because there are no sign sprite");
+            return;
+        }
+
+        Image roomSign = Instantiate(new GameObject(), room.transform).AddComponent<Image>();
+        roomSign.sprite = sign;
+        roomSign.transform.localPosition = new Vector3(0, 0, 5);
+        roomSign.transform.localScale = new Vector3(signSize, signSize, 1);
+        roomSign.transform.rotation = Quaternion.identity;
+    }
+
     public void SetPlayerInRoomMark(MiniMapRoom miniMapRoom)
     {
         playerInRoomMark.transform.position = miniMapRoom.transform.position;
@@ -172,11 +220,30 @@ public class MiniMapUIM : MonoBehaviour
     public void UseMap()
     {
         // примерный метод
-        foreach (var miniMapRoom in miniMapRooms)
+        foreach (var miniMapRoom in miniMapRoomsList)
         {
             if (miniMapRoom.status == MiniMapRoomStatus.Hidden)
             {
                 miniMapRoom.status = MiniMapRoomStatus.VisibleWay;
+            }
+        }
+    }
+
+    public void ShowRoomsNear(Room room)
+    {
+        RoomTemplate roomTemplate =
+            LevelBuilder.instance.levelTemplate.levelRooms
+            [room.positionInLevel.x, room.positionInLevel.y];
+
+        HashSet<Vector2Int> transRoomPositions = roomTemplate.GetTransistedRoomsPositions();
+
+        foreach (var pos in transRoomPositions)
+        {
+            MiniMapRoom roomNear = miniMapRooms[pos.x, pos.y];
+
+            if (roomNear.status == MiniMapRoomStatus.Hidden)
+            {
+                roomNear.status = MiniMapRoomStatus.VisibleWay;
             }
         }
     }

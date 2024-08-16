@@ -108,6 +108,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3155353691028177998, guid: d47f07c4c59085946a1c3fc0a097262b, type: 3}
+      propertyPath: playerWasInRoomColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155353691028177998, guid: d47f07c4c59085946a1c3fc0a097262b, type: 3}
+      propertyPath: playerWasNotInRoomColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8130876343853972191, guid: d47f07c4c59085946a1c3fc0a097262b, type: 3}
       propertyPath: m_Sprite
       value: 

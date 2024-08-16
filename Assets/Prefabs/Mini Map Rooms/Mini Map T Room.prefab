@@ -32,6 +32,14 @@ PrefabInstance:
       propertyPath: locks.Array.data[2]
       value: 
       objectReference: {fileID: 760023100413666706}
+    - target: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
+      propertyPath: playerWasInRoomColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
+      propertyPath: playerWasNotInRoomColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 975565564979273885, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

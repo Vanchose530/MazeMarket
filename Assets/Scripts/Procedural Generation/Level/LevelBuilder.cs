@@ -137,10 +137,18 @@ public class LevelBuilder : MonoBehaviour
         newRoom.miniMapRoom.playerStatus = MiniMapRoomPlayerStatus.NowIn;
         newRoom.miniMapRoom.status = MiniMapRoomStatus.VisibleWayAndBonus;
 
+        StartCoroutine(ShowRoomsNearStartRoom(newRoom)); // корутина используется для того, чтобы комната рядом со стартовой успела создаться
+
         SetRoomPosition(newRoom, roomTemplate.position);
         RightRotateRoom(newRoom, roomTemplate);
 
         StartCoroutine(SetStartRoomCamera(newRoom));
+    }
+
+    IEnumerator ShowRoomsNearStartRoom(Room startRoom)
+    {
+        yield return new WaitForSeconds(0.1f);
+        MiniMapUIM.instance.ShowRoomsNear(startRoom);
     }
 
     IEnumerator SetStartRoomCamera(Room startRoom)

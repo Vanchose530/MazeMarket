@@ -35,9 +35,11 @@ public class Map : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        if (MapUIM.instance.mapEnable)
-            MapUIM.instance.HideMap();
-        else
-            MapUIM.instance.ShowMap();
+        //if (MapUIM.instance.mapEnable)
+        //    MapUIM.instance.HideMap();
+        //else
+        //    MapUIM.instance.ShowMap();
+
+        MiniMapUIM.instance.UseMap();
     }
 }

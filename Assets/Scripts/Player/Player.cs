@@ -276,6 +276,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
         GameEventsManager.instance.input.onGrenadeAttack += UseGrenade;
         GameEventsManager.instance.input.onHealthBottle += UseHealth;
+
+        GameEventsManager.instance.input.onMapPressed += OpenCloseMap;
     }
 
     private void OnDisable()
@@ -286,7 +288,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
 
         GameEventsManager.instance.input.onGrenadeAttack -= UseGrenade;
-        GameEventsManager.instance.input.onHealthBottle += UseHealth;
+        GameEventsManager.instance.input.onHealthBottle -= UseHealth;
+
+        GameEventsManager.instance.input.onMapPressed -= OpenCloseMap;
     }
 
     private IEnumerator OnLevelWasLoaded(int level)
@@ -482,6 +486,14 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 PlayerWeaponsManager.instance.currentWeapon.Attack(attackPoint);
             }
         }
+    }
+
+    private void OpenCloseMap()
+    {
+        if (MiniMapUIM.instance.mapEnable)
+            MiniMapUIM.instance.HideMiniMap();
+        else
+            MiniMapUIM.instance.ShowMiniMap();
     }
 
     private void RunEnable()
