@@ -27,6 +27,15 @@ public class Room : MonoBehaviour
     [SerializeField] private VirtualCameraTrigger _virtualCameraTrigger;
     public VirtualCameraTrigger virtualCameraTrigger { get { return _virtualCameraTrigger; } }
 
+    [Header("Setup")]
+    [SerializeField] private RoomTrigger roomTrigger; // для работы мини карты
+
+    private void OnValidate()
+    {
+        if (roomTrigger != null && roomTrigger.room != this)
+            roomTrigger.room = this;
+    }
+
     public float bonusValue { get; set; }
     BonusType _bonusType;
     public BonusType bonusType
