@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class MiniMapUIM : MonoBehaviour
@@ -219,12 +220,23 @@ public class MiniMapUIM : MonoBehaviour
 
     public void UseMap()
     {
-        // примерный метод
         foreach (var miniMapRoom in miniMapRoomsList)
         {
             if (miniMapRoom.status == MiniMapRoomStatus.Hidden)
             {
                 miniMapRoom.status = MiniMapRoomStatus.VisibleWay;
+
+                if (miniMapRoom.locksCount == 1) // если комната является тупиковой
+                {
+                    RoomTemplate roomTemplate
+                        = LevelBuilder.instance.levelTemplate.
+                        levelRooms[miniMapRoom.positionInLevel.x, miniMapRoom.positionInLevel.y];
+
+                    if (roomTemplate == LevelBuilder.instance.levelTemplate.endRoom)
+                    {
+                        miniMapRoom.status = MiniMapRoomStatus.VisibleWayAndBonus;
+                    }
+                }
             }
         }
     }

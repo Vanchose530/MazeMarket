@@ -13,6 +13,7 @@ public class MiniMapRoom : MonoBehaviour
 
     [Header("Locks")]
     [SerializeField] private Image[] locks;
+    public int locksCount { get { return locks.Length; } }
     [SerializeField] private Color redMiasmaColor;
     [SerializeField] private Color mintMiasmaColor;
 
