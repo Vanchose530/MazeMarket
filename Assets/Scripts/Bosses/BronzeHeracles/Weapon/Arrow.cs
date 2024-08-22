@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    [Header("Behavior")]
     [SerializeField] private int damageArrow;
     private void Start()
     {

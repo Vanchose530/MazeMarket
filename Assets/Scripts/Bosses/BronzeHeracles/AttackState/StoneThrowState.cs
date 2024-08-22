@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class StoneThrowState : BronzeHeraclesState
 {
+    [Header("Behavior")]
     public bool takenStone;
     public bool walkStone;
     public int countStone;

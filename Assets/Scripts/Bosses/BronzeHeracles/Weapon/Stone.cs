@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Stone : MonoBehaviour
 {
+    [Header("Behavior")]
     public GameObject smallStonePrefab;
     public Transform point;
-    public int damageStone;
+    private int damageStone;
     public int minCountSmallStone;
     public int maxCountSmallStone;
     private int randomSmallStone;

@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class SmallStone : MonoBehaviour
 {
-    [SerializeField]private int damageSmallStone;
+    [Header("Behavior")]
+    [SerializeField] private int damageSmallStone;
+    [SerializeField] private float timeDestroySmallStone;
 
     private void Start()
     {
@@ -13,19 +15,17 @@ public class SmallStone : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+
+        if (obj != null)
         {
-            collision.gameObject.GetComponent<IDamagable>().TakeDamage(damageSmallStone);
-            Destroy(gameObject);
-        }
-        else if(collision.gameObject.tag == "Walls")
-        {
+            obj.TakeDamage(damageSmallStone, transform);
             Destroy(gameObject);
         }
     }
     private IEnumerator Delete()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(timeDestroySmallStone);
         Destroy(gameObject);
     }
 }

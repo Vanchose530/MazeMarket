@@ -28,7 +28,7 @@ public class ArcheryState : BronzeHeraclesState
 
         bronzeHeracles.isBowInHand = false;
 
-        countArrow= bronzeHeracles.RandomArrow();
+        countArrow = bronzeHeracles.RandomArrow();
     }
     public override void Run()
     {

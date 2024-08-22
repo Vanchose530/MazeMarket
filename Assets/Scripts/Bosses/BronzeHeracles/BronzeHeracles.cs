@@ -28,11 +28,12 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private Transform stonePoint;
 
     [Header("Sound Effects")]
-    [SerializeField] private GameObject damageSoundPrefab;
-    [SerializeField] private GameObject alivingSoundPrefab;
-    [SerializeField] private GameObject shootBowSoundPrefab;
-    [SerializeField] private GameObject maceAttackSoundPrefab;
-    [SerializeField] private GameObject shootStoneSoundPrefab;
+    [SerializeField] private SoundEffect damageSE;
+    [SerializeField] private SoundEffect alivingSE;
+    [SerializeField] private SoundEffect aimingBowSE;
+    [SerializeField] private SoundEffect shootBowSE;
+    [SerializeField] private SoundEffect maceAttackSE;
+    [SerializeField] private SoundEffect shootStoneSE;
 
     [Header("Alive")]
     public bool stayOnAwake;
@@ -40,12 +41,12 @@ public class BronzeHeracles : Enemy, IDamagable
     public float alivingTime;
 
     [Header("Bow")]
-    [SerializeField] private float timeTakeBow;//время доставания лука
+    [SerializeField] private float timeTakeBow;
     [SerializeField] private float timeNewArrow;
     [SerializeField] private float timeWalkBow;
-    [SerializeField] private float aimingBow;//время доставания лука
-    [SerializeField] private float timeToShootBow;//время стрельбы
-    [SerializeField] private float timeRemoveBow;//время убирания лука
+    [SerializeField] private float aimingBow;
+    [SerializeField] private float timeToShootBow;
+    [SerializeField] private float timeRemoveBow;
     [SerializeField] private int minCountArrow;
     [SerializeField] private int maxCountArrow;
     [SerializeField] private float forceArrow;
@@ -62,6 +63,7 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private int minCountStone;
     [SerializeField] private int maxCountStone;
     [SerializeField] private float forceStone;
+
 
 
     [Header("BronzeHeracles AttackStates")]
@@ -213,7 +215,7 @@ public class BronzeHeracles : Enemy, IDamagable
             return;
         if (alreadySpawnedOnStart) 
             health -= damage;
-        EffectsManager.instance.PlaySoundEffect(damageSoundPrefab, transform.position, 1f, 0.9f, 1.1f);
+        AudioManager.instance.PlaySoundEffect(damageSE, transform.position);
 
         if (attack != null)
         {
@@ -274,7 +276,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         bodyAnimator.SetTrigger("Alive");
 
-        EffectsManager.instance.PlaySoundEffect(alivingSoundPrefab, alivingTime * 1.5f, 0.9f, 1.1f);
+        AudioManager.instance.PlaySoundEffect(alivingSE, transform.position);
 
         yield return new WaitForSeconds(alivingTime);
 
@@ -332,8 +334,10 @@ public class BronzeHeracles : Enemy, IDamagable
         isShootBow = true;
         movementDirection = Vector2.zero;
         bodyAnimator.SetTrigger("ShootABow");
-        EffectsManager.instance.PlaySoundEffect(shootBowSoundPrefab, timeToShootBow + aimingBow * 1.5f, 0.9f, 1.1f);
-        yield return new WaitForSeconds(timeToShootBow + aimingBow);
+        AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position);
+        yield return new WaitForSeconds(aimingBow);
+        AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
+        yield return new WaitForSeconds(timeToShootBow);
 
         Vector3 arrowAngle = archerPoint.eulerAngles;
         GameObject arrow = Instantiate(arrowPrefab, archerPoint.position, Quaternion.Euler(arrowAngle));
@@ -390,7 +394,7 @@ public class BronzeHeracles : Enemy, IDamagable
         isAttackMace = true;
         bodyAnimator.SetTrigger("MaceAttack");
         mace.GetComponent<Collider2D>().enabled = true;
-        EffectsManager.instance.PlaySoundEffect(maceAttackSoundPrefab, timeAttackMace * 1.5f, 0.9f, 1.1f);
+        AudioManager.instance.PlaySoundEffect(maceAttackSE, transform.position);
         yield return new WaitForSeconds(timeAttackMace);
         mace.GetComponent<Collider2D>().enabled = false;
         attack = false;
@@ -462,7 +466,7 @@ public class BronzeHeracles : Enemy, IDamagable
         isShootStone = true;
         movementDirection = Vector2.zero;
 
-        EffectsManager.instance.PlaySoundEffect(shootStoneSoundPrefab, timeShootStone * 1.5f, 0.9f, 1.1f);
+        AudioManager.instance.PlaySoundEffect(shootStoneSE, transform.position);
 
         yield return new WaitForSeconds(timeShootStone);
 
