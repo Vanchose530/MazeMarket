@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mace : MonoBehaviour
 {
     public int maceDamage = 1;
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     { 
        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
        if (obj != null)

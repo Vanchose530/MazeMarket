@@ -50,6 +50,7 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private int minCountArrow;
     [SerializeField] private int maxCountArrow;
     [SerializeField] private float forceArrow;
+    [SerializeField] private float arrowRotation;
 
     [Header("Mace")]
     [SerializeField] private float timeTakeMace;
@@ -136,7 +137,7 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         InvokeRepeating("UpdatePath", 0f, 0.5f);
         
-        SetState(stayState);
+        SetState(stoneThrowState);
     }
 
     
@@ -338,8 +339,8 @@ public class BronzeHeracles : Enemy, IDamagable
         yield return new WaitForSeconds(aimingBow);
         AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
         yield return new WaitForSeconds(timeToShootBow);
-
-        Vector3 arrowAngle = archerPoint.eulerAngles;
+        
+        Vector3 arrowAngle = new Vector3(archerPoint.eulerAngles.x, archerPoint.eulerAngles.y, archerPoint.eulerAngles.z + arrowRotation); ;
         GameObject arrow = Instantiate(arrowPrefab, archerPoint.position, Quaternion.Euler(arrowAngle));
         Rigidbody2D arb = arrow.GetComponent<Rigidbody2D>();
         arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceArrow, ForceMode2D.Impulse);

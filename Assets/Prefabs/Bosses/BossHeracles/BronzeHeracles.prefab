@@ -287,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 7853856490866781612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 11.19, y: 27.21, z: 0}
+  m_LocalPosition: {x: 12.19, y: 27.97, z: 0}
   m_LocalScale: {x: 11.9554, y: 10.5652, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -473,11 +473,36 @@ MonoBehaviour:
   damageEffect: {fileID: 2642225804590499521, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
   archerPoint: {fileID: 8983991875538256668}
   stonePoint: {fileID: 6468737344563250832}
-  damageSoundPrefab: {fileID: 4370945284375020606, guid: 0050dc35db72ef74d8cb633f816d3d99, type: 3}
-  alivingSoundPrefab: {fileID: 1919307532975111202, guid: 730544609d5f6c24fac914a6ab7e0896, type: 3}
-  shootBowSoundPrefab: {fileID: 4370945284375020606, guid: 0050dc35db72ef74d8cb633f816d3d99, type: 3}
-  maceAttackSoundPrefab: {fileID: 6501651493301820201, guid: ed150ef63fead0c43b98f89403e8778c, type: 3}
-  shootStoneSoundPrefab: {fileID: 6501651493301820201, guid: ed150ef63fead0c43b98f89403e8778c, type: 3}
+  damageSE:
+    sound: {fileID: 8300000, guid: 0695f1168c48f5947a37483ede1a0025, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  alivingSE:
+    sound: {fileID: 8300000, guid: ee8a553691a7a38498d01cb40b61bb0e, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  aimingBowSE:
+    sound: {fileID: 8300000, guid: a1d7bc25136fcbc4abcb1dd81f0323c0, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  shootBowSE:
+    sound: {fileID: 8300000, guid: 41943eeea82ab7b4b82c7d2f2054897e, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  maceAttackSE:
+    sound: {fileID: 8300000, guid: a1d7bc25136fcbc4abcb1dd81f0323c0, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  shootStoneSE:
+    sound: {fileID: 8300000, guid: ee8a553691a7a38498d01cb40b61bb0e, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
   stayOnAwake: 1
   stay: 0
   alivingTime: 5
@@ -490,6 +515,7 @@ MonoBehaviour:
   minCountArrow: 1
   maxCountArrow: 3
   forceArrow: 4
+  arrowRotation: -50
   timeTakeMace: 1
   timeAttackMace: 3
   timeRemoveMace: 1
