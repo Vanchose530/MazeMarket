@@ -85,6 +85,21 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         countEmptyBottle = startCountEmptyBottle;
     }
 
+    public void AddBottleByType(BottleTypes type, int count)
+    {
+        switch (type)
+        {
+            case BottleTypes.EmptyBottle:
+                countEmptyBottle += count;
+                break;
+            case BottleTypes.HealthBottle:
+                countHealthBottle += count;
+                break;
+            case BottleTypes.GrenadeBottle:
+                countGrenadeBottle += count;
+                break;
+        }
+    }
     private void UpdateUI()
     {
         if (keyCardCount == 0)
