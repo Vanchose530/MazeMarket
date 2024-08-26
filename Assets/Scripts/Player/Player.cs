@@ -177,18 +177,18 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private Rigidbody2D _rb;
 
     private bool _isOnBattle = false; // параметр необходим в первую очередь для музыки
-    public bool isOnBattle
-    {
-        get { return _isOnBattle; }
-        set
-        {
-            if (value)
-                AudioManager.instance.battleSnapshot.TransitionTo(2f);
-            else
-                AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
-            _isOnBattle = value;
-        }
-    }
+    //public bool isOnBattle
+    //{
+    //    get { return _isOnBattle; }
+    //    set
+    //    {
+    //        if (value)
+    //            AudioManager.instance.battleSnapshot.TransitionTo(2f);
+    //        else
+    //            AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
+    //        _isOnBattle = value;
+    //    }
+    //}
 
     [HideInInspector] public Vector2 startPosition; // эти два поля относятся к сохранению игрока
     [HideInInspector] public string levelName; // возможно их стоит перенести в другой скрипт

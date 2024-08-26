@@ -53,8 +53,8 @@ public class EnemyWavesManager : MonoBehaviour, IDataPersistence
         onPlayerEnterRoom += StartNextWave;
         onPlayerEnterRoom += EnableVirtualCamera;
 
-        onPlayerEnterRoom += () => Player.instance.isOnBattle = true;
-        onPlayerPassRoom += () => Player.instance.isOnBattle = false;
+        onPlayerEnterRoom += () => PlayerConditionsManager.instance.currentCondition = PlayerConditions.Battle;
+        onPlayerPassRoom += () => PlayerConditionsManager.instance.currentCondition = PlayerConditions.Default;
     }
 
     private void OnDisable()

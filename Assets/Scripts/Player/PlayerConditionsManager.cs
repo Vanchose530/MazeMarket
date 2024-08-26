@@ -71,7 +71,7 @@ public class PlayerConditionsManager : MonoBehaviour
                 break;
             case PlayerConditions.Death:
                 onBattle = false;
-                Time.timeScale = 0f;
+                Time.timeScale = 0.1f;
                 AudioManager.instance.onDeathSnapshot.TransitionTo(0.1f);
                 break;
         }

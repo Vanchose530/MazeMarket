@@ -60,25 +60,31 @@ public class PauseMenu : MonoBehaviour
 
     private void Pause(bool pause)
     {
+        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Death)
+            return;
+
         if (pause)
         {
             pauseMenuPanel.SetActive(true);
-            Time.timeScale = 0f;
+            // Time.timeScale = 0f;
             StartCoroutine("SelectFirstChoice");
             GameEventsManager.instance.pause.PauseIn();
-            AudioManager.instance.inMenuSnapshot.TransitionTo(0.5f);
+            // AudioManager.instance.inMenuSnapshot.TransitionTo(0.5f);
+            PlayerConditionsManager.instance.currentCondition = PlayerConditions.Pause;
         }
         else
         {
             if (pauseMenuPanel != null)
                 pauseMenuPanel.SetActive(false);
-            Time.timeScale = 1f;
+            // Time.timeScale = 1f;
             GameEventsManager.instance.pause.PauseOut();
 
-            if (Player.instance.isOnBattle)
-                AudioManager.instance.battleSnapshot.TransitionTo(0.5f);
-            else
-                AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
+            //if (Player.instance.isOnBattle)
+            //    AudioManager.instance.battleSnapshot.TransitionTo(0.5f);
+            //else
+            //    AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
+
+            PlayerConditionsManager.instance.SetGamingCondition();
         }
 
         this.pause = pause;

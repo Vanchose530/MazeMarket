@@ -17,7 +17,7 @@ public class Shop : MonoBehaviour, IInteractable
 
     public void CanInteract(Player player)
     {
-        if (Player.instance.isOnBattle)
+        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle)
         {
             return;
         }
@@ -27,7 +27,7 @@ public class Shop : MonoBehaviour, IInteractable
 
     public void CanNotInteract(Player player)
     {
-        if (Player.instance.isOnBattle)
+        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle)
         {
             return;
         }
@@ -37,7 +37,7 @@ public class Shop : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        if (Player.instance.isOnBattle)
+        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle)
         {
             return;
         }

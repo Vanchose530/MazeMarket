@@ -42,7 +42,8 @@ public class DeathWindow : MonoBehaviour
     private void ShowDeathWindow()
     {
         active = true;
-        AudioManager.instance.onDeathSnapshot.TransitionTo(0.1f);
+        // AudioManager.instance.onDeathSnapshot.TransitionTo(0.1f);
+        PlayerConditionsManager.instance.currentCondition = PlayerConditions.Death;
         deathPanel.SetActive(true);
     }
 }
