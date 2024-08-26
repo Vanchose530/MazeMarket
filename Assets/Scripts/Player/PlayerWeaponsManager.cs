@@ -157,8 +157,10 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     // проверка инвентаря на "полность" для подбора предметов
     public bool IsGunSlotsFull()
     {
-        if (weaponInventoryId > weapons.Count) return true;
-        if (weapons.Count < weaponInventorySize) return false;
+        if (weaponInventoryId > weapons.Count)
+            return true;
+        if (weapons.Count < weaponInventorySize)
+            return false;
         if (weapons.Count == weaponInventorySize)
         {
             SwitchToNullWeapon();
