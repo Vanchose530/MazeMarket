@@ -18,4 +18,14 @@ public class ShopManager : MonoBehaviour
             return _instance;
         }
     }
+
+    public void StartShoping()
+    {
+
+    }
+
+    public void EndShoping()
+    {
+
+    }
 }

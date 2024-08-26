@@ -222,6 +222,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         dashTrail.emitting = false;
 
         CursorManager.instance.InvokeUpdateAimPosition();
+        PlayerConditionsManager.instance.currentCondition = PlayerConditions.Default;
     }
 
      
