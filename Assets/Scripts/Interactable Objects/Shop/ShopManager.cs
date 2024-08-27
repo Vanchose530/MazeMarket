@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour
@@ -19,13 +20,25 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    public void StartShoping()
-    {
+    public bool onShoping { get; private set; }
 
+    public void StartShoping(Product[] products)
+    {
+        onShoping = true;
+        PlayerConditionsManager.instance.currentCondition = PlayerConditions.Shoping;
+        ShopUIM.instance.SetProductsInSlots(products);
+        ShopUIM.instance.ShowShopUI();
+
+        GameEventsManager.instance.input.onReloadPressed += EndShoping;
     }
 
     public void EndShoping()
     {
+        onShoping = false;
+        PlayerConditionsManager.instance.SetGamingCondition();
+        ShopUIM.instance.ClearSlots();
+        ShopUIM.instance.HideShopUI();
 
+        GameEventsManager.instance.input.onReloadPressed -= EndShoping;
     }
 }

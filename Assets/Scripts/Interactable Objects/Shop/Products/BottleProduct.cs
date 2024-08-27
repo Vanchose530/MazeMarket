@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Bottle Product", menuName = "Products/Bottle Product", order = 1)]
 public class BottleProduct : Product
 {
     [Header("Bottle")]
