@@ -5044,6 +5044,7 @@ GameObject:
   - component: {fileID: 7873645536678605362}
   - component: {fileID: 7873645536678605364}
   - component: {fileID: 7873645536678605367}
+  - component: {fileID: 8704248206441699250}
   m_Layer: 3
   m_Name: Zombie
   m_TagString: Enemy
@@ -5271,6 +5272,20 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
+--- !u!114 &8704248206441699250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873645536678605374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a9acbacb1321c4dbac9a6b04962644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zlovon: {fileID: 8804648676067629887, guid: 0a363d939a44fe24bba77545266ddaa3, type: 3}
+  spawnZlovon: 0.3
 --- !u!1 &7873645537486053308
 GameObject:
   m_ObjectHideFlags: 0
