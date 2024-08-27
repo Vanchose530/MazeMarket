@@ -1591,7 +1591,7 @@ Transform:
   m_GameObject: {fileID: 506325086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0.1, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32018,7 +32018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontSaveGameAfterQuit: 1
   fileName: data.json
---- !u!1001 &7774820828893881317
+--- !u!1001 &1115195159821869805
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -32028,11 +32028,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2959878066870951847, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.19
+      value: 12.19
       objectReference: {fileID: 0}
     - target: {fileID: 2959878066870951847, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27.21
+      value: 27.97
       objectReference: {fileID: 0}
     - target: {fileID: 2959878066870951847, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32066,29 +32066,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 3242319437259949674, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
-      propertyPath: checkObstaclesDistance
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6468737344563250832, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.0879
-      objectReference: {fileID: 0}
-    - target: {fileID: 6468737344563250832, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.058
-      objectReference: {fileID: 0}
-    - target: {fileID: 7687786781296897647, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1382855298, guid: b22c436f228175c438cb0333ecfab6df, type: 3}
     - target: {fileID: 7853856490866781612, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_Name
       value: BronzeHeracles
-      objectReference: {fileID: 0}
-    - target: {fileID: 8546099007515171092, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
-      propertyPath: maceDamage
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32116,8 +32096,8 @@ SceneRoots:
   - {fileID: 862821616}
   - {fileID: 276953586}
   - {fileID: 1979314468}
-  - {fileID: 7774820828893881317}
   - {fileID: 1680484842}
   - {fileID: 167954149}
   - {fileID: 1317949007}
   - {fileID: 313246528}
+  - {fileID: 1115195159821869805}

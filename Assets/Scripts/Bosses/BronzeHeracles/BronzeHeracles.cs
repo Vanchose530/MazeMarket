@@ -137,7 +137,7 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         InvokeRepeating("UpdatePath", 0f, 0.5f);
         
-        SetState(stoneThrowState);
+        SetState(stayState);
     }
 
     
@@ -281,7 +281,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(alivingTime);
 
-        SetState(maceAttackState);
+        SetState(RandomState());
 
         aliving = false;
 

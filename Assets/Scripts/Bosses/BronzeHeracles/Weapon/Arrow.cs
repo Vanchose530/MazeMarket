@@ -19,6 +19,9 @@ public class Arrow : MonoBehaviour
             obj.TakeDamage(damageArrow, transform);
             Destroy(gameObject);
         }
+        else {
+            Destroy(gameObject);
+        }
     }
     private IEnumerator Delete()
     {
