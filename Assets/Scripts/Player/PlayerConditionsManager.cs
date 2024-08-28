@@ -55,24 +55,29 @@ public class PlayerConditionsManager : MonoBehaviour
                 onBattle = false;
                 Time.timeScale = 1f;
                 AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
+                InputManager.instance.UnLockCursor();
                 break;
             case PlayerConditions.Battle:
                 onBattle = true;
                 Time.timeScale = 1f;
                 AudioManager.instance.battleSnapshot.TransitionTo(2f);
+                InputManager.instance.UnLockCursor();
                 break;
             case PlayerConditions.Pause:
                 Time.timeScale = 0f;
                 AudioManager.instance.inMenuSnapshot.TransitionTo(0.5f);
+                InputManager.instance.LockCursor();
                 break;
             case PlayerConditions.Shoping:
                 Time.timeScale = 0f;
                 AudioManager.instance.inMenuSnapshot.TransitionTo(0.5f); // снэпшот как у паузы
+                InputManager.instance.LockCursor();
                 break;
             case PlayerConditions.Death:
                 onBattle = false;
                 Time.timeScale = 0.1f;
                 AudioManager.instance.onDeathSnapshot.TransitionTo(0.1f);
+                InputManager.instance.LockCursor();
                 break;
         }
     }

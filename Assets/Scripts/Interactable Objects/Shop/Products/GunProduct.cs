@@ -16,7 +16,9 @@ public class GunProduct : Product
 
     public override void Buy()
     {
-        PlayerWeaponsManager.instance.AddWeapon(gun);
+        Gun gunToBuy = Instantiate(gun);
+        gunToBuy.ammoInMagazine = gun.magazineSize;
+        PlayerWeaponsManager.instance.AddWeapon(gunToBuy);
         PlayerWeaponsManager.instance.AddAmmoByType(gun.ammoType, ammoCount);
     }
 }

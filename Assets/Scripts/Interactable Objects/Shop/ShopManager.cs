@@ -28,6 +28,7 @@ public class ShopManager : MonoBehaviour
         PlayerConditionsManager.instance.currentCondition = PlayerConditions.Shoping;
         ShopUIM.instance.SetProductsInSlots(products);
         ShopUIM.instance.ShowShopUI();
+        ShopUIM.instance.SelectFirstChoice();
 
         GameEventsManager.instance.input.onReloadPressed += EndShoping;
     }

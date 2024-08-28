@@ -12,7 +12,7 @@ public abstract class Product : ScriptableObject
     [SerializeField] private int _price;
     public int price { get { return _price; } }
     [SerializeField] private int _count;
-    public int count { get { return _count; } }
+    public int count { get { return _count; } set { _count = value; } }
     public int currentCount { get; set; }
 
     abstract public void Buy();

@@ -95,6 +95,19 @@ public class InputManager : MonoBehaviour
         GameEventsManager.instance.input.ChangeHandling(handler);
     }
 
+    public void LockCursor() => Cursor.lockState = CursorLockMode.Locked;
+    public void UnLockCursor()
+    {
+        if (inputHandler == InputHandlers.KeyboardAndMouse)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        else if (inputHandler == InputHandlers.Gamepad)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
     public void MovePressed(InputAction.CallbackContext context)
     {
         if (context.performed)

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ShopUIM : MonoBehaviour
 {
@@ -39,5 +41,17 @@ public class ShopUIM : MonoBehaviour
         {
             slot.SetVoid();
         }
+    }
+
+    public void SelectFirstChoice()
+    {
+        StartCoroutine(SelectFirstChoiceCorrutine());
+    }
+
+    private IEnumerator SelectFirstChoiceCorrutine()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        EventSystem.current.SetSelectedGameObject(slots[1].gameObject);
     }
 }

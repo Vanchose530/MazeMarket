@@ -76,7 +76,8 @@ public class Shop : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle)
+        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle
+            || PlayerConditionsManager.instance.currentCondition == PlayerConditions.Shoping)
         {
             return;
         }

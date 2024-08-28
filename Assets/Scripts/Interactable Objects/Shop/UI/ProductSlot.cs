@@ -16,7 +16,7 @@ public class ProductSlot : MonoBehaviour
 
     public void SetProduct(Product newProduct)
     {
-        if (newProduct == null)
+        if (newProduct == null || newProduct.count <= 0)
         {
             SetVoid();
             return;
@@ -36,17 +36,27 @@ public class ProductSlot : MonoBehaviour
         product = null;
         productImage.sprite = ShopUIM.instance.voidSlotImage;
         productName.text = "пусто";
-        productPrice.text = "0";
-        productCount.text = "0";
+        productPrice.text = "";
+        productCount.text = "";
         cantBuyProductIcon.SetActive(false);
     }
 
     public void TryBuyProduct()
     {
-        if (product.GetCanBuy())
+        if (product.GetCanBuy() && product != null)
         {
             // проверка на наличие деняк !!!
             product.Buy();
+            product.count--;
+
+            if (product.count == 0)
+            {
+                SetVoid();
+            }
+            else
+            {
+                productCount.text = System.Convert.ToString(product.count);
+            }
         }
         else
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Ammo Product", menuName = "Products/Ammo Product", order = 1)]
+[CreateAssetMenu(fileName = "Ammo Product", menuName = "Products/Ammo Producte", order = 1)]
 public class AmmoProduct : Product
 {
     [Header("Ammo")]

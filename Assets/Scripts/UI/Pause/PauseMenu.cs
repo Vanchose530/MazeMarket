@@ -94,6 +94,10 @@ public class PauseMenu : MonoBehaviour
     {
         if (Player.instance == null)
             return;
+
+        if (ShopManager.instance.onShoping)
+            ShopManager.instance.EndShoping();
+
         Pause(!pause);
     }
 
