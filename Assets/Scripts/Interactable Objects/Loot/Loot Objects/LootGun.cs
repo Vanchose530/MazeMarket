@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "Loot Gun", menuName = "Scriptable Objects/Loot/Gun", order = 1)]
 public class LootGun : LootObject
 {
     [Header("Loot Gun")]
