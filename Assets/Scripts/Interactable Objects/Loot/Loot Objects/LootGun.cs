@@ -16,7 +16,10 @@ public class LootGun : LootObject
 
     public override void Loot()
     {
-        PlayerWeaponsManager.instance.AddWeapon(gun);
+        Gun gunToAdd = Instantiate(gun);
+        gunToAdd.ammoInMagazine = gunToAdd.magazineSize;
+
+        PlayerWeaponsManager.instance.AddWeapon(gunToAdd);
 
         if (ammoToAdd > 0)
             PlayerWeaponsManager.instance.AddAmmoByType(gun.ammoType, ammoToAdd);
