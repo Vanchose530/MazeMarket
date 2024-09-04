@@ -46,8 +46,15 @@ public class ProductSlot : MonoBehaviour
         if (product.GetCanBuy() && product != null)
         {
             // проверка на наличие деняк !!!
+
+            if (PlayerInventory.instance.money < product.price)
+                return;
+
             product.Buy();
             product.count--;
+
+            PlayerInventory.instance.money -= product.price;
+            ShopUIM.instance.UpdatePlayersMoney();
 
             if (product.count == 0)
             {

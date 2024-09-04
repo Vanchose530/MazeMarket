@@ -5,7 +5,7 @@ using UnityEngine;
 public class RandomScriptDeactivator : MonoBehaviour
 {
     [Header("Deactivator")]
-    [SerializeField] private MonoBehaviour script;
+    [SerializeField] private List<MonoBehaviour> scripts;
     [Range(0, 100)]
     [SerializeField] private int chance;
 
@@ -17,8 +17,12 @@ public class RandomScriptDeactivator : MonoBehaviour
         int r = Random.Range(0, 100);
 
         if (r <= chance)
-            Destroy(script);
-            // script.enabled = false;
+        {
+            foreach (var script in scripts)
+            {
+                Destroy(script);
+            }
+        }
 
         Destroy(this);
     }

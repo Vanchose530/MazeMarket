@@ -11,6 +11,15 @@ public class LootMoney : LootObject
 
     public override void Loot()
     {
-        // а мани то пока что нет
+        int countToAdd = 0;
+
+        if (inaccuracy > 0)
+            countToAdd = Random.Range(count - inaccuracy, count + inaccuracy);
+        else if (inaccuracy < 0)
+            countToAdd = Random.Range(count + inaccuracy, count - inaccuracy);
+        else if (inaccuracy == 0)
+            countToAdd = count;
+
+        PlayerInventory.instance.money += countToAdd;
     }
 }

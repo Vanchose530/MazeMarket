@@ -15,11 +15,12 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
     [SerializeField] private int startCountEmptyBottle = 1;
 
     private int _keyCardCount;
+
     private int _countGrenadeBottle;
     private int _countHealthBottle;
     private int _countEmptyBottle;
 
-
+    private int _money;
 
     public int keyCardCount
     {
@@ -58,6 +59,15 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         }
     }
 
+    public int money
+    {
+        get { return _money; }
+        set
+        {
+            _money = value;
+            InventoryUIManager.instance.SetMoney(value);
+        }
+    }
     private void Awake()
     {
         if (instance != null)

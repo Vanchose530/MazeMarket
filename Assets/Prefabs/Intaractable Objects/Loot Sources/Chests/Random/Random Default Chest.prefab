@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7925600382887907272}
   - component: {fileID: 987883272413753567}
   - component: {fileID: 3288268992615291081}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Random Default Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ MonoBehaviour:
   glowColor: {r: 0.5660378, g: 0.394874, b: 0.07742971, a: 1}
   glowBrightness: 1
   outlineWidth: 1
-  alphaThreshold: 0.01
+  alphaThreshold: 0
   drawOutside: 1
   enableInstancing: 0
 --- !u!61 &7925600382887907272

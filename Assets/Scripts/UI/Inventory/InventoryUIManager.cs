@@ -11,6 +11,9 @@ public class InventoryUIManager : MonoBehaviour
     [Header("General")]
     [SerializeField] private GameObject inventoryPanel;
 
+    [Header("Money")]
+    [SerializeField] private TextMeshProUGUI moneyTMP;
+
     [Header("Weapons")]
     [SerializeField] private WeaponSlot[] weaponSlots;
 
@@ -86,6 +89,11 @@ public class InventoryUIManager : MonoBehaviour
         HideInventory();
     }
 
+    public void SetMoney(int value)
+    {
+        if (moneyTMP != null)
+            moneyTMP.text = System.Convert.ToString(value);
+    }
 
     public void UpdateAmmoCounters()
     {

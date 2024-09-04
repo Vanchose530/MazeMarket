@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class ShopUIM : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private List<ProductSlot> slots;
+    [SerializeField] private TextMeshProUGUI playersMoneyTMP;
     public int slotsCount { get { return slots.Count; } }
     [SerializeField] private Sprite _voidSlotImage;
     public Sprite voidSlotImage {  get { return _voidSlotImage; } }
@@ -24,7 +26,12 @@ public class ShopUIM : MonoBehaviour
         shopPanel.active = false;
     }
 
-    public void ShowShopUI() => shopPanel.SetActive(true);
+    public void ShowShopUI()
+    {
+        shopPanel.SetActive(true);
+        UpdatePlayersMoney();
+    }
+        
     public void HideShopUI() => shopPanel.SetActive(false);
 
     public void SetProductsInSlots(Product[] products)
@@ -41,6 +48,12 @@ public class ShopUIM : MonoBehaviour
         {
             slot.SetVoid();
         }
+    }
+
+    public void UpdatePlayersMoney()
+    {
+        if (playersMoneyTMP != null)
+            playersMoneyTMP.text = System.Convert.ToString(PlayerInventory.instance.money);
     }
 
     public void SelectFirstChoice()

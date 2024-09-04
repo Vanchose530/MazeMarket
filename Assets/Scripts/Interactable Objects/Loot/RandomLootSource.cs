@@ -29,8 +29,14 @@ public class RandomLootSource : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        glow.enabled = false;
         opened = false;
+    }
+
+    private void Start()
+    {
+        glow.enabled = false;
+        // если мы выключаем свечение в методе старта, то 
+        // отсутствует баг с материалом
     }
 
     public void CanInteract(Player player)
