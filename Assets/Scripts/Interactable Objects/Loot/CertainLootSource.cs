@@ -12,6 +12,10 @@ public class CertainLootSource : MonoBehaviour, IInteractable
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteGlowEffect glow;
 
+    [Header("SFX")]
+    [SerializeField] private SoundEffect openSound;
+    [SerializeField] private SoundEffect cantOpenSound;
+
     bool opened;
 
     private void OnValidate()
@@ -50,12 +54,19 @@ public class CertainLootSource : MonoBehaviour, IInteractable
                 loot.Loot();
                 opened = true;
                 glow.enabled = false;
+
                 if (animator != null)
                     animator.Play("Loot");
+
+                if (openSound != null)
+                    AudioManager.instance.PlaySoundEffect(openSound);
             }
             else
             {
                 Debug.Log("Cant loot this source!");
+
+                if (cantOpenSound != null)
+                    AudioManager.instance.PlaySoundEffect(cantOpenSound);
                 // нужна индикация того, что источник нельзя залутать
             }
         }

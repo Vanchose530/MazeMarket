@@ -7,4 +7,5 @@ public abstract class LootObject : ScriptableObject
     public abstract void Loot();
 
     public virtual bool GetCanLoot() { return true; }
+    public virtual string GetLootString() { return "~ отсутствует строка лута ~"; }
 }
