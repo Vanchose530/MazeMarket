@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 59.614437, y: 32.959286, z: 4.5370293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5672648411623390084}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2413754140639274795
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -30817133, guid: 7d2990e3682555b48910583b40c35e78, type: 3}
+  m_Sprite: {fileID: -1305281190, guid: f67caff87c22fda40be7e90bcb361fee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,3 +131,65 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1875, y: 0.625}
   m_EdgeRadius: 0
+--- !u!1001 &3490243653881552226
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2400709936757660520}
+    m_Modifications:
+    - target: {fileID: 6753029274018010208, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_Name
+      value: Cash Register
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.063
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.5370293
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+--- !u!4 &5672648411623390084 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9139665875573745382, guid: 050754ed6972e49418a49befed27f4a2, type: 3}
+  m_PrefabInstance: {fileID: 3490243653881552226}
+  m_PrefabAsset: {fileID: 0}
