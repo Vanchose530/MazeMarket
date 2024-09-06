@@ -13,11 +13,9 @@ public class Room : MonoBehaviour
     [SerializeField] private DemonsBloodFountain demonsBloodFountain;
     [SerializeField] private VendingMachine sodaMachine;
     [SerializeField] private Map map;
-    [SerializeField] private Chest chestDefault;
-    [SerializeField] private Chest chestMedium;
-    [SerializeField] private Chest chestRare;
+    [SerializeField] private ChestInstaller chestInstaller;
     [SerializeField] private GameObject cultistsDecor;
-    [SerializeField] private Shop shop;
+    [SerializeField] private ShopInstaller shopInstaller;
 
     [Header("Enemyes on Room")]
     [SerializeField] private EnemyWavesManager _enemyWavesManager;
@@ -78,25 +76,22 @@ public class Room : MonoBehaviour
             Destroy(sodaMachine.gameObject);
         if (bonusType != BonusType.Map)
             Destroy(map.gameObject);
+
         if (bonusType != BonusType.Shop)
-            Destroy(shop.gameObject);
+            Destroy(shopInstaller.gameObject);
+        else
+            shopInstaller.Install(bonusValue);
 
         if (bonusType != BonusType.Chest)
         {
             if (cultistsDecor != null)
                 Destroy(cultistsDecor.gameObject);
 
-            Destroy(chestDefault.gameObject);
-            Destroy(chestMedium.gameObject);
-            Destroy(chestRare.gameObject);
+            Destroy(chestInstaller.gameObject);
         }
         else
         {
-            // в дальнейшем сделать градацию по сундукам разной редкости!
-
-            Destroy(chestDefault.gameObject);
-            // Destroy(chestMedium.gameObject);
-            Destroy(chestRare.gameObject);
+            chestInstaller.Install(bonusValue);
         }
     }
 
