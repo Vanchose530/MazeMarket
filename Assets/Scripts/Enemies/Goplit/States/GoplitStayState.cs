@@ -16,7 +16,11 @@ public class GoplitStayState : GoplitState
 
     public override void Run()
     {
-        if (Vector2.Distance(Player.instance.rb.position, goplit.rb.position) < distanceToFindPlayer) CheckPlayer();
+        if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle)
+            return;
+
+        if (Vector2.Distance(Player.instance.rb.position, goplit.rb.position) < distanceToFindPlayer)
+            CheckPlayer();
     }
 
     public override void Exit()
