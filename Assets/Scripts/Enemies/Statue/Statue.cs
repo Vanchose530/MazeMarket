@@ -236,6 +236,7 @@ public class Statue : Enemy, IDamagable
 
             if (currentState != agressiveState)
                 SetState(agressiveState);
+
             if (attack != null)
             {
                 var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);

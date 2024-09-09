@@ -26,6 +26,7 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] private GameObject alivingSoundPrefab;
     [Header("Effects")]
     [SerializeField] private GameObject damageEffect;
+    [SerializeField] private GameObject bulletsAftereffects;
     [SerializeField] private GameObject alivingEffect;
 
     [Header("Statue stay/alive")]
@@ -155,16 +156,16 @@ public class Goplit : Enemy, IDamagable
 
     public override void Attack()
     {
-        
         time=timeAttack;
         StartAttack();
         SetState(attackState);
-
     }
+
     public void StartAttack() 
     {
         StartCoroutine("StartAttackCoroutine");
     }
+
     public IEnumerator StartAttackCoroutine() 
     {
         movementDirection = Vector2.zero;
@@ -275,6 +276,14 @@ public class Goplit : Enemy, IDamagable
     {
         if (spawning)
             return;
+
+        if (currentState == stayState)
+        {
+            GameObject effect = Instantiate(bulletsAftereffects, new Vector3(attack.position.x, attack.position.y, 1), attack.rotation);
+            Destroy(effect, 0.3f);
+            return;
+        }
+
         AudioManager.instance.PlaySoundEffect(damageSoundSE, rb.position, (1 / firingRate) * 1.5f);
         health -= damage;
 

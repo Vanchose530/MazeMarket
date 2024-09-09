@@ -339,7 +339,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 40
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -423,6 +423,7 @@ MonoBehaviour:
   alivingEffectSoundPrefab: {fileID: 971622264450682791, guid: aff6f8f80db46d0429dd21fa2df0fa3f, type: 3}
   alivingSoundPrefab: {fileID: 7390544046064625189, guid: 01d0288251327fd45b5073fb78a306fa, type: 3}
   damageEffect: {fileID: 2642225804590499521, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
+  bulletsAftereffects: {fileID: 7120575172948533449, guid: 17dddbd611370b5428b4fa5da6a7ed19, type: 3}
   alivingEffect: {fileID: 9046454777077198889, guid: 08071334ab1692c47a49c8ad61f78f8e, type: 3}
   stayOnAwake: 1
   stay: 0
