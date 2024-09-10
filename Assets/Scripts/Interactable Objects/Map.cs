@@ -48,5 +48,12 @@ public class Map : MonoBehaviour, IInteractable
 
         if (sourceLight != null)
             sourceLight.enabled = false;
+
+        Destroy(this);
+    }
+
+    private void OnDestroy()
+    {
+        interactSpriteGlow.enabled = false;
     }
 }
