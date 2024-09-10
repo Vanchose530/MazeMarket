@@ -2,17 +2,21 @@ using SpriteGlow;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Map : MonoBehaviour, IInteractable
 {
     [Header("Interact Effect")]
     [SerializeField] private SpriteGlowEffect interactSpriteGlow;
     [SerializeField] private SoundEffect interactSE;
+    [SerializeField] private Light2D sourceLight;
 
     private void OnValidate()
     {
         if (interactSpriteGlow == null)
             interactSpriteGlow = GetComponent<SpriteGlowEffect>();
+        if (sourceLight == null)
+            sourceLight = GetComponentInChildren<Light2D>();
     }
 
     private void Start()
@@ -41,5 +45,8 @@ public class Map : MonoBehaviour, IInteractable
         //    MapUIM.instance.ShowMap();
 
         MiniMapUIM.instance.UseMap();
+
+        if (sourceLight != null)
+            sourceLight.enabled = false;
     }
 }

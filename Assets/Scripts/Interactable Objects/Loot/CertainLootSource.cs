@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using SpriteGlow;
+using UnityEngine.Rendering.Universal;
 using UnityEngine;
 
 public class CertainLootSource : MonoBehaviour, IInteractable
@@ -11,6 +12,7 @@ public class CertainLootSource : MonoBehaviour, IInteractable
     [Header("Setup")]
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteGlowEffect glow;
+    [SerializeField] private Light2D sourceLight;
 
     [Header("SFX")]
     [SerializeField] private SoundEffect openSound;
@@ -24,6 +26,8 @@ public class CertainLootSource : MonoBehaviour, IInteractable
             animator = GetComponent<Animator>();
         if (glow == null)
             glow = GetComponent<SpriteGlowEffect>();
+        if (sourceLight == null)
+            sourceLight = GetComponentInChildren<Light2D>();
     }
 
     private void Awake()
@@ -63,6 +67,9 @@ public class CertainLootSource : MonoBehaviour, IInteractable
 
                 if (animator != null)
                     animator.Play("Loot");
+
+                if (sourceLight != null)
+                    sourceLight.enabled = false;
 
                 if (openSound != null)
                     AudioManager.instance.PlaySoundEffect(openSound);
