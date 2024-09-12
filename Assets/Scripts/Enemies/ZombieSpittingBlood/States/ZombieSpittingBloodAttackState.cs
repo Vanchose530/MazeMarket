@@ -34,15 +34,12 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
         if (walkInOneTurnTime <= 0 || zombieSpittingBlood.rb.velocity.magnitude < zombieSpittingBlood.speed / 3)
         {
-            Debug.Log("близко-близко");
             ChangeTurn();
             ResetTimeToWalkInOneTurn();
         }
 
         if (distanceToPlayer <= distanceFromPlayer)
         {
-
-            Debug.Log("близко");
 
             moveVector += vectorFromPlayer;
 
@@ -52,7 +49,6 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
         }
         else 
         {
-            Debug.Log("далеко");
 
             zombieSpittingBlood.ExecutePath();
 

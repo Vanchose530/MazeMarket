@@ -30,13 +30,13 @@ public class ZombieSpittingBloodPursuitState : ZombieSpittingBloodState
 
         if (!CheckObstacle() && distanceToPlayer < attackDistance) 
         {
-            zombieSpittingBlood.Attack();
+            zombieSpittingBlood.SetState(zombieSpittingBlood.attackState);
             
         }
 
         if (attackObstacles && zombieSpittingBlood.rb.velocity.magnitude < zombieSpittingBlood.speed && CheckObstacle()) 
         {
-            zombieSpittingBlood.Attack();
+            zombieSpittingBlood.SetState(zombieSpittingBlood.attackState);
         } 
 
         if (distanceToPlayer > distanceToMissPlayer)
