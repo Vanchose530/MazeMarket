@@ -28,10 +28,10 @@ public class GameData
     public GameData()
     {
         playerHealth = 10000;
-        lightBulletsCount = 200;
-        mediumBulletsCount = 120;
-        heavyBulletsCount = 50;
-        shellsCount = 40;
+        lightBulletsCount = 0;
+        mediumBulletsCount = 0;
+        heavyBulletsCount = 0;
+        shellsCount = 0;
         keyCardCount = 0;
         playerWeapons = new SerializableDictionary<string, int>();
         collectedItemsId = new List<string>();
