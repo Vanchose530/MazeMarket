@@ -441,7 +441,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Attack()
     {
-        if (PlayerWeaponsManager.instance.currentWeapon == null && nextAttackTime <= 0 && InputManager.instance.GetAttackPressed())
+        if (PlayerWeaponsManager.instance.currentWeapon == null
+            && nextAttackTime <= 0 && InputManager.instance.GetAttackPressed()) // игрок безоружен
         {
             if (seriesAttack <= 0) { punchSide = 0; bodyAnimator.SetFloat("Punch Side", punchSide); }
 
@@ -470,7 +471,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
             nextAttackTime = attackCooldown;
         }
-        else if (PlayerWeaponsManager.instance.currentWeapon != null && InputManager.instance.GetAttackPressed(PlayerWeaponsManager.instance.currentWeapon.holdToAttack) && PlayerWeaponsManager.instance.currentWeaponCooldown <= 0 && !PlayerWeaponsManager.instance.currentGun.reloading)
+        else if (PlayerWeaponsManager.instance.currentWeapon != null
+            && InputManager.instance.GetAttackPressed(PlayerWeaponsManager.instance.currentWeapon.holdToAttack)
+            && PlayerWeaponsManager.instance.currentWeaponCooldown <= 0
+            && !PlayerWeaponsManager.instance.currentGun.reloading) // игрок вооружён
         {
             if (PlayerWeaponsManager.instance.currentGun.ammoInMagazine > 0)
             {
@@ -478,13 +482,32 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 bodyAnimator.SetTrigger("Attack");
             }
 
+            Transform currentAttackPoint = null;
+
             if (CheckObstacles(attackPoint.localPosition.y, hideObjectLayer))
             {
-                PlayerWeaponsManager.instance.currentWeapon.Attack(secondAttackPoint);
+                currentAttackPoint = secondAttackPoint;
             }
             else
             {
-                PlayerWeaponsManager.instance.currentWeapon.Attack(attackPoint);
+                currentAttackPoint = attackPoint;
+            }
+
+            if (attackPoint != null)
+            {
+                PlayerWeaponsManager.instance.currentWeapon.Attack(currentAttackPoint);
+
+                if (PlayerWeaponsManager.instance.currentGun.ammoInMagazine == 0)
+                {
+                    if (PlayerWeaponsManager.instance.GetAmmoByType(PlayerWeaponsManager.instance.currentGun.ammoType) > 0)
+                    {
+                        ReloadGun();
+                    }
+                    else
+                    {
+                        Debug.Log("Нет патрон");
+                    }
+                }
             }
         }
     }
@@ -616,7 +639,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void UseHealth()
     {
-        if(PlayerInventory.instance.countHealthBottle > 0)
+        if(PlayerInventory.instance.countHealthBottle > 0 && health < maxHealth)
         {
             bodyAnimator.SetFloat("Healing Multiplier", 1 / timeToHeal);
             StartCoroutine("HealthBottleDrinkCouroutine");
