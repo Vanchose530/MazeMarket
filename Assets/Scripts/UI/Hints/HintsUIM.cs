@@ -21,6 +21,18 @@ public class HintsUIM : MonoBehaviour
     [SerializeField] private Animator dropHintAnimator;
     [SerializeField] private float dropHintTime = 4f;
 
+    [Header("Notices")]
+    [SerializeField] private TextHint _defaultNotice;
+    public TextHint defaultNotice { get { return _defaultNotice; } }
+    [SerializeField] private TextHint _pleasureNotice;
+    public TextHint pleasureNotice { get { return _pleasureNotice; } }
+    [SerializeField] private TextHint _warningNotice;
+    public TextHint warningNotice { get { return _warningNotice; } }
+
+    [Header("Loot")]
+    [SerializeField] private TextHint _lootHint;
+    public TextHint lootHint { get { return _lootHint; } }
+
     private void Awake()
     {
         if (instance != null)
