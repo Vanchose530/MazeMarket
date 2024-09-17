@@ -9,11 +9,10 @@ public class LootAmmo : LootObject
     [SerializeField] private int count;
     [SerializeField] private int inaccuracy;
     [SerializeField] private AmmoTypes type;
+    int countToAdd = 0;
 
     public override void Loot()
     {
-        int countToAdd = 0;
-
         if (inaccuracy > 0)
             countToAdd = Random.Range(count - inaccuracy, count + inaccuracy);
         else if (inaccuracy < 0)
@@ -22,5 +21,28 @@ public class LootAmmo : LootObject
             countToAdd = count;
 
         PlayerWeaponsManager.instance.AddAmmoByType(type, countToAdd);
+    }
+
+    public override string GetLootString()
+    {
+        string ammoTypeStr = "";
+
+        switch (type)
+        {
+            case AmmoTypes.LightBullets:
+                ammoTypeStr = "Патроны лёгкого калибра";
+                break;
+            case AmmoTypes.MediumBullets:
+                ammoTypeStr = "Патроны среднего калибра";
+                break;
+            case AmmoTypes.HeavyBullets:
+                ammoTypeStr = "Патроны тяжёлого калибра";
+                break;
+            case AmmoTypes.Shells:
+                ammoTypeStr = "Дроби";
+                break;
+        }
+
+        return ammoTypeStr + " " + countToAdd;
     }
 }

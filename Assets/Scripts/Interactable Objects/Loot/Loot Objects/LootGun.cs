@@ -24,4 +24,9 @@ public class LootGun : LootObject
         if (ammoToAdd > 0)
             PlayerWeaponsManager.instance.AddAmmoByType(gun.ammoType, ammoToAdd);
     }
+
+    public override string GetLootString()
+    {
+        return gun.name;
+    }
 }

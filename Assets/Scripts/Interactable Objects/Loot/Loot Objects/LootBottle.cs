@@ -24,4 +24,24 @@ public class LootBottle : LootObject
                 break;
         }
     }
+
+    public override string GetLootString()
+    {
+        string bottleTypeStr = "";
+
+        switch (type)
+        {
+            case BottleType.Void:
+                bottleTypeStr = "Пустая склянка";
+                break;
+            case BottleType.HealthPoition:
+                bottleTypeStr = "Лечебное зелье";
+                break;
+            case BottleType.DemonsBloodGrenade:
+                bottleTypeStr = "Граната из крови демона лабиринтов";
+                break;
+        }
+
+        return bottleTypeStr + " " + count;
+    }
 }

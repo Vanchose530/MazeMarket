@@ -86,6 +86,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         GameEventsManager.instance.input.onRemoveWeaponPressed += RemoveWeapon;
         GameEventsManager.instance.input.onChangeWeaponPressed += ChangeWeapon;
+        GameEventsManager.instance.playerWeapons.onWeaponChanged += CheckAmmo;
         GameEventsManager.instance.input.onFirstWeaponChoosen += toFirstWeapon;
         GameEventsManager.instance.input.onSecondWeaponChoosen += toSecondWeapon;
         GameEventsManager.instance.input.onThirdWeaponChoosen += toThirdWeapon;
@@ -96,6 +97,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         GameEventsManager.instance.input.onRemoveWeaponPressed -= RemoveWeapon;
         GameEventsManager.instance.input.onChangeWeaponPressed -= ChangeWeapon;
+        GameEventsManager.instance.playerWeapons.onWeaponChanged -= CheckAmmo;
         GameEventsManager.instance.input.onFirstWeaponChoosen -= toFirstWeapon;
         GameEventsManager.instance.input.onSecondWeaponChoosen -= toSecondWeapon;
         GameEventsManager.instance.input.onThirdWeaponChoosen -= toThirdWeapon;
@@ -104,6 +106,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
+        // CheckAmmo(); // затратно делать каждый кадр
         UpdateUI(); // затратно делать каждый кадр
         CountTimeVariables();
     }
@@ -327,7 +330,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
         {
             UnityEngine.Debug.Log("Cant drop it here");
-            HintsUIM.instance.ShowDropHint();
+            HintsManager.instance.ShowDefaultNotice("Ќе могу выбросить здесь", 1.5f);
             return;
         }
 
@@ -379,6 +382,14 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
         if (currentGun != null)
             AmmoUIManager.instance.ammoType = currentGun.ammoType; // в будущем обновл€ть ui при вызове событи€
+    }
+
+    public void CheckAmmo()
+    {
+        if (currentGun != null && currentGun.ammoInMagazine == 0 && GetAmmoByType(currentGun.ammoType) == 0)
+            HintsManager.instance.ShowWarningNotice(" ончились патроны!");
+        else
+            HintsManager.instance.HideWarningNotice();
     }
 
     public void Reload()
@@ -489,6 +500,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
             InventoryUIManager.instance.UpdateWeaponSlots();
+
+            // CheckAmmo();
         }
         else toMeleeWeapon();
     }
@@ -507,6 +520,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
             InventoryUIManager.instance.UpdateWeaponSlots();
+
+            // CheckAmmo();
         }
         else toMeleeWeapon();
     }
@@ -525,6 +540,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
             InventoryUIManager.instance.UpdateWeaponSlots();
+
+            // CheckAmmo();
         }
         else toMeleeWeapon();
     }
@@ -543,5 +560,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         SetGunOrMelee();
 
         GameEventsManager.instance.playerWeapons.WeaponChanged();
+
+        // CheckAmmo();
     }
 }

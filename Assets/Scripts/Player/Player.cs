@@ -506,6 +506,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                     else
                     {
                         Debug.Log("Нет патрон");
+                        PlayerWeaponsManager.instance.CheckAmmo();
                     }
                 }
             }

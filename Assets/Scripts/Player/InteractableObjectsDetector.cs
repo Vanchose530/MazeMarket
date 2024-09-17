@@ -37,14 +37,14 @@ public class InteractableObjectsDetector : MonoBehaviour
 
     private void OnEnable()
     {
-        //GameEventsManager.instance.interactableObjects.onCanInteractObject += EnableHint;
-        //GameEventsManager.instance.interactableObjects.onCanNotInteractObject += DisableHint;
+        GameEventsManager.instance.interactableObjects.onCanInteractObject += HintsManager.instance.ShowInteractHint;
+        GameEventsManager.instance.interactableObjects.onCanNotInteractObject += HintsManager.instance.HideInteractHint;
     }
 
     private void OnDisable()
     {
-        //GameEventsManager.instance.interactableObjects.onCanInteractObject -= EnableHint;
-        //GameEventsManager.instance.interactableObjects.onCanNotInteractObject -= DisableHint;
+        GameEventsManager.instance.interactableObjects.onCanInteractObject -= HintsManager.instance.ShowInteractHint;
+        GameEventsManager.instance.interactableObjects.onCanNotInteractObject -= HintsManager.instance.HideInteractHint;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -81,7 +81,4 @@ public class InteractableObjectsDetector : MonoBehaviour
             }
         }
     }
-
-    private void EnableHint() => HintsUIM.instance.enableInteractHint = true;
-    private void DisableHint() => HintsUIM.instance.enableInteractHint = false;
 }

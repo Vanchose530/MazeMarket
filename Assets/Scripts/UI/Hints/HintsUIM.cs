@@ -14,12 +14,14 @@ public class HintsUIM : MonoBehaviour
         set { interactHint.SetActive(value); }
     }
 
+    // -----
     [SerializeField] private Animator saveHintAnimator;
     [SerializeField] private float saveHintTime = 4f;
 
     [SerializeField] private GameObject dropHint;
     [SerializeField] private Animator dropHintAnimator;
     [SerializeField] private float dropHintTime = 4f;
+    // -----
 
     [Header("Notices")]
     [SerializeField] private TextHint _defaultNotice;
@@ -43,8 +45,14 @@ public class HintsUIM : MonoBehaviour
     private void Start()
     {
         enableInteractHint = false;
-        saveHintAnimator.Play("Hide");
-        dropHintAnimator.Play("Hide");
+        // saveHintAnimator?.Play("Hide");
+        // dropHintAnimator?.Play("Hide");
+
+        defaultNotice?.Hide();
+        pleasureNotice?.Hide();
+        warningNotice?.Hide();
+
+        lootHint?.Hide();
     }
 
     public void ShowSaveHint() => StartCoroutine(SaveHint(saveHintTime));

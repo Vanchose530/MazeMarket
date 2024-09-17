@@ -4,6 +4,28 @@ using UnityEngine;
 
 public class HintsManager : MonoBehaviour
 {
+    private static HintsManager _instance;
+    public static HintsManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new GameObject().AddComponent<HintsManager>();
+                _instance.name = _instance.GetType().ToString();
+                DontDestroyOnLoad(_instance.gameObject);
+            }
+            return _instance;
+        }
+    }
+
+    // Interact Hint
+    public void ShowInteractHint()
+        => HintsUIM.instance.enableInteractHint = true;
+
+    public void HideInteractHint()
+        => HintsUIM.instance.enableInteractHint = false;
+
     // Loot Hint
     public void ShowLootHint(string lootText, float time = 2)
     {

@@ -66,6 +66,9 @@ public class RandomLootSource : MonoBehaviour, IInteractable
             if (loot.GetCanLoot())
             {
                 loot.Loot();
+
+                HintsManager.instance.ShowLootHint(loot.GetLootString(), 1.5f);
+
                 opened = true;
                 glow.enabled = false;
 
@@ -77,6 +80,8 @@ public class RandomLootSource : MonoBehaviour, IInteractable
 
                 if (openSound != null)
                     AudioManager.instance.PlaySoundEffect(openSound);
+
+                // Destroy(this);
             }
             else
             {
