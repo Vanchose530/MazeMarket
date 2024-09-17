@@ -165,7 +165,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private TrailRenderer dashTrail;
 
     [Header("Interactable Objects Detect")]
-    [SerializeField] private InteractableObjectsDetector interactableObjectsDetector;
+    [SerializeField] private InteractableObjectsDetector _interactableObjectsDetector;
+    public InteractableObjectsDetector interactableObjectsDetector { get { return _interactableObjectsDetector; } }
 
     [Header("Sound Effects")]
     [SerializeField] private GameObject punchSound;
@@ -201,8 +202,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             bodyAnimator = GetComponent<Animator>();
         if (dashTrail == null)
             dashTrail = GetComponentInChildren<TrailRenderer>();
-        if (interactableObjectsDetector == null)
-            interactableObjectsDetector = GetComponentInChildren<InteractableObjectsDetector>();
+        if (_interactableObjectsDetector == null)
+            _interactableObjectsDetector = GetComponentInChildren<InteractableObjectsDetector>();
             
     }
 
@@ -245,8 +246,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         if (!dashing)
             moveDirection = InputManager.instance.moveDirection;
 
-        if (InputManager.instance.GetInteractPressed() && interactableObjectsDetector.interactable != null)
-            interactableObjectsDetector.interactable.Interact(this);
+        if (InputManager.instance.GetInteractPressed() && _interactableObjectsDetector.interactable != null)
+            _interactableObjectsDetector.interactable.Interact(this);
 
         //HealthBottleDrink();
 

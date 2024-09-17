@@ -14,6 +14,7 @@ public class RandomLootSource : MonoBehaviour, IInteractable
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteGlowEffect glow;
     [SerializeField] private Light2D sourceLight;
+    //[SerializeField] private Collider2D collision;
 
     [Header("SFX")]
     [SerializeField] private SoundEffect openSound;
@@ -29,6 +30,8 @@ public class RandomLootSource : MonoBehaviour, IInteractable
             glow = GetComponent<SpriteGlowEffect>();
         if (sourceLight == null)
             sourceLight = GetComponentInChildren<Light2D>();
+        //if (collision == null)
+        //    collision = GetComponentInChildren<Collider2D>();
     }
 
     private void Awake()
@@ -41,6 +44,11 @@ public class RandomLootSource : MonoBehaviour, IInteractable
         glow.enabled = false;
         // если мы выключаем свечение в методе старта, то 
         // отсутствует баг с материалом
+    }
+
+    private void OnDestroy()
+    {
+        Player.instance.interactableObjectsDetector.StartRemoveFromInteracteble(this);
     }
 
     public void CanInteract(Player player)
@@ -81,7 +89,7 @@ public class RandomLootSource : MonoBehaviour, IInteractable
                 if (openSound != null)
                     AudioManager.instance.PlaySoundEffect(openSound);
 
-                // Destroy(this);
+                Destroy(this);
             }
             else
             {
@@ -89,7 +97,6 @@ public class RandomLootSource : MonoBehaviour, IInteractable
 
                 if (cantOpenSound != null)
                     AudioManager.instance.PlaySoundEffect(cantOpenSound);
-                // нужна индикация того, что источник нельзя залутать
             }
         }
 

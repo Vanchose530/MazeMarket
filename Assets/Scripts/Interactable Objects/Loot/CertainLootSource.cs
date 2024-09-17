@@ -42,6 +42,11 @@ public class CertainLootSource : MonoBehaviour, IInteractable
         // отсутствует баг с материалом
     }
 
+    private void OnDestroy()
+    {
+        Player.instance.interactableObjectsDetector.StartRemoveFromInteracteble(this);
+    }
+
     public void CanInteract(Player player)
     {
         if (!opened)
@@ -77,7 +82,7 @@ public class CertainLootSource : MonoBehaviour, IInteractable
                 if (openSound != null)
                     AudioManager.instance.PlaySoundEffect(openSound);
 
-                // Destroy(this);
+                Destroy(this);
             }
             else
             {

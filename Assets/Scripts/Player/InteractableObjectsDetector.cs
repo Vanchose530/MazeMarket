@@ -81,4 +81,32 @@ public class InteractableObjectsDetector : MonoBehaviour
             }
         }
     }
+
+    public void StartRemoveFromInteracteble(IInteractable outInteractable)
+    {
+        StartCoroutine(RemoveFromInteracteble(outInteractable));
+    }
+
+    private IEnumerator RemoveFromInteracteble(IInteractable outInteractable)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (outInteractable == interactable)
+        {
+            interactable = null;
+
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, circleCollider.radius);
+
+            foreach (var coll in colliders)
+            {
+                IInteractable newInteractable = coll.gameObject.GetComponent<IInteractable>();
+
+                if (newInteractable != null)
+                {
+                    interactable = newInteractable;
+                    break;
+                }
+            }
+        }
+    }
 }

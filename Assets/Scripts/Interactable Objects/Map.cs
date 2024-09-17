@@ -55,5 +55,6 @@ public class Map : MonoBehaviour, IInteractable
     private void OnDestroy()
     {
         interactSpriteGlow.enabled = false;
+        Player.instance.interactableObjectsDetector.StartRemoveFromInteracteble(this);
     }
 }

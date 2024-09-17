@@ -330,7 +330,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
         {
             UnityEngine.Debug.Log("Cant drop it here");
-            HintsManager.instance.ShowDefaultNotice("Не могу выбросить здесь", 1.5f);
+            HintsManager.instance.ShowDefaultNotice("Не могу выбросить здесь", 3f);
             return;
         }
 

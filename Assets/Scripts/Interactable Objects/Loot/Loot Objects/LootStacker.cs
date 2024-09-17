@@ -15,4 +15,17 @@ public class LootStacker : LootObject
             loot.Loot();
         }
     }
+
+    public override string GetLootString()
+    {
+        string resString = string.Empty;
+
+        foreach (var loot in lootToStuck)
+        {
+            resString += loot.GetLootString();
+            resString += "\n";
+        }
+
+        return resString;
+    }
 }
