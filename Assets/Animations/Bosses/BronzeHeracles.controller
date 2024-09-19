@@ -121,8 +121,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.015482187
-  m_TransitionOffset: 0.0023168449
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
   m_ExitTime: 0.9847715
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -143,8 +143,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.037598073
-  m_TransitionOffset: 0.0061297487
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
   m_ExitTime: 0.9630182
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -165,7 +165,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.0032687187
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.99678475
   m_HasExitTime: 1
@@ -187,7 +187,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.042360008
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9583343
   m_HasExitTime: 1
@@ -209,8 +209,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.016221642
-  m_TransitionOffset: 13.943072
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
   m_ExitTime: 0.98267263
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -249,7 +249,7 @@ AnimatorStateMachine:
     m_Position: {x: 1240, y: 390, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 9208446635485165848}
-    m_Position: {x: 530, y: 50, z: 0}
+    m_Position: {x: 590, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2496130260001723064}
     m_Position: {x: 530, y: 230, z: 0}
@@ -414,8 +414,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.35000002
-  m_TransitionOffset: 0.000000008050161
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
   m_ExitTime: 0.000000004609024
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -436,7 +436,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.042360008
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9583343
   m_HasExitTime: 1
@@ -461,7 +461,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
@@ -537,121 +537,121 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Bow
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ShootABow
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RemoveBow
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Mace
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: MaceAttack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Alive
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Stone
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: GetTheBow Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ShootABow Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AimingShootBow Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RemoveBow Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: TakeMace Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: MaceAttack Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: RemoveMace Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Alive Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: TakeStone Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ShootStone Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: WalkStone Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: NewArrow Multiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -682,7 +682,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.019649386
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9806726
   m_HasExitTime: 1
@@ -730,8 +730,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.0023540258
-  m_TransitionOffset: 0.01137973
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
   m_ExitTime: 0.99768436
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -755,7 +755,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.040753186
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9513423
   m_HasExitTime: 0
@@ -780,7 +780,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.0040894747
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9958104
   m_HasExitTime: 0
@@ -830,8 +830,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.0020569563
-  m_TransitionOffset: 0.00010904728
+  m_TransitionDuration: 0
+  m_TransitionOffset: 0
   m_ExitTime: 0.99797666
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -855,7 +855,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 3.3713035e-10
   m_HasExitTime: 1
@@ -880,7 +880,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.21097729
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.3016853
   m_HasExitTime: 1
@@ -956,7 +956,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.024155796
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.9762401
   m_HasExitTime: 1
@@ -978,7 +978,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0
   m_HasExitTime: 1
@@ -1030,7 +1030,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.027989686
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.96837074
   m_HasExitTime: 0

@@ -340,14 +340,19 @@ public class BronzeHeracles : Enemy, IDamagable
         AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
         yield return new WaitForSeconds(timeToShootBow);
         
+        // Spawn Arrow в теории
+        
+        yield return new WaitForSeconds(timeNewArrow);
+        isShootBow = false;
+        stand = false;
+    }
+    public void SpawnArrow()
+    {
         Vector3 arrowAngle = new Vector3(archerPoint.eulerAngles.x, archerPoint.eulerAngles.y, archerPoint.eulerAngles.z + arrowRotation); ;
         GameObject arrow = Instantiate(arrowPrefab, archerPoint.position, Quaternion.Euler(arrowAngle));
         Rigidbody2D arb = arrow.GetComponent<Rigidbody2D>();
         arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceArrow, ForceMode2D.Impulse);
         archeryState.countArrow--;
-        yield return new WaitForSeconds(timeNewArrow);
-        isShootBow = false;
-        stand = false;
     }
     public void RemoveBow() 
     {

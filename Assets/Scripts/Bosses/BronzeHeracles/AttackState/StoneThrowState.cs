@@ -43,7 +43,6 @@ public class StoneThrowState : BronzeHeraclesState
             }
             else if (takenStone && !walkStone)
             {
-
                 bronzeHeracles.WalkStone();
             }
             else if (takenStone && walkStone)
