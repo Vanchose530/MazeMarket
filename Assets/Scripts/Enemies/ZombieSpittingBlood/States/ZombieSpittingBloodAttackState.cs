@@ -6,21 +6,23 @@ using UnityEngine;
 public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 {
     [Header("Behaviour")]
-    [SerializeField] private float distanceFromPlayer;
-    [SerializeField] private float minRecoveryTime;
-    [SerializeField] private float maxRecoveryTime;
+    [SerializeField] private float distanceRun;
+    [SerializeField] private float distanceAttack;
+    [SerializeField] private float distancePursuit;
+    [SerializeField] private int minCountShoot;
+    [SerializeField] private int maxCountShoot;
     [SerializeField] private float minWalkInOneTurnTime;
     [SerializeField] private float maxWalkInOneTurnTime;
     float walkInOneTurnTime;
     bool rightTurn;
 
-    private float recoveryTime;
+    public int attackTime;
 
     public override void Init()
     {
         isFinished = false;
 
-        recoveryTime = Random.Range(minRecoveryTime, maxRecoveryTime);
+        attackTime = Random.Range(minCountShoot, maxCountShoot);
 
         ResetTimeToWalkInOneTurn();
     }
@@ -32,22 +34,39 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
         Vector2 vectorFromPlayer = (zombieSpittingBlood.rb.position - Player.instance.rb.position).normalized;
         Vector2 moveVector = Vector2.zero;
 
-        if (walkInOneTurnTime <= 0 || zombieSpittingBlood.rb.velocity.magnitude < zombieSpittingBlood.speed / 3)
-        {
-            ChangeTurn();
-            ResetTimeToWalkInOneTurn();
-        }
+        
 
-        if (distanceToPlayer <= distanceFromPlayer)
+        if (distanceToPlayer <= distanceRun)
         {
-
+            if (walkInOneTurnTime <= 0 || zombieSpittingBlood.rb.velocity.magnitude < zombieSpittingBlood.speed / 3)
+            {
+                ChangeTurn();
+                ResetTimeToWalkInOneTurn();
+            }
             moveVector += vectorFromPlayer;
 
             zombieSpittingBlood.movementDirection = moveVector;
 
+            if (rightTurn)
+            {
+                moveVector.x = vectorFromPlayer.y;
+                moveVector.y = -vectorFromPlayer.x;
+            }
+            else
+            {
+                moveVector.x = vectorFromPlayer.y;
+                moveVector.y = vectorFromPlayer.x;
+            }
+
             
         }
-        else 
+        else if (distanceToPlayer >= distanceRun && distanceToPlayer <= distanceAttack) 
+        {
+
+            zombieSpittingBlood.Attack();
+
+        }
+        else if (distanceToPlayer >= distanceAttack) 
         {
 
             zombieSpittingBlood.ExecutePath();
@@ -55,26 +74,28 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
             zombieSpittingBlood.target = Player.instance.transform;
 
             zombieSpittingBlood.targetOnAim = true;
+
         }
 
 
-        CountTimeVariables();
+        EndAttack();
     }
 
-    private void CountTimeVariables()
-    {
-        if (recoveryTime > 0)
-            recoveryTime -= Time.deltaTime;
-        else
-            isFinished = true;
-
-        if (walkInOneTurnTime > 0)
-            walkInOneTurnTime -= Time.deltaTime;
-    }
 
     private void ResetTimeToWalkInOneTurn()
     {
         walkInOneTurnTime = Random.Range(minWalkInOneTurnTime, maxWalkInOneTurnTime);
+    }
+
+    private void EndAttack() {
+
+        if (attackTime == 0) {
+            zombieSpittingBlood.agressive = false;
+            zombieSpittingBlood.attack = false;
+            zombieSpittingBlood.SetState(zombieSpittingBlood.recoveryState);
+            isFinished = true;
+        }
+
     }
 
     private void ChangeTurn()
@@ -87,8 +108,17 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.grey;
+        Gizmos.color = Color.red;
 
-        Gizmos.DrawWireSphere(transform.position, distanceFromPlayer);
+        Gizmos.DrawWireSphere(transform.position, distanceRun);
+
+        Gizmos.color = Color.cyan;
+
+        Gizmos.DrawWireSphere(transform.position, distanceAttack);
+
+        Gizmos.color = Color.black;
+
+        Gizmos.DrawWireSphere(transform.position, distancePursuit);
     }
+
 }

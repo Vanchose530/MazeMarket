@@ -63,22 +63,6 @@ public class ZombieSpittingBloodPursuitState : ZombieSpittingBloodState
 
         return hit;
     }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
 
-        Gizmos.DrawWireSphere(transform.position, distanceToMissPlayer);
-
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(transform.position, attackDistance);
-
-        if (attackObstacles)
-        {
-            Gizmos.color = Color.grey;
-
-            Gizmos.DrawWireSphere(transform.position, checkObstaclesDistance);
-        }
-    }
 }
 

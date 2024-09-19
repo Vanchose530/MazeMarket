@@ -62,7 +62,9 @@ public class ZombieSpittingBloodRecoveryState : ZombieSpittingBloodState
         if (recoveryTime > 0)
             recoveryTime -= Time.deltaTime;
         else
+        {
             isFinished = true;
+        }
 
         if (walkInOneTurnTime > 0)
             walkInOneTurnTime -= Time.deltaTime;

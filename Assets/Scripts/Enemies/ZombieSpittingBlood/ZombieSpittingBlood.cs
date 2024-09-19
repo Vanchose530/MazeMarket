@@ -24,11 +24,11 @@ public class ZombieSpittingBlood : Enemy, IDamagable
     [SerializeField] private ZombieSpittingBloodPassiveState passiveState;
     [SerializeField] private ZombieSpittingBloodPursuitState pursuitState;
     [SerializeField] public ZombieSpittingBloodAttackState attackState;
-    [SerializeField] private ZombieSpittingBloodRecoveryState recoveryState;
+    [SerializeField] public ZombieSpittingBloodRecoveryState recoveryState;
     public ZombieSpittingBloodState currentState { get; private set; }
     public bool attack = false;
     // Start is called before the first frame update
-    bool isShoot = false;
+    [HideInInspector] public bool isShoot = false;
     private void OnValidate()
     {
         if (rb == null)
@@ -95,10 +95,12 @@ public class ZombieSpittingBlood : Enemy, IDamagable
             {
                 SetState(pursuitState);
             }
-            else if (agressive && attack) 
+            else if (agressive && attack)
             {
                 SetState(attackState);
             }
+            else
+                SetState(passiveState);
         }
         else
         {
@@ -164,23 +166,50 @@ public class ZombieSpittingBlood : Enemy, IDamagable
     private IEnumerator StartAttack() 
     {
         isShoot = true;
-
+        Debug.Log("attack");
         movementDirection = Vector2.zero;
 
         yield return new WaitForSeconds(timeShoot);
 
         targetOnAim = false;
-        Vector3 bloodAngle = attackPoint.eulerAngles;
-        GameObject blood = Instantiate(bloodPrefab, attackPoint.position, Quaternion.Euler(bloodAngle));
-        Rigidbody2D brb = blood.GetComponent<Rigidbody2D>();
-        brb.AddForce(blood.transform.up * forceBlood, ForceMode2D.Impulse);
+
+        Shoot();
+
+        attackState.attackTime--;
         targetOnAim = true;
         isShoot = false;
     }
 
+    private void Shoot() 
+    {
+        Vector3 bloodAngle = attackPoint.eulerAngles;
+        GameObject blood = Instantiate(bloodPrefab, attackPoint.position, Quaternion.Euler(bloodAngle));
+        Rigidbody2D brb = blood.GetComponent<Rigidbody2D>();
+        brb.AddForce(blood.transform.up * forceBlood, ForceMode2D.Impulse);
+    }
+
     public override void Spawn()
     {
-        throw new System.NotImplementedException();
+        StartCoroutine("StartSpawning");
+    }
+
+    private IEnumerator StartSpawning()
+    {
+        spawning = true;
+
+        var effect = Instantiate(EffectsStorage.instance.enemySpawnEffect, transform.position, transform.rotation);
+        effect.GetComponent<Animator>().SetFloat("Speed", 1 / spawningTime);
+
+        yield return new WaitForSeconds(spawningTime);
+
+        SetState(passiveState);
+
+
+        effect.GetComponent<Animator>().SetFloat("Speed", 2 / spawningTime);
+        effect.GetComponent<Animator>().Play("Disappear");
+        Destroy(effect, spawningTime / 2);
+
+        spawning = false;
     }
     private void RotateBody()
     {
