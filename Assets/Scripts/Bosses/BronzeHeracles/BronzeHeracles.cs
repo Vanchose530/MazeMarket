@@ -481,7 +481,8 @@ public class BronzeHeracles : Enemy, IDamagable
         stoneThrowState.walkStone = false;
         stoneThrowState.countStone--;
     }
-    public int RandomStone() {
+    public int RandomStone() 
+    {
         return Random.Range(minCountStone, maxCountStone);
     }
     public int RandomArrow()

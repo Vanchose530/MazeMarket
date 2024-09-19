@@ -29,6 +29,7 @@ public class BossManager : MonoBehaviour
 
     public event Action onPlayerEnterRoom;
     public event Action onPlayerPassRoom;
+    public static event Action onBossDefeat;
 
     [ContextMenu("Generate guid for id")]
     private void GenerateGuid()
@@ -40,7 +41,7 @@ public class BossManager : MonoBehaviour
     {
         onPlayerEnterRoom += CloseAllExits;
         onPlayerEnterRoom += DestroyAllTriggers;
-
+        onBossDefeat += BossDefeat;
 
         onPlayerEnterRoom += () => Player.instance.isOnBattle = true;
         onPlayerPassRoom += () => Player.instance.isOnBattle = false;
@@ -50,6 +51,7 @@ public class BossManager : MonoBehaviour
     {
         onPlayerEnterRoom -= CloseAllExits;
         onPlayerEnterRoom -= DestroyAllTriggers;
+        onBossDefeat -= BossDefeat;
 
     }
 
@@ -83,10 +85,6 @@ public class BossManager : MonoBehaviour
 
         if (id == null || id == "")
             Debug.LogError("For Room Manager not setted unique id. Room Manager object: " + gameObject.name);
-    }
-    private void Update()
-    {
-        BossDefeat();
     }
 
     public void PlayerEnterRoom()
@@ -148,11 +146,13 @@ public class BossManager : MonoBehaviour
             Destroy(trigger.gameObject);
         }
     }
-    private void BossDefeat() {
+    public void BossDefeat() {
+
         if (bronzeHeracles == null)
         {
             PassRoom();
         }
+
     }
 
 }
