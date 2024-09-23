@@ -15,7 +15,7 @@ public class InventoryUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyTMP;
 
     [Header("Weapons")]
-    [SerializeField] private WeaponSlot[] weaponSlots;
+    [SerializeField] private WeaponSlotOld[] weaponSlots;
 
     [Header("Ammo")]
     [SerializeField] private TextMeshProUGUI lightBulletsCountTMP;

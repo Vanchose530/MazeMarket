@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponSlot : MonoBehaviour
+public class WeaponSlotOld : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Animator animator;
