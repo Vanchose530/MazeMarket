@@ -19,6 +19,11 @@ public class ZombieSpittingBlood : Enemy, IDamagable
     [SerializeField] private GameObject bloodPrefab;
     [SerializeField] private float forceBlood;
 
+    [Header("Animators")]
+    [SerializeField] private Animator bodyAnimator;
+    [SerializeField] private GameObject legs;
+    [SerializeField] private Animator legsAnimator;
+
     [Header("ZombieSpittingBlood States")]
     [SerializeField] private ZombieSpittingBloodSpawnState spawnState;
     [SerializeField] private ZombieSpittingBloodPassiveState passiveState;
@@ -35,6 +40,9 @@ public class ZombieSpittingBlood : Enemy, IDamagable
             rb = GetComponent<Rigidbody2D>();
         if (seeker == null)
             seeker = GetComponent<Seeker>();
+        if (legsAnimator == null)
+            legsAnimator = legs.GetComponent<Animator>();
+        
 
         if (spawnState == null)
             spawnState = statesGameObject.GetComponent<ZombieSpittingBloodSpawnState>();
@@ -53,6 +61,8 @@ public class ZombieSpittingBlood : Enemy, IDamagable
 
         target = null;
         agressive = false;
+
+        SetAnimationSettings();
     }
     private void OnEnable()
     {
@@ -106,9 +116,10 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         {
             currentState.Run();
         }
-
+        Animate();
         Move();
         RotateBody();
+        RotateLegs();
     }
     public void TakeDamage(int damage, Transform attack = null)
     {
@@ -130,6 +141,15 @@ public class ZombieSpittingBlood : Enemy, IDamagable
             EnemyDeathEvent();
             Destroy(gameObject);
         }
+    }
+    private void Animate()
+    {
+        bodyAnimator.SetFloat("Speed", rb.velocity.sqrMagnitude);
+        legsAnimator.SetFloat("Speed", rb.velocity.magnitude);
+    }
+    private void SetAnimationSettings()
+    {
+        bodyAnimator.SetFloat("Attack Multiplier", 1 / timeShoot);
     }
 
     protected override void PlayerDeath()
@@ -166,21 +186,22 @@ public class ZombieSpittingBlood : Enemy, IDamagable
     private IEnumerator StartAttack() 
     {
         isShoot = true;
-        Debug.Log("attack");
+        bodyAnimator.SetTrigger("Shoot");
         movementDirection = Vector2.zero;
+        
 
         yield return new WaitForSeconds(timeShoot);
 
-        targetOnAim = false;
+        //targetOnAim = false;
 
         Shoot();
 
-        attackState.attackTime--;
+        attackState.attackCount--;
         targetOnAim = true;
         isShoot = false;
     }
 
-    private void Shoot() 
+    private void Shoot()
     {
         Vector3 bloodAngle = attackPoint.eulerAngles;
         GameObject blood = Instantiate(bloodPrefab, attackPoint.position, Quaternion.Euler(bloodAngle));
@@ -229,6 +250,12 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         }
 
         rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+    }
+    private void RotateLegs()
+    {
+        float angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+
+        legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
     private void Move()
     {

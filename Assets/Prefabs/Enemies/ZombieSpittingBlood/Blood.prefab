@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 6743765010285167308}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5681, y: 26.0187, z: 0}
-  m_LocalScale: {x: 0.36064768, y: 0.36064768, z: 0.36064768}
+  m_LocalPosition: {x: 5.0547, y: 24.2792, z: 0}
+  m_LocalScale: {x: 12.680116, y: 11.929685, z: 1.582522}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -267266127, guid: 6304c812905d186458dacf78eddaa3ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,9 +132,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.0013577241}
   serializedVersion: 2
-  m_Radius: 0.49999997
+  m_Radius: 0.02215567
 --- !u!50 &744009327969357920
 Rigidbody2D:
   serializedVersion: 4
@@ -148,7 +148,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.1
-  m_LinearDrag: 3
+  m_LinearDrag: 2
   m_AngularDrag: 7
   m_GravityScale: 0
   m_Material: {fileID: 0}
