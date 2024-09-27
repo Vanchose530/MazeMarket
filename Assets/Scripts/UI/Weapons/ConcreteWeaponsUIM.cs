@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -31,42 +32,83 @@ public class ConcreteWeaponsUIM : WeaponsUIM
     public override void ChooseWeaponSlot(int slot)
     {
         Vector3 pos;
+        GunSlotUI slotUI = null;
 
         switch (slot)
         {
             case 1:
                 pos = gunSlotOne.transform.position;
-
-                SetAmmoInGun(gunSlotOne.gun.ammoInMagazine, gunSlotOne.gun.magazineSize);
-                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(gunSlotOne.gun.ammoType),
-                    gunSlotOne.gun.ammoType);
+                slotUI = gunSlotOne;
                 break;
             case 2:
                 pos = gunSlotTwo.transform.position;
-
-                SetAmmoInGun(gunSlotTwo.gun.ammoInMagazine, gunSlotTwo.gun.magazineSize);
-                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(gunSlotTwo.gun.ammoType),
-                    gunSlotTwo.gun.ammoType);
+                slotUI = gunSlotTwo;
                 break;
             case 3:
                 pos = gunSlotFree.transform.position;
-
-                SetAmmoInGun(gunSlotFree.gun.ammoInMagazine, gunSlotFree.gun.magazineSize);
-                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(gunSlotFree.gun.ammoType),
-                    gunSlotFree.gun.ammoType);
+                slotUI= gunSlotFree;
                 break;
             case 4:
                 pos = meleeWeaponSlot.transform.position;
+
                 ammoInGunBuffer = -1;
                 allAmmoBuffer = -1;
                 magazineSizeBuffer = -1;
                 break;
             default:
+                Debug.LogWarning("Chosen missing UI slot: " + slot);
                 pos = new Vector3(-1000, -1000, 0);
                 break;
         }
 
+        if (slotUI != null)
+        {
+            if (slotUI.gun != null)
+            {
+                SetAmmoInGun(slotUI.gun.ammoInMagazine, slotUI.gun.magazineSize);
+                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(slotUI.gun.ammoType),
+                    slotUI.gun.ammoType);
+            }
+            else
+            {
+                StartCoroutine(SetAmmoCoroutine(slotUI));
+            }
+        }
+
+        choosenWeaponMark.transform.position = pos;
+
         choosenWeaponIndex = slot;
+    }
+
+    // костыль необходимый, чтобы оружие успевалось подобраться и попасть в слот прежде чем выставлять патроны в ui
+    IEnumerator SetAmmoCoroutine(GunSlotUI gunSlot)
+    {
+        for (int i = 0; i < 10;  i++)
+        {
+            try
+            {
+                SetAmmoInGun(gunSlot.gun.ammoInMagazine, gunSlot.gun.magazineSize);
+                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(gunSlot.gun.ammoType),
+                    gunSlot.gun.ammoType);
+
+                break;
+            }
+            catch (NullReferenceException)
+            {
+                // по сути тут должен быть yield return, но yield не может быть в блоке catch
+            }
+            yield return new WaitForSecondsRealtime(0.01f);
+
+            if (i == 9)
+                Debug.LogError("Cant set ammo in gun panel, because gun slot is void!");
+        }
+        yield return null;
+    }
+
+    public override void ShowAmmoPanel(int ammoInGun, int magazineSize, int allAmmoCount, AmmoTypes type)
+    {
+        SetAmmoInGun(ammoInGun, magazineSize);
+        SetAllAmmo(allAmmoCount, type);
     }
 
     public override void SetAllAmmo(int count, AmmoTypes type)
@@ -102,8 +144,14 @@ public class ConcreteWeaponsUIM : WeaponsUIM
         }
     }
 
-    private void DisableAmmoImage()
+    public override void HideAmmoPanel()
     {
+        ammoInGunTMP.text = "";
+        allAmmoTMP.text = "";
+
+        if (reloadingCoroutine != null)
+            StopCoroutine(reloadingCoroutine);
+
         ammoImage.enabled = false;
     }
 
@@ -164,7 +212,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
         reloadingCoroutine = StartCoroutine(ReloadingCoroutine(time));
     }
 
-    private void StopReloading()
+    public override void StopReloading()
     {
         if (reloadingCoroutine != null)
             StopCoroutine(reloadingCoroutine);

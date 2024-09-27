@@ -68,9 +68,9 @@ public class InventoryUIManager : MonoBehaviour
 
     private void OnEnableAfterTime()
     {
-        GameEventsManager.instance.input.onInventoryPerformed += ShowInventory;
-        GameEventsManager.instance.input.onInventoryCanceled += HideInventory;
-        GameEventsManager.instance.playerWeapons.onWeaponChanged += UpdateForWeaponChosen;
+        //GameEventsManager.instance.input.onInventoryPerformed += ShowInventory;
+        //GameEventsManager.instance.input.onInventoryCanceled += HideInventory;
+        // GameEventsManager.instance.playerWeapons.onWeaponChanged += UpdateForWeaponChosen;
 
         UpdateAmmoCounters();
         UpdateWeaponSlots();
@@ -79,9 +79,9 @@ public class InventoryUIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameEventsManager.instance.input.onInventoryPerformed -= ShowInventory;
-        GameEventsManager.instance.input.onInventoryCanceled -= HideInventory;
-        GameEventsManager.instance.playerWeapons.onWeaponChanged -= UpdateForWeaponChosen;
+        //GameEventsManager.instance.input.onInventoryPerformed -= ShowInventory;
+        //GameEventsManager.instance.input.onInventoryCanceled -= HideInventory;
+        // GameEventsManager.instance.playerWeapons.onWeaponChanged -= UpdateForWeaponChosen;
     }
 
     private void Start()

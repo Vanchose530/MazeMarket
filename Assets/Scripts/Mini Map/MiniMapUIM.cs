@@ -50,6 +50,7 @@ public class MiniMapUIM : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private GameObject mapRooms;
     [SerializeField] private GameObject mapPanel;
+    [SerializeField] private GameObject mapMark;
 
     public bool isMiniMapActive { get; private set; }
 
@@ -211,11 +212,13 @@ public class MiniMapUIM : MonoBehaviour
     public void ShowMiniMap()
     {
         mapPanel.SetActive(true);
+        mapMark.SetActive(false);
     }
 
     public void HideMiniMap()
     {
         mapPanel.SetActive(false);
+        mapMark.SetActive(true);
     }
 
     public void UseMap()

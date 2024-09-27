@@ -6,7 +6,8 @@ public abstract class BaseStatesUIM : MonoBehaviour
 {
     public abstract void SetMaxHealth(int health);
     public abstract void SetCurrentHealth(int health);
-    public abstract void SetMaxStamina(int stamina);
-    public abstract void SetCurrentStamina(int stamina);
+    public abstract void SetMaxStamina(float stamina);
+    public abstract void SetCurrentStamina(float stamina);
+    public abstract void SetCanUseStamina(bool canUseStamina);
 }
 

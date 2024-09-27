@@ -54,7 +54,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         weapons = new List<Weapon>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         //lightBullets = startLightBullets;
         //mediumBullets = startMediumBullets;
@@ -80,6 +80,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         //        weapons.Add(w);
         //    }
         //}
+
+        yield return new WaitForSeconds(0.1f);
+
+        UpdateWeaponsUI();
+
+        MainUIM.instance.inventory.SetAmmoByType(GetAmmoByType(AmmoTypes.LightBullets), AmmoTypes.LightBullets);
+        MainUIM.instance.inventory.SetAmmoByType(GetAmmoByType(AmmoTypes.MediumBullets), AmmoTypes.MediumBullets);
+        MainUIM.instance.inventory.SetAmmoByType(GetAmmoByType(AmmoTypes.HeavyBullets), AmmoTypes.HeavyBullets);
+        MainUIM.instance.inventory.SetAmmoByType(GetAmmoByType(AmmoTypes.Shells), AmmoTypes.Shells);
     }
 
     private void OnEnable()
@@ -87,6 +96,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         GameEventsManager.instance.input.onRemoveWeaponPressed += RemoveWeapon;
         GameEventsManager.instance.input.onChangeWeaponPressed += ChangeWeapon;
         GameEventsManager.instance.playerWeapons.onWeaponChanged += CheckAmmo;
+        GameEventsManager.instance.playerWeapons.onWeaponChanged += UpdateForWeaponChoosenUI;
+
         GameEventsManager.instance.input.onFirstWeaponChoosen += toFirstWeapon;
         GameEventsManager.instance.input.onSecondWeaponChoosen += toSecondWeapon;
         GameEventsManager.instance.input.onThirdWeaponChoosen += toThirdWeapon;
@@ -98,6 +109,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         GameEventsManager.instance.input.onRemoveWeaponPressed -= RemoveWeapon;
         GameEventsManager.instance.input.onChangeWeaponPressed -= ChangeWeapon;
         GameEventsManager.instance.playerWeapons.onWeaponChanged -= CheckAmmo;
+        GameEventsManager.instance.playerWeapons.onWeaponChanged -= UpdateForWeaponChoosenUI;
+
         GameEventsManager.instance.input.onFirstWeaponChoosen -= toFirstWeapon;
         GameEventsManager.instance.input.onSecondWeaponChoosen -= toSecondWeapon;
         GameEventsManager.instance.input.onThirdWeaponChoosen -= toThirdWeapon;
@@ -213,7 +226,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         currentWeapon.onAttack += SetCooldown;
 
         GameEventsManager.instance.playerWeapons.WeaponChanged();
-        InventoryUIManager.instance.UpdateWeaponSlots();
+        UpdateWeaponsUI();
+        // InventoryUIManager.instance.UpdateWeaponSlots();
     }
 
     public int GetAmmoByType(AmmoTypes type)
@@ -251,7 +265,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
                 break;
         }
 
-        InventoryUIManager.instance.UpdateAmmoCounters();
+        MainUIM.instance.inventory.SetAmmoByType(GetAmmoByType(type), type);
+        // InventoryUIManager.instance.UpdateAmmoCounters();
     }
 
     public void SetAmmoByType(AmmoTypes type, int setValue)
@@ -272,7 +287,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
                 break;
         }
 
-        InventoryUIManager.instance.UpdateAmmoCounters();
+        MainUIM.instance.inventory.SetAmmoByType(GetAmmoByType(type), type);
+        // InventoryUIManager.instance.UpdateAmmoCounters();
     }
 
     public void ChangeWeapon()
@@ -356,7 +372,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             
         }
         StartCoroutine(DropDelay());
-        InventoryUIManager.instance.UpdateWeaponSlots();
+        UpdateWeaponsUI();
+        // InventoryUIManager.instance.UpdateWeaponSlots();
     }
 
     private void CreateDrop()
@@ -380,8 +397,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         catch (System.InvalidCastException) { currentGun = null; }
         try { currentMeleeWeapon = (MeleeWeapon)currentWeapon; } catch (System.InvalidCastException) { currentMeleeWeapon = null; }
 
-        if (currentGun != null)
-            AmmoUIManager.instance.ammoType = currentGun.ammoType; // в будущем обновл€ть ui при вызове событи€
+        //if (currentGun != null)
+        //    AmmoUIManager.instance.ammoType = currentGun.ammoType; // в будущем обновл€ть ui при вызове событи€
     }
 
     public void CheckAmmo()
@@ -465,16 +482,19 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if(currentGun != null)
         {
-            AmmoUIManager.instance.ammoPanelActive = true;
-            AmmoUIManager.instance.allAmmoText = Convert.ToString(GetAmmoByType(currentGun.ammoType));
-            AmmoUIManager.instance.ammoInGunText = Convert.ToString(currentGun.magazineSize) + "/" + Convert.ToString(currentGun.ammoInMagazine);
+            //AmmoUIManager.instance.ammoPanelActive = true;
+            //AmmoUIManager.instance.allAmmoText = Convert.ToString(GetAmmoByType(currentGun.ammoType));
+            //AmmoUIManager.instance.ammoInGunText = Convert.ToString(currentGun.magazineSize) + "/" + Convert.ToString(currentGun.ammoInMagazine);
 
-            AmmoUIManager.instance.ammoPanelAnimator.SetBool("Reloading", currentGun.reloading);
-            
+            //AmmoUIManager.instance.ammoPanelAnimator.SetBool("Reloading", currentGun.reloading);
+
+            MainUIM.instance.weapons.ShowAmmoPanel(currentGun.ammoInMagazine,
+                currentGun.magazineSize, GetAmmoByType(currentGun.ammoType), currentGun.ammoType);
         }
         else
         {
-            AmmoUIManager.instance.ammoPanelActive = false;
+            // AmmoUIManager.instance.ammoPanelActive = false;
+            MainUIM.instance.weapons.HideAmmoPanel();
         }
     }
 
@@ -499,7 +519,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
-            InventoryUIManager.instance.UpdateWeaponSlots();
+            UpdateWeaponsUI();
+            // InventoryUIManager.instance.UpdateWeaponSlots();
 
             // CheckAmmo();
         }
@@ -519,7 +540,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
-            InventoryUIManager.instance.UpdateWeaponSlots();
+            UpdateWeaponsUI();
+            // InventoryUIManager.instance.UpdateWeaponSlots();
 
             // CheckAmmo();
         }
@@ -539,7 +561,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             StopGunReloading();
             SetGunOrMelee();
             GameEventsManager.instance.playerWeapons.WeaponChanged();
-            InventoryUIManager.instance.UpdateWeaponSlots();
+            UpdateWeaponsUI();
+            // InventoryUIManager.instance.UpdateWeaponSlots();
 
             // CheckAmmo();
         }
@@ -562,5 +585,37 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         GameEventsManager.instance.playerWeapons.WeaponChanged();
 
         // CheckAmmo();
+    }
+
+    // UI
+
+    private void UpdateWeaponsUI()
+    {
+        try { MainUIM.instance.weapons.SetGunToSlotOne((Gun)weapons[0]); }
+        catch (ArgumentOutOfRangeException) { MainUIM.instance.weapons.SetGunToSlotOne(null); }
+
+        try { MainUIM.instance.weapons.SetGunToSlotTwo((Gun)weapons[1]); }
+        catch (ArgumentOutOfRangeException) { MainUIM.instance.weapons.SetGunToSlotTwo(null); }
+
+        try { MainUIM.instance.weapons.SetGunToSlotFree((Gun)weapons[2]); }
+        catch (ArgumentOutOfRangeException) { MainUIM.instance.weapons.SetGunToSlotFree(null); }
+
+        // когда будут милишки
+        // MainUIM.instance.weapons.SetMeleeWeaponToSlot(meleeWeapon);
+        MainUIM.instance.weapons.SetMeleeWeaponToSlot(null);
+
+        UpdateForWeaponChoosenUI();
+    }
+
+    private void UpdateForWeaponChoosenUI()
+    {
+        if (currentGun != null)
+        {
+            MainUIM.instance.weapons.ChooseWeaponSlot(weaponInventoryId + 1);
+        }
+        else
+        {
+            MainUIM.instance.weapons.ChooseWeaponSlot(4);
+        }
     }
 }

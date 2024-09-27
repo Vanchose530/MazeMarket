@@ -7,6 +7,7 @@ public class ConcreteInventoryUIM : InventoryUIM
 {
     [Header("Inventory Panel")]
     [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private GameObject inventoryMark;
 
     [Header("Ammo")]
     [SerializeField] private TextMeshProUGUI lightAmmoTMP;
@@ -23,11 +24,13 @@ public class ConcreteInventoryUIM : InventoryUIM
     public override void CloseInventory()
     {
         inventoryPanel.SetActive(false);
+        inventoryMark.SetActive(true);
     }
 
     public override void OpenInventory()
     {
         inventoryPanel.SetActive(true);
+        inventoryMark.SetActive(false);
     }
 
     public override void SetAmmoByType(int count, AmmoTypes type)
@@ -35,27 +38,27 @@ public class ConcreteInventoryUIM : InventoryUIM
         switch (type)
         {
             case AmmoTypes.LightBullets:
-                lightAmmoTMP.text = System.Convert.ToString(count);
+                lightAmmoTMP.text = count.ToString();
                 break;
             case AmmoTypes.MediumBullets:
-                mediumAmmoTMP.text = System.Convert.ToString(count);
+                mediumAmmoTMP.text = count.ToString();
                 break;
             case AmmoTypes.HeavyBullets:
-                heavyAmmoTMP.text = System.Convert.ToString(count);
+                heavyAmmoTMP.text = count.ToString();
                 break;
             case AmmoTypes.Shells:
-                shellsTMP.text = System.Convert.ToString(count);
+                shellsTMP.text = count.ToString();
                 break;
         }
     }
 
     public override void SetMoney(int count)
     {
-        moneyTMP.text = System.Convert.ToString(count);
+        moneyTMP.text = count.ToString();
     }
 
     public override void SetVoidBottle(int count)
     {
-        voidBottleTMP.text = System.Convert.ToString(count);
+        voidBottleTMP.text = count.ToString();
     }
 }

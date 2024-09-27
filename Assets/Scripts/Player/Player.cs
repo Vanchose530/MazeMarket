@@ -133,7 +133,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         get { return _canUseStamina; }
         set
         {
-            HPStaminaManager.instance.canUseStamina = value;
+            MainUIM.instance.baseStates.SetCanUseStamina(value);
+            // HPStaminaManager.instance.canUseStamina = value;
             _canUseStamina = value;
         }
     }
@@ -226,7 +227,13 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         PlayerConditionsManager.instance.currentCondition = PlayerConditions.Default;
     }
 
-     
+    private void Start()
+    {
+        MainUIM.instance.baseStates.SetMaxHealth(maxHealth);
+        MainUIM.instance.baseStates.SetMaxStamina(maxStamina);
+    }
+
+
     private void Update()
     {
         if (InputManager.instance.GetRunPressed(true) && canUseStamina)
@@ -616,10 +623,12 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void UpdateUI()
     {
-        HPStaminaManager.instance.hpSlider.value = (float)health / (float)maxHealth;
+        MainUIM.instance.baseStates.SetCurrentHealth(health);
+        //HPStaminaManager.instance.hpSlider.value = (float)health / (float)maxHealth;
         //hpSlider.value = (float)health / (float)maxHealth;
 
-        HPStaminaManager.instance.staminaSlider.value = stamina / maxStamina;
+        MainUIM.instance.baseStates.SetCurrentStamina(stamina);
+        //HPStaminaManager.instance.staminaSlider.value = stamina / maxStamina;
         //staminaSlider.value = stamina / maxDashCount;
     }
 

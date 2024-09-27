@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerInventory : MonoBehaviour, IDataPersistence
 {
@@ -28,7 +29,7 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         set
         {
             _keyCardCount = value;
-            UpdateUI();
+            UpdateUIKeyCard();
         }
     }
     public int countGrenadeBottle
@@ -65,7 +66,7 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
         set
         {
             _money = value;
-            InventoryUIManager.instance.SetMoney(value);
+            UpdateUIMoney();
         }
     }
     private void Awake()
@@ -74,41 +75,68 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
             Debug.LogWarning("Find more than one Player Inventory in scene");
         instance = this;
     }
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.2f);
+
         countGrenadeBottle = startCountGrenadeBottle;
         countHealthBottle = startCountHealthBottle;
         countEmptyBottle = startCountEmptyBottle;
+
+        HideInventory();
+    }
+    private void OnEnable()
+    {
+        GameEventsManager.instance.input.onInventoryPerformed += ShowInventory;
+        GameEventsManager.instance.input.onInventoryCanceled += HideInventory;
+    }
+    private void OnDisable()
+    {
+        GameEventsManager.instance.input.onInventoryPerformed -= ShowInventory;
+        GameEventsManager.instance.input.onInventoryCanceled -= HideInventory;
     }
 
-    private void UpdateUI()
+    void ShowInventory()
+        => MainUIM.instance.inventory.OpenInventory();
+    void HideInventory()
+        => MainUIM.instance.inventory.CloseInventory();
+
+    private void UpdateUIKeyCard()
     {
-        if (keyCardCount == 0)
-        {
-            InventoryUIManager.instance.keyCardUI.SetActive(false);
-        }
-        else if (keyCardCount == 1)
-        {
-            InventoryUIManager.instance.keyCardUI.SetActive(true);
-            InventoryUIManager.instance.keyCardCountText = "";
-        }
-        else
-        {
-            InventoryUIManager.instance.keyCardUI.SetActive(true);
-            InventoryUIManager.instance.keyCardCountText = Convert.ToString(keyCardCount);
-        }
+        //if (keyCardCount == 0)
+        //{
+        //    InventoryUIManager.instance.keyCardUI.SetActive(false);
+        //}
+        //else if (keyCardCount == 1)
+        //{
+        //    InventoryUIManager.instance.keyCardUI.SetActive(true);
+        //    InventoryUIManager.instance.keyCardCountText = "";
+        //}
+        //else
+        //{
+        //    InventoryUIManager.instance.keyCardUI.SetActive(true);
+        //    InventoryUIManager.instance.keyCardCountText = Convert.ToString(keyCardCount);
+        //}
+    }
+    private void UpdateUIMoney()
+    {
+        MainUIM.instance.inventory.SetMoney(money);
+        // InventoryUIManager.instance.SetMoney(money);
     }
     private void UpdateUIGrenadeBottle() 
     {
-        InventoryUIManager.instance.grenadeBottleCountText = Convert.ToString(countGrenadeBottle);
+        MainUIM.instance.bottle.SetDemonsBloodGrenadeCount(countGrenadeBottle);
+        // InventoryUIManager.instance.grenadeBottleCountText = Convert.ToString(countGrenadeBottle);
     }
     private void UpdateUIHealthBottle()
     {
-        InventoryUIManager.instance.healthBottleCountText = Convert.ToString(countHealthBottle);
+        MainUIM.instance.bottle.SetHealthPoisionCount(countHealthBottle);
+        // InventoryUIManager.instance.healthBottleCountText = Convert.ToString(countHealthBottle);
     }
     private void UpdateUIEmptyBottle()
     {
-        InventoryUIManager.instance.emptyBottleCountText = Convert.ToString(countEmptyBottle);
+        MainUIM.instance.inventory.SetVoidBottle(countEmptyBottle);
+        // InventoryUIManager.instance.emptyBottleCountText = Convert.ToString(countEmptyBottle);
     }
 
     public void LoadData(GameData data)
