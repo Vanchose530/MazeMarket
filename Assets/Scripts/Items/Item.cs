@@ -15,10 +15,10 @@ public abstract class Item : MonoBehaviour
 
     private void Start()
     {
-        if (id == null || id == "")
-            Debug.LogError("For Item not setted unique id. Item object: " + gameObject.name);
-        else
-            Invoke("CheckToCollected", 0.01f);
+        //if (id == null || id == "")
+        //    Debug.LogError("For Item not setted unique id. Item object: " + gameObject.name);
+        //else
+        //    Invoke("CheckToCollected", 0.01f);
     }
 
     protected void CheckToCollected()

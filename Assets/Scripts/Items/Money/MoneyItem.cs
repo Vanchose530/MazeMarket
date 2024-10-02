@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -7,25 +8,24 @@ using UnityEngine;
 public class MoneyItem : Item
 {
     [Header("Count")]
-    [SerializeField] private int count;
-
-    [Header("SFX")]
-    [SerializeField] private SoundEffect pickUpSE;
+    [SerializeField] private int _count;
+    public int count { get { return _count; } }
 
     [Header("Magnetize to Player")]
     [SerializeField] private bool magnetizeToPlayer = true;
     [SerializeField] private float magnetizeToPlayerForce = 1f;
 
     [Header("Setup")]
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D _rb;
+    public Rigidbody2D rb { get { return _rb; } }
     [SerializeField] private CircleCollider2D toPlayerMagnetizeRadius;
 
     Transform playerTransform;
 
     private void OnValidate()
     {
-        if (rb == null)
-            rb = GetComponent<Rigidbody2D>();
+        if (_rb == null)
+            _rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
@@ -33,7 +33,7 @@ public class MoneyItem : Item
         if (magnetizeToPlayer && playerTransform != null)
         {
             Vector2 force = playerTransform.position - gameObject.transform.position;
-            rb.AddForce(force, ForceMode2D.Force);
+            _rb.AddForce(force, ForceMode2D.Force);
         }
     }
 
@@ -59,7 +59,7 @@ public class MoneyItem : Item
     {
         PlayerInventory.instance.money += count;
         if (pickUpSE != null)
-            AudioManager.instance.PlaySoundEffect(pickUpSE);
+            AudioManager.instance.PlaySoundEffect(pickUpSE, 0.05f);
         Destroy(gameObject);
     }
 }

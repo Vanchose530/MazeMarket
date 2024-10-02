@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2282041490327234601}
   - component: {fileID: 366804255596092498}
   - component: {fileID: 2919026568915430187}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Bill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,16 +165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   pickUpSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 9e87045c6e5bf814a9949745aaa548a1, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
-  count: 5
-  pickUpSE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
+  _count: 5
   magnetizeToPlayer: 1
   magnetizeToPlayerForce: 4
   rb: {fileID: 366804255596092498}

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6046333141860823911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3628449957765233674}
+  - component: {fileID: 3819901892556938052}
+  m_Layer: 0
+  m_Name: Money Looter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3628449957765233674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046333141860823911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7200456, y: 22.812458, z: 0.040676925}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3819901892556938052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046333141860823911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b34ed8f8764a846bfa7bd499974f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyItems:
+  - {fileID: 2919026568915430187, guid: 9bbf5a64aa464a94b910bb91b3809138, type: 3}
+  - {fileID: 5063903494286843466, guid: b9e69a9bada2fc940af5120e8910944a, type: 3}
+  - {fileID: 699960431223580979, guid: 377c231394804fb4b9afc4882dcf902c, type: 3}
+  count: 20
+  countInnacuracy: 5
+  "splitting\u0421oefficient": 3
+  moneyDropForce: 0.2
+  moneyDropInnacuracy: 0.1

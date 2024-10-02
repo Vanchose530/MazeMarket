@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4089418479106748383}
   - component: {fileID: 1168525607022710660}
   - component: {fileID: 699960431223580979}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Silver Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,16 +165,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   pickUpSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 692001eb12cd85f4398d43c7002016ad, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
-  count: 1
-  pickUpSE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
+  _count: 1
   magnetizeToPlayer: 1
   magnetizeToPlayerForce: 4
   rb: {fileID: 1168525607022710660}

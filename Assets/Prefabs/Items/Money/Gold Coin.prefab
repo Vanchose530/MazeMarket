@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 8883980571278325186}
   - component: {fileID: 5365559751156177299}
   - component: {fileID: 5063903494286843466}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Gold Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,16 +232,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   pickUpSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: f0fb295a77a09cb4b8b96c0f5df845f3, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
-  count: 3
-  pickUpSE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
+  _count: 3
   magnetizeToPlayer: 1
   magnetizeToPlayerForce: 4
   rb: {fileID: 5365559751156177299}
