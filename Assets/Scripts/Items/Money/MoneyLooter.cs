@@ -21,6 +21,7 @@ public class MoneyLooter : MonoBehaviour
     [SerializeField] private float moneyDropForce;
     [SerializeField] private float moneyDropInnacuracy;
 
+    
     private void Start()
     {
         nominals = new List<int>();
@@ -84,6 +85,9 @@ public class MoneyLooter : MonoBehaviour
 
         int rc = res.Count - 1;
 
+        List<int> addList = new List<int>();
+        List<int> removeList = new List<int>();
+
         for (int i = 0; i < rc; i++)
         {
             if (res[i] > nominals[0])
@@ -99,14 +103,26 @@ public class MoneyLooter : MonoBehaviour
                     Debug.Log("Split");
                     List<int> added = GenerateMoneyVariant(res[i], outerSum);
 
-                    res.Remove(res[i]);
+                    removeList.Add(res[i]);
+                    //res.Remove(res[i]);
 
                     foreach (var add in added)
                     {
-                        res.Add(add);
+                        addList.Add(add);
+                        // res.Add(add);
                     }
                 }
             }
+        }
+
+        foreach (var add in addList)
+        {
+            res.Add(add);
+        }
+
+        foreach (var rem in removeList)
+        {
+            res.Remove(rem);
         }
 
         return res;
