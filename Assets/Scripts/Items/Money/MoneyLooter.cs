@@ -20,7 +20,6 @@ public class MoneyLooter : MonoBehaviour
     [Header("Drop Force")]
     [SerializeField] private float moneyDropForce;
     [SerializeField] private float moneyDropInnacuracy;
-
     
     private void Start()
     {
@@ -30,7 +29,10 @@ public class MoneyLooter : MonoBehaviour
             nominals.Add(money.count);
         }
         nominals.Sort();
+    }
 
+    private void OnDestroy()
+    {
         SpawnMoneyItems();
     }
 

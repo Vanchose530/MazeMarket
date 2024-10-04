@@ -258,12 +258,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootPool:
     elements:
-    - element: {fileID: 11400000, guid: 9463d9c8d8aed0146970ce3960b5f3e3, type: 2}
-      chance: 1
-    - element: {fileID: 11400000, guid: 5b127fad0a5011146831e6b54eddf235, type: 2}
-      chance: 1
     - element: {fileID: 11400000, guid: 00faadf95c7b5484491b37cbf9c45086, type: 2}
-      chance: 100
+      chance: 9
+    - element: {fileID: 11400000, guid: abdb6e2dc5f62254187bd91e46759932, type: 2}
+      chance: 1
   animator: {fileID: 0}
   glow: {fileID: 361065004088914945}
   sourceLight: {fileID: 7936002314671122410}
