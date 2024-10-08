@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AK-47
   m_EditorClassIdentifier: 
   displayName: AK-47
-  damage: 10
+  damage: 5
   image: {fileID: 21300000, guid: 36cfdb4e3f113f94ab2a4ec23aec0c89, type: 3}
   id: 3
   holdToAttack: 1
@@ -24,13 +24,15 @@ MonoBehaviour:
     maxPitch: 1.1
   magazineSize: 30
   reloadTime: 3
-  firingRate: 7
+  firingRate: 6
   spread: 4
   bulletForce: 6
   ammoType: 1
   bulletPrefab: {fileID: 477208312691641933, guid: adbcf7b6bfa5aee46b8e4c2c6a86e48a, type: 3}
   ammoInMagazine: 0
   reloading: 0
+  bulletsPerShot: 1
+  deltaBulletForce: 0
   shootSE:
     sound: {fileID: 8300000, guid: ecf56d53e4ff6334fbe030291c0166d1, type: 3}
     volume: 0.25

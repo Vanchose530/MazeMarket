@@ -6,7 +6,6 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using System.Linq;
 
 public class Player : MonoBehaviour, IDamagable, IDataPersistence
@@ -324,6 +323,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
         newData.weapons = PlayerWeaponsManager.instance.weapons;
 
+        newData.moneyCount = PlayerInventory.instance.money;
+        newData.voidBottleCount = PlayerInventory.instance.countEmptyBottle;
+        newData.demonsBloodGrenadeCount = PlayerInventory.instance.countGrenadeBottle;
+        newData.healthPoitionCount = PlayerInventory.instance.countHealthBottle;
+
         PlayerDataKeeper.instance.playerData = newData;
     }
 
@@ -340,6 +344,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
 
         PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+
+        PlayerInventory.instance.money = dataToLoad.moneyCount;
+        PlayerInventory.instance.countEmptyBottle = dataToLoad.voidBottleCount;
+        PlayerInventory.instance.countGrenadeBottle = dataToLoad.demonsBloodGrenadeCount;
+        PlayerInventory.instance.countHealthBottle = dataToLoad.healthPoitionCount;
 
         PlayerDataKeeper.instance.ClearData();
     }

@@ -187,14 +187,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootPool:
     elements:
-    - element: {fileID: 11400000, guid: 56a9179d3327080418c2caaa6ffb9697, type: 2}
-      chance: 1
-    - element: {fileID: 11400000, guid: 9463d9c8d8aed0146970ce3960b5f3e3, type: 2}
-      chance: 1
-    - element: {fileID: 11400000, guid: 5b127fad0a5011146831e6b54eddf235, type: 2}
-      chance: 1
+    - element: {fileID: 11400000, guid: 6be24f4dee727854b8972e3b737b7a8c, type: 2}
+      chance: 2
+    - element: {fileID: 11400000, guid: a3983a5df2147d6408ddb160e1e0ddda, type: 2}
+      chance: 2
+    - element: {fileID: 11400000, guid: 800265a103d9c1c40abcf2ecb99b0d62, type: 2}
+      chance: 4
   animator: {fileID: 7970523634946877766}
   glow: {fileID: 804004720625738190}
+  sourceLight: {fileID: 4790350434910070468}
   openSound:
     sound: {fileID: 8300000, guid: 31fcfb30314d4b74ab00578eeb544028, type: 3}
     volume: 1

@@ -18,5 +18,9 @@ public class PlayerData
     public List<Weapon> weapons;
 
     // Inventory
+    public int moneyCount;
+    public int voidBottleCount;
+    public int demonsBloodGrenadeCount;
+    public int healthPoitionCount;
 
 }

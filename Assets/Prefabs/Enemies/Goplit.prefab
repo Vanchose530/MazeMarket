@@ -396,11 +396,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  speed: 2
+  speed: 2.5
   nextWaypointDistance: 1
   targetOnAim: 0
   attackPoint: {fileID: 2126164683379923393}
-  damage: 10
+  damage: 70
   statesGameObject: {fileID: 4769801514093938888}
   agressive: 0
   alreadySpawnedOnStart: 1
@@ -408,10 +408,10 @@ MonoBehaviour:
   seeker: {fileID: 1622124748133939917}
   _rb: {fileID: 7456330247445833259}
   spear: {fileID: 172284209650157570}
-  speedAttack: 5
-  aimingTime: 5
+  speedAttack: 6.5
+  aimingTime: 2
   timeAttack: 5
-  timeAttackEnd: 5
+  timeAttackEnd: 2
   firingRate: 1
   bodyAnimator: {fileID: 6515731758922230993}
   legs: {fileID: 438779133665045033}
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goplit: {fileID: 0}
-  attackDistance: 4
+  attackDistance: 12
   distanceToMissPlayer: 15
 --- !u!114 &1970767555677839663
 MonoBehaviour:
@@ -539,9 +539,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goplit: {fileID: 0}
-  distanceFromPlayer: 5
-  minRecoveryTime: 2
-  maxRecoveryTime: 5
+  distanceFromPlayer: 8
+  minRecoveryTime: 1
+  maxRecoveryTime: 4
   minWalkInOneTurnTime: 2
   maxWalkInOneTurnTime: 4
 --- !u!114 &1872251374944918333

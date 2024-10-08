@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33cb22d839665bb4ca3044fe1747e118, type: 3}
-  m_Name: Loot Shells
+  m_Script: {fileID: 11500000, guid: f8f88e69799b3824d885011002b20c62, type: 3}
+  m_Name: Loot Pomp
   m_EditorClassIdentifier: 
-  count: 10
-  inaccuracy: 3
-  type: 3
+  gun: {fileID: 11400000, guid: 73d13cd735683a149889647b04cad7f8, type: 2}
+  ammoToAdd: 6

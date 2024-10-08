@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c367ac5e786ca44918f26226d93e3a, type: 3}
+  m_Name: Loot Many Ammo
+  m_EditorClassIdentifier: 
+  lootToStuck:
+  - {fileID: 11400000, guid: 077c37e9b33ed0a4f928b18c2419c140, type: 2}
+  - {fileID: 11400000, guid: 0289030a2e958ac4197ad27802def2cf, type: 2}
+  - {fileID: 11400000, guid: 7bb16c79acc8c334a81a559a7381f975, type: 2}
+  - {fileID: 11400000, guid: 9463d9c8d8aed0146970ce3960b5f3e3, type: 2}

@@ -480,6 +480,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponInventorySize: 3
+  dropDistance: 2
+  dropDelayTimer: 2
+  cantDropWeaponLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &927904088
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +717,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659899c45de6546419853d4e356cd832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCountGrenadeBottle: 0
+  startCountHealthBottle: 0
+  startCountEmptyBottle: 0
 --- !u!1 &1178347701
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,6 +890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstChoice: {fileID: 1148935057}
+  levelToLoadName: Procedural Generation 1
 --- !u!1 &1389981733
 GameObject:
   m_ObjectHideFlags: 0

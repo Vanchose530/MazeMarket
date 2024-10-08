@@ -307,7 +307,7 @@ MonoBehaviour:
   staminaRecoverySpeed: 0.9
   grenadePrefab: {fileID: 8314972605054049927, guid: 0ea0c991740ccac4099f372e2217fdeb, type: 3}
   forceGrenade: 3
-  hpToHeal: 10
+  hpToHeal: 60
   timeToHeal: 2
   attackPoint: {fileID: 6939753730445181469}
   secondAttackPoint: {fileID: 1042710718863370343}
@@ -322,7 +322,7 @@ MonoBehaviour:
   legs: {fileID: 561000445666535089}
   damageEffect: {fileID: 649758871316472102, guid: e488db0c5c47b024eb70ec7157b5590c, type: 3}
   dashTrail: {fileID: 8758755446985658079}
-  interactableObjectsDetector: {fileID: 983159606032103209}
+  _interactableObjectsDetector: {fileID: 983159606032103209}
   punchSound: {fileID: 8797459062646210151, guid: 45b6ffc994fa8a64c8ff99e7d20d5123, type: 3}
   damageSound: {fileID: 5341204480864620632, guid: af9548430dd567840b9e4fc804a35376, type: 3}
   dashSE:

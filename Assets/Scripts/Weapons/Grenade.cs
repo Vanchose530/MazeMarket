@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.UI;
 
 public class Grenade : MonoBehaviour
