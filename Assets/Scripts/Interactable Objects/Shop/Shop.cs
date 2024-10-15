@@ -9,6 +9,8 @@ public class Shop : MonoBehaviour, IInteractable
     public int productsCount = 3;
     [SerializeField] private Balancer<Product> productBalancer;
     Product[] products;
+    [SerializeField] private bool uniqueProducts;
+    const int UNIQUE_TRYES = 20;
 
     [Header("Interact Effect")]
     [SerializeField] private SpriteGlowEffect interactSpriteGlow;
@@ -23,7 +25,7 @@ public class Shop : MonoBehaviour, IInteractable
     {
         if (products != null)
         {
-            Debug.Log("Trying to create products in shop but it was already created");
+            Debug.LogError("Trying to create products in shop but it was already created");
             return;
         }
 
@@ -36,6 +38,26 @@ public class Shop : MonoBehaviour, IInteractable
 
             for (int i = 0; i < productsSlotsInShop; i++)
             {
+                if (uniqueProducts)
+                {
+                    bool findUniqueProduct = false;
+
+                    for (int j = 0; j < UNIQUE_TRYES; j++)
+                    {
+                        var prod = productBalancer.Get();
+                        if (CheckForUnique(prod))
+                        {
+                            products[i] = Instantiate(prod);
+                            findUniqueProduct = true;
+                            break;
+                        }
+                    }
+
+                    if (findUniqueProduct)
+                        break;
+
+                    Debug.LogWarning("Cant find unique product in Shop after " + UNIQUE_TRYES.ToString() + " tryes!");
+                }
                 products[i] = Instantiate(productBalancer.Get());
             }
         }
@@ -47,11 +69,50 @@ public class Shop : MonoBehaviour, IInteractable
 
                 if (products[r] == null)
                 {
+                    if (uniqueProducts)
+                    {
+                        bool findUniqueProduct = false;
+
+                        for (int j = 0; j < UNIQUE_TRYES; j++)
+                        {
+                            var prod = productBalancer.Get();
+                            Debug.Log(prod.productName);
+                            Debug.Log(CheckForUnique(prod));
+                            if (CheckForUnique(prod))
+                            {
+                                products[r] = Instantiate(prod);
+                                findUniqueProduct = true;
+                                break;
+                            }
+                        }
+
+                        if (findUniqueProduct)
+                        {
+                            i++;
+                            continue;
+                        }
+                            
+                        Debug.LogWarning("Cant find unique product in Shop after " + UNIQUE_TRYES.ToString() + " tryes!");
+                    }
                     products[r] = Instantiate(productBalancer.Get());
                     i++;
                 }
             }
         }
+    }
+
+    private bool CheckForUnique(Product product)
+    {
+        if (products.Length == 0)
+            return true;
+        foreach (Product p in products)
+        {
+            if (p == null)
+                continue;
+            if (product.productName == p.productName) // ÑÐÀÂÍÅÍÈÅ ÏÎ ÈÌÅÍÀÌ!
+                return false;
+        }
+        return true;
     }
 
     public void CanInteract(Player player)

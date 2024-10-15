@@ -456,7 +456,7 @@ MonoBehaviour:
   minWalkInOneTurnTime: 1
   maxWalkInOneTurnTime: 5
   stayChancePercents: 1
-  distanceToFindPlayer: 10
+  distanceToFindPlayer: 14
 --- !u!114 &4177631226498715181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,8 +471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statue: {fileID: 0}
   timeToStartShooting: 1
-  distanceToMissPlayer: 15
-  distanceToAttackPlayer: 8.5
+  distanceToMissPlayer: 18
+  distanceToAttackPlayer: 9.5
 --- !u!114 &8279049226383292925
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,7 +20,11 @@ public class LockRoomForRedMiasmasLayer : GenerationLayer
             if (!CanLockThisBonusRoom(room))
                 continue;
 
-            if (room.bonusValue > 0 && room.roomType == RoomType.Deadlock && !CheckSodaMachineNear(room, levelTemplate) && room.lockType == RoomLockType.None)
+            if (room.bonusValue > 0
+                && room.roomType == RoomType.Deadlock
+                && !CheckSodaMachineNear(room, levelTemplate)
+                && room.lockType == RoomLockType.None
+                && room.bonusType != BonusType.DemonsBloodFountain)
             {
                 room.lockType = RoomLockType.RedMiasmas;
                 room.bonusValue *= lockRoomBonusModifier;
@@ -36,7 +40,11 @@ public class LockRoomForRedMiasmasLayer : GenerationLayer
             if (!CanLockThisBonusRoom(room))
                 continue;
 
-            if (room.bonusValue > 0 && !room.obligatory && !CheckSodaMachineNear(room, levelTemplate) && room.lockType == RoomLockType.None)
+            if (room.bonusValue > 0
+                && !room.obligatory
+                && !CheckSodaMachineNear(room, levelTemplate)
+                && room.lockType == RoomLockType.None
+                && room.bonusType != BonusType.DemonsBloodFountain)
             {
                 room.lockType = RoomLockType.RedMiasmas;
                 room.bonusValue *= lockRoomBonusModifier;

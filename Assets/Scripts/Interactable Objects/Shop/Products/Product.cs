@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public abstract class Product : ScriptableObject
@@ -18,4 +19,5 @@ public abstract class Product : ScriptableObject
     abstract public void Buy();
 
     virtual public bool GetCanBuy() { return true; }
+
 }

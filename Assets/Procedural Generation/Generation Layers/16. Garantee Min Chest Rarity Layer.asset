@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f738036d5e2db3d41b034f13ef0b8234, type: 3}
-  m_Name: 9. Choose Rooms With Enemy Waves Layer
+  m_Script: {fileID: 11500000, guid: 5c5c676da02171c42a5c51193be1bc58, type: 3}
+  m_Name: 16. Garantee Min Chest Rarity Layer
   m_EditorClassIdentifier: 
   enabled: 1
-  oneWaveMTRBVS: 0.2
-  twoWavesMTRBVS: 1
+  minChestRarity: 2

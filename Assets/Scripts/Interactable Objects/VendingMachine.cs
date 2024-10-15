@@ -20,6 +20,8 @@ public class VendingMachine : MonoBehaviour, IInteractable
 
     bool canInteract = false;
 
+    const float HINT_TIME = 2.5f;
+
     private void OnValidate()
     {
         if (interactSpriteGlow == null)
@@ -46,16 +48,24 @@ public class VendingMachine : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
-        if (canInteract && PlayerInventory.instance.countEmptyBottle > 0)
+        if (canInteract)
         {
-            PlayerInventory.instance.countHealthBottle++;
-            PlayerInventory.instance.countEmptyBottle--;
-            
+            if (PlayerInventory.instance.countEmptyBottle > 0)
+            {
+                PlayerInventory.instance.countHealthBottle++;
+                PlayerInventory.instance.countEmptyBottle--;
 
-            if (interactSE != null)
-                AudioManager.instance.PlaySoundEffect(interactSE, transform.position);
+                HintsManager.instance.ShowPleasureNotice("Добавлено лечебное зелье!", HINT_TIME);
 
-            StartCoroutine(SetCooldown());
+                if (interactSE != null)
+                    AudioManager.instance.PlaySoundEffect(interactSE, transform.position);
+
+                StartCoroutine(SetCooldown());
+            }
+            else
+            {
+                HintsManager.instance.ShowDefaultNotice("Нет пустых банок!", HINT_TIME);
+            }
         }
     }
     private IEnumerator SetCooldown()

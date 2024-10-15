@@ -702,7 +702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startCountGrenadeBottle: 0
   startCountHealthBottle: 0
-  startCountEmptyBottle: 0
+  startCountEmptyBottle: 1
 --- !u!1 &877453683
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,7 +974,7 @@ MonoBehaviour:
   generationLayers:
   - {fileID: 11400000, guid: 827beda269f8b6d44acbdbb1edac49b5, type: 2}
   - {fileID: 11400000, guid: 98ad51d19aeee2f459ea7339038422a8, type: 2}
-  - {fileID: 11400000, guid: 7b73e65d85d95da4aac11c67b9e605da, type: 2}
+  - {fileID: 11400000, guid: ea38181a42ef92846809b065cb2cbcfc, type: 2}
   - {fileID: 11400000, guid: ffb8b3b7c5e63c14db6b36d5288d357e, type: 2}
   - {fileID: 11400000, guid: 42b98755d56087542a66846b12df696e, type: 2}
   - {fileID: 11400000, guid: 936a491f5bab5cd44a34b74969cc91fd, type: 2}
@@ -983,7 +983,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f22be83031e76f4fbddda8cb524e222, type: 2}
   - {fileID: 11400000, guid: 2e126e2757a39db4cb69cc8aee213d05, type: 2}
   - {fileID: 11400000, guid: bd4e4175ee768764d8aefa355ae9e3e7, type: 2}
-  - {fileID: 11400000, guid: 667cab445447877499d3fc42475ff1af, type: 2}
+  - {fileID: 11400000, guid: 0ce023e68619d254da9d5cf4051a793c, type: 2}
+  - {fileID: 11400000, guid: b802d50fdb1d03e4b9dc18f41186b365, type: 2}
 --- !u!114 &1208164742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,11 +1018,10 @@ MonoBehaviour:
   xRoomPrefabs:
   - {fileID: 1607778313324333580, guid: cd19d0c5c73058d45aeacfd1bb600315, type: 3}
   - {fileID: 1607778313324333580, guid: 6d5c34f8b7569de40b4845312cf6925f, type: 3}
-  - {fileID: 1607778313324333580, guid: 944d3a88dad556b42b846ff4e913a404, type: 3}
   startRoomPrefabs:
-  - {fileID: 666670146399836563, guid: 0aa3ec40139cef845a201cd1dd1ba4c1, type: 3}
+  - {fileID: 666670146399836563, guid: be8c2f316bfb87e4ea141bc235426154, type: 3}
   endRoomPrefabs:
-  - {fileID: 666670146399836563, guid: 0b414780a5a76434bae3cc12addc5166, type: 3}
+  - {fileID: 666670146399836563, guid: 34d06d08889860d4badcdd101d6f11e0, type: 3}
   pathfinder: {fileID: 741320633}
 --- !u!1 &1435785300
 GameObject:
@@ -1385,14 +1385,6 @@ PrefabInstance:
       propertyPath: playerStart
       value: 
       objectReference: {fileID: 1990336222}
-    - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
-      propertyPath: cameraConfinerShape
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
-      propertyPath: gameplayCanvasPrefab
-      value: 
-      objectReference: {fileID: 255001354533835729, guid: 6a466b47528e8704390ebd6df80257bf, type: 3}
     - target: {fileID: 4311960356838475629, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
       propertyPath: m_Name
       value: Gameplay Scene Installer

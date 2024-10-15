@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerInventory : MonoBehaviour, IDataPersistence
 {
@@ -77,11 +75,14 @@ public class PlayerInventory : MonoBehaviour, IDataPersistence
     }
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.2f);
+        if (PlayerDataKeeper.instance.playerData == null)
+        {
+            countGrenadeBottle = startCountGrenadeBottle;
+            countHealthBottle = startCountHealthBottle;
+            countEmptyBottle = startCountEmptyBottle;
+        }
 
-        countGrenadeBottle = startCountGrenadeBottle;
-        countHealthBottle = startCountHealthBottle;
-        countEmptyBottle = startCountEmptyBottle;
+        yield return new WaitForSeconds(0.2f);
 
         HideInventory();
     }

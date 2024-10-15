@@ -22,6 +22,8 @@ public class RandomLootSource : MonoBehaviour, IInteractable
 
     bool opened;
 
+    const float HINT_TIME = 2.5f;
+
     private void OnValidate()
     {
         if (animator == null)
@@ -75,7 +77,7 @@ public class RandomLootSource : MonoBehaviour, IInteractable
             {
                 loot.Loot();
 
-                HintsManager.instance.ShowLootHint(loot.GetLootString(), 1.5f);
+                HintsManager.instance.ShowLootHint(loot.GetLootString(), HINT_TIME);
 
                 opened = true;
                 glow.enabled = false;
@@ -93,6 +95,7 @@ public class RandomLootSource : MonoBehaviour, IInteractable
             }
             else
             {
+                HintsManager.instance.ShowDefaultNotice("Нет места в инвентаре!", HINT_TIME);
                 Debug.Log("Cant loot this source!");
 
                 if (cantOpenSound != null)

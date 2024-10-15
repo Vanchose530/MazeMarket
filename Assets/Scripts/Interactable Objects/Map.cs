@@ -11,6 +11,8 @@ public class Map : MonoBehaviour, IInteractable
     [SerializeField] private SoundEffect interactSE;
     [SerializeField] private Light2D sourceLight;
 
+    const float HINT_TIME = 2.5f;
+
     private void OnValidate()
     {
         if (interactSpriteGlow == null)
@@ -45,6 +47,7 @@ public class Map : MonoBehaviour, IInteractable
         //    MapUIM.instance.ShowMap();
 
         MiniMapUIM.instance.UseMap();
+        HintsManager.instance.ShowPleasureNotice("Карта обновлена!", HINT_TIME);
 
         if (sourceLight != null)
             sourceLight.enabled = false;

@@ -4889,7 +4889,7 @@ MonoBehaviour:
   minWalkInOneTurnTime: 1
   maxWalkInOneTurnTime: 5
   stayChancePercents: 10
-  distanceToFindPlayer: 10
+  distanceToFindPlayer: 15
 --- !u!114 &7873645535960143413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4904,7 +4904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombie: {fileID: 0}
   attackDistance: 1.5
-  distanceToMissPlayer: 15
+  distanceToMissPlayer: 20
   attackObstacles: 0
   checkObstaclesDistance: 1.5
   obstacleLayer:

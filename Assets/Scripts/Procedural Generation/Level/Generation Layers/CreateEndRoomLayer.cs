@@ -38,7 +38,7 @@ public class CreateEndRoomLayer : GenerationLayer
                 levelTemplate.MakeTransition(endRoomPos, farFromStartRoomPos);
             }
 
-            farFromStartRoom.canHaveBonus = false;
+            // farFromStartRoom.canHaveBonus = false;
         }
         else
         {
