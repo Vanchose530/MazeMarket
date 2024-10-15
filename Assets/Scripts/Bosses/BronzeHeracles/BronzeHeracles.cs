@@ -15,7 +15,7 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private GameObject legs;
     [SerializeField] private Animator legsAnimator;
 
-    [Header("Weapons")]
+    [Header("WeaponsPrefab")]
     [SerializeField] private GameObject stonePrefab;
     [SerializeField] private GameObject arrowPrefab;
     [SerializeField] private GameObject mace;
@@ -23,9 +23,9 @@ public class BronzeHeracles : Enemy, IDamagable
     [Header("Effects")]
     [SerializeField] private GameObject damageEffect;
 
-    [Header("Attack Points")]
-    [SerializeField] private Transform archerPoint;
-    [SerializeField] private Transform stonePoint;
+    [Header("Weapons")]
+    [SerializeField] private GameObject stonePoint;
+    [SerializeField] private GameObject archeryPoint;
 
     [Header("Sound Effects")]
     [SerializeField] private SoundEffect damageSE;
@@ -44,13 +44,12 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private float timeTakeBow;
     [SerializeField] private float timeNewArrow;
     [SerializeField] private float timeWalkBow;
-    [SerializeField] private float aimingBow;
+    [SerializeField] private float timeAimingBow;
     [SerializeField] private float timeToShootBow;
     [SerializeField] private float timeRemoveBow;
     [SerializeField] private int minCountArrow;
     [SerializeField] private int maxCountArrow;
     [SerializeField] private float forceArrow;
-    [SerializeField] private float arrowRotation;
 
     [Header("Mace")]
     [SerializeField] private float timeTakeMace;
@@ -93,7 +92,7 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public bool isWalkBow = false;
     public bool stand = false;
     private bool aliving;
-    
+
     public bool attack { get;  set; }
     private void OnValidate()
     {
@@ -130,6 +129,7 @@ public class BronzeHeracles : Enemy, IDamagable
         aliving = false;
 
         mace.GetComponent<Collider2D>().enabled = false;
+        
         
         SetAnimate();
     }
@@ -242,7 +242,7 @@ public class BronzeHeracles : Enemy, IDamagable
             rb.velocity = movementDirection * speed;
     }
     private void SetAnimate() {
-        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / aimingBow);
+        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / timeAimingBow);
         bodyAnimator.SetFloat("ShootABow Multiplier", 1 / timeToShootBow);
         bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / timeTakeBow);
         bodyAnimator.SetFloat("RemoveBow Multiplier", 1 / timeRemoveBow);
@@ -281,7 +281,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(alivingTime);
 
-        SetState(RandomState());
+        SetState(archeryState);
 
         aliving = false;
 
@@ -290,8 +290,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
     public BronzeHeraclesState RandomState() {
 
-        int random = Random.Range(0,attackState.Count);
-        return attackState[random];
+        return attackState[Random.Range(0, attackState.Count)];
 
     }
 
@@ -300,14 +299,21 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         if (isTakeBow)
             return;
+
         StartCoroutine("StartTakeTheBow");
     }
     private IEnumerator StartTakeTheBow() 
     {
         isTakeBow = true;
         stand = true;
+
+        GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.Euler(0,0, 45));
+        ar.transform.SetParent(archeryPoint.transform);
+
         bodyAnimator.SetTrigger("Bow");
+
         yield return new WaitForSeconds(timeTakeBow);
+
         isBowInHand = true;
         isTakeBow = false;
         stand = false;
@@ -336,16 +342,28 @@ public class BronzeHeracles : Enemy, IDamagable
         movementDirection = Vector2.zero;
         bodyAnimator.SetTrigger("ShootABow");
         AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position);
-        yield return new WaitForSeconds(aimingBow);
+        yield return new WaitForSeconds(timeAimingBow);
         AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
         yield return new WaitForSeconds(timeToShootBow);
-        
-        Vector3 arrowAngle = new Vector3(archerPoint.eulerAngles.x, archerPoint.eulerAngles.y, archerPoint.eulerAngles.z + arrowRotation); ;
-        GameObject arrow = Instantiate(arrowPrefab, archerPoint.position, Quaternion.Euler(arrowAngle));
-        Rigidbody2D arb = arrow.GetComponent<Rigidbody2D>();
-        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceArrow, ForceMode2D.Impulse);
+
+        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
+        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Arrow>().enabled = true;
+        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+
+        Rigidbody2D arb = archeryPoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
+        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+
+        archeryPoint.transform.GetChild(0).gameObject.transform.SetParent(null);
+
         archeryState.countArrow--;
-        yield return new WaitForSeconds(timeNewArrow);
+
+        if (archeryState.countArrow > 0)
+        {
+            yield return new WaitForSeconds(timeNewArrow);
+
+            GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.Euler(0, 0, 45));
+            ar.transform.SetParent(archeryPoint.transform);
+        }
         isShootBow = false;
         stand = false;
     }
@@ -425,9 +443,12 @@ public class BronzeHeracles : Enemy, IDamagable
         
 
     }
-    private IEnumerator StartTakeStone() 
+    public IEnumerator StartTakeStone() 
     {
         isTakeStone = true;
+        GameObject st = Instantiate(stonePrefab,stonePoint.transform.position,Quaternion.identity);
+        st.transform.SetParent(stonePoint.transform);
+
         bodyAnimator.SetTrigger("Stone");
         yield return new WaitForSeconds(timeTakeStone);
         isTakeStone = false;
@@ -471,10 +492,15 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(timeShootStone);
 
-        Vector3 stoneAngle = stonePoint.eulerAngles;
-        GameObject stone = Instantiate(stonePrefab, stonePoint.position, Quaternion.Euler(stoneAngle));
-        Rigidbody2D srb = stone.GetComponent<Rigidbody2D>();
+
+        stonePoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
+        stonePoint.transform.GetChild(0).gameObject.GetComponent<Stone>().enabled = true;
+        stonePoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        Rigidbody2D srb = stonePoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
         srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+        stonePoint.transform.GetChild(0).gameObject.transform.SetParent(null);
+
+        
 
         isShootStone = false;
         stoneThrowState.takenStone = false;

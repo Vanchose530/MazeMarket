@@ -18,6 +18,7 @@ public class Stone : MonoBehaviour
         randomSmallStone = Random.Range(minCountSmallStone, maxCountSmallStone + 1);
         StartCoroutine("Delete");
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
