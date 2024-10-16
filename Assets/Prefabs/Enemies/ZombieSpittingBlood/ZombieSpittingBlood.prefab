@@ -391,6 +391,21 @@ MonoBehaviour:
   pursuitState: {fileID: 5945436188845593613}
   attackState: {fileID: 6441615871222774361}
   recoveryState: {fileID: 1529892018636778289}
+  groahSE:
+    sound: {fileID: 8300000, guid: a1d7bc25136fcbc4abcb1dd81f0323c0, type: 3}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  attackSE:
+    sound: {fileID: 8300000, guid: 41943eeea82ab7b4b82c7d2f2054897e, type: 3}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  hitSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
   attack: 0
   isShoot: 0
 --- !u!114 &5040502597737800811

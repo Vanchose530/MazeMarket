@@ -6,9 +6,13 @@ public class Blood : MonoBehaviour
 {
     [Header("Behavior")]
     [SerializeField] private int damageBlood;
+
+    [Header("Sound")]
+    [SerializeField] private SoundEffect hitSE;
     private void Start()
     {
         StartCoroutine("Delete");
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,6 +27,7 @@ public class Blood : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        AudioManager.instance.PlaySoundEffect(hitSE,transform.position);
     }
     private IEnumerator Delete()
     {

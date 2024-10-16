@@ -30,6 +30,11 @@ public class ZombieSpittingBlood : Enemy, IDamagable
     [SerializeField] private ZombieSpittingBloodPursuitState pursuitState;
     [SerializeField] public ZombieSpittingBloodAttackState attackState;
     [SerializeField] public ZombieSpittingBloodRecoveryState recoveryState;
+
+    [Header("Sound")]
+    [SerializeField] private SoundEffect groahSE;
+    [SerializeField] private SoundEffect attackSE;
+    public SoundEffect hitSE;
     public ZombieSpittingBloodState currentState { get; private set; }
     public bool attack = false;
     // Start is called before the first frame update
@@ -174,6 +179,8 @@ public class ZombieSpittingBlood : Enemy, IDamagable
             currentState.zombieSpittingBlood = this;
             currentState.Init();
         }
+        if (state == pursuitState)
+            AudioManager.instance.PlaySoundEffect(groahSE, transform.position);
     }
 
     public override void Attack()
@@ -207,6 +214,8 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         GameObject blood = Instantiate(bloodPrefab, attackPoint.position, Quaternion.Euler(bloodAngle));
         Rigidbody2D brb = blood.GetComponent<Rigidbody2D>();
         brb.AddForce(blood.transform.up * forceBlood, ForceMode2D.Impulse);
+
+        AudioManager.instance.PlaySoundEffect(attackSE,transform.position);
     }
 
     public override void Spawn()
