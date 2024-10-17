@@ -101,7 +101,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 0.1
-  m_LinearDrag: 3
+  m_LinearDrag: 2
   m_AngularDrag: 7
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 559ae1352d36d9a44b0273c8fcd0f2c2, type: 2}
@@ -128,6 +128,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageArrow: 5
+  hitSE:
+    sound: {fileID: 8300000, guid: 214fb3389c9d5b44590db750f1ee05b5, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!61 &7660097884122800283
 BoxCollider2D:
   m_ObjectHideFlags: 0

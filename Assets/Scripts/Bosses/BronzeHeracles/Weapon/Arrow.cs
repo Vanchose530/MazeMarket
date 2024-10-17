@@ -6,6 +6,8 @@ public class Arrow : MonoBehaviour
 {
     [Header("Behavior")]
     [SerializeField] private int damageArrow;
+    [Header("Sound")]
+    [SerializeField] private SoundEffect hitSE;
     private void Start()
     {
         StartCoroutine("Delete");
@@ -17,11 +19,9 @@ public class Arrow : MonoBehaviour
         if (obj != null)
         {
             obj.TakeDamage(damageArrow, transform);
-            Destroy(gameObject);
         }
-        else {
-            Destroy(gameObject);
-        }
+        AudioManager.instance.PlaySoundEffect(hitSE, transform.position);
+        Destroy(gameObject);
     }
     private IEnumerator Delete()
     {

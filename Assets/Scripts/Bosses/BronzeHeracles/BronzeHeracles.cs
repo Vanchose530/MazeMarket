@@ -32,7 +32,10 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private SoundEffect alivingSE;
     [SerializeField] private SoundEffect aimingBowSE;
     [SerializeField] private SoundEffect shootBowSE;
+    [SerializeField] private SoundEffect takeArrowBowSE;
+    [SerializeField] private SoundEffect takeMaceSE;
     [SerializeField] private SoundEffect maceAttackSE;
+    [SerializeField] private SoundEffect takeStoneSE;
     [SerializeField] private SoundEffect shootStoneSE;
 
     [Header("Alive")]
@@ -281,7 +284,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(alivingTime);
 
-        SetState(archeryState);
+        SetState(stoneThrowState);
 
         aliving = false;
 
@@ -307,10 +310,13 @@ public class BronzeHeracles : Enemy, IDamagable
         isTakeBow = true;
         stand = true;
 
-        GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.Euler(0,0, 45));
+        GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.identity);
         ar.transform.SetParent(archeryPoint.transform);
+        ar.transform.localRotation = Quaternion.Euler(0, 0, 95); 
 
         bodyAnimator.SetTrigger("Bow");
+
+        AudioManager.instance.PlaySoundEffect(takeArrowBowSE,transform.position);
 
         yield return new WaitForSeconds(timeTakeBow);
 
@@ -326,7 +332,9 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     private IEnumerator StartWalkBow() {
         isWalkBow = true;
+
         yield return new WaitForSeconds(timeWalkBow + timeNewArrow);
+
         isWalkBow = false;
         stand = true;
     }
@@ -339,10 +347,13 @@ public class BronzeHeracles : Enemy, IDamagable
     private IEnumerator StartShootBow() 
     {
         isShootBow = true;
+
         movementDirection = Vector2.zero;
         bodyAnimator.SetTrigger("ShootABow");
+
         AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position);
         yield return new WaitForSeconds(timeAimingBow);
+
         AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
         yield return new WaitForSeconds(timeToShootBow);
 
@@ -359,10 +370,12 @@ public class BronzeHeracles : Enemy, IDamagable
 
         if (archeryState.countArrow > 0)
         {
+            AudioManager.instance.PlaySoundEffect(takeArrowBowSE, transform.position);
             yield return new WaitForSeconds(timeNewArrow);
 
-            GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.Euler(0, 0, 45));
+            GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.identity);
             ar.transform.SetParent(archeryPoint.transform);
+            ar.transform.localRotation = Quaternion.Euler(0, 0, 95);
         }
         isShootBow = false;
         stand = false;
@@ -377,12 +390,18 @@ public class BronzeHeracles : Enemy, IDamagable
     private IEnumerator StartRemoveBow() 
     {
         isRemoveBow = true;
+
         bodyAnimator.SetTrigger("RemoveBow");
+
         yield return new WaitForSeconds(timeRemoveBow);
+
         isBowInHand = false;
         stand = false;
+
         bodyAnimator.SetTrigger("Default");
+
         SetState(recoveryState);
+
         isRemoveBow = false;
     }
 
@@ -390,14 +409,20 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         if (isTakeMace)
             return;
+
         StartCoroutine("StartTakeMace");
     }
     private IEnumerator StartTakeMace()
     {
         isTakeMace = true;
         stand = true;
+
         bodyAnimator.SetTrigger("Mace");
+
+        AudioManager.instance.PlaySoundEffect(takeMaceSE, transform.position);
+
         yield return new WaitForSeconds(timeTakeMace);
+
         maceAttackState.maceTaken = true;
         stand = false;
         
@@ -446,10 +471,14 @@ public class BronzeHeracles : Enemy, IDamagable
     public IEnumerator StartTakeStone() 
     {
         isTakeStone = true;
-        GameObject st = Instantiate(stonePrefab,stonePoint.transform.position,Quaternion.identity);
+
+        GameObject st = Instantiate(stonePrefab, stonePoint.transform.position, Quaternion.identity);
         st.transform.SetParent(stonePoint.transform);
+        st.transform.localRotation = Quaternion.Euler(0,0,gameObject.transform.rotation.z);
 
         bodyAnimator.SetTrigger("Stone");
+
+        AudioManager.instance.PlaySoundEffect(takeStoneSE,transform.position);
         yield return new WaitForSeconds(timeTakeStone);
         isTakeStone = false;
         stoneThrowState.takenStone = true;
@@ -459,10 +488,7 @@ public class BronzeHeracles : Enemy, IDamagable
         if (isWalkStone)
             return;
 
-
         StartCoroutine("StartWalkStone");
-
-
     }
     private IEnumerator StartWalkStone()
     {
@@ -496,6 +522,7 @@ public class BronzeHeracles : Enemy, IDamagable
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Stone>().enabled = true;
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+
         Rigidbody2D srb = stonePoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
         srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
         stonePoint.transform.GetChild(0).gameObject.transform.SetParent(null);

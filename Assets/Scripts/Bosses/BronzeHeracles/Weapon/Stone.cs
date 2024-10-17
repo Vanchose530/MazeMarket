@@ -13,6 +13,8 @@ public class Stone : MonoBehaviour
     private int randomSmallStone;
     private int[] randArr = new int[] { -1, 1 };
     [SerializeField] private float forceStone;
+    [Header("Sound")]
+    [SerializeField] private SoundEffect hitSE;
     private void Start()
     {
         randomSmallStone = Random.Range(minCountSmallStone, maxCountSmallStone + 1);
@@ -26,9 +28,7 @@ public class Stone : MonoBehaviour
         if (obj != null) 
         {
             obj.TakeDamage(damageStone, transform);
-            if (collision.transform.tag == "Player") {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
         else {
             for (int i = 0; i < randomSmallStone; i++)
@@ -39,6 +39,9 @@ public class Stone : MonoBehaviour
             }
             Destroy(gameObject);
         }
+
+
+        AudioManager.instance.PlaySoundEffect(hitSE,transform.position);
     }
     private IEnumerator Delete() 
     {

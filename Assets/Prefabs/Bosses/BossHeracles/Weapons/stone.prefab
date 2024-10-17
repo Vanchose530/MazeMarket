@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6629049931960359121}
   m_Layer: 0
   m_Name: stone
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -168,6 +168,11 @@ MonoBehaviour:
   minCountSmallStone: 1
   maxCountSmallStone: 3
   forceStone: 2
+  hitSE:
+    sound: {fileID: 8300000, guid: 7fbb10bd44b6a734fa64265ce314e640, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!1 &9146349725765962627
 GameObject:
   m_ObjectHideFlags: 0

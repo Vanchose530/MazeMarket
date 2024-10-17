@@ -242,7 +242,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e08686b04ccff4783135742220323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maceDamage: 2
+  maceDamage: 20
+  hitSE:
+    sound: {fileID: 8300000, guid: 0d13245fe098c5c46bb86efbca09c9d4, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!70 &540454332865554721
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -580,32 +585,47 @@ MonoBehaviour:
   stonePoint: {fileID: 1531802007075595463}
   archeryPoint: {fileID: 7048575401703511944}
   damageSE:
-    sound: {fileID: 8300000, guid: 0695f1168c48f5947a37483ede1a0025, type: 3}
+    sound: {fileID: 8300000, guid: 8fcd1ed526f39934e918083b67ebb378, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
   alivingSE:
-    sound: {fileID: 8300000, guid: ee8a553691a7a38498d01cb40b61bb0e, type: 3}
+    sound: {fileID: 0}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
   aimingBowSE:
-    sound: {fileID: 8300000, guid: a1d7bc25136fcbc4abcb1dd81f0323c0, type: 3}
+    sound: {fileID: 8300000, guid: 665bf78dd7004a647addae1191747b20, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
   shootBowSE:
-    sound: {fileID: 8300000, guid: 41943eeea82ab7b4b82c7d2f2054897e, type: 3}
+    sound: {fileID: 8300000, guid: d30b0c9964c954d41b87cde3403e66b3, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  takeArrowBowSE:
+    sound: {fileID: 8300000, guid: ce91e589dd95adc488742f732405be03, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  takeMaceSE:
+    sound: {fileID: 8300000, guid: 6c8b9d722a71d0f4ea3d2fcbc1dfad36, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
   maceAttackSE:
-    sound: {fileID: 8300000, guid: a1d7bc25136fcbc4abcb1dd81f0323c0, type: 3}
+    sound: {fileID: 8300000, guid: a98467b6511c58f4bb704eb61dce0e4f, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  takeStoneSE:
+    sound: {fileID: 8300000, guid: fdd6d491f4560244abcfd8594a2f0722, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
   shootStoneSE:
-    sound: {fileID: 8300000, guid: ee8a553691a7a38498d01cb40b61bb0e, type: 3}
+    sound: {fileID: 8300000, guid: b696fe6a428e5de4b8b77806664e5913, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1

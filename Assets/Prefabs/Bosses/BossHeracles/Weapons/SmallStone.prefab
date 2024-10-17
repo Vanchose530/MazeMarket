@@ -163,3 +163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageSmallStone: 15
   timeDestroySmallStone: 2
+  hitSE:
+    sound: {fileID: 8300000, guid: a24ec1d694174964aa9718249f4e7676, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
