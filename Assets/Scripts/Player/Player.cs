@@ -173,6 +173,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private GameObject damageSound;
     [SerializeField] private SoundEffect dashSE;
     [SerializeField] private SoundEffect grenadeThrowSE;
+    [SerializeField] private SoundEffect healSE;
 
     [Header("Physics")]
     [SerializeField] private Rigidbody2D _rb;
@@ -473,7 +474,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
             foreach (var obj in hitDamagedObjects)
             {
-                if (obj.gameObject == this.gameObject) continue;
+                if (obj.gameObject == this.gameObject)
+                    continue;
 
                 IDamagable damagedObj = obj.GetComponent<IDamagable>();
 
@@ -673,11 +675,17 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         isHeal = true;
 
         bodyAnimator.SetTrigger("Healing");
+
         yield return new WaitForSeconds(timeToHeal);
 
         instance.health += hpToHeal;
 
         isHeal = false;
+    }
+
+    void PlayHealingSE()
+    {
+        AudioManager.instance.PlaySoundEffect(healSE, timeToHeal);
     }
 
     private IEnumerator StaminaZero()

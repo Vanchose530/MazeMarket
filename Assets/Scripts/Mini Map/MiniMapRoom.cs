@@ -92,7 +92,10 @@ public class MiniMapRoom : MonoBehaviour
                     }
                     else if (roomTemplate == LevelBuilder.instance.levelTemplate.endRoom)
                     {
-                        sign = MiniMapUIM.instance.endSign;
+                        if (roomTemplate.enemyesOnRoom == EnemyesOnRoom.Boss)
+                            sign = MiniMapUIM.instance.bossSign;
+                        else
+                            sign = MiniMapUIM.instance.endSign;
                     }
                     else
                     {

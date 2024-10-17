@@ -7,5 +7,6 @@ public enum EnemyesOnRoom
     None = 0,
     OneWave = 1,
     TwoWaves = 2,
-    ThreeWaves = 3
+    ThreeWaves = 3,
+    Boss = 4
 }

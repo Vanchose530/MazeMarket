@@ -308,7 +308,7 @@ MonoBehaviour:
   grenadePrefab: {fileID: 8314972605054049927, guid: 0ea0c991740ccac4099f372e2217fdeb, type: 3}
   forceGrenade: 3
   hpToHeal: 60
-  timeToHeal: 2
+  timeToHeal: 3
   attackPoint: {fileID: 6939753730445181469}
   secondAttackPoint: {fileID: 1042710718863370343}
   hideObjectLayer:
@@ -335,6 +335,11 @@ MonoBehaviour:
     volume: 0.5
     minPitch: 1
     maxPitch: 1.2
+  healSE:
+    sound: {fileID: 8300000, guid: 17a5c3a62199fec4382ddf0bdaab32a4, type: 3}
+    volume: 0.5
+    minPitch: 0.7
+    maxPitch: 0.7
   _rb: {fileID: 2702732625081450782}
   startPosition: {x: 0, y: 0}
   levelName: 

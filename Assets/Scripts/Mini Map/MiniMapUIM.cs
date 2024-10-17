@@ -33,6 +33,8 @@ public class MiniMapUIM : MonoBehaviour
     public Sprite demonsBloodFountainSign { get { return _demonsBloodFountainSign; } }
     [SerializeField] private Sprite _sodaMachineSign;
     public Sprite sodaMachineSign { get { return _sodaMachineSign; } }
+    public Sprite bossSign { get { return _bossSign; } }
+    [SerializeField] private Sprite _bossSign;
 
     [Header("Signs Size")]
     [SerializeField] private float signSize = 1;
@@ -225,7 +227,7 @@ public class MiniMapUIM : MonoBehaviour
     {
         foreach (var miniMapRoom in miniMapRoomsList)
         {
-            if (miniMapRoom.status == MiniMapRoomStatus.Hidden)
+            if (miniMapRoom.status == MiniMapRoomStatus.Hidden || miniMapRoom.status == MiniMapRoomStatus.VisibleWay) // обработка второго статуса есть исключительно для комнаты с выходом
             {
                 miniMapRoom.status = MiniMapRoomStatus.VisibleWay;
 
