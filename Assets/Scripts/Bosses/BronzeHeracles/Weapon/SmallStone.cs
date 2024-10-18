@@ -8,18 +8,23 @@ public class SmallStone : MonoBehaviour
     [Header("Behavior")]
     [SerializeField] private int damageSmallStone;
     [SerializeField] private float timeDestroySmallStone;
-
+    [Header("Sound")]
+    [SerializeField] private SoundEffect hitSE;
     private void Start()
     {
         StartCoroutine("Delete");
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
-
-        if (obj != null)
+        if (collision.transform.tag != "Bullet")
         {
-            obj.TakeDamage(damageSmallStone, transform);
+            IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+
+            if (obj != null)
+            {
+                obj.TakeDamage(damageSmallStone, transform);
+            }
+            AudioManager.instance.PlaySoundEffect(hitSE, transform.position);
             Destroy(gameObject);
         }
     }
