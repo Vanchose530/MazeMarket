@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e08686b04ccff4783135742220323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maceDamage: 20
+  maceDamage: 35
   hitSE:
     sound: {fileID: 8300000, guid: 0d13245fe098c5c46bb86efbca09c9d4, type: 3}
     volume: 0.5
@@ -563,12 +563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994097f9e4f671648a7068051dd0059d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
-  speed: 3
+  maxHealth: 550
+  speed: 2.8
   nextWaypointDistance: 2
   targetOnAim: 0
   attackPoint: {fileID: 0}
-  damage: 10
+  damage: 35
   statesGameObject: {fileID: 2175714980077689276}
   agressive: 0
   alreadySpawnedOnStart: 1
@@ -633,23 +633,23 @@ MonoBehaviour:
   stay: 0
   alivingTime: 5
   timeTakeBow: 2
-  timeNewArrow: 2
-  timeWalkBow: 3
-  timeAimingBow: 2
-  timeToShootBow: 1
+  timeNewArrow: 0.3
+  timeWalkBow: 0.1
+  timeAimingBow: 1.7
+  timeToShootBow: 0.1
   timeRemoveBow: 1
   minCountArrow: 1
   maxCountArrow: 3
-  forceArrow: 4
+  forceArrow: 4.5
   timeTakeMace: 1
-  timeAttackMace: 3
+  timeAttackMace: 2.5
   timeRemoveMace: 1
   timeTakeStone: 1
-  timeWalkStone: 3
-  timeShootStone: 1
+  timeWalkStone: 0.15
+  timeShootStone: 0.2
   minCountStone: 2
   maxCountStone: 3
-  forceStone: 4
+  forceStone: 4.5
   archeryState: {fileID: 2555664646802664863}
   maceAttackState: {fileID: 6907334669574101903}
   stoneThrowState: {fileID: 1407195964567393340}

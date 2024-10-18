@@ -1,9 +1,6 @@
 using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -97,6 +94,8 @@ public class BronzeHeracles : Enemy, IDamagable
     private bool aliving;
 
     public bool attack { get;  set; }
+
+
     private void OnValidate()
     {
         if (rb == null)
@@ -219,7 +218,7 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     public void TakeDamage(int damage, Transform attack = null)
     {
-        if (spawning)
+        if (spawning || aliving)
             return;
         if (alreadySpawnedOnStart) 
             health -= damage;

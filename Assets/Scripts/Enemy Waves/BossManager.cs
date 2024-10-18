@@ -23,7 +23,7 @@ public class BossManager : MonoBehaviour
     [SerializeField] private float lockExitsTime = 1f;
     [SerializeField] private float unlockExitsTime = 1f;
 
-    [SerializeField] private GameObject bronzeHeracles;
+    [SerializeField] private BronzeHeracles bronzeHeracles;
 
     private bool roomPassed = false;
 
@@ -31,28 +31,27 @@ public class BossManager : MonoBehaviour
     public event Action onPlayerPassRoom;
     public static event Action onBossDefeat;
 
-    [ContextMenu("Generate guid for id")]
-    private void GenerateGuid()
-    {
-        id = System.Guid.NewGuid().ToString();
-    }
-
     private void OnEnable()
     {
         onPlayerEnterRoom += CloseAllExits;
         onPlayerEnterRoom += DestroyAllTriggers;
+        onPlayerEnterRoom += bronzeHeracles.Alive;
         onBossDefeat += BossDefeat;
 
-        onPlayerEnterRoom += () => Player.instance.isOnBattle = true;
-        onPlayerPassRoom += () => Player.instance.isOnBattle = false;
+        bronzeHeracles.onEnemyDeath += BossDefeat;
+
+        onPlayerEnterRoom += () => PlayerConditionsManager.instance.currentCondition = PlayerConditions.Battle;
+        onPlayerPassRoom += () => PlayerConditionsManager.instance.currentCondition = PlayerConditions.Default;
     }
 
     private void OnDisable()
     {
         onPlayerEnterRoom -= CloseAllExits;
         onPlayerEnterRoom -= DestroyAllTriggers;
+        onPlayerEnterRoom -= bronzeHeracles.Alive;
         onBossDefeat -= BossDefeat;
 
+        bronzeHeracles.onEnemyDeath -= BossDefeat;
     }
 
     private void OnValidate()
@@ -82,9 +81,6 @@ public class BossManager : MonoBehaviour
         }
 
         virtualCamera.enabled = false;
-
-        if (id == null || id == "")
-            Debug.LogError("For Room Manager not setted unique id. Room Manager object: " + gameObject.name);
     }
 
     public void PlayerEnterRoom()
@@ -146,13 +142,9 @@ public class BossManager : MonoBehaviour
             Destroy(trigger.gameObject);
         }
     }
-    public void BossDefeat() {
-
-        if (bronzeHeracles == null)
-        {
-            PassRoom();
-        }
-
+    public void BossDefeat()
+    {
+        PassRoom();
     }
 
 }
