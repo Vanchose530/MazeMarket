@@ -134,13 +134,17 @@ public class BronzeHeracles : Enemy, IDamagable
         mace.GetComponent<Collider2D>().enabled = false;
         
         
-        SetAnimate();
+        
     }
     private void Start()
     {
         InvokeRepeating("UpdatePath", 0f, 0.5f);
-        
+
+        SetAnimate();
+
         SetState(stayState);
+
+        
     }
 
     
@@ -284,7 +288,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(alivingTime);
 
-        SetState(stoneThrowState);
+        SetState(archeryState);
 
         aliving = false;
 
@@ -294,7 +298,6 @@ public class BronzeHeracles : Enemy, IDamagable
     public BronzeHeraclesState RandomState() {
 
         return attackState[Random.Range(0, attackState.Count)];
-
     }
 
     //Методы атак
@@ -349,22 +352,16 @@ public class BronzeHeracles : Enemy, IDamagable
         isShootBow = true;
 
         movementDirection = Vector2.zero;
-        bodyAnimator.SetTrigger("ShootABow");
+        bodyAnimator.Play("AimingABow");
 
-        AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position);
+        AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position, timeAimingBow);
+
         yield return new WaitForSeconds(timeAimingBow);
 
-        AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
+        // bodyAnimator.SetTrigger("ShootABow");
+        AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position, timeToShootBow);
+
         yield return new WaitForSeconds(timeToShootBow);
-
-        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
-        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Arrow>().enabled = true;
-        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
-
-        Rigidbody2D arb = archeryPoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
-        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
-
-        archeryPoint.transform.GetChild(0).gameObject.transform.SetParent(null);
 
         archeryState.countArrow--;
 
@@ -379,6 +376,16 @@ public class BronzeHeracles : Enemy, IDamagable
         }
         isShootBow = false;
         stand = false;
+    }
+    void ImpulseArrow()
+    {
+        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
+        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Arrow>().enabled = true;
+        archeryPoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+
+        Rigidbody2D arb = archeryPoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
+        archeryPoint.transform.GetChild(0).gameObject.transform.SetParent(null);
+        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
     }
     public void RemoveBow() 
     {
@@ -436,7 +443,7 @@ public class BronzeHeracles : Enemy, IDamagable
     private IEnumerator StartMaceAttack() 
     {
         isAttackMace = true;
-        bodyAnimator.SetTrigger("MaceAttack");
+        bodyAnimator.Play("MaceAttack");
         mace.GetComponent<Collider2D>().enabled = true;
         AudioManager.instance.PlaySoundEffect(maceAttackSE, transform.position);
         yield return new WaitForSeconds(timeAttackMace);
@@ -524,8 +531,9 @@ public class BronzeHeracles : Enemy, IDamagable
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
 
         Rigidbody2D srb = stonePoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
-        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
         stonePoint.transform.GetChild(0).gameObject.transform.SetParent(null);
+        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+        
 
         
 
