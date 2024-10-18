@@ -377,7 +377,7 @@ public class BronzeHeracles : Enemy, IDamagable
         isShootBow = false;
         stand = false;
     }
-    void ImpulseArrow()
+    public void ImpulseArrow()
     {
         archeryPoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
         archeryPoint.transform.GetChild(0).gameObject.GetComponent<Arrow>().enabled = true;
