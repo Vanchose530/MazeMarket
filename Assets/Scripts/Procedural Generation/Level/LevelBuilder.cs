@@ -29,6 +29,9 @@ public class LevelBuilder : MonoBehaviour
     [Header("Extra Rooms")]
     [SerializeField] private List<Room> startRoomPrefabs;
     [SerializeField] private List<Room> endRoomPrefabs;
+    // можно придумать систему по изящнее
+    [SerializeField] private bool addHorizontalEndRoomVariant = false;
+    [SerializeField] private List<Room> endRoomHorizontalPrefabs;
 
     [Header("Setup")]
     [SerializeField] private AstarPath pathfinder;
@@ -159,7 +162,23 @@ public class LevelBuilder : MonoBehaviour
 
     void BuildEndRoom(RoomTemplate roomTemplate)
     {
-        Room roomPrefab = GetRandomRoom(endRoomPrefabs);
+        Room roomPrefab = null;
+
+        if (addHorizontalEndRoomVariant)
+        {
+            if (roomTemplate.transitionUp != null || roomTemplate.transitionDown != null) // vertical
+            {
+                roomPrefab = GetRandomRoom(endRoomPrefabs);
+            }
+            else if (roomTemplate.transitionLeft != null || roomTemplate.transitionRight != null) // horizontal
+            {
+                roomPrefab = GetRandomRoom(endRoomHorizontalPrefabs);
+            }
+        }
+        else
+        {
+            roomPrefab = GetRandomRoom(endRoomPrefabs);
+        }
 
         Room newRoom = Instantiate(roomPrefab);
 
