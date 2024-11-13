@@ -2,12 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mace : MonoBehaviour
+public class Mace : MaceAttackState
 {
-    [Header("Behavior")]
-    public int maceDamage = 1;
-    [Header("Sound")]
-    [SerializeField] private SoundEffect hitSE;
     private void OnTriggerEnter2D(Collider2D collision)
     { 
         IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
