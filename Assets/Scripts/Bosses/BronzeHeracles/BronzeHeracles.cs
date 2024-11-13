@@ -43,32 +43,6 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public bool stay;
     public float alivingTime;
 
-    [Header("Bow")]
-    [SerializeField] private float timeTakeBow;
-    [SerializeField] private float timeNewArrow;
-    [SerializeField] private float timeWalkBow;
-    [SerializeField] private float timeAimingBow;
-    [SerializeField] private float timeToShootBow;
-    [SerializeField] private float timeRemoveBow;
-    [SerializeField] private int minCountArrow;
-    [SerializeField] private int maxCountArrow;
-    [SerializeField] private float forceArrow;
-
-    [Header("Mace")]
-    [SerializeField] private float timeTakeMace;
-    [SerializeField] private float timeAttackMace;
-    [SerializeField] private float timeRemoveMace;
-
-    [Header("Stone")]
-    [SerializeField] private float timeTakeStone;
-    [SerializeField] private float timeWalkStone;
-    [SerializeField] private float timeShootStone;
-    [SerializeField] private int minCountStone;
-    [SerializeField] private int maxCountStone;
-    [SerializeField] private float forceStone;
-
-
-
     [Header("BronzeHeracles AttackStates")]
     [SerializeField] private ArcheryState archeryState;
     [SerializeField] private MaceAttackState maceAttackState;
@@ -245,18 +219,18 @@ public class BronzeHeracles : Enemy, IDamagable
             rb.velocity = movementDirection * speed;
     }
     private void SetAnimate() {
-        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / timeAimingBow);
-        bodyAnimator.SetFloat("ShootABow Multiplier", 1 / timeToShootBow);
-        bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / timeTakeBow);
-        bodyAnimator.SetFloat("RemoveBow Multiplier", 1 / timeRemoveBow);
-        bodyAnimator.SetFloat("TakeMace Multiplier", 1 / timeTakeMace);
-        bodyAnimator.SetFloat("MaceAttack Multiplier", 1 / timeAttackMace);
-        bodyAnimator.SetFloat("RemoveMace Multiplier", 1 / timeRemoveMace);
+        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / archeryState.timeAimingBow);
+        bodyAnimator.SetFloat("ShootABow Multiplier", 1 / archeryState.timeToShootBow);
+        bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / archeryState.timeTakeBow);
+        bodyAnimator.SetFloat("RemoveBow Multiplier", 1 / archeryState.timeRemoveBow);
+        bodyAnimator.SetFloat("TakeMace Multiplier", 1 / maceAttackState.timeTakeMace);
+        bodyAnimator.SetFloat("MaceAttack Multiplier", 1 / maceAttackState.timeAttackMace);
+        bodyAnimator.SetFloat("RemoveMace Multiplier", 1 / maceAttackState.timeRemoveMace);
         bodyAnimator.SetFloat("Alive Multiplier", 1 / alivingTime);
-        bodyAnimator.SetFloat("TakeStone Multiplier", 1 / timeTakeStone);
-        bodyAnimator.SetFloat("ShootStone Multiplier", 1 / timeShootStone);
-        bodyAnimator.SetFloat("WalkStone Multiplier", 1 / timeWalkStone);
-        bodyAnimator.SetFloat("NewArrow Multiplier", 1 / timeNewArrow);
+        bodyAnimator.SetFloat("TakeStone Multiplier", 1 / stoneThrowState.timeTakeStone);
+        bodyAnimator.SetFloat("ShootStone Multiplier", 1 / stoneThrowState.timeShootStone);
+        bodyAnimator.SetFloat("WalkStone Multiplier", 1 / stoneThrowState.timeWalkStone);
+        bodyAnimator.SetFloat("NewArrow Multiplier", 1 / archeryState.timeNewArrow);
     }
     public void LockRigidbody(bool lockMode)
     {
@@ -318,7 +292,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         AudioManager.instance.PlaySoundEffect(takeArrowBowSE,transform.position);
 
-        yield return new WaitForSeconds(timeTakeBow);
+        yield return new WaitForSeconds(archeryState.timeTakeBow);
 
         isBowInHand = true;
         isTakeBow = false;
@@ -333,7 +307,7 @@ public class BronzeHeracles : Enemy, IDamagable
     private IEnumerator StartWalkBow() {
         isWalkBow = true;
 
-        yield return new WaitForSeconds(timeWalkBow + timeNewArrow);
+        yield return new WaitForSeconds(archeryState.timeWalkBow + archeryState.timeNewArrow);
 
         isWalkBow = false;
         stand = true;
@@ -352,17 +326,17 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetTrigger("ShootABow");
 
         AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position);
-        yield return new WaitForSeconds(timeAimingBow);
+        yield return new WaitForSeconds(archeryState.timeAimingBow);
 
         AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
-        yield return new WaitForSeconds(timeToShootBow);
+        yield return new WaitForSeconds(archeryState.timeToShootBow);
 
         archeryPoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
         archeryPoint.transform.GetChild(0).gameObject.GetComponent<Arrow>().enabled = true;
         archeryPoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
 
         Rigidbody2D arb = archeryPoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
-        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * stoneThrowState.forceStone, ForceMode2D.Impulse);
 
         archeryPoint.transform.GetChild(0).gameObject.transform.SetParent(null);
 
@@ -371,7 +345,7 @@ public class BronzeHeracles : Enemy, IDamagable
         if (archeryState.countArrow > 0)
         {
             AudioManager.instance.PlaySoundEffect(takeArrowBowSE, transform.position);
-            yield return new WaitForSeconds(timeNewArrow);
+            yield return new WaitForSeconds(archeryState.timeNewArrow);
 
             GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.identity);
             ar.transform.SetParent(archeryPoint.transform);
@@ -393,7 +367,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         bodyAnimator.SetTrigger("RemoveBow");
 
-        yield return new WaitForSeconds(timeRemoveBow);
+        yield return new WaitForSeconds(archeryState.timeRemoveBow);
 
         isBowInHand = false;
         stand = false;
@@ -421,7 +395,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         AudioManager.instance.PlaySoundEffect(takeMaceSE, transform.position);
 
-        yield return new WaitForSeconds(timeTakeMace);
+        yield return new WaitForSeconds(maceAttackState.timeTakeMace);
 
         maceAttackState.maceTaken = true;
         stand = false;
@@ -439,7 +413,7 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetTrigger("MaceAttack");
         mace.GetComponent<Collider2D>().enabled = true;
         AudioManager.instance.PlaySoundEffect(maceAttackSE, transform.position);
-        yield return new WaitForSeconds(timeAttackMace);
+        yield return new WaitForSeconds(maceAttackState.timeAttackMace);
         mace.GetComponent<Collider2D>().enabled = false;
         attack = false;
     }
@@ -453,7 +427,7 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         isRemoveMace = true;
         stand = true;
-        yield return new WaitForSeconds(timeRemoveMace);
+        yield return new WaitForSeconds(maceAttackState.timeRemoveMace);
         bodyAnimator.SetTrigger("Default");
         stand = false;
         SetState(recoveryState);
@@ -479,7 +453,7 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetTrigger("Stone");
 
         AudioManager.instance.PlaySoundEffect(takeStoneSE,transform.position);
-        yield return new WaitForSeconds(timeTakeStone);
+        yield return new WaitForSeconds(stoneThrowState.timeTakeStone);
         isTakeStone = false;
         stoneThrowState.takenStone = true;
     }
@@ -494,7 +468,7 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         stand = false;
         isWalkStone = true;
-        yield return new WaitForSeconds(timeWalkStone);
+        yield return new WaitForSeconds(stoneThrowState.timeWalkStone);
         isWalkStone = false;
         stand = true;
         stoneThrowState.walkStone = true;
@@ -516,7 +490,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         AudioManager.instance.PlaySoundEffect(shootStoneSE, transform.position);
 
-        yield return new WaitForSeconds(timeShootStone);
+        yield return new WaitForSeconds(stoneThrowState.timeShootStone);
 
 
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
@@ -524,7 +498,7 @@ public class BronzeHeracles : Enemy, IDamagable
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
 
         Rigidbody2D srb = stonePoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
-        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * archeryState.forceArrow, ForceMode2D.Impulse);
         stonePoint.transform.GetChild(0).gameObject.transform.SetParent(null);
 
         
@@ -536,10 +510,10 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     public int RandomStone() 
     {
-        return Random.Range(minCountStone, maxCountStone);
+        return Random.Range(stoneThrowState.minCountStone, stoneThrowState.maxCountStone);
     }
     public int RandomArrow()
     {
-        return Random.Range(minCountArrow, maxCountArrow);
+        return Random.Range(archeryState.minCountArrow, archeryState.maxCountArrow);
     }
 }

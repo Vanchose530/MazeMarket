@@ -7,7 +7,13 @@ public class MaceAttackState : BronzeHeraclesState
 {
     [Header("Behavior")]
     public float attackDistance;
-    public bool maceTaken;
+    [HideInInspector] public bool maceTaken;
+    public int maceDamage = 1;
+    public float timeTakeMace;
+    public float timeAttackMace;
+    public float timeRemoveMace;
+    [Header("Sound")]
+    [SerializeField] protected SoundEffect hitSE;
     public override void Init()
     {
         isFinished = false;

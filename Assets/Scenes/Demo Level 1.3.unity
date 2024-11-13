@@ -32026,6 +32026,114 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: forceStone
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: damageStone
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSE.sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 7fbb10bd44b6a734fa64265ce314e640, type: 3}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: maxCountStone
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: minCountStone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeTakeStone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeWalkStone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeShootStone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: forceSmallStone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: damageSmallStone
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSmallSE.sound
+      value: 
+      objectReference: {fileID: 8300000, guid: a24ec1d694174964aa9718249f4e7676, type: 3}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: maxCountSmallStone
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: minCountSmallStone
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSmallSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSmallSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407195964567393340, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeDestroySmallStone
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: forceArrow
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeTakeBow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeWalkBow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeNewArrow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: maxCountArrow
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: minCountArrow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeAimingBow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeRemoveBow
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2555664646802664863, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeToShootBow
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2959878066870951847, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.8
@@ -32065,6 +32173,34 @@ PrefabInstance:
     - target: {fileID: 2959878066870951847, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: maceDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSE.sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0d13245fe098c5c46bb86efbca09c9d4, type: 3}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeTakeMace
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: hitSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeAttackMace
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907334669574101903, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
+      propertyPath: timeRemoveMace
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7853856490866781612, guid: 17765d071a92ca84c8cc97d375ae985a, type: 3}
       propertyPath: m_Name

@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SmallStone : MonoBehaviour
+public class SmallStone : Stone
 {
-    [Header("Behavior")]
-    [SerializeField] private int damageSmallStone;
-    [SerializeField] private float timeDestroySmallStone;
-    [Header("Sound")]
-    [SerializeField] private SoundEffect hitSE;
     private void Start()
     {
         StartCoroutine("Delete");

@@ -6,7 +6,17 @@ using UnityEngine;
 
 public class ArcheryState : BronzeHeraclesState
 {
-    public int countArrow;
+    [Header("Behavior")]
+    [HideInInspector] public int countArrow;
+    public float timeTakeBow;
+    public float timeNewArrow;
+    public float timeWalkBow;
+    public float timeAimingBow;
+    public float timeToShootBow;
+    public float timeRemoveBow;
+    public int minCountArrow;
+    public int maxCountArrow;
+    public float forceArrow;
 
     public override void Init()
     {
@@ -33,8 +43,6 @@ public class ArcheryState : BronzeHeraclesState
     public override void Run()
     {
         bronzeHeracles.ExecutePath();
-        if (!bronzeHeracles.isBowInHand)
-            bronzeHeracles.TakeTheBow();
         if (countArrow > 0)
         {
             if (!bronzeHeracles.isBowInHand)

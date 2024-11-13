@@ -5,10 +5,27 @@ using UnityEngine;
 
 public class StoneThrowState : BronzeHeraclesState
 {
-    [Header("Behavior")]
-    public bool takenStone;
-    public bool walkStone;
-    public int countStone;
+    [Header("Behavior Stone")]
+    [HideInInspector] public bool takenStone;
+    [HideInInspector] public bool walkStone;
+    [HideInInspector] public int countStone;
+    public float timeTakeStone;
+    public float timeWalkStone;
+    public float timeShootStone;
+    public int minCountStone;
+    public int maxCountStone;
+    public float forceStone;
+    public int damageStone;
+    [Header ("Behavior SmallStone")]
+    public int minCountSmallStone;
+    public int maxCountSmallStone;
+    [SerializeField]protected float forceSmallStone;
+    [SerializeField] protected int damageSmallStone;
+    [SerializeField] protected float timeDestroySmallStone;
+    [Header("Sound")]
+    [SerializeField] protected SoundEffect hitSE;
+    [SerializeField] protected SoundEffect hitSmallSE;
+
     public override void Init()
     {
         isFinished = false;
