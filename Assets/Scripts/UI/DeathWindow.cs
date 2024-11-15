@@ -35,7 +35,7 @@ public class DeathWindow : MonoBehaviour
     {
         if (active && InputManager.instance.GetInteractPressed())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene("Procedural Generation 1");
         }
     }
 

@@ -20,7 +20,7 @@ public class VirtualCameraManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private float cameraLensOrtoSize = 6.5f;
+    [SerializeField] private float cameraLensOrtoSize = 5.7f;
 
     private CinemachineVirtualCamera _currentVirtualCamera;
     public CinemachineVirtualCamera currentVirtualCamera
