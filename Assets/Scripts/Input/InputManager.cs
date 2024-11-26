@@ -189,6 +189,7 @@ public class InputManager : MonoBehaviour
             else if (context.canceled)
             {
                 runPressed = false;
+                GameEventsManager.instance.input.RunCanceled();
             }
         }
         else if (inputHandler == InputHandlers.Gamepad)

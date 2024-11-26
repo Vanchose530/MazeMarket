@@ -7,6 +7,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamagable, IDataPersistence
 {
@@ -56,9 +57,13 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    [SerializeField] private float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+
     [Header("Runing")]
     [SerializeField] private float runSpeedModifier = 1.2f;
     [SerializeField] private float runStaminaWaste = 1;
+    public bool runing { get; private set; }
 
     [Header("Dashing")]
     public float dashForce;
@@ -179,18 +184,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private Rigidbody2D _rb;
 
     private bool _isOnBattle = false; // параметр необходим в первую очередь для музыки
-    //public bool isOnBattle
-    //{
-    //    get { return _isOnBattle; }
-    //    set
-    //    {
-    //        if (value)
-    //            AudioManager.instance.battleSnapshot.TransitionTo(2f);
-    //        else
-    //            AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
-    //        _isOnBattle = value;
-    //    }
-    //}
 
     [HideInInspector] public Vector2 startPosition; // эти два поля относятся к сохранению игрока
     [HideInInspector] public string levelName; // возможно их стоит перенести в другой скрипт
@@ -238,14 +231,20 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         if (InputManager.instance.GetRunPressed(true) && canUseStamina)
         {
+            // runing proccess
+
             currentSpeed = normalSpeed * runSpeedModifier;
             dashTrail.emitting = true;
+
+            runing = true;
 
             if (moveDirection != Vector2.zero)
                 stamina -= runStaminaWaste * Time.deltaTime;
         }
         else
         {
+            runing = false;
+
             currentSpeed = normalSpeed;
             dashTrail.emitting = false;
         }
@@ -256,12 +255,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         if (InputManager.instance.GetInteractPressed() && _interactableObjectsDetector.interactable != null)
             _interactableObjectsDetector.interactable.Interact(this);
 
-        //HealthBottleDrink();
 
         if (!isHeal)
         {
             Attack();
-            //GrenadeAttack();
         }
 
         Animate();
@@ -279,9 +276,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void OnEnableAfterTime()
     {
         GameEventsManager.instance.playerWeapons.onWeaponChanged += AnimateChangedWeapon;
-        // GameEventsManager.instance.input.onAttackPressed += Attack;
         GameEventsManager.instance.input.onDashPressed += Dash;
         GameEventsManager.instance.input.onReloadPressed += ReloadGun;
+
+        GameEventsManager.instance.input.onRunPressed += RunEnable;
+        GameEventsManager.instance.input.onRunCanceled += RunDisable;
 
         GameEventsManager.instance.input.onGrenadeAttack += UseGrenade;
         GameEventsManager.instance.input.onHealthBottle += UseHealth;
@@ -292,9 +291,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void OnDisable()
     {
         GameEventsManager.instance.playerWeapons.onWeaponChanged -= AnimateChangedWeapon;
-        // GameEventsManager.instance.input.onAttackPressed -= Attack;
         GameEventsManager.instance.input.onDashPressed -= Dash;
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
+
+        GameEventsManager.instance.input.onRunPressed -= RunEnable;
+        GameEventsManager.instance.input.onRunCanceled -= RunDisable;
 
         GameEventsManager.instance.input.onGrenadeAttack -= UseGrenade;
         GameEventsManager.instance.input.onHealthBottle -= UseHealth;
@@ -441,24 +442,43 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void RotatePlayer()
     {
-        Vector2 lookDirection = InputManager.instance.lookDirection;
+        Vector2 lookDirection;
+        float angle = 0;
 
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+        if (runing)
+        {
+            // lookDirection = moveDirection;
+            // float targerAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            // angle = Mathf.SmoothDampAngle(rb.transform.eulerAngles.z - 90, targerAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
 
-        rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+            rb.transform.rotation = legs.transform.rotation;
+        }
+        else
+        {
+            lookDirection = InputManager.instance.lookDirection;
+            angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        }
     }
 
     private void RotatePlayersLegs()
     {
         Vector2 moveDir = InputManager.instance.moveDirection;
 
-        float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        float targerAngle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targerAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+        // float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        Debug.Log("Angle: " + angle);
 
         legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     private void Attack()
     {
+        if (runing)
+            return;
+
         if (PlayerWeaponsManager.instance.currentWeapon == null
             && nextAttackTime <= 0 && InputManager.instance.GetAttackPressed()) // игрок безоружен
         {
@@ -542,12 +562,12 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void RunEnable()
     {
-        currentSpeed = normalSpeed * runSpeedModifier;
+        bodyAnimator.SetTrigger("Run");
     }
 
     private void RunDisable()
     {
-        currentSpeed = normalSpeed;
+        bodyAnimator.SetTrigger("Change Weapon");
     }
 
     private void Dash()
@@ -587,6 +607,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void ReloadGun()
     {
+        if (runing)
+            return;
+
         PlayerWeaponsManager.instance.Reload();     
     }
 
@@ -595,27 +618,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         bodyAnimator.SetFloat("Reloading Multiplier", 1 / PlayerWeaponsManager.instance.currentGun.reloadTime);
         bodyAnimator.SetTrigger("Reload");
     }
-    //public void GrenadeAttack()
-    //{
-    //    if (InputManager.instance.GetGrenadeAttack() && isGrenade)
-    //    {
-    //        Vector3 bulletAngle = followCameraPoint.eulerAngles;
-    //        GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
-    //        Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
-    //        grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
-
-    //        isGrenade = false;
-    //        isEmptyBottle = true;
-            
-    //    }
-    //}
-    //public void HealthBottleDrink()
-    //{
-    //    if (InputManager.instance.GetHealthBottle() && isEstos)
-    //    {
-    //        StartCoroutine("HealthBottleDrinkCouroutine");
-    //    }
-    //}
 
     private void CountTimeVariables()
     {
@@ -635,16 +637,15 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void UpdateUI()
     {
         MainUIM.instance.baseStates.SetCurrentHealth(health);
-        //HPStaminaManager.instance.hpSlider.value = (float)health / (float)maxHealth;
-        //hpSlider.value = (float)health / (float)maxHealth;
 
         MainUIM.instance.baseStates.SetCurrentStamina(stamina);
-        //HPStaminaManager.instance.staminaSlider.value = stamina / maxStamina;
-        //staminaSlider.value = stamina / maxDashCount;
     }
 
     private void UseGrenade()
     {
+        if (runing)
+            return;
+
         if (PlayerInventory.instance.countGrenadeBottle > 0)
         {
             if (grenadeThrowSE != null)
@@ -655,13 +656,15 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
             grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
             PlayerInventory.instance.countGrenadeBottle--;
-            // PlayerInventory.instance.countEmptyBottle++;
         }
     }
 
     private void UseHealth()
     {
-        if(PlayerInventory.instance.countHealthBottle > 0 && health < maxHealth)
+        if (runing)
+            return;
+
+        if (PlayerInventory.instance.countHealthBottle > 0 && health < maxHealth)
         {
             bodyAnimator.SetFloat("Healing Multiplier", 1 / timeToHeal);
             StartCoroutine("HealthBottleDrinkCouroutine");

@@ -22,6 +22,10 @@ public class InputEvents
 
     public void RunPressed() => onRunPressed?.Invoke();
 
+    public event Action onRunCanceled;
+
+    public void RunCanceled() => onRunCanceled?.Invoke();
+
     public event Action onInteractPressed;
 
     public void InteractPressed()
