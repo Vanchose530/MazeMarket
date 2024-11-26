@@ -238,8 +238,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
             runing = true;
 
-            if (moveDirection != Vector2.zero)
-                stamina -= runStaminaWaste * Time.deltaTime;
+            // if (moveDirection != Vector2.zero)
+            //    stamina -= runStaminaWaste * Time.deltaTime;
         }
         else
         {
@@ -442,19 +442,17 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void RotatePlayer()
     {
-        Vector2 lookDirection;
-        float angle = 0;
-
         if (runing)
         {
-            // lookDirection = moveDirection;
-            // float targerAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-            // angle = Mathf.SmoothDampAngle(rb.transform.eulerAngles.z - 90, targerAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
-
-            rb.transform.rotation = legs.transform.rotation;
+            Vector3 rotation = legs.transform.eulerAngles;
+            rb.transform.localEulerAngles = legs.transform.eulerAngles;
+            legs.transform.eulerAngles = rotation;
         }
         else
         {
+            Vector2 lookDirection;
+            float angle = 0;
+
             lookDirection = InputManager.instance.lookDirection;
             angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
             rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
@@ -463,15 +461,12 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void RotatePlayersLegs()
     {
-        Vector2 moveDir = InputManager.instance.moveDirection;
+        Vector2 moveDir = InputManager.instance.moveDirection.normalized;
 
         float targerAngle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targerAngle, ref turnSmoothVelocity, turnSmoothTime);
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targerAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
 
-        // float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        Debug.Log("Angle: " + angle);
-
-        legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        legs.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void Attack()
