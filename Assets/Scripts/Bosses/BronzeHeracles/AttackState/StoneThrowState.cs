@@ -34,12 +34,6 @@ public class StoneThrowState : BronzeHeraclesState
 
         bronzeHeracles.attack = true;
 
-        bronzeHeracles.isTakeStone = false;
-
-        bronzeHeracles.isShootStone = false;
-
-        bronzeHeracles.isWalkStone = false;
-
         bronzeHeracles.stand = true;
 
         bronzeHeracles.targetOnAim = true;

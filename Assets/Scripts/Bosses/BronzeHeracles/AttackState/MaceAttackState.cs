@@ -22,11 +22,6 @@ public class MaceAttackState : BronzeHeraclesState
 
         bronzeHeracles.targetOnAim = true;
 
-        bronzeHeracles.isTakeMace = false;
-
-        bronzeHeracles.isAttackMace = false;
-
-        bronzeHeracles.isRemoveMace = false;
 
         bronzeHeracles.attack = true;
 

@@ -17,6 +17,7 @@ public class ArcheryState : BronzeHeraclesState
     public int minCountArrow;
     public int maxCountArrow;
     public float forceArrow;
+    public int damageArrow;
 
     public override void Init()
     {
@@ -24,19 +25,11 @@ public class ArcheryState : BronzeHeraclesState
 
         bronzeHeracles.target = Player.instance.transform;
 
-        bronzeHeracles.isTakeBow = false;
-
-        bronzeHeracles.isWalkBow = false;
-
-        bronzeHeracles.isShootBow = false;
-
         bronzeHeracles.targetOnAim = true;
 
         bronzeHeracles.attack = true;
 
         bronzeHeracles.stand = true;
-
-        bronzeHeracles.isBowInHand = false;
 
         countArrow = bronzeHeracles.RandomArrow();
     }

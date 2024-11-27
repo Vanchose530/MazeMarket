@@ -27,6 +27,7 @@ public class EffectsStorage : MonoBehaviour
 
     [Header("Effects")]
     public GameObject enemySpawnEffect;
+    public GameObject bossSpawnEffect;
 
     [Header("Sounds")]
     public GameObject enemySpawnEffectSound;

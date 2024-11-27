@@ -134,6 +134,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bronzeHeracles: {fileID: 0}
   countArrow: 0
+  timeTakeBow: 2
+  timeNewArrow: 2
+  timeWalkBow: 2
+  timeAimingBow: 2
+  timeToShootBow: 2
+  timeRemoveBow: 2
+  minCountArrow: 1
+  maxCountArrow: 4
+  forceArrow: 5
+  damageArrow: 10
 --- !u!114 &6907334669574101903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +159,15 @@ MonoBehaviour:
   bronzeHeracles: {fileID: 0}
   attackDistance: 4
   maceTaken: 0
+  maceDamage: 1
+  timeTakeMace: 2
+  timeAttackMace: 3
+  timeRemoveMace: 2
+  hitSE:
+    sound: {fileID: 8300000, guid: a98467b6511c58f4bb704eb61dce0e4f, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!114 &1407195964567393340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +184,28 @@ MonoBehaviour:
   takenStone: 0
   walkStone: 0
   countStone: 0
+  timeTakeStone: 2
+  timeWalkStone: 2
+  timeShootStone: 2
+  minCountStone: 1
+  maxCountStone: 4
+  forceStone: 5
+  damageStone: 10
+  minCountSmallStone: 1
+  maxCountSmallStone: 3
+  forceSmallStone: 5
+  damageSmallStone: 10
+  timeDestroySmallStone: 2
+  hitSE:
+    sound: {fileID: 8300000, guid: 7fbb10bd44b6a734fa64265ce314e640, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
+  hitSmallSE:
+    sound: {fileID: 8300000, guid: b610b0ec546185146a31f13805e10180, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!114 &3133755502688629153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,7 +283,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19e08686b04ccff4783135742220323b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bronzeHeracles: {fileID: 0}
+  attackDistance: 0
+  maceTaken: 0
   maceDamage: 35
+  timeTakeMace: 0
+  timeAttackMace: 0
+  timeRemoveMace: 0
   hitSE:
     sound: {fileID: 8300000, guid: 0d13245fe098c5c46bb86efbca09c9d4, type: 3}
     volume: 0.5
@@ -383,7 +430,7 @@ GameObject:
   - component: {fileID: 3295783827105572229}
   - component: {fileID: 6850867644275045021}
   m_Layer: 0
-  m_Name: BronzeHeracles
+  m_Name: BronzeHeracles (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,7 +445,7 @@ Transform:
   m_GameObject: {fileID: 7853856490866781612}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 10.8, y: 28.11, z: 0}
+  m_LocalPosition: {x: 66.53, y: 12.98, z: 0}
   m_LocalScale: {x: 11.9554, y: 10.5652, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -572,7 +619,7 @@ MonoBehaviour:
   statesGameObject: {fileID: 2175714980077689276}
   agressive: 0
   alreadySpawnedOnStart: 1
-  spawningTime: 0
+  spawningTime: 3
   seeker: {fileID: 7218873257746545149}
   _rb: {fileID: 4162251926088211730}
   bodyAnimator: {fileID: 6850867644275045021}
@@ -629,44 +676,20 @@ MonoBehaviour:
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
+  screamSE:
+    sound: {fileID: 8300000, guid: fdd6d491f4560244abcfd8594a2f0722, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
   stayOnAwake: 1
   stay: 0
   alivingTime: 5
-  timeTakeBow: 2
-  timeNewArrow: 0.3
-  timeWalkBow: 0.1
-  timeAimingBow: 1.7
-  timeToShootBow: 0.1
-  timeRemoveBow: 1
-  minCountArrow: 1
-  maxCountArrow: 3
-  forceArrow: 4.5
-  timeTakeMace: 1
-  timeAttackMace: 2.5
-  timeRemoveMace: 1
-  timeTakeStone: 1
-  timeWalkStone: 0.15
-  timeShootStone: 0.2
-  minCountStone: 2
-  maxCountStone: 3
-  forceStone: 4.5
   archeryState: {fileID: 2555664646802664863}
   maceAttackState: {fileID: 6907334669574101903}
   stoneThrowState: {fileID: 1407195964567393340}
   stayState: {fileID: 7694149193686125257}
   recoveryState: {fileID: 3133755502688629153}
   attackState: []
-  isShootBow: 0
-  isRemoveBow: 0
-  isTakeMace: 0
-  isAttackMace: 0
-  isRemoveMace: 0
-  isTakeStone: 0
-  isShootStone: 0
-  isTakeBow: 0
-  isBowInHand: 0
-  isWalkStone: 0
-  isWalkBow: 0
   stand: 0
 --- !u!95 &6850867644275045021
 Animator:
