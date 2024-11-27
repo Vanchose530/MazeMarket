@@ -154,6 +154,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     float seriesAttack = 0f;
     public int damage = 5;
 
+    public bool attack { get; private set; }
 
     int punchSide = 1;
     
@@ -229,25 +230,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Update()
     {
-        if (InputManager.instance.GetRunPressed(true) && canUseStamina)
-        {
-            // runing proccess
-
-            currentSpeed = normalSpeed * runSpeedModifier;
-            dashTrail.emitting = true;
-
-            runing = true;
-
-            // if (moveDirection != Vector2.zero)
-            //    stamina -= runStaminaWaste * Time.deltaTime;
-        }
-        else
-        {
-            runing = false;
-
-            currentSpeed = normalSpeed;
-            dashTrail.emitting = false;
-        }
+        Runing();
 
         if (!dashing)
             moveDirection = InputManager.instance.moveDirection;
@@ -279,9 +262,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onDashPressed += Dash;
         GameEventsManager.instance.input.onReloadPressed += ReloadGun;
 
-        GameEventsManager.instance.input.onRunPressed += RunEnable;
-        GameEventsManager.instance.input.onRunCanceled += RunDisable;
-
         GameEventsManager.instance.input.onGrenadeAttack += UseGrenade;
         GameEventsManager.instance.input.onHealthBottle += UseHealth;
 
@@ -293,9 +273,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.playerWeapons.onWeaponChanged -= AnimateChangedWeapon;
         GameEventsManager.instance.input.onDashPressed -= Dash;
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
-
-        GameEventsManager.instance.input.onRunPressed -= RunEnable;
-        GameEventsManager.instance.input.onRunCanceled -= RunDisable;
 
         GameEventsManager.instance.input.onGrenadeAttack -= UseGrenade;
         GameEventsManager.instance.input.onHealthBottle -= UseHealth;
@@ -412,6 +389,37 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    private void Runing()
+    {
+        if (InputManager.instance.GetRunPressed(true) && canUseStamina && !attack && !PlayerWeaponsManager.instance.reloadingProccess)
+        {
+            currentSpeed = normalSpeed * runSpeedModifier;
+            dashTrail.emitting = true;
+
+            if (runing == false)
+            {
+                bodyAnimator.SetTrigger("Run");
+            }
+
+            runing = true;
+
+            if (moveDirection != Vector2.zero)
+                stamina -= runStaminaWaste * Time.deltaTime;
+        }
+        else
+        {
+            if (runing == true)
+            {
+                bodyAnimator.SetTrigger("Change Weapon");
+            }
+
+            runing = false;
+
+            currentSpeed = normalSpeed;
+            dashTrail.emitting = false;
+        }
+    }
+
     private void PlayerDeath()
     {
         health = 0;
@@ -437,9 +445,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void AnimateChangedWeapon()
     {
-        bodyAnimator.SetTrigger("Change Weapon");
+        if (!runing)
+            bodyAnimator.SetTrigger("Change Weapon");
     }
 
+    bool rotateOnAim;
     private void RotatePlayer()
     {
         if (runing)
@@ -447,6 +457,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             Vector3 rotation = legs.transform.eulerAngles;
             rb.transform.localEulerAngles = legs.transform.eulerAngles;
             legs.transform.eulerAngles = rotation;
+
+            rotateOnAim = false;
         }
         else
         {
@@ -456,12 +468,17 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             lookDirection = InputManager.instance.lookDirection;
             angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
             rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
+            rotateOnAim = true;
         }
     }
 
     private void RotatePlayersLegs()
     {
         Vector2 moveDir = InputManager.instance.moveDirection.normalized;
+
+        if (moveDir == Vector2.zero)
+            return;
 
         float targerAngle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
         float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targerAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
@@ -472,14 +489,17 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void Attack()
     {
         if (runing)
-            return;
+           return;
 
         if (PlayerWeaponsManager.instance.currentWeapon == null
             && nextAttackTime <= 0 && InputManager.instance.GetAttackPressed()) // игрок безоружен
         {
+            InputManager.instance.ReroizeAttackBuffer();
+
             if (seriesAttack <= 0) { punchSide = 0; bodyAnimator.SetFloat("Punch Side", punchSide); }
 
             bodyAnimator.SetTrigger("Attack");
+            attack = true;
 
             var soundEffect = Instantiate(punchSound);
             soundEffect.GetComponent<AudioSource>().pitch = UnityEngine.Random.Range(0.9f, 1.1f);
@@ -508,12 +528,16 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         else if (PlayerWeaponsManager.instance.currentWeapon != null
             && InputManager.instance.GetAttackPressed(PlayerWeaponsManager.instance.currentWeapon.holdToAttack)
             && PlayerWeaponsManager.instance.currentWeaponCooldown <= 0
-            && !PlayerWeaponsManager.instance.currentGun.reloading) // игрок вооружён
+            && !PlayerWeaponsManager.instance.reloadingProccess
+            && rotateOnAim) // игрок вооружён
         {
+            InputManager.instance.ReroizeAttackBuffer();
+
             if (PlayerWeaponsManager.instance.currentGun.ammoInMagazine > 0)
             {
                 bodyAnimator.SetFloat("Attack Multiplier", PlayerWeaponsManager.instance.currentGun.firingRate); // будет ошибка при использовании оружия ближнего боя!!!
                 bodyAnimator.SetTrigger("Attack");
+                attack = true;
             }
 
             Transform currentAttackPoint = null;
@@ -536,14 +560,20 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                     if (PlayerWeaponsManager.instance.GetAmmoByType(PlayerWeaponsManager.instance.currentGun.ammoType) > 0)
                     {
                         ReloadGun();
+                        attack = false;
                     }
                     else
                     {
                         Debug.Log("Нет патрон");
+                        attack = false;
                         PlayerWeaponsManager.instance.CheckAmmo();
                     }
                 }
             }
+        }
+        else
+        {
+            attack = false;
         }
     }
 
@@ -553,16 +583,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             MiniMapUIM.instance.HideMiniMap();
         else
             MiniMapUIM.instance.ShowMiniMap();
-    }
-
-    private void RunEnable()
-    {
-        bodyAnimator.SetTrigger("Run");
-    }
-
-    private void RunDisable()
-    {
-        bodyAnimator.SetTrigger("Change Weapon");
     }
 
     private void Dash()

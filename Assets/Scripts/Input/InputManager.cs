@@ -51,9 +51,27 @@ public class InputManager : MonoBehaviour
     private bool chooseWeapon3;
     private bool chooseWeapon4;
 
+    /*
+        При работе с запоминанием нажатий кнопок в классах, использующих кнопки с запоминанием нажатий,
+        необходимо вручную обнулять буфер нажатия кнопки после успешно обработаного нажатия!
+        Буфер нажатия кнопки обнуляется с помощью соответсвующего метода (Reroize) !
+
+        Запоминание нажатий кнопок активно если переменная кнопки BufferingTime не равна 0.
+        Если переменная кнопки BufferingTime равна 0, то запоминание нажатий кнопки не активно.
+     */
+
+    [Header("Buffering")]
+    [SerializeField] private float attackBufferingTime = 0.1f;
+    float attackBuffer;
+
     private void Awake()
     {
         Invoke("SetStartHandling", 0.1f);
+    }
+
+    private void Start()
+    {
+        // SetBuffering();
     }
 
     private void Update()
@@ -69,7 +87,31 @@ public class InputManager : MonoBehaviour
                 runPressed = false; // для бега на геймпаде
             }
         }
+
+        Buffering();
     }
+
+    void Buffering()
+    {
+        if (attackBufferingTime > 0)
+        {
+            if (attackPressed) 
+                attackBuffer = attackBufferingTime;
+            else if (attackBuffer > 0)
+                attackBuffer -= Time.deltaTime;
+        }
+        else
+        {
+            if (attackPressed)
+                attackBuffer = 1;
+            else
+                attackBuffer = 0;
+        }
+
+        Debug.Log("Attack Buffer: " + attackBuffer);
+    }
+
+    public void ReroizeAttackBuffer() => attackBuffer = 0;
 
     private void SetStartHandling()
     {
@@ -289,16 +331,25 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    // GAP
     public bool GetAttackPressed(bool hold = false)
     {
+        // Debug.Log(attackBuffer > 0);
+
         if (hold)
         {
-            return attackPressed;
+            return attackBuffer > 0;
         }
         else
         {
-            bool result = attackPressed;
-            attackPressed = false;
+            bool result = attackBuffer > 0;
+
+            if (result)
+            {
+                // attackBuffer = 0;
+                attackPressed = false;
+            }
+
             return result;
         }
     }

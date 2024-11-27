@@ -25,18 +25,26 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     private IEnumerator reloadingCoroutine;
 
     const string PATH_TO_WEAPON_PREFABS = "Items\\Weapons\\";
-    /*
-    [Header("Start Items")]
-    public List<Weapon> startWeapons;
-    public int startLightBullets;
-    public int startMediumBullets;
-    public int startHeavyBullets;
-    public int startShells;
-    */
+
     int lightBullets;
     int mediumBullets;
     int heavyBullets;
     int shells;
+
+    public bool reloadingProccess
+    {
+        get
+        {
+            if (currentGun != null)
+            {
+                return currentGun.reloading;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 
     [Header("Cant drop weapon")]
     [SerializeField] private LayerMask cantDropWeaponLayer;
@@ -56,30 +64,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private IEnumerator Start()
     {
-        //lightBullets = startLightBullets;
-        //mediumBullets = startMediumBullets;
-        //heavyBullets = startHeavyBullets;
-        //shells = startShells;
-
         SetGunOrMelee();
-
-        //if (startWeapons != null)
-        //{
-        //    foreach (Weapon weapon in startWeapons)
-        //    {
-        //        var w = Instantiate(weapon);
-
-        //        try
-        //        {
-        //            Gun g = (Gun)w;
-
-        //            g.ammoInMagazine = g.magazineSize;
-        //        }
-        //        catch (System.InvalidCastException) { }
-                
-        //        weapons.Add(w);
-        //    }
-        //}
 
         yield return new WaitForSeconds(0.1f);
 
@@ -452,6 +437,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
             PlayerWeaponsManager.instance.AddAmmoByType(gun.ammoType, -magazineDelta);
         }
 
+        GameEventsManager.instance.playerWeapons.ReloadingEnd();
+
         gun.reloading = false;
     }
 
@@ -463,6 +450,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         Destroy(reloadingSound);
 
         currentGun.reloading = false;
+        GameEventsManager.instance.playerWeapons.ReloadingEnd();
         if (reloadingCoroutine != null) StopCoroutine(reloadingCoroutine);
     }
 
