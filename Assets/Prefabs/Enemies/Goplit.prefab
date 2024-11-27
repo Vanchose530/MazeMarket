@@ -426,6 +426,26 @@ MonoBehaviour:
   damageEffect: {fileID: 2642225804590499521, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
   bulletsAftereffects: {fileID: 7120575172948533449, guid: 17dddbd611370b5428b4fa5da6a7ed19, type: 3}
   alivingEffect: {fileID: 9046454777077198889, guid: 08071334ab1692c47a49c8ad61f78f8e, type: 3}
+  prepareSpearSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  runSpearSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  hitSpearSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  standInPoseSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
   stayOnAwake: 1
   stay: 0
   alivingTime: 2
