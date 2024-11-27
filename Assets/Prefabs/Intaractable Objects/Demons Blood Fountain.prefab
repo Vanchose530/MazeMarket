@@ -110,6 +110,11 @@ MonoBehaviour:
     volume: 0.5
     minPitch: 1
     maxPitch: 1
+  jarFillingSE:
+    sound: {fileID: 8300000, guid: e3138f0317ca432439bd43c5f1c0a205, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!58 &2927615665879563596
 CircleCollider2D:
   m_ObjectHideFlags: 0

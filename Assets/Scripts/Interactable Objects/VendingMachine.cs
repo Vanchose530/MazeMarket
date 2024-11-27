@@ -17,6 +17,7 @@ public class VendingMachine : MonoBehaviour, IInteractable
     [Header("Interact Effect")]
     [SerializeField] private SpriteGlowEffect interactSpriteGlow;
     [SerializeField] private SoundEffect interactSE;
+    [SerializeField] private SoundEffect jarFillingSE;
 
     bool canInteract = false;
 
@@ -52,6 +53,7 @@ public class VendingMachine : MonoBehaviour, IInteractable
         {
             if (PlayerInventory.instance.countEmptyBottle > 0)
             {
+                AudioManager.instance.PlaySoundEffect(jarFillingSE, transform.position);
                 PlayerInventory.instance.countHealthBottle++;
                 PlayerInventory.instance.countEmptyBottle--;
 

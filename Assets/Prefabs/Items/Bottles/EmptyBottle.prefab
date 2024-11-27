@@ -102,10 +102,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   pickUpSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 3778b701350d8de4caf246d152fa30ac, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!95 &543227664056908131
 Animator:
   serializedVersion: 5

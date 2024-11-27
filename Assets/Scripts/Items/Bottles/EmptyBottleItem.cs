@@ -14,6 +14,7 @@ public class EmptyBottleItem : Item
 
     protected override void PickUp()
     {
+        AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position);
         PlayerInventory.instance.countEmptyBottle++;
         SaveCollectedItem();
         Destroy(gameObject);
