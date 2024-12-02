@@ -6,6 +6,9 @@ public class LockMiasma : MonoBehaviour
 {
     public bool lockStatus { get; private set; } = true;
 
+    [Header("Settings")]
+    [SerializeField] private float unlockAlpha = 0;
+
     [Header("Components")]
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -23,7 +26,7 @@ public class LockMiasma : MonoBehaviour
 
     private void Start()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0);
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, unlockAlpha);
         boxCollider.enabled = false;
         lockStatus = false;
     }
@@ -41,15 +44,22 @@ public class LockMiasma : MonoBehaviour
 
     public void Unlock(float time = 1f, bool destroy = false)
     {
-        if (destroy)
-            Destroy(this.gameObject, time * 1.1f);
-
         if (!lockStatus)
             return;
 
+        if (destroy)
+        {
+            Destroy(this.gameObject, time * 1.1f);
+            StartCoroutine(StartUnlock(time));
+        }
+        else
+        {
+            StartCoroutine(StartUnlock(time, unlockAlpha));
+        }
+
         //animator.SetFloat("Lock/Unlock Multiplier", 1 / time);
         //animator.Play("Unlock");
-        StartCoroutine(StartUnlock(time));
+        
         lockStatus = false;
     }
 
@@ -65,9 +75,9 @@ public class LockMiasma : MonoBehaviour
         }
     }
 
-    private IEnumerator StartUnlock(float time)
+    private IEnumerator StartUnlock(float time, float alpha = 0)
     {
-        while (spriteRenderer.color.a > 0)
+        while (spriteRenderer.color.a > alpha)
         {
             spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, spriteRenderer.color.a - 0.01f);
             yield return new WaitForSecondsRealtime(0.01f / time);

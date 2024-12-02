@@ -247,7 +247,8 @@ public class BronzeHeracles : Enemy, IDamagable
         else
             rb.velocity = movementDirection * speed;
     }
-    private void SetAnimate() {
+    private void SetAnimate()
+    {
         bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / timeAimingBow);
         bodyAnimator.SetFloat("ShootABow Multiplier", 1 / timeToShootBow);
         bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / timeTakeBow);
@@ -274,7 +275,8 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     public void Alive()
     {
-        if (!aliving) StartCoroutine("StartAliving");
+        if (!aliving)
+            StartCoroutine("StartAliving");
     }
 
     private IEnumerator StartAliving()
@@ -294,8 +296,8 @@ public class BronzeHeracles : Enemy, IDamagable
         alreadySpawnedOnStart = true;
     }
 
-    public BronzeHeraclesState RandomState() {
-
+    public BronzeHeraclesState RandomState()
+    {
         return attackState[Random.Range(0, attackState.Count)];
     }
 
@@ -332,7 +334,8 @@ public class BronzeHeracles : Enemy, IDamagable
             return;
         StartCoroutine("StartWalkBow");
     }
-    private IEnumerator StartWalkBow() {
+    private IEnumerator StartWalkBow()
+    {
         isWalkBow = true;
 
         yield return new WaitForSeconds(timeWalkBow + timeNewArrow);
@@ -532,7 +535,6 @@ public class BronzeHeracles : Enemy, IDamagable
         Rigidbody2D srb = stonePoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
         stonePoint.transform.GetChild(0).gameObject.transform.SetParent(null);
         srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
-        
 
         
 

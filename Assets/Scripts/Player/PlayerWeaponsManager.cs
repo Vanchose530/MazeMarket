@@ -10,6 +10,11 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     public List<Weapon> weapons { get; /*private*/ set; } // чтобы игрок мог переносить информацию между сценами private модификатор закоментирован
 
+    //public Gun firstSlotGun { get; set; }
+    //public Gun secondSlotGun { get; set; }
+    //public Gun thirdSlotGun { get; set; }
+    //public MeleeWeapon meleeWeapon { get; set; }
+
     public Weapon currentWeapon { get; private set; }
     public Gun currentGun { get; private set; }
     public MeleeWeapon currentMeleeWeapon { get; private set; }

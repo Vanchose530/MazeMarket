@@ -88,10 +88,10 @@ public class EnemyWavesManager : MonoBehaviour, IDataPersistence
             wave.roomManager = this;
         }
 
-        foreach (var miasma in lockMiasmas)
-        {
-            miasma.Unlock(time : 0.01f, destroy : false);
-        }
+        //foreach (var miasma in lockMiasmas)
+        //{
+        //    miasma.Unlock(time : 0.01f, destroy : false);
+        //}
 
         shuffledEnemyWaves = GetShuffledEnemyWaves();
 

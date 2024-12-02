@@ -620,10 +620,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         {
             if (hit.transform.gameObject.CompareTag("Player") || hit.transform.gameObject.layer == layer)
                 continue;
-            Debug.Log("2nd atck point");
             return true;
         }
-        Debug.Log("1st atck point");
         return false;
     }
 
