@@ -8,8 +8,6 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 {
     public static PlayerWeaponsManager instance { get; private set; }
 
-    // public List<Weapon> weapons { get; /*private*/ set; } // чтобы игрок мог переносить информацию между сценами private модификатор закоментирован
-
     public Gun firstSlotGun { get; set; }
     public Gun secondSlotGun { get; set; }
     public Gun thirdSlotGun { get; set; }
@@ -18,8 +16,6 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     public Weapon currentWeapon { get; private set; }
     public Gun currentGun { get; private set; }
     public MeleeWeapon currentMeleeWeapon { get; private set; }
-
-    [SerializeField] private int weaponInventorySize;
 
     [SerializeField] private float dropDistance = 2.0f;
     [SerializeField] private float dropDelayTimer = 2f;
@@ -109,7 +105,6 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        // CheckAmmo(); // затратно делать каждый кадр
         UpdateUI(); // затратно делать каждый кадр
         CountTimeVariables();
     }
@@ -160,41 +155,18 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         data.shellsCount = this.shells;
     }
     
-    // проверка инвентаря на "полность" для подбора предметов
     public bool IsGunSlotsFull()
     {
         return firstSlotGun != null
             && secondSlotGun != null
-            && firstSlotGun != null;
-        //if (weaponInventoryId > weapons.Count && currentWeapon != null)
-        //    return true;
-        //if (weapons.Count < weaponInventorySize)
-        //    return false;
-        //if (weapons.Count == weaponInventorySize)
-        //{
-        //    SwitchToNullWeapon();
-        //    if (currentWeapon == null) return false;
-        //}
-        //return true;
+            && thirdSlotGun != null;
     }
-
-    //private void SwitchToNullWeapon()
-    //{
-    //    for (int i = 0; i < weapons.Count; i++)
-    //    {
-    //        if (weapons[i] == null)
-    //        {
-    //            currentWeapon = weapons[i];
-    //            weaponInventoryId = i;
-    //            return;
-    //        }
-    //    }
-    //}
 
     public void AddWeapon(Weapon newWeapon)
     {
         if (newWeapon.GetType() == typeof(Gun))
         {
+            
             if (firstSlotGun == null)
             {
                 firstSlotGun = (Gun) newWeapon;
@@ -227,35 +199,6 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
                 // Сообщение о том, что нет места для оружий ближнего боя в инвентаре
             }
         }
-        //if (weapons.Count == weaponInventorySize)
-        //{
-        //    try
-        //    { 
-        //        if (currentWeapon.displayName != newWeapon.displayName)
-        //            weapons[weaponInventoryId] = newWeapon;
-        //    }
-        //    catch(NullReferenceException ignored) 
-        //    {
-        //        if (currentWeapon == null) weapons[weaponInventoryId] = newWeapon;
-        //    }
-        //}
-        //else
-        //    weapons.Add(newWeapon);
-        //    weaponInventoryId = weapons.Count - 1;
-
-        //if (currentWeapon != null)
-        //    currentWeapon.onAttack -= SetCooldown;
-
-        //currentWeapon = weapons[weaponInventoryId];
-
-        //StopGunReloading();
-        //SetGunOrMelee();
-
-        //currentWeapon.onAttack += SetCooldown;
-
-        //GameEventsManager.instance.playerWeapons.WeaponChanged();
-        //UpdateWeaponsUI();
-        // InventoryUIManager.instance.UpdateWeaponSlots();
     }
 
     public int GetAmmoByType(AmmoTypes type)
@@ -358,37 +301,13 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
                 else if (thirdSlotGun)
                     ToThirdWeapon();
             }
-            // UnityEngine.Debug.Log("changed weapon by F");
-            //if (currentWeapon != null)
-            //    currentWeapon.onAttack -= SetCooldown;
-
-            //try
-            //{
-            //    currentWeapon = weapons[weaponInventoryId + 1];
-            //    weaponInventoryId++;
-            //}
-            //catch (System.ArgumentOutOfRangeException)
-            //{
-            //    weaponInventoryId = 0;
-            //    currentWeapon = weapons[weaponInventoryId];
-            //}
-
-            //currentWeapon.onAttack += SetCooldown;
-
-            //StopGunReloading();
-            //SetGunOrMelee();
         }
-
-        // GameEventsManager.instance.playerWeapons.WeaponChanged();
     }
 
     public void RemoveWeapon()
     {
-        // UnityEngine.Debug.Log("logged T");
-
-        if (Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
+        if (currentWeapon != null && Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
         {
-            // UnityEngine.Debug.Log("Cant drop it here");
             HintsManager.instance.ShowDefaultNotice("Не могу выбросить здесь", 3f);
             return;
         }
@@ -402,20 +321,32 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
             CreateDrop();
 
-            // weapons.Remove(currentWeapon);
             Destroy(currentWeapon);
 
             currentWeapon = null;
 
-            ToMeleeWeapon();
-            //StopGunReloading();
-            //SetGunOrMelee();
+            switch (weaponInventoryId)
+            {
+                case 1:
+                    firstSlotGun = null;
+                    break;
+                case 2:
+                    secondSlotGun = null;
+                    break;
+                case 3:
+                    thirdSlotGun = null;
+                    break;
+                case 4:
+                    slotMeleeWeapon = null;
+                    break;
+            }
 
-            //GameEventsManager.instance.playerWeapons.WeaponChanged();
-            
+            // ToMeleeWeapon();
+            ChangeWeapon();
+
+            StartCoroutine(DropDelay());
+            UpdateWeaponsUI();
         }
-        StartCoroutine(DropDelay());
-        UpdateWeaponsUI();
     }
 
     private void CreateDrop()
@@ -434,7 +365,12 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private void SetGunOrMelee()
     {
-        if (currentWeapon.GetType() == typeof(Gun))
+        if (currentWeapon == null)
+        {
+            currentGun = null;
+            currentMeleeWeapon = null;
+        }
+        else if (currentWeapon.GetType() == typeof(Gun))
         {
             currentGun = (Gun) currentWeapon;
             currentMeleeWeapon = null;
@@ -599,20 +535,15 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         }
     }
 
-   // toMeleeWeapon -> старый ремув веапон
     public void ToMeleeWeapon()
     {
-        if (currentWeapon != null)
-            currentWeapon.onAttack -= SetCooldown;
+        BeforeChangeWeapon();
 
-        currentWeapon = null;
-        weaponInventoryId = 4; // большое значение чтобы в этот "слот" пушек не брать
+        currentWeapon = slotMeleeWeapon;
 
-        StopGunReloading();
-        SetGunOrMelee();
+        weaponInventoryId = 4;
 
-        GameEventsManager.instance.playerWeapons.WeaponChanged();
-
+        AfterChangeWeapon();
     }
 
     // Методы для работы с UI
@@ -621,18 +552,11 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (currentGun != null)
         {
-            //AmmoUIManager.instance.ammoPanelActive = true;
-            //AmmoUIManager.instance.allAmmoText = Convert.ToString(GetAmmoByType(currentGun.ammoType));
-            //AmmoUIManager.instance.ammoInGunText = Convert.ToString(currentGun.magazineSize) + "/" + Convert.ToString(currentGun.ammoInMagazine);
-
-            //AmmoUIManager.instance.ammoPanelAnimator.SetBool("Reloading", currentGun.reloading);
-
             MainUIM.instance.weapons.ShowAmmoPanel(currentGun.ammoInMagazine,
                 currentGun.magazineSize, GetAmmoByType(currentGun.ammoType), currentGun.ammoType);
         }
         else
         {
-            // AmmoUIManager.instance.ammoPanelActive = false;
             MainUIM.instance.weapons.HideAmmoPanel();
         }
     }
@@ -640,17 +564,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     private void UpdateWeaponsUI()
     {
         MainUIM.instance.weapons.SetGunToSlotOne(firstSlotGun);
-        MainUIM.instance.weapons.SetGunToSlotOne(secondSlotGun);
-        MainUIM.instance.weapons.SetGunToSlotOne(thirdSlotGun);
-
-        //try { MainUIM.instance.weapons.SetGunToSlotOne((Gun)weapons[0]); }
-        //catch (ArgumentOutOfRangeException) { MainUIM.instance.weapons.SetGunToSlotOne(null); }
-
-        //try { MainUIM.instance.weapons.SetGunToSlotTwo((Gun)weapons[1]); }
-        //catch (ArgumentOutOfRangeException) { MainUIM.instance.weapons.SetGunToSlotTwo(null); }
-
-        //try { MainUIM.instance.weapons.SetGunToSlotFree((Gun)weapons[2]); }
-        //catch (ArgumentOutOfRangeException) { MainUIM.instance.weapons.SetGunToSlotFree(null); }
+        MainUIM.instance.weapons.SetGunToSlotTwo(secondSlotGun);
+        MainUIM.instance.weapons.SetGunToSlotThree(thirdSlotGun);
 
         // когда будут милишки
         // MainUIM.instance.weapons.SetMeleeWeaponToSlot(meleeWeapon);
@@ -664,7 +579,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         if (currentGun != null)
         {
-            MainUIM.instance.weapons.ChooseWeaponSlot(weaponInventoryId + 1);
+            MainUIM.instance.weapons.ChooseWeaponSlot(weaponInventoryId);
         }
         else
         {

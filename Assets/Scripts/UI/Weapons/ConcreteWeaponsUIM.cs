@@ -189,7 +189,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
             gunSlotTwo.Clear();
     }
 
-    public override void SetGunToSlotFree(Gun gun)
+    public override void SetGunToSlotThree(Gun gun)
     {
         if (gun != null)
             gunSlotFree.SetGun(gun);

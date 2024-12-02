@@ -105,17 +105,17 @@ public class InventoryUIManager : MonoBehaviour
 
     public void UpdateWeaponSlots()
     {
-        for (int i = 0; i < weaponSlots.Length; i++)
-        {
-            try
-            {
-                weaponSlots[i].weapon = PlayerWeaponsManager.instance.weapons[i];
-            }
-            catch (System.ArgumentOutOfRangeException)
-            {
-                weaponSlots[i].weapon = null;
-            }
-        }
+        //for (int i = 0; i < weaponSlots.Length; i++)
+        //{
+        //    try
+        //    {
+        //        weaponSlots[i].weapon = PlayerWeaponsManager.instance.weapons[i];
+        //    }
+        //    catch (System.ArgumentOutOfRangeException)
+        //    {
+        //        weaponSlots[i].weapon = null;
+        //    }
+        //}
     }
 
     public void UpdateForWeaponChosen() 

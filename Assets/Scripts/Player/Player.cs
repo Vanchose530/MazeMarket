@@ -708,6 +708,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         instance.health += hpToHeal;
 
         isHeal = false;
+
+        bodyAnimator.SetTrigger("Change Weapon");
     }
 
     void PlayHealingSE()
