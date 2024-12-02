@@ -452,7 +452,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     bool rotateOnAim;
     private void RotatePlayer()
     {
-        if (runing)
+        if (runing || dashing)
         {
             Vector3 rotation = legs.transform.eulerAngles;
             rb.transform.localEulerAngles = legs.transform.eulerAngles;
@@ -597,12 +597,19 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             {
                 rb.AddForce(Vector2.up * dashForce * rb.mass, ForceMode2D.Impulse);
             }
-            
+
+            bodyAnimator.Play("Dash");
+
             AudioManager.instance.PlaySoundEffect(dashSE, dashingTime);
 
             dashingTimeBuffer = dashingTime;
             stamina--;
         }
+    }
+
+    private void DashEnd()
+    {
+        bodyAnimator.SetTrigger("Change Weapon");
     }
 
     public bool CheckObstacles(float distance, LayerMask layer)
@@ -643,7 +650,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             seriesAttack -= Time.deltaTime;
 
         if (dashingTimeBuffer > 0)
+        {
             dashingTimeBuffer -= Time.deltaTime;
+            if (dashingTimeBuffer <= 0)
+                DashEnd();
+        }
 
         if (stamina != maxStamina)
             stamina += Time.deltaTime * staminaRecoverySpeed;
