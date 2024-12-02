@@ -300,7 +300,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         newData.heavyBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.HeavyBullets);
         newData.shells = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.Shells);
 
-        newData.weapons = PlayerWeaponsManager.instance.weapons;
+        // newData.weapons = PlayerWeaponsManager.instance.weapons;
 
         newData.moneyCount = PlayerInventory.instance.money;
         newData.voidBottleCount = PlayerInventory.instance.countEmptyBottle;
@@ -322,7 +322,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.HeavyBullets, dataToLoad.heavyBullets);
         PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
 
-        PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+        // PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
 
         PlayerInventory.instance.money = dataToLoad.moneyCount;
         PlayerInventory.instance.countEmptyBottle = dataToLoad.voidBottleCount;
