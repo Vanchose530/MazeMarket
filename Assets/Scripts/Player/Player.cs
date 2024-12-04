@@ -156,6 +156,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     public float seriesAttackTime = 1f;
     float seriesAttack = 0f;
     public int damage = 5;
+    [SerializeField] private bool autoReloading;
 
     public bool attack { get; private set; }
 
@@ -571,7 +572,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 {
                     if (PlayerWeaponsManager.instance.GetAmmoByType(PlayerWeaponsManager.instance.currentGun.ammoType) > 0)
                     {
-                        ReloadGun();
+                        if (autoReloading)
+                            ReloadGun();
                         attack = false;
                     }
                     else
@@ -599,7 +601,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Dash()
     {
-        if (canUseStamina && stamina >= maxStamina / 2)
+        if (canUseStamina && stamina >= maxStamina / 2 && !PlayerWeaponsManager.instance.reloadingProccess && !isHeal)
         {
             if (InputManager.instance.moveDirection.magnitude != 0)
             {
