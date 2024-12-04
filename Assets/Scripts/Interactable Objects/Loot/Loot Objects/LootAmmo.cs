@@ -20,7 +20,7 @@ public class LootAmmo : LootObject
         else if (inaccuracy == 0)
             countToAdd = count;
 
-        PlayerWeaponsManager.instance.AddAmmoByType(type, countToAdd);
+        Player.instance.weaponsManager.AddAmmoByType(type, countToAdd);
     }
 
     public override string GetLootString()

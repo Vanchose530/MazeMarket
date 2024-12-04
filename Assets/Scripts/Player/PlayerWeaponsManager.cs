@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 {
-    public static PlayerWeaponsManager instance { get; private set; }
-
     public Gun firstSlotGun { get; set; }
     public Gun secondSlotGun { get; set; }
     public Gun thirdSlotGun { get; set; }
@@ -50,18 +48,10 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     [Header("Cant drop weapon")]
     [SerializeField] private LayerMask cantDropWeaponLayer;
 
+    [Header("Setup")]
+    public Player player;
+
     public float currentWeaponCooldown { get; private set; }
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            UnityEngine.Debug.LogWarning("Find more than one Player Weapon Manager in scene");
-        }
-        instance = this;
-
-        // weapons = new List<Weapon>();
-    }
 
     private IEnumerator Start()
     {
@@ -352,8 +342,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     private void CreateDrop()
     {
         Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"),
-            Player.instance.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance,
-            Player.instance.transform.rotation);
+            player.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance,
+            player.transform.rotation);
     }
 
     private IEnumerator DropDelay()
@@ -416,7 +406,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         gun.reloading = true;
 
-        Player.instance.PlayReloadingAnimation();
+        player.PlayReloadingAnimation();
 
         reloadingSound = AudioManager.instance.GetSoundEffectAS(gun.reloadingSE);
 

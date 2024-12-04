@@ -38,7 +38,7 @@ public class GunItem : Item
 
     protected override void PickUp() 
     {
-        if (PlayerWeaponsManager.instance.IsGunSlotsFull())
+        if (Player.instance.weaponsManager.IsGunSlotsFull())
         {
             Debug.Log("Inventory is full of guns");
             return;
@@ -46,7 +46,7 @@ public class GunItem : Item
         else
         {
             AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);
-            PlayerWeaponsManager.instance.AddWeapon(gun);
+            Player.instance.weaponsManager.AddWeapon(gun);
             SaveCollectedItem();
             Destroy(gameObject);
         }

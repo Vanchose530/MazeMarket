@@ -97,10 +97,10 @@ public class InventoryUIManager : MonoBehaviour
 
     public void UpdateAmmoCounters()
     {
-        lightBulletsCountTMP.text = System.Convert.ToString(PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.LightBullets));
-        mediumBulletsCountTMP.text = System.Convert.ToString(PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.MediumBullets));
-        heavyBulletsCountTMP.text = System.Convert.ToString(PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.HeavyBullets));
-        shellsCountTMP.text = System.Convert.ToString(PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.Shells));
+        lightBulletsCountTMP.text = System.Convert.ToString(Player.instance.weaponsManager.GetAmmoByType(AmmoTypes.LightBullets));
+        mediumBulletsCountTMP.text = System.Convert.ToString(Player.instance.weaponsManager.GetAmmoByType(AmmoTypes.MediumBullets));
+        heavyBulletsCountTMP.text = System.Convert.ToString(Player.instance.weaponsManager.GetAmmoByType(AmmoTypes.HeavyBullets));
+        shellsCountTMP.text = System.Convert.ToString(Player.instance.weaponsManager.GetAmmoByType(AmmoTypes.Shells));
     }
 
     public void UpdateWeaponSlots()
