@@ -300,7 +300,9 @@ MonoBehaviour:
   maxHealth: 200
   normalSpeed: 3.2
   turnSmoothTime: 0.1
-  runSpeedModifier: 1.9
+  runSpeedModifier: 1.5
+  runBoostModifier: 1.5
+  timeToRunBoost: 2.2
   runStaminaWaste: 1.1
   dashForce: 20
   dashingTime: 0.07

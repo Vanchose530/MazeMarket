@@ -62,6 +62,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     [Header("Runing")]
     [SerializeField] private float runSpeedModifier = 1.2f;
+    [SerializeField] private float runBoostModifier = 1.2f;
+    [SerializeField] private float timeToRunBoost = 1f;
+    private float runBustBuffer = 0f;
     [SerializeField] private float runStaminaWaste = 1;
     public bool runing { get; private set; }
 
@@ -391,10 +394,19 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Runing()
     {
-        if (InputManager.instance.GetRunPressed(true) && canUseStamina && !attack && !PlayerWeaponsManager.instance.reloadingProccess)
+        if (InputManager.instance.GetRunPressed(true) && canUseStamina && !isHeal && !attack && !PlayerWeaponsManager.instance.reloadingProccess)
         {
-            currentSpeed = normalSpeed * runSpeedModifier;
-            dashTrail.emitting = true;
+            if (runBustBuffer >= timeToRunBoost) // действует буст скорости
+            {
+                currentSpeed = normalSpeed * runSpeedModifier * runBoostModifier;
+                dashTrail.emitting = true;
+            }
+            else // буст скорости не действует
+            {
+                currentSpeed = normalSpeed * runSpeedModifier;
+                dashTrail.emitting = false;
+            }
+            
 
             if (runing == false)
             {
@@ -656,6 +668,15 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
         if (stamina != maxStamina)
             stamina += Time.deltaTime * staminaRecoverySpeed;
+
+        if (runing && moveDirection != Vector2.zero)
+        {
+            runBustBuffer += Time.deltaTime;
+        }
+        else
+        {
+            runBustBuffer = 0;
+        }
     }
 
     private void UpdateUI()
