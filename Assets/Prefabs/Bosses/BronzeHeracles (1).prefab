@@ -681,7 +681,13 @@ MonoBehaviour:
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
+  pentogramSE:
+    sound: {fileID: 8300000, guid: a07aa6439d14f2447b5c0a2e9143a04d, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
   stayOnAwake: 1
+  pentogramTime: 5
   stay: 0
   alivingTime: 5
   archeryState: {fileID: 2555664646802664863}

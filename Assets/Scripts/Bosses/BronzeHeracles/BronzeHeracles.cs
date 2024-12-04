@@ -35,9 +35,11 @@ public class BronzeHeracles : Enemy, IDamagable
     [SerializeField] private SoundEffect takeStoneSE;
     [SerializeField] private SoundEffect shootStoneSE;
     [SerializeField] private SoundEffect screamSE;
+    [SerializeField] private SoundEffect pentogramSE;
 
     [Header("Alive")]
     public bool stayOnAwake;
+    [SerializeField] private float pentogramTime;
     [HideInInspector] public bool stay;
     public float alivingTime;
     [Header("BronzeHeracles AttackStates")]
@@ -260,16 +262,17 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         aliving = true;
 
-        bodyAnimator.SetTrigger("Alive");
+        bodyAnimator.Play("Alive");
 
         var effect = Instantiate(EffectsStorage.instance.bossSpawnEffect, transform.position, transform.rotation);
-        effect.GetComponent<Animator>().SetFloat("Speed", 1 / alivingTime);
+        effect.GetComponent<Animator>().SetFloat("Speed", 1 / pentogramTime);
+        AudioManager.instance.PlaySoundEffect(pentogramSE, transform.position);
 
         yield return new WaitForSeconds(alivingTime);
-
-        effect.GetComponent<Animator>().SetFloat("Speed", 4 / alivingTime);
+        
+        effect.GetComponent<Animator>().SetFloat("Speed", 4 / pentogramTime);
         effect.GetComponent<Animator>().Play("Disappear");
-        Destroy(effect, alivingTime / 4);
+        Destroy(effect, pentogramTime / 4);
 
         bodyAnimator.SetTrigger("Default");
 
