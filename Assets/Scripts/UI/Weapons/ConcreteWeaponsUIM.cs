@@ -115,7 +115,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAllAmmo(int count, AmmoTypes type)
     {
-        Debug.Log("Set all ammo");
+        // Debug.Log("Set all ammo");
 
         SetAmmoImage(type);
 
@@ -124,7 +124,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAllAmmo(int count)
     {
-        Debug.Log("Set all ammo");
+        // Debug.Log("Set all ammo");
 
         allAmmoTMP.text = Convert.ToString(count);
     }
@@ -152,7 +152,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void HideAmmoPanel()
     {
-        Debug.Log("Hide Ammo Panel");
+        // Debug.Log("Hide Ammo Panel");
 
         ammoInGunTMP.text = "";
         allAmmoTMP.text = "";

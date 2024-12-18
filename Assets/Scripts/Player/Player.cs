@@ -158,8 +158,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     int punchSide = 1;
     
-
     public Vector2 attackPointPosition { get { return attackPoint.localPosition; } }
+
+    [Header("Reloading")]
+    [SerializeField] private bool autoreloading;
 
     [Header("Animations")]
     [SerializeField] private Animator bodyAnimator;
@@ -566,17 +568,13 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
                 if (weaponsManager.currentGun.ammoInMagazine == 0)
                 {
-                    if (weaponsManager.GetAmmoByType(weaponsManager.currentGun.ammoType) > 0)
+                    if (weaponsManager.GetAmmoByType(weaponsManager.currentGun.ammoType) > 0
+                        && autoreloading)
                     {
                         ReloadGun();
-                        attack = false;
                     }
-                    else
-                    {
-                        Debug.Log("Нет патрон");
-                        attack = false;
-                        weaponsManager.CheckAmmo();
-                    }
+                    weaponsManager.CheckAmmo();
+                    attack = false;
                 }
             }
         }

@@ -374,8 +374,13 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     public void CheckAmmo()
     {
-        if (currentGun != null && currentGun.ammoInMagazine == 0 && GetAmmoByType(currentGun.ammoType) == 0)
-            HintsManager.instance.ShowWarningNotice("Кончились патроны!");
+        if (currentGun != null && currentGun.ammoInMagazine == 0)
+        {
+            if (GetAmmoByType(currentGun.ammoType) == 0)
+                HintsManager.instance.ShowWarningNotice("Кончились патроны!");
+            else
+                HintsManager.instance.ShowWarningNotice("Нужна перезарядка! (R)");
+        }
         else
             HintsManager.instance.HideWarningNotice();
     }
@@ -428,6 +433,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
         }
 
         GameEventsManager.instance.playerWeapons.ReloadingEnd();
+
+        CheckAmmo();
 
         gun.reloading = false;
     }
@@ -540,8 +547,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     void UpdateUI()
     {
-        Debug.Log("Current gun null: " + Convert.ToString(currentGun == null));
-        Debug.Log("Current weapon null: " + Convert.ToString(currentWeapon == null));
+        // Debug.Log("Current gun null: " + Convert.ToString(currentGun == null));
+        // Debug.Log("Current weapon null: " + Convert.ToString(currentWeapon == null));
         if (currentGun != null)
         {
             MainUIM.instance.weapons.ShowAmmoPanel(currentGun.ammoInMagazine,
