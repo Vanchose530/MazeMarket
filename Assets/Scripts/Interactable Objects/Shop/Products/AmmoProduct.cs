@@ -11,6 +11,6 @@ public class AmmoProduct : Product
 
     public override void Buy()
     {
-        PlayerWeaponsManager.instance.AddAmmoByType(ammoType, ammoCount);
+        Player.instance.weaponsManager.AddAmmoByType(ammoType, ammoCount);
     }
 }

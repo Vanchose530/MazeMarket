@@ -10,7 +10,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
     [Header("Weapon Slots")]
     [SerializeField] private GunSlotUI gunSlotOne;
     [SerializeField] private GunSlotUI gunSlotTwo;
-    [SerializeField] private GunSlotUI gunSlotFree;
+    [SerializeField] private GunSlotUI gunSlotThree;
     [SerializeField] private MeleeWeaponSlotUI meleeWeaponSlot;
     [SerializeField] private GameObject choosenWeaponMark;
     int choosenWeaponIndex;
@@ -45,8 +45,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
                 slotUI = gunSlotTwo;
                 break;
             case 3:
-                pos = gunSlotFree.transform.position;
-                slotUI= gunSlotFree;
+                pos = gunSlotThree.transform.position;
+                slotUI = gunSlotThree;
                 break;
             case 4:
                 pos = meleeWeaponSlot.transform.position;
@@ -63,10 +63,12 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
         if (slotUI != null)
         {
+            // Debug.Log("Slot UI not null");
             if (slotUI.gun != null)
             {
+                // Debug.Log("Gun not null");
                 SetAmmoInGun(slotUI.gun.ammoInMagazine, slotUI.gun.magazineSize);
-                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(slotUI.gun.ammoType),
+                SetAllAmmo(Player.instance.weaponsManager.GetAmmoByType(slotUI.gun.ammoType),
                     slotUI.gun.ammoType);
             }
             else
@@ -88,7 +90,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
             try
             {
                 SetAmmoInGun(gunSlot.gun.ammoInMagazine, gunSlot.gun.magazineSize);
-                SetAllAmmo(PlayerWeaponsManager.instance.GetAmmoByType(gunSlot.gun.ammoType),
+                SetAllAmmo(Player.instance.weaponsManager.GetAmmoByType(gunSlot.gun.ammoType),
                     gunSlot.gun.ammoType);
 
                 break;
@@ -113,14 +115,18 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAllAmmo(int count, AmmoTypes type)
     {
+        // Debug.Log("Set all ammo");
+
         SetAmmoImage(type);
 
-        allAmmoTMP.text = System.Convert.ToString(count);
+        allAmmoTMP.text = Convert.ToString(count);
     }
 
     public override void SetAllAmmo(int count)
     {
-        allAmmoTMP.text = System.Convert.ToString(count);
+        // Debug.Log("Set all ammo");
+
+        allAmmoTMP.text = Convert.ToString(count);
     }
 
     private void SetAmmoImage(AmmoTypes type)
@@ -146,6 +152,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void HideAmmoPanel()
     {
+        // Debug.Log("Hide Ammo Panel");
+
         ammoInGunTMP.text = "";
         allAmmoTMP.text = "";
 
@@ -157,6 +165,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAmmoInGun(int ammoInGun, int magazineSize)
     {
+        Debug.Log("Set in gun");
+
         string text = ammoInGun.ToString() + "/" + magazineSize.ToString();
         ammoInGunTMP.text = text;
 
@@ -166,6 +176,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAmmoInGun(int ammoInGun)
     {
+        Debug.Log("Set in gun");
+
         string magazineSize = ammoInGunTMP.text.Split('/')[1];
         string text = ammoInGun.ToString() + "/" + magazineSize;
         ammoInGunTMP.text = text;
@@ -189,12 +201,12 @@ public class ConcreteWeaponsUIM : WeaponsUIM
             gunSlotTwo.Clear();
     }
 
-    public override void SetGunToSlotFree(Gun gun)
+    public override void SetGunToSlotThree(Gun gun)
     {
         if (gun != null)
-            gunSlotFree.SetGun(gun);
+            gunSlotThree.SetGun(gun);
         else
-            gunSlotFree.Clear();
+            gunSlotThree.Clear();
     }
 
     public override void SetMeleeWeaponToSlot(MeleeWeapon meleeWeapon)

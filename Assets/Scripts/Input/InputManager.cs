@@ -108,7 +108,7 @@ public class InputManager : MonoBehaviour
                 attackBuffer = 0;
         }
 
-        Debug.Log("Attack Buffer: " + attackBuffer);
+        // Debug.Log("Attack Buffer: " + attackBuffer);
     }
 
     public void ReroizeAttackBuffer() => attackBuffer = 0;
@@ -405,7 +405,6 @@ public class InputManager : MonoBehaviour
 
     public void FirstWeaponChoosen(InputAction.CallbackContext context)
     {
-        Debug.Log("1");
         if (context.performed)
         {
             chooseWeapon = true;
@@ -419,7 +418,6 @@ public class InputManager : MonoBehaviour
 
     public void SecondWeaponChoosen(InputAction.CallbackContext context)
     {
-        Debug.Log("2");
         if (context.performed)
         {
             chooseWeapon2 = true;
@@ -433,7 +431,6 @@ public class InputManager : MonoBehaviour
 
     public void ThirdWeaponChoosen(InputAction.CallbackContext context)
     {
-        Debug.Log("3");
         if (context.performed)
         {
             chooseWeapon3 = true;
@@ -447,7 +444,6 @@ public class InputManager : MonoBehaviour
 
     public void MeleeWeaponChoosen(InputAction.CallbackContext context)
     {
-        Debug.Log("4");
         if (context.performed)
         {
             chooseWeapon4 = true;

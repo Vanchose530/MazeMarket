@@ -11,7 +11,7 @@ public class LootGun : LootObject
 
     public override bool GetCanLoot()
     {
-        return !PlayerWeaponsManager.instance.IsGunSlotsFull();
+        return !Player.instance.weaponsManager.IsGunSlotsFull();
     }
 
     public override void Loot()
@@ -19,10 +19,10 @@ public class LootGun : LootObject
         Gun gunToAdd = Instantiate(gun);
         gunToAdd.ammoInMagazine = gunToAdd.magazineSize;
 
-        PlayerWeaponsManager.instance.AddWeapon(gunToAdd);
+        Player.instance.weaponsManager.AddWeapon(gunToAdd);
 
         if (ammoToAdd > 0)
-            PlayerWeaponsManager.instance.AddAmmoByType(gun.ammoType, ammoToAdd);
+            Player.instance.weaponsManager.AddAmmoByType(gun.ammoType, ammoToAdd);
     }
 
     public override string GetLootString()

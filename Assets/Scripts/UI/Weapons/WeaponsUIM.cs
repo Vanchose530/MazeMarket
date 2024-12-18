@@ -6,7 +6,7 @@ public abstract class WeaponsUIM : MonoBehaviour
 {
     public abstract void SetGunToSlotOne(Gun gun);
     public abstract void SetGunToSlotTwo(Gun gun);
-    public abstract void SetGunToSlotFree(Gun gun);
+    public abstract void SetGunToSlotThree(Gun gun);
     public abstract void SetMeleeWeaponToSlot(MeleeWeapon meleeWeapon);
     public abstract void ChooseWeaponSlot(int slot);
 

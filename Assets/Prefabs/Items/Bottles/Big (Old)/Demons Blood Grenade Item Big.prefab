@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2873961280723904659}
   - component: {fileID: 543227664056908131}
   - component: {fileID: 3375131559290946337}
-  - component: {fileID: 8944484768859244719}
+  - component: {fileID: 1896178814892783200}
   m_Layer: 0
-  m_Name: HealthPoitionItem
+  m_Name: Demons Blood Grenade Item Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7c1b9ca4c2c48124dada01ca58e06b76, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b5c645c619c578840992118d69090b40, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -144,7 +144,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.28
---- !u!114 &8944484768859244719
+--- !u!114 &1896178814892783200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3539247117645178881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c826534e5236fd2488ff9ff016906fb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bd8d7188d433924381af54deaf35054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: 
