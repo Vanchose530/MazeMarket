@@ -124,6 +124,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    [SerializeField] private float timeToStaminaUp = 0.1f;
+    private float timeToStaminaUpBuffer;
+
     bool _canUseStamina = true;
     bool isHeal = false;
 
@@ -410,11 +413,13 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         {
             if (runBustBuffer >= timeToRunBoost) // действует буст скорости
             {
+                bodyAnimator.SetFloat("Run Multiplier", runBoostModifier);
                 currentSpeed = normalSpeed * runSpeedModifier * runBoostModifier;
                 dashTrail.emitting = true;
             }
             else // буст скорости не действует
             {
+                bodyAnimator.SetFloat("Run Multiplier", 1f);
                 currentSpeed = normalSpeed * runSpeedModifier;
                 dashTrail.emitting = false;
             }
@@ -631,6 +636,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void DashEnd()
     {
         bodyAnimator.SetTrigger("Change Weapon");
+        timeToStaminaUpBuffer = 0;
     }
 
     public bool CheckObstacles(float distance, LayerMask layer)
@@ -675,17 +681,24 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 DashEnd();
         }
 
-        if (stamina != maxStamina)
+        if (stamina != maxStamina && timeToStaminaUpBuffer <= 0)
             stamina += Time.deltaTime * staminaRecoverySpeed;
 
         if (runing && moveDirection != Vector2.zero)
         {
+            timeToStaminaUpBuffer = timeToStaminaUp;
+        }
+
+        if (timeToStaminaUpBuffer > 0)
+        {
+            timeToStaminaUpBuffer -= Time.deltaTime;
             runBustBuffer += Time.deltaTime;
         }
         else
         {
             runBustBuffer = 0;
         }
+            
     }
 
     private void UpdateUI()
