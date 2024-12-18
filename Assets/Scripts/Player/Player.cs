@@ -608,7 +608,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Dash()
     {
-        if (canUseStamina && stamina >= maxStamina / 2 && !PlayerWeaponsManager.instance.reloadingProccess && !isHeal)
+        if (canUseStamina && stamina >= maxStamina / 2 && !weaponsManager.reloadingProccess && !isHeal)
         {
             if (InputManager.instance.moveDirection.magnitude != 0)
             {
