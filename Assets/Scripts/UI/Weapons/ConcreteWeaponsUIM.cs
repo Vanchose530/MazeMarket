@@ -63,8 +63,10 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
         if (slotUI != null)
         {
+            // Debug.Log("Slot UI not null");
             if (slotUI.gun != null)
             {
+                // Debug.Log("Gun not null");
                 SetAmmoInGun(slotUI.gun.ammoInMagazine, slotUI.gun.magazineSize);
                 SetAllAmmo(Player.instance.weaponsManager.GetAmmoByType(slotUI.gun.ammoType),
                     slotUI.gun.ammoType);
@@ -113,6 +115,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAllAmmo(int count, AmmoTypes type)
     {
+        Debug.Log("Set all ammo");
+
         SetAmmoImage(type);
 
         allAmmoTMP.text = Convert.ToString(count);
@@ -120,6 +124,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAllAmmo(int count)
     {
+        Debug.Log("Set all ammo");
+
         allAmmoTMP.text = Convert.ToString(count);
     }
 
@@ -146,6 +152,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void HideAmmoPanel()
     {
+        Debug.Log("Hide Ammo Panel");
+
         ammoInGunTMP.text = "";
         allAmmoTMP.text = "";
 
@@ -157,6 +165,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAmmoInGun(int ammoInGun, int magazineSize)
     {
+        Debug.Log("Set in gun");
+
         string text = ammoInGun.ToString() + "/" + magazineSize.ToString();
         ammoInGunTMP.text = text;
 
@@ -166,6 +176,8 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAmmoInGun(int ammoInGun)
     {
+        Debug.Log("Set in gun");
+
         string magazineSize = ammoInGunTMP.text.Split('/')[1];
         string text = ammoInGun.ToString() + "/" + magazineSize;
         ammoInGunTMP.text = text;

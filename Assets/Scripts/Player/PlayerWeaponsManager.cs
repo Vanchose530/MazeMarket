@@ -95,8 +95,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        UpdateUI(); // затратно делать каждый кадр
         CountTimeVariables();
+        UpdateUI(); // затратно делать каждый кадр
     }
 
     public void LoadData(GameData data)
@@ -529,9 +529,9 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         BeforeChangeWeapon();
 
-        currentWeapon = slotMeleeWeapon;
-
         weaponInventoryId = 4;
+
+        currentWeapon = slotMeleeWeapon;
 
         AfterChangeWeapon();
     }
@@ -540,6 +540,8 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     void UpdateUI()
     {
+        Debug.Log("Current gun null: " + Convert.ToString(currentGun == null));
+        Debug.Log("Current weapon null: " + Convert.ToString(currentWeapon == null));
         if (currentGun != null)
         {
             MainUIM.instance.weapons.ShowAmmoPanel(currentGun.ammoInMagazine,
