@@ -36,7 +36,7 @@ public class Goplit : Enemy, IDamagable
     bool aliving;
 
     [Header("Goplit States")]
-    [SerializeField] private GoplitSpawnState spawnState;
+    public GoplitSpawnState spawnState;
     [SerializeField] private GoplitStayState stayState;
     [SerializeField] private GoplitPassiveState passiveState;
     [SerializeField] private GoplitPursuitState pursuitState;
@@ -156,7 +156,7 @@ public class Goplit : Enemy, IDamagable
 
     public override void Attack()
     {
-        time=timeAttack;
+        time = timeAttack;
         StartAttack();
         SetState(attackState);
     }

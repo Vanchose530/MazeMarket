@@ -66,7 +66,18 @@ public class StoneThrowState : BronzeHeraclesState
             bronzeHeracles.attack = false;
             isFinished = true;
             bronzeHeracles.bodyAnimator.SetTrigger("Default");
-            bronzeHeracles.SetState(bronzeHeracles.recoveryState);
+
+            if (bronzeHeracles.isThirdPhase && bronzeHeracles.isFirstAttack)
+            {
+                bronzeHeracles.isFirstAttack = false;
+                bronzeHeracles.SetState(bronzeHeracles.RandomState());
+            }
+            else
+            {
+                bronzeHeracles.isFirstAttack = true;
+                bronzeHeracles.SetState(bronzeHeracles.recoveryState);
+            }
+
         }
     }
 

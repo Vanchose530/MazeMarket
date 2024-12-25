@@ -93,11 +93,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6739060471445093385}
+  - component: {fileID: 659320635769146310}
   - component: {fileID: 2555664646802664863}
   - component: {fileID: 6907334669574101903}
   - component: {fileID: 1407195964567393340}
   - component: {fileID: 3133755502688629153}
   - component: {fileID: 7694149193686125257}
+  - component: {fileID: 7037192709139616287}
+  - component: {fileID: 5054461928193632673}
   m_Layer: 0
   m_Name: BronzeHeracles States
   m_TagString: Untagged
@@ -120,6 +123,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2959878066870951847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &659320635769146310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175714980077689276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8e66dc5d349324085403e12ad54a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bronzeHeracles: {fileID: 0}
+  callGoplitsTime: 3
 --- !u!114 &2555664646802664863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,14 +152,14 @@ MonoBehaviour:
   bronzeHeracles: {fileID: 0}
   countArrow: 0
   timeTakeBow: 2
-  timeNewArrow: 2
-  timeWalkBow: 2
-  timeAimingBow: 2
-  timeToShootBow: 2
-  timeRemoveBow: 2
+  timeNewArrow: 0.5
+  timeWalkBow: 0.1
+  timeAimingBow: 1.7
+  timeToShootBow: 0.1
+  timeRemoveBow: 1
   minCountArrow: 1
-  maxCountArrow: 4
-  forceArrow: 5
+  maxCountArrow: 3
+  forceArrow: 4.5
   damageArrow: 10
 --- !u!114 &6907334669574101903
 MonoBehaviour:
@@ -159,10 +176,10 @@ MonoBehaviour:
   bronzeHeracles: {fileID: 0}
   attackDistance: 4
   maceTaken: 0
-  maceDamage: 1
-  timeTakeMace: 2
-  timeAttackMace: 3
-  timeRemoveMace: 2
+  maceDamage: 10
+  timeTakeMace: 1
+  timeAttackMace: 2.5
+  timeRemoveMace: 1
   hitSE:
     sound: {fileID: 8300000, guid: a98467b6511c58f4bb704eb61dce0e4f, type: 3}
     volume: 0.5
@@ -184,12 +201,12 @@ MonoBehaviour:
   takenStone: 0
   walkStone: 0
   countStone: 0
-  timeTakeStone: 2
-  timeWalkStone: 2
-  timeShootStone: 2
-  minCountStone: 1
-  maxCountStone: 4
-  forceStone: 5
+  timeTakeStone: 1
+  timeWalkStone: 0.1
+  timeShootStone: 0.2
+  minCountStone: 2
+  maxCountStone: 3
+  forceStone: 4.5
   damageStone: 10
   minCountSmallStone: 1
   maxCountSmallStone: 3
@@ -220,10 +237,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bronzeHeracles: {fileID: 0}
   distanceFromPlayer: 5
+  distanceRecoverAttack: 2.29
   minRecoveryTime: 2
   maxRecoveryTime: 5
   minWalkInOneTurnTime: 2
   maxWalkInOneTurnTime: 4
+  recoverAttackTime: 3
 --- !u!114 &7694149193686125257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +257,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bronzeHeracles: {fileID: 0}
   distanceToFindPlayer: 4
+--- !u!114 &7037192709139616287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175714980077689276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b821cfa19094c4ca58c45999e078ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bronzeHeracles: {fileID: 0}
+  cooldownTime: 2
+--- !u!114 &5054461928193632673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175714980077689276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63b7c1e6e371c148bbbc44d1964135c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bronzeHeracles: {fileID: 0}
+  deathTime: 2
 --- !u!1 &3822359056829068551
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +475,7 @@ GameObject:
   - component: {fileID: 4162251926088211730}
   - component: {fileID: 7218873257746545149}
   - component: {fileID: 3295783827105572229}
+  - component: {fileID: 5606537867339462621}
   - component: {fileID: 6850867644275045021}
   m_Layer: 0
   m_Name: BronzeHeracles (1)
@@ -610,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994097f9e4f671648a7068051dd0059d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 500
   speed: 2.8
   nextWaypointDistance: 2
   targetOnAim: 0
@@ -619,7 +667,7 @@ MonoBehaviour:
   statesGameObject: {fileID: 2175714980077689276}
   agressive: 0
   alreadySpawnedOnStart: 1
-  spawningTime: 3
+  spawningTime: 5
   seeker: {fileID: 7218873257746545149}
   _rb: {fileID: 4162251926088211730}
   bodyAnimator: {fileID: 6850867644275045021}
@@ -682,21 +730,50 @@ MonoBehaviour:
     minPitch: 0.9
     maxPitch: 1.1
   pentogramSE:
-    sound: {fileID: 8300000, guid: a07aa6439d14f2447b5c0a2e9143a04d, type: 3}
+    sound: {fileID: 8300000, guid: b27b09bdaeae73d4e88d7f4a885e4ae5, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
   stayOnAwake: 1
-  pentogramTime: 5
+  pentogramTime: 3
   stay: 0
-  alivingTime: 5
+  alivingTime: 3
+  firstPhaseHP: 0
+  secondPhaseHP: 0
+  thirdPhaseHP: 0
+  interactSpriteGlow: {fileID: 5606537867339462621}
+  isFirstAttack: 1
+  isThirdPhase: 0
+  bossManager: {fileID: 0}
+  numberGoplit: 0
   archeryState: {fileID: 2555664646802664863}
   maceAttackState: {fileID: 6907334669574101903}
   stoneThrowState: {fileID: 1407195964567393340}
+  callOfGoplitsState: {fileID: 659320635769146310}
   stayState: {fileID: 7694149193686125257}
   recoveryState: {fileID: 3133755502688629153}
+  cooldownState: {fileID: 7037192709139616287}
+  deathState: {fileID: 5054461928193632673}
   attackState: []
   stand: 0
+--- !u!114 &5606537867339462621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853856490866781612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0.454902, g: 0.3019608, b: 0.18039216, a: 1}
+  glowBrightness: 1.5
+  outlineWidth: 1
+  alphaThreshold: 0.1
+  drawOutside: 0
+  enableInstancing: 0
 --- !u!95 &6850867644275045021
 Animator:
   serializedVersion: 5
@@ -729,6 +806,7 @@ GameObject:
   - component: {fileID: 2353078352172396824}
   - component: {fileID: 2683282416474292799}
   - component: {fileID: 4376139553077338178}
+  - component: {fileID: 8435954614443268022}
   m_Layer: 0
   m_Name: BronzeHeracles Legs
   m_TagString: Untagged
@@ -824,3 +902,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8435954614443268022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9080055534021518062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0.45490196, g: 0.3019608, b: 0.18039216, a: 1}
+  glowBrightness: 1.5
+  outlineWidth: 1
+  alphaThreshold: 0.1
+  drawOutside: 0
+  enableInstancing: 0

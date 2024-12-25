@@ -7,10 +7,12 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
 {
     [Header("Behaviour")]
     [SerializeField] private float distanceFromPlayer;
+    [SerializeField] private float distanceRecoverAttack;
     [SerializeField] private float minRecoveryTime;
     [SerializeField] private float maxRecoveryTime;
     [SerializeField] private float minWalkInOneTurnTime;
     [SerializeField] private float maxWalkInOneTurnTime;
+    public float recoverAttackTime;
     float walkInOneTurnTime;
     bool rightTurn;
 
@@ -31,42 +33,50 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
 
     public override void Run()
     {
-        float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, bronzeHeracles.rb.position);
-        Vector2 vectorFromPlayer = (bronzeHeracles.rb.position - Player.instance.rb.position).normalized;
-        Vector2 moveVector = Vector2.zero;
-
-        if (walkInOneTurnTime <= 0 || bronzeHeracles.rb.velocity.magnitude < bronzeHeracles.speed / 3)
+        if (!bronzeHeracles.isRecoverAttack)
         {
-            ChangeTurn();
-            ResetTimeToWalkInOneTurn();
-        }
+            float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, bronzeHeracles.rb.position);
+            Vector2 vectorFromPlayer = (bronzeHeracles.rb.position - Player.instance.rb.position).normalized;
+            Vector2 moveVector = Vector2.zero;
 
-        if (distanceToPlayer < distanceFromPlayer)
-        {
-            moveVector += vectorFromPlayer;
-        }
+            if (walkInOneTurnTime <= 0 || bronzeHeracles.rb.velocity.magnitude < bronzeHeracles.speed / 3)
+            {
+                ChangeTurn();
+                ResetTimeToWalkInOneTurn();
+            }
 
-        if (rightTurn)
-        {
-            moveVector.x = vectorFromPlayer.y;
-            moveVector.y = -vectorFromPlayer.x;
-        }
-        else
-        {
-            moveVector.x = vectorFromPlayer.y;
-            moveVector.y = vectorFromPlayer.x;
-        }
+            if (distanceToPlayer < distanceFromPlayer)
+            {
+                moveVector += vectorFromPlayer;
+            }
 
-        bronzeHeracles.movementDirection = moveVector;
+            if (rightTurn)
+            {
+                moveVector.x = vectorFromPlayer.y;
+                moveVector.y = -vectorFromPlayer.x;
+            }
+            else
+            {
+                moveVector.x = vectorFromPlayer.y;
+                moveVector.y = vectorFromPlayer.x;
+            }
 
-        CountTimeVariables();
+            bronzeHeracles.movementDirection = moveVector;
+
+            CountTimeVariables();
+
+            if (distanceToPlayer < distanceRecoverAttack)
+            {
+                bronzeHeracles.RecoverAttack();
+            }
+        }
     }
 
     private void CountTimeVariables()
     {
         if (recoveryTime > 0)
             recoveryTime -= Time.deltaTime;
-        else
+        else if (recoveryTime <= 0)
         {
             isFinished = true;
             bronzeHeracles.SetState(bronzeHeracles.RandomState());
@@ -93,5 +103,9 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
         Gizmos.color = Color.grey;
 
         Gizmos.DrawWireSphere(transform.position, distanceFromPlayer);
+
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position, distanceRecoverAttack);
     }
 }

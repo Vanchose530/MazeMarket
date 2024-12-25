@@ -24,6 +24,9 @@ public class BossManager : MonoBehaviour
     [SerializeField] private float unlockExitsTime = 1f;
 
     [SerializeField] private BronzeHeracles bronzeHeracles;
+    [Header("Goplit")]
+
+    public List<GameObject> goplitsList = new List<GameObject>() { };
 
     private bool roomPassed = false;
 
@@ -58,6 +61,14 @@ public class BossManager : MonoBehaviour
     {
         if (virtualCamera != null && virtualCamera.enabled)
             virtualCamera.enabled = false;
+    }
+    private void Awake()
+    {
+        for (int i = 0; i < goplitsList.Count; i++) 
+        {
+            goplitsList[i].GetComponent<Goplit>().enabled = false;
+            goplitsList[i].GetComponent<Rigidbody2D>().isKinematic = true;
+        }
     }
 
     private IEnumerator Start()

@@ -8,7 +8,7 @@ public class MaceAttackState : BronzeHeraclesState
     [Header("Behavior")]
     public float attackDistance;
     [HideInInspector] public bool maceTaken;
-    public int maceDamage = 1;
+    public int maceDamage;
     public float timeTakeMace;
     public float timeAttackMace;
     public float timeRemoveMace;
