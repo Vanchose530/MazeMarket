@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6986570182518220167}
   - component: {fileID: 5399779453960152973}
   - component: {fileID: 1208096656929055616}
+  - component: {fileID: 8047059132371939466}
   m_Layer: 0
   m_Name: Empty Bottle Item
   m_TagString: Untagged
@@ -184,10 +185,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   pickUpSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 6ef9bac8c7d7f6d409374ae39f371795, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.95
+    maxPitch: 1.05
 --- !u!95 &5399779453960152973
 Animator:
   serializedVersion: 5
@@ -244,3 +245,30 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.15
+--- !u!50 &8047059132371939466
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3653324207760266287}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 100
+  m_AngularDrag: 10
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0

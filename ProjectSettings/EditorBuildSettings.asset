@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 2c5d22ed80ee64844bd73de16fc55bf6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Procedural Generation/Procedural Generation 1.unity
     guid: d5e9a00fb52844846ac564b70b50c1a0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Procedural Generation/Procedural Generation 2.unity
     guid: 7d5cbe3f137d2254ab5f34b6bc281c9f
   - enabled: 0
@@ -23,5 +23,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Test.unity
     guid: 87afba6e5cbe0aa4d96941aed221f07a
+  - enabled: 1
+    path: Assets/Scenes/Procedural Generation/Procedural Generation Small 1 (22x22).unity
+    guid: cc696dba2b08dc44690d49240c9b390b
+  - enabled: 1
+    path: Assets/Scenes/Procedural Generation/Procedural Generation Small 2 (22x22).unity
+    guid: fc22975f4afdcb94bbfb1bd80f56fe5b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 7059710b1bec3c34a9ff8e59b1d67cb3, type: 2}

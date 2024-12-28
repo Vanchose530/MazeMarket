@@ -13,6 +13,7 @@ public class Racine : Enemy, IDamagable
     [SerializeField] private float rootForwardSpeed;
     [SerializeField] private float rootStayTime;
     [SerializeField] private float rootBackSpeed;
+    [SerializeField] private float aimingTurnSmoothTime = 0f;
 
     [Header("Animators")]
     [SerializeField] private Animator bodyAnimator;
@@ -250,26 +251,39 @@ public class Racine : Enemy, IDamagable
         if (movementDirection == Vector2.zero && !targetOnAim)
             return;
 
-        float angle;
-
         if (targetOnAim)
         {
+            // Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
+            // angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
             Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
-            angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, aimingTurnSmoothTime);
+
+            Vector3 legsRotation = legs.transform.eulerAngles;
+            rb.transform.localRotation = Quaternion.Euler(0, 0, angle);
+            legs.transform.eulerAngles = legsRotation;
         }
         else
         {
-            angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+            Vector3 rotation = legs.transform.eulerAngles;
+            rb.transform.localEulerAngles = legs.transform.eulerAngles;
+            legs.transform.eulerAngles = rotation;
         }
-
-        rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     private void RotateLegs()
     {
-        float angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+        if (movementDirection == Vector2.zero)
+        {
+            legs.transform.localRotation = Quaternion.identity;
+            return;
+        }
 
-        legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        float targetAngle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
+
+        legs.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void Move()

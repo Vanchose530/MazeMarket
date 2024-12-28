@@ -70,7 +70,7 @@ public class LockMiasma : MonoBehaviour
         while (spriteRenderer.color.a < 1)
         {
             spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, spriteRenderer.color.a + 0.01f);
-            Debug.Log(spriteRenderer.color.a);
+            // Debug.Log(spriteRenderer.color.a);
             yield return new WaitForSecondsRealtime(0.01f / time);
         }
     }

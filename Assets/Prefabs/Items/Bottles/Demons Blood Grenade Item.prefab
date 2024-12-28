@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 2929971396707052828}
   - component: {fileID: 1305221114443687585}
   - component: {fileID: 5603015350011282415}
+  - component: {fileID: 4683935824722053378}
   m_Layer: 0
   m_Name: Demons Blood Grenade Item
   m_TagString: Untagged
@@ -240,7 +241,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   pickUpSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 64c10f7c5c94dcc48b87864c561e8018, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.95
+    maxPitch: 1.05
+--- !u!50 &4683935824722053378
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215026149133363685}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 100
+  m_AngularDrag: 10
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0

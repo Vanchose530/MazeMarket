@@ -16,6 +16,10 @@ public class EmptyBottleItem : Item
     {
         PlayerInventory.instance.countEmptyBottle++;
         SaveCollectedItem();
+
+        if (pickUpSE != null)
+            AudioManager.instance.PlaySoundEffect(pickUpSE, 3f);
+
         Destroy(gameObject);
     }
 }

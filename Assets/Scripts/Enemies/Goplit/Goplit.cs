@@ -10,20 +10,26 @@ public class Goplit : Enemy, IDamagable
 {
     [Header("Spear")]
     public GameObject spear;
-    [Header("Attack")]
+    [Header("Spear Attack")]
     public float speedAttack;
     public float aimingTime;
     public float timeAttack;
     public float timeAttackEnd;
     public float firingRate;
+    [SerializeField] private float aimingTurnSmoothTime = 0f;
+    [SerializeField] private int bodyDamage = 35;
+    [SerializeField] private bool enableBodyRushDamage = true;
+
     [Header ("Animators")]
     public Animator bodyAnimator;
     [SerializeField] private GameObject legs;
     [SerializeField] private Animator legsAnimator;
+
     [Header("Sound effect")]
     [SerializeField] private SoundEffect damageSoundSE;
     [SerializeField] private GameObject alivingEffectSoundPrefab;
     [SerializeField] private GameObject alivingSoundPrefab;
+
     [Header("Effects")]
     [SerializeField] private GameObject damageEffect;
     [SerializeField] private GameObject bulletsAftereffects;
@@ -124,6 +130,20 @@ public class Goplit : Enemy, IDamagable
         RotateBody();
         RotateLegs();
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (enableBodyRushDamage && isRush && !collision.gameObject.CompareTag("Enemy"))
+        {
+            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+
+            if (damagable != null)
+            {
+                damagable.TakeDamage(bodyDamage, this.transform);
+            }
+        }
+    }
+
     public void SetState(GoplitState state)
     {
         try
@@ -184,8 +204,6 @@ public class Goplit : Enemy, IDamagable
         {
             isRush = false;
         }
-        
-        
     }
     public void EndAttack() 
     {
@@ -311,26 +329,40 @@ public class Goplit : Enemy, IDamagable
         if (movementDirection == Vector2.zero && !targetOnAim)
             return;
 
-        float angle;
-
         if (targetOnAim)
         {
+            // Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
+            // angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
             Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
-            angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, aimingTurnSmoothTime);
+
+            Vector3 legsRotation = legs.transform.eulerAngles;
+            rb.transform.localRotation = Quaternion.Euler(0, 0, angle);
+            legs.transform.eulerAngles = legsRotation;
         }
         else
         {
-            angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+            Vector3 rotation = legs.transform.eulerAngles;
+            rb.transform.localEulerAngles = legs.transform.eulerAngles;
+            legs.transform.eulerAngles = rotation;
         }
-
-        rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     private void RotateLegs()
     {
-        float angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+        if (movementDirection == Vector2.zero)
+        {
+            legs.transform.localRotation = Quaternion.identity;
+            return;
+        }
+            
 
-        legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        float targetAngle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
+
+        legs.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
     private void Move()
     {

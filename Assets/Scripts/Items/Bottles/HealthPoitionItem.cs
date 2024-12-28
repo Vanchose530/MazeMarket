@@ -16,6 +16,10 @@ public class HealthPoitionItem : Item
     {
         PlayerInventory.instance.countHealthBottle++;
         SaveCollectedItem();
+
+        if (pickUpSE != null)
+            AudioManager.instance.PlaySoundEffect(pickUpSE, 3f);
+
         Destroy(gameObject);
     }
 }

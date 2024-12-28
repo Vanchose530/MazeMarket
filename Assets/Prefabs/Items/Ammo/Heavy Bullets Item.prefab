@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 2735955622580663202}
   - component: {fileID: 406093827535988720}
   - component: {fileID: 6509566359943783126}
+  - component: {fileID: -7618794785806752222}
   m_Layer: 12
   m_Name: Heavy Bullets Item
   m_TagString: Untagged
@@ -262,3 +263,15 @@ MonoBehaviour:
     maxPitch: 1.1
   ammoType: 2
   ammoCount: 5
+--- !u!114 &-7618794785806752222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8264815157986204796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100ef98b80beab94aa31501bfe4e34f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

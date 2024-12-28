@@ -68,6 +68,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private float runStaminaWaste = 1;
     public bool runing { get; private set; }
 
+    [Header("Damage Object With Run Boost")]
+    [SerializeField] private bool enableDamageObjectWhileBoost = true;
+    [SerializeField] private int bodyDamage = 30;
+
     [Header("Dashing")]
     public float dashForce;
     public float dashingTime;
@@ -216,8 +220,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             _weaponsManager = GetComponentInChildren<PlayerWeaponsManager>();
             weaponsManager.player = this;
         }
-            
-            
     }
 
     private void Awake()
@@ -298,6 +300,20 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onMapPressed -= OpenCloseMap;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (enableDamageObjectWhileBoost
+            && runBustBuffer >= timeToRunBoost /*действует буст к скорости*/
+            && collision.gameObject.CompareTag("Object"))
+        {
+            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            if (damagable != null)
+            {
+                damagable.TakeDamage(bodyDamage, this.transform);
+            }
+        }
+    }
+
     private IEnumerator OnLevelWasLoaded(int level)
     {
         yield return new WaitForSecondsRealtime(0.01f);
@@ -319,6 +335,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         newData.shells = weaponsManager.GetAmmoByType(AmmoTypes.Shells);
 
         // newData.weapons = PlayerWeaponsManager.instance.weapons;
+        newData.gun1 = weaponsManager.firstSlotGun;
+        newData.gun2 = weaponsManager.secondSlotGun;
+        newData.gun3 = weaponsManager.thirdSlotGun;
+        newData.meleeWeapon = weaponsManager.slotMeleeWeapon;
 
         newData.moneyCount = PlayerInventory.instance.money;
         newData.voidBottleCount = PlayerInventory.instance.countEmptyBottle;
@@ -341,6 +361,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         weaponsManager.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
 
         // PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+        weaponsManager.firstSlotGun = dataToLoad.gun1;
+        weaponsManager.secondSlotGun = dataToLoad.gun2;
+        weaponsManager.thirdSlotGun = dataToLoad.gun3;
+        weaponsManager.slotMeleeWeapon = dataToLoad.meleeWeapon;
 
         PlayerInventory.instance.money = dataToLoad.moneyCount;
         PlayerInventory.instance.countEmptyBottle = dataToLoad.voidBottleCount;
@@ -492,10 +516,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         else
         {
             Vector2 lookDirection;
-            float angle = 0;
 
             lookDirection = InputManager.instance.lookDirection;
-            angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
             rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
 
             rotateOnAim = true;
@@ -507,10 +530,13 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         Vector2 moveDir = InputManager.instance.moveDirection.normalized;
 
         if (moveDir == Vector2.zero)
+        {
+            legs.transform.localRotation = Quaternion.identity;
             return;
+        }
 
-        float targerAngle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targerAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
+        float targetAngle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
 
         legs.transform.rotation = Quaternion.Euler(0, 0, angle);
     }

@@ -106,9 +106,9 @@ MonoBehaviour:
   canNotInteractGlowColor: {r: 0, g: 0, b: 0, a: 0}
   interactSpriteGlow: {fileID: 2323190410772671142}
   interactSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 408949fdc8cd40c409e9e0267484fc1b, type: 3}
     volume: 0.5
-    minPitch: 1
+    minPitch: 0.9
     maxPitch: 1
 --- !u!58 &2927615665879563596
 CircleCollider2D:

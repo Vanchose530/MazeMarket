@@ -9,6 +9,7 @@ public class Statue : Enemy, IDamagable
     [SerializeField] private float bulletForce;
     [SerializeField] private float firingRate;
     [SerializeField] private float spread;
+    [SerializeField] private float aimingTurnSmoothTime = 0.5f;
     [SerializeField] private GameObject bulletPrefab;
     float nextAttackTime;
 
@@ -273,26 +274,37 @@ public class Statue : Enemy, IDamagable
         if ((movementDirection == Vector2.zero && !attack) || (currentState == stayState))
             return;
 
-        float angle;
-
         if (targetOnAim)
         {
             Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
-            angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, aimingTurnSmoothTime);
+
+            //Vector3 legsRotation = legs.transform.eulerAngles;
+            rb.transform.rotation = Quaternion.Euler(0, 0, angle);
+            // legs.transform.eulerAngles = legsRotation;
+            legs.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
         else
         {
-            angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+            Vector3 rotation = legs.transform.eulerAngles;
+            rb.transform.localEulerAngles = legs.transform.eulerAngles;
+            legs.transform.eulerAngles = rotation;
         }
-
-        rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
     }
 
     private void RotateLegs()
     {
-        float angle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+        if (movementDirection == Vector2.zero)
+        {
+            legs.transform.localRotation = Quaternion.identity;
+            return;
+        }
 
-        legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        float targetAngle = Mathf.Atan2(movementDirection.y, movementDirection.x) * Mathf.Rad2Deg;
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
+
+        legs.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     public override void Spawn()

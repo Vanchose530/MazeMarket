@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 303984103404239496}
   - component: {fileID: 6981663819313691003}
   - component: {fileID: 7552726235210947030}
+  - component: {fileID: -7269208940826112780}
   m_Layer: 12
   m_Name: Light Bullets Item
   m_TagString: Untagged
@@ -180,6 +181,18 @@ MonoBehaviour:
     maxPitch: 1.1
   ammoType: 0
   ammoCount: 20
+--- !u!114 &-7269208940826112780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3185322763328744952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100ef98b80beab94aa31501bfe4e34f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5893637120050640031
 GameObject:
   m_ObjectHideFlags: 0

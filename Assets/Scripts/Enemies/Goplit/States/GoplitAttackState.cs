@@ -16,9 +16,6 @@ public class GoplitAttackState : GoplitState
 
         goplit.agressive = true;
         goplit.attack = true;
-
-
-
     }
 
     public override void Run()
