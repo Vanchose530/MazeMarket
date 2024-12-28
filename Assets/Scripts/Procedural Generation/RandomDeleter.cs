@@ -15,6 +15,8 @@ public class RandomDeleter : MonoBehaviour
 
         int r = Random.Range(0, 100);
 
+        // Debug.Log(gameObject.name + " delete chance: " + chance + ", r: " + r + ", delete: " + (r <= chance));
+
         if (r <= chance)
         {
             Destroy(this.gameObject);
