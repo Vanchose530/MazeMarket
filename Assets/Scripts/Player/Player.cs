@@ -7,6 +7,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IDamagable, IDataPersistence
 {
@@ -56,9 +57,20 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    [SerializeField] private float turnSmoothTime = 0.1f;
+    float turnSmoothVelocity;
+
     [Header("Runing")]
     [SerializeField] private float runSpeedModifier = 1.2f;
+    [SerializeField] private float runBoostModifier = 1.2f;
+    [SerializeField] private float timeToRunBoost = 1f;
+    private float runBustBuffer = 0f;
     [SerializeField] private float runStaminaWaste = 1;
+    public bool runing { get; private set; }
+
+    [Header("Damage Object With Run Boost")]
+    [SerializeField] private bool enableDamageObjectWhileBoost = true;
+    [SerializeField] private int bodyDamage = 30;
 
     [Header("Dashing")]
     public float dashForce;
@@ -116,6 +128,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    [SerializeField] private float timeToStaminaUp = 0.1f;
+    private float timeToStaminaUpBuffer;
+
     bool _canUseStamina = true;
     bool isHeal = false;
 
@@ -148,12 +163,16 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     public float seriesAttackTime = 1f;
     float seriesAttack = 0f;
     public int damage = 5;
+    [SerializeField] private bool autoReloading;
 
+    public bool attack { get; private set; }
 
     int punchSide = 1;
     
-
     public Vector2 attackPointPosition { get { return attackPoint.localPosition; } }
+
+    [Header("Reloading")]
+    [SerializeField] private bool autoreloading;
 
     [Header("Animations")]
     [SerializeField] private Animator bodyAnimator;
@@ -163,10 +182,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [Header("Effects")]
     [SerializeField] private GameObject damageEffect;
     [SerializeField] private TrailRenderer dashTrail;
-
-    [Header("Interactable Objects Detect")]
-    [SerializeField] private InteractableObjectsDetector _interactableObjectsDetector;
-    public InteractableObjectsDetector interactableObjectsDetector { get { return _interactableObjectsDetector; } }
 
     [Header("Sound Effects")]
     [SerializeField] private GameObject punchSound;
@@ -179,21 +194,16 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [SerializeField] private Rigidbody2D _rb;
 
     private bool _isOnBattle = false; // параметр необходим в первую очередь для музыки
-    //public bool isOnBattle
-    //{
-    //    get { return _isOnBattle; }
-    //    set
-    //    {
-    //        if (value)
-    //            AudioManager.instance.battleSnapshot.TransitionTo(2f);
-    //        else
-    //            AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
-    //        _isOnBattle = value;
-    //    }
-    //}
 
     [HideInInspector] public Vector2 startPosition; // эти два поля относятся к сохранению игрока
     [HideInInspector] public string levelName; // возможно их стоит перенести в другой скрипт
+
+    [Header("Setup")]
+    [SerializeField] private PlayerWeaponsManager _weaponsManager;
+    public PlayerWeaponsManager weaponsManager { get { return _weaponsManager; } private set { _weaponsManager = value; } }
+
+    [SerializeField] private InteractableObjectsDetector _interactableObjectsDetector;
+    public InteractableObjectsDetector interactableObjectsDetector { get { return _interactableObjectsDetector; } }
 
     private void OnValidate()
     {
@@ -205,7 +215,11 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             dashTrail = GetComponentInChildren<TrailRenderer>();
         if (_interactableObjectsDetector == null)
             _interactableObjectsDetector = GetComponentInChildren<InteractableObjectsDetector>();
-            
+        if (_weaponsManager == null)
+        {
+            _weaponsManager = GetComponentInChildren<PlayerWeaponsManager>();
+            weaponsManager.player = this;
+        }
     }
 
     private void Awake()
@@ -236,19 +250,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Update()
     {
-        if (InputManager.instance.GetRunPressed(true) && canUseStamina)
-        {
-            currentSpeed = normalSpeed * runSpeedModifier;
-            dashTrail.emitting = true;
-
-            if (moveDirection != Vector2.zero)
-                stamina -= runStaminaWaste * Time.deltaTime;
-        }
-        else
-        {
-            currentSpeed = normalSpeed;
-            dashTrail.emitting = false;
-        }
+        Runing();
 
         if (!dashing)
             moveDirection = InputManager.instance.moveDirection;
@@ -256,12 +258,10 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         if (InputManager.instance.GetInteractPressed() && _interactableObjectsDetector.interactable != null)
             _interactableObjectsDetector.interactable.Interact(this);
 
-        //HealthBottleDrink();
 
         if (!isHeal)
         {
             Attack();
-            //GrenadeAttack();
         }
 
         Animate();
@@ -279,7 +279,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void OnEnableAfterTime()
     {
         GameEventsManager.instance.playerWeapons.onWeaponChanged += AnimateChangedWeapon;
-        // GameEventsManager.instance.input.onAttackPressed += Attack;
         GameEventsManager.instance.input.onDashPressed += Dash;
         GameEventsManager.instance.input.onReloadPressed += ReloadGun;
 
@@ -292,7 +291,6 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     private void OnDisable()
     {
         GameEventsManager.instance.playerWeapons.onWeaponChanged -= AnimateChangedWeapon;
-        // GameEventsManager.instance.input.onAttackPressed -= Attack;
         GameEventsManager.instance.input.onDashPressed -= Dash;
         GameEventsManager.instance.input.onReloadPressed -= ReloadGun;
 
@@ -300,6 +298,20 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         GameEventsManager.instance.input.onHealthBottle -= UseHealth;
 
         GameEventsManager.instance.input.onMapPressed -= OpenCloseMap;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (enableDamageObjectWhileBoost
+            && runBustBuffer >= timeToRunBoost /*действует буст к скорости*/
+            && collision.gameObject.CompareTag("Object"))
+        {
+            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            if (damagable != null)
+            {
+                damagable.TakeDamage(bodyDamage, this.transform);
+            }
+        }
     }
 
     private IEnumerator OnLevelWasLoaded(int level)
@@ -317,12 +329,16 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         newData.heath = health;
         newData.nextLevelStartPosition = nextLevelStartPosition;
 
-        newData.lightBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.LightBullets);
-        newData.mediumBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.MediumBullets);
-        newData.heavyBullets = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.HeavyBullets);
-        newData.shells = PlayerWeaponsManager.instance.GetAmmoByType(AmmoTypes.Shells);
+        newData.lightBullets = weaponsManager.GetAmmoByType(AmmoTypes.LightBullets);
+        newData.mediumBullets = weaponsManager.GetAmmoByType(AmmoTypes.MediumBullets);
+        newData.heavyBullets = weaponsManager.GetAmmoByType(AmmoTypes.HeavyBullets);
+        newData.shells = weaponsManager.GetAmmoByType(AmmoTypes.Shells);
 
-        newData.weapons = PlayerWeaponsManager.instance.weapons;
+        // newData.weapons = PlayerWeaponsManager.instance.weapons;
+        newData.gun1 = weaponsManager.firstSlotGun;
+        newData.gun2 = weaponsManager.secondSlotGun;
+        newData.gun3 = weaponsManager.thirdSlotGun;
+        newData.meleeWeapon = weaponsManager.slotMeleeWeapon;
 
         newData.moneyCount = PlayerInventory.instance.money;
         newData.voidBottleCount = PlayerInventory.instance.countEmptyBottle;
@@ -339,12 +355,16 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         health = dataToLoad.heath;
         transform.position = dataToLoad.nextLevelStartPosition;
 
-        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.LightBullets, dataToLoad.lightBullets);
-        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.MediumBullets, dataToLoad.mediumBullets);
-        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.HeavyBullets, dataToLoad.heavyBullets);
-        PlayerWeaponsManager.instance.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
+        weaponsManager.SetAmmoByType(AmmoTypes.LightBullets, dataToLoad.lightBullets);
+        weaponsManager.SetAmmoByType(AmmoTypes.MediumBullets, dataToLoad.mediumBullets);
+        weaponsManager.SetAmmoByType(AmmoTypes.HeavyBullets, dataToLoad.heavyBullets);
+        weaponsManager.SetAmmoByType(AmmoTypes.Shells, dataToLoad.shells);
 
-        PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+        // PlayerWeaponsManager.instance.weapons = dataToLoad.weapons;
+        weaponsManager.firstSlotGun = dataToLoad.gun1;
+        weaponsManager.secondSlotGun = dataToLoad.gun2;
+        weaponsManager.thirdSlotGun = dataToLoad.gun3;
+        weaponsManager.slotMeleeWeapon = dataToLoad.meleeWeapon;
 
         PlayerInventory.instance.money = dataToLoad.moneyCount;
         PlayerInventory.instance.countEmptyBottle = dataToLoad.voidBottleCount;
@@ -411,6 +431,48 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         }
     }
 
+    private void Runing()
+    {
+        if (InputManager.instance.GetRunPressed(true) && canUseStamina && !isHeal && !attack && !weaponsManager.reloadingProccess)
+        {
+            if (runBustBuffer >= timeToRunBoost) // действует буст скорости
+            {
+                bodyAnimator.SetFloat("Run Multiplier", runBoostModifier);
+                currentSpeed = normalSpeed * runSpeedModifier * runBoostModifier;
+                dashTrail.emitting = true;
+            }
+            else // буст скорости не действует
+            {
+                bodyAnimator.SetFloat("Run Multiplier", 1f);
+                currentSpeed = normalSpeed * runSpeedModifier;
+                dashTrail.emitting = false;
+            }
+            
+
+            if (runing == false)
+            {
+                bodyAnimator.SetTrigger("Run");
+            }
+
+            runing = true;
+
+            if (moveDirection != Vector2.zero)
+                stamina -= runStaminaWaste * Time.deltaTime;
+        }
+        else
+        {
+            if (runing == true)
+            {
+                bodyAnimator.SetTrigger("Change Weapon");
+            }
+
+            runing = false;
+
+            currentSpeed = normalSpeed;
+            dashTrail.emitting = false;
+        }
+    }
+
     private void PlayerDeath()
     {
         health = 0;
@@ -425,7 +487,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         bodyAnimator.SetFloat("Punch Side", punchSide);
         bodyAnimator.SetFloat("Speed", rb.velocity.sqrMagnitude);
 
-        if (PlayerWeaponsManager.instance.currentWeapon != null) bodyAnimator.SetInteger("Weapon ID", PlayerWeaponsManager.instance.currentWeapon.id);
+        if (weaponsManager.currentWeapon != null) bodyAnimator.SetInteger("Weapon ID", weaponsManager.currentWeapon.id);
         else bodyAnimator.SetInteger("Weapon ID", 0);
 
         if (move)
@@ -436,35 +498,63 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void AnimateChangedWeapon()
     {
-        bodyAnimator.SetTrigger("Change Weapon");
+        if (!runing)
+            bodyAnimator.SetTrigger("Change Weapon");
     }
 
+    bool rotateOnAim;
     private void RotatePlayer()
     {
-        Vector2 lookDirection = InputManager.instance.lookDirection;
+        if (runing || dashing)
+        {
+            Vector3 rotation = legs.transform.eulerAngles;
+            rb.transform.localEulerAngles = legs.transform.eulerAngles;
+            legs.transform.eulerAngles = rotation;
 
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            rotateOnAim = false;
+        }
+        else
+        {
+            Vector2 lookDirection;
 
-        rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+            lookDirection = InputManager.instance.lookDirection;
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            rb.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+
+            rotateOnAim = true;
+        }
     }
 
     private void RotatePlayersLegs()
     {
-        Vector2 moveDir = InputManager.instance.moveDirection;
+        Vector2 moveDir = InputManager.instance.moveDirection.normalized;
 
-        float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        if (moveDir == Vector2.zero)
+        {
+            legs.transform.localRotation = Quaternion.identity;
+            return;
+        }
 
-        legs.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        float targetAngle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        float angle = Mathf.SmoothDampAngle(legs.transform.eulerAngles.z, targetAngle - 90, ref turnSmoothVelocity, turnSmoothTime);
+
+        legs.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void Attack()
     {
-        if (PlayerWeaponsManager.instance.currentWeapon == null
+        if (runing)
+           return;
+
+        if (weaponsManager.currentWeapon == null
             && nextAttackTime <= 0 && InputManager.instance.GetAttackPressed()) // игрок безоружен
         {
+            InputManager.instance.ReroizeAttackBuffer();
+
             if (seriesAttack <= 0) { punchSide = 0; bodyAnimator.SetFloat("Punch Side", punchSide); }
 
             bodyAnimator.SetTrigger("Attack");
+            attack = true;
 
             var soundEffect = Instantiate(punchSound);
             soundEffect.GetComponent<AudioSource>().pitch = UnityEngine.Random.Range(0.9f, 1.1f);
@@ -490,15 +580,19 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
             nextAttackTime = attackCooldown;
         }
-        else if (PlayerWeaponsManager.instance.currentWeapon != null
-            && InputManager.instance.GetAttackPressed(PlayerWeaponsManager.instance.currentWeapon.holdToAttack)
-            && PlayerWeaponsManager.instance.currentWeaponCooldown <= 0
-            && !PlayerWeaponsManager.instance.currentGun.reloading) // игрок вооружён
+        else if (weaponsManager.currentWeapon != null
+            && InputManager.instance.GetAttackPressed(weaponsManager.currentWeapon.holdToAttack)
+            && weaponsManager.currentWeaponCooldown <= 0
+            && !weaponsManager.reloadingProccess
+            && rotateOnAim) // игрок вооружён
         {
-            if (PlayerWeaponsManager.instance.currentGun.ammoInMagazine > 0)
+            InputManager.instance.ReroizeAttackBuffer();
+
+            if (weaponsManager.currentGun.ammoInMagazine > 0)
             {
-                bodyAnimator.SetFloat("Attack Multiplier", PlayerWeaponsManager.instance.currentGun.firingRate); // будет ошибка при использовании оружия ближнего боя!!!
+                bodyAnimator.SetFloat("Attack Multiplier", weaponsManager.currentGun.firingRate); // будет ошибка при использовании оружия ближнего боя!!!
                 bodyAnimator.SetTrigger("Attack");
+                attack = true;
             }
 
             Transform currentAttackPoint = null;
@@ -514,21 +608,24 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
             if (attackPoint != null)
             {
-                PlayerWeaponsManager.instance.currentWeapon.Attack(currentAttackPoint);
+                weaponsManager.currentWeapon.Attack(currentAttackPoint);
 
-                if (PlayerWeaponsManager.instance.currentGun.ammoInMagazine == 0)
+                if (weaponsManager.currentGun.ammoInMagazine == 0)
                 {
-                    if (PlayerWeaponsManager.instance.GetAmmoByType(PlayerWeaponsManager.instance.currentGun.ammoType) > 0)
+                    if (weaponsManager.GetAmmoByType(weaponsManager.currentGun.ammoType) > 0
+                        && autoreloading)
                     {
                         ReloadGun();
+                        attack = false;
                     }
-                    else
-                    {
-                        Debug.Log("Нет патрон");
-                        PlayerWeaponsManager.instance.CheckAmmo();
-                    }
+                    weaponsManager.CheckAmmo();
+                    attack = false;
                 }
             }
+        }
+        else
+        {
+            attack = false;
         }
     }
 
@@ -540,19 +637,9 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             MiniMapUIM.instance.ShowMiniMap();
     }
 
-    private void RunEnable()
-    {
-        currentSpeed = normalSpeed * runSpeedModifier;
-    }
-
-    private void RunDisable()
-    {
-        currentSpeed = normalSpeed;
-    }
-
     private void Dash()
     {
-        if (canUseStamina && stamina >= maxStamina / 2)
+        if (canUseStamina && stamina >= maxStamina / 2 && !weaponsManager.reloadingProccess && !isHeal)
         {
             if (InputManager.instance.moveDirection.magnitude != 0)
             {
@@ -562,12 +649,20 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             {
                 rb.AddForce(Vector2.up * dashForce * rb.mass, ForceMode2D.Impulse);
             }
-            
+
+            bodyAnimator.Play("Dash");
+
             AudioManager.instance.PlaySoundEffect(dashSE, dashingTime);
 
             dashingTimeBuffer = dashingTime;
             stamina--;
         }
+    }
+
+    private void DashEnd()
+    {
+        bodyAnimator.SetTrigger("Change Weapon");
+        timeToStaminaUpBuffer = 0;
     }
 
     public bool CheckObstacles(float distance, LayerMask layer)
@@ -578,44 +673,24 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         {
             if (hit.transform.gameObject.CompareTag("Player") || hit.transform.gameObject.layer == layer)
                 continue;
-            Debug.Log("2nd atck point");
             return true;
         }
-        Debug.Log("1st atck point");
         return false;
     }
 
     private void ReloadGun()
     {
-        PlayerWeaponsManager.instance.Reload();     
+        if (runing)
+            return;
+
+        weaponsManager.Reload();     
     }
 
     public void PlayReloadingAnimation()
     {
-        bodyAnimator.SetFloat("Reloading Multiplier", 1 / PlayerWeaponsManager.instance.currentGun.reloadTime);
+        bodyAnimator.SetFloat("Reloading Multiplier", 1 / weaponsManager.currentGun.reloadTime);
         bodyAnimator.SetTrigger("Reload");
     }
-    //public void GrenadeAttack()
-    //{
-    //    if (InputManager.instance.GetGrenadeAttack() && isGrenade)
-    //    {
-    //        Vector3 bulletAngle = followCameraPoint.eulerAngles;
-    //        GameObject grenade = Instantiate(grenadePrefab, followCameraPoint.position, Quaternion.Euler(bulletAngle));
-    //        Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
-    //        grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
-
-    //        isGrenade = false;
-    //        isEmptyBottle = true;
-            
-    //    }
-    //}
-    //public void HealthBottleDrink()
-    //{
-    //    if (InputManager.instance.GetHealthBottle() && isEstos)
-    //    {
-    //        StartCoroutine("HealthBottleDrinkCouroutine");
-    //    }
-    //}
 
     private void CountTimeVariables()
     {
@@ -626,25 +701,44 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             seriesAttack -= Time.deltaTime;
 
         if (dashingTimeBuffer > 0)
+        {
             dashingTimeBuffer -= Time.deltaTime;
+            if (dashingTimeBuffer <= 0)
+                DashEnd();
+        }
 
-        if (stamina != maxStamina)
+        if (stamina != maxStamina && timeToStaminaUpBuffer <= 0)
             stamina += Time.deltaTime * staminaRecoverySpeed;
+
+        if (runing && moveDirection != Vector2.zero)
+        {
+            timeToStaminaUpBuffer = timeToStaminaUp;
+        }
+
+        if (timeToStaminaUpBuffer > 0)
+        {
+            timeToStaminaUpBuffer -= Time.deltaTime;
+            runBustBuffer += Time.deltaTime;
+        }
+        else
+        {
+            runBustBuffer = 0;
+        }
+            
     }
 
     private void UpdateUI()
     {
         MainUIM.instance.baseStates.SetCurrentHealth(health);
-        //HPStaminaManager.instance.hpSlider.value = (float)health / (float)maxHealth;
-        //hpSlider.value = (float)health / (float)maxHealth;
 
         MainUIM.instance.baseStates.SetCurrentStamina(stamina);
-        //HPStaminaManager.instance.staminaSlider.value = stamina / maxStamina;
-        //staminaSlider.value = stamina / maxDashCount;
     }
 
     private void UseGrenade()
     {
+        if (runing)
+            return;
+
         if (PlayerInventory.instance.countGrenadeBottle > 0)
         {
             if (grenadeThrowSE != null)
@@ -655,13 +749,15 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             Rigidbody2D grb = grenade.GetComponent<Rigidbody2D>();
             grb.AddForce(grenade.transform.up * forceGrenade, ForceMode2D.Impulse);
             PlayerInventory.instance.countGrenadeBottle--;
-            // PlayerInventory.instance.countEmptyBottle++;
         }
     }
 
     private void UseHealth()
     {
-        if(PlayerInventory.instance.countHealthBottle > 0 && health < maxHealth)
+        if (runing)
+            return;
+
+        if (PlayerInventory.instance.countHealthBottle > 0 && health < maxHealth)
         {
             bodyAnimator.SetFloat("Healing Multiplier", 1 / timeToHeal);
             StartCoroutine("HealthBottleDrinkCouroutine");
@@ -681,6 +777,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         instance.health += hpToHeal;
 
         isHeal = false;
+
+        bodyAnimator.SetTrigger("Change Weapon");
     }
 
     void PlayHealingSE()

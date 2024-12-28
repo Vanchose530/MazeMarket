@@ -11,14 +11,14 @@ public class GunProduct : Product
 
     override public bool GetCanBuy()
     {
-        return !PlayerWeaponsManager.instance.IsGunSlotsFull();
+        return !Player.instance.weaponsManager.IsGunSlotsFull();
     }
 
     public override void Buy()
     {
         Gun gunToBuy = Instantiate(gun);
         gunToBuy.ammoInMagazine = gun.magazineSize;
-        PlayerWeaponsManager.instance.AddWeapon(gunToBuy);
-        PlayerWeaponsManager.instance.AddAmmoByType(gun.ammoType, ammoCount);
+        Player.instance.weaponsManager.AddWeapon(gunToBuy);
+        Player.instance.weaponsManager.AddAmmoByType(gun.ammoType, ammoCount);
     }
 }

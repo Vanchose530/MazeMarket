@@ -9,7 +9,7 @@ public class AmmoItem : Item
 
     protected override void PickUp()
     {
-        PlayerWeaponsManager.instance.AddAmmoByType(ammoType, ammoCount);
+        Player.instance.weaponsManager.AddAmmoByType(ammoType, ammoCount);
         AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);
         SaveCollectedItem();
         Destroy(gameObject); 

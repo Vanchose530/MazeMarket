@@ -357,6 +357,7 @@ MonoBehaviour:
   speed: 2
   nextWaypointDistance: 1
   targetOnAim: 0
+  turnSmoothTime: 0.2
   attackPoint: {fileID: 4177631225260223790}
   damage: 10
   statesGameObject: {fileID: 4177631226498715168}
@@ -368,6 +369,7 @@ MonoBehaviour:
   bulletForce: 3
   firingRate: 1
   spread: 7
+  aimingTurnSmoothTime: 0.5
   bulletPrefab: {fileID: 477208312691641933, guid: b4ed07bf184836c40af1729097c51f17, type: 3}
   bodyAnimator: {fileID: 4177631225949639683}
   legs: {fileID: 4177631225422764727}

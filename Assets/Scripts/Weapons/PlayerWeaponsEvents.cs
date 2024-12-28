@@ -9,4 +9,7 @@ public class PlayerWeaponsEvents
         if (onWeaponChanged != null)
             onWeaponChanged();
     }
+
+    public event Action onReloadingEnd;
+    public void ReloadingEnd() => onReloadingEnd?.Invoke();
 }

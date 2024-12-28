@@ -28,8 +28,11 @@ public abstract class Enemy : MonoBehaviour
     }
 
     [SerializeField] protected float nextWaypointDistance;
-     public bool targetOnAim;
+    public bool targetOnAim;
     protected bool walk; // TODO - нормализовать анимации отслеживая показатель walk в аниматоре
+
+    [SerializeField] protected float turnSmoothTime = 0.1f;
+    protected float turnSmoothVelocity;
 
     public Path path { get; private set; }
     private int _currentWaypoint = 0;

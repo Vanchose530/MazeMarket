@@ -16,6 +16,10 @@ public class DemonsBloodGrenadeItem : Item
     {
         PlayerInventory.instance.countGrenadeBottle++;
         SaveCollectedItem();
+
+        if (pickUpSE != null)
+            AudioManager.instance.PlaySoundEffect(pickUpSE, 3f);
+
         Destroy(gameObject);
     }
 }

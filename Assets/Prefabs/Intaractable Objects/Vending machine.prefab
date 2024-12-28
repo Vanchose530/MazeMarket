@@ -123,9 +123,9 @@ GameObject:
   - component: {fileID: 1239363950755736909}
   - component: {fileID: 1974248614561635966}
   - component: {fileID: 1498084975223374060}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Vending machine
-  m_TagString: Untagged
+  m_TagString: Hight Deoration
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -259,10 +259,10 @@ MonoBehaviour:
   canNotInteractGlowColor: {r: 0, g: 0, b: 0, a: 0}
   interactSpriteGlow: {fileID: 1498084975223374060}
   interactSE:
-    sound: {fileID: 0}
+    sound: {fileID: 8300000, guid: 2eebff65a06b1d447b545a6ef703d2d7, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.95
+    maxPitch: 1.05
 --- !u!114 &1498084975223374060
 MonoBehaviour:
   m_ObjectHideFlags: 0

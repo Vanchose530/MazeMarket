@@ -7,6 +7,7 @@ public class DeathWindow : MonoBehaviour
 {
     [Header("General")]
     [SerializeField] private GameObject deathPanel;
+    [SerializeField] private string reloadingScene;
 
     bool active;
 
@@ -35,7 +36,7 @@ public class DeathWindow : MonoBehaviour
     {
         if (active && InputManager.instance.GetInteractPressed())
         {
-            SceneManager.LoadScene("Procedural Generation 1");
+            SceneManager.LoadScene(reloadingScene);
         }
     }
 

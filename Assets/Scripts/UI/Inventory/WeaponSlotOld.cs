@@ -67,7 +67,7 @@ public class WeaponSlotOld : MonoBehaviour
 
     public void CheckForChosen()
     {
-        chosen = weapon == PlayerWeaponsManager.instance.currentWeapon; 
+        chosen = weapon == Player.instance.weaponsManager.currentWeapon; 
     }
 
     private void SetWeaponInSlot()

@@ -15,7 +15,10 @@ public class PlayerData
     public int heavyBullets;
     public int shells;
 
-    public List<Weapon> weapons;
+    public Gun gun1;
+    public Gun gun2;
+    public Gun gun3;
+    public MeleeWeapon meleeWeapon;
 
     // Inventory
     public int moneyCount;
