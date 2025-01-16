@@ -24,7 +24,7 @@ public class Stone : StoneThrowState
             obj.TakeDamage(damageStone, transform);
             Destroy(gameObject);
         }
-        else {
+        else{
             for (int i = 0; i < randomSmallStone; i++)
             {
                 GameObject stoneSmall = Instantiate(smallStonePrefab, point.position, transform.rotation);

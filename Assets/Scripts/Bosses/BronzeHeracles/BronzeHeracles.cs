@@ -670,7 +670,7 @@ public class BronzeHeracles : Enemy, IDamagable
         interactSpriteGlow.enabled = true;
         
 
-        bodyAnimator.Play("Scream");
+        bodyAnimator.Play("Cooldown");
         yield return new WaitForSeconds(cooldownState.cooldownTime);
 
         bodyAnimator.SetTrigger("Default");
@@ -717,7 +717,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(deathState.deathTime);
 
-        gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        Destroy(gameObject);
         isDeath = false;
         isDeathCoroutine = false;
     }
