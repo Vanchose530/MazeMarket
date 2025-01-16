@@ -67,7 +67,7 @@ public class StoneThrowState : BronzeHeraclesState
             isFinished = true;
             bronzeHeracles.bodyAnimator.SetTrigger("Default");
 
-            if (bronzeHeracles.isThirdPhase && bronzeHeracles.isFirstAttack)
+            if (bronzeHeracles.stage == 3 && bronzeHeracles.isFirstAttack)
             {
                 bronzeHeracles.isFirstAttack = false;
                 bronzeHeracles.SetState(bronzeHeracles.RandomState());

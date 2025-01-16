@@ -157,6 +157,13 @@ public class BossManager : MonoBehaviour
     {
         PassRoom();
     }
+    public void AliveGoplists() 
+    {
+        goplitsList[bronzeHeracles.numberGoplit].GetComponent<Goplit>().enabled = true;
+        goplitsList[bronzeHeracles.numberGoplit].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        goplitsList[bronzeHeracles.numberGoplit].GetComponent<Goplit>().Alive();
+        bronzeHeracles.numberGoplit++;
+    }
 
 }
 

@@ -53,9 +53,7 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public bool isDeath { get; private set; }
     private bool invulnerability = true;
     [HideInInspector] public bool isFirstAttack = true;
-    private bool isFirstPhase;
-    private bool isSecondPhase;
-    [HideInInspector] public bool isThirdPhase;
+    [HideInInspector] public int stage = 1;
     [Header("BossManager")]
     public BossManager bossManager;
     public int numberGoplit = 0;
@@ -158,9 +156,6 @@ public class BronzeHeracles : Enemy, IDamagable
         secondPhaseHP = maxHealth * 0.33f;
         thirdPhaseHP = 0f;
 
-        isFirstPhase = true;
-        isSecondPhase = false;
-        isThirdPhase = false;
 
     }
 
@@ -249,28 +244,26 @@ public class BronzeHeracles : Enemy, IDamagable
             var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
             Destroy(effect, 1f);
         }
-        if (health <= firstPhaseHP && isFirstPhase)
+        if (health <= firstPhaseHP && stage == 1)
         {
             isCoolDown = true;
             invulnerability = true;
-            isFirstPhase = false;
-            isSecondPhase = true;
+            NextStage();
             SetState(cooldownState);
         }
-        if (health <= secondPhaseHP && isSecondPhase)
+        if (health <= secondPhaseHP && stage == 2)
         {
             isCoolDown = true;
             invulnerability = true;
-            isSecondPhase = false;
-            isThirdPhase = true;
+            NextStage();
             attackState.Add(callOfGoplitsState);
             SetState(cooldownState);
         }
-        if (health <= thirdPhaseHP && isThirdPhase)
+        if (health <= thirdPhaseHP && stage == 3)
         {
             isDeath = true;
             invulnerability = true;
-            isThirdPhase = false;
+            NextStage();
             SetState(deathState);
         }
     }
@@ -466,7 +459,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         bodyAnimator.SetTrigger("Default");
 
-        if (isThirdPhase && isFirstAttack)
+        if (stage == 3 && isFirstAttack)
         {
             isFirstAttack = false;
             SetState(RandomState());
@@ -535,7 +528,7 @@ public class BronzeHeracles : Enemy, IDamagable
         isAttackMace = false;
         isRemoveMace = false;
 
-        if (isThirdPhase && isFirstAttack)
+        if (stage == 3 && isFirstAttack)
         {
             isFirstAttack = false;
             SetState(RandomState());
@@ -638,17 +631,14 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(callOfGoplitsState.GetComponent<CallOfGoplits>().callGoplitsTime);
 
-        bossManager.goplitsList[numberGoplit].GetComponent<Goplit>().enabled = true;
-        bossManager.goplitsList[numberGoplit].GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-        bossManager.goplitsList[numberGoplit].GetComponent<Goplit>().Alive();
-        numberGoplit++;
+        bossManager.AliveGoplists();
 
         if (numberGoplit > bossManager.goplitsList.Count) 
         {
             attackState.Remove(callOfGoplitsState);
         }
 
-        if (isThirdPhase && isFirstAttack)
+        if (stage == 3 && isFirstAttack)
         {
             isFirstAttack = false;
             SetState(RandomState());
@@ -738,6 +728,10 @@ public class BronzeHeracles : Enemy, IDamagable
     public int RandomArrow()
     {
         return Random.Range(archeryState.GetComponent<ArcheryState>().minCountArrow, archeryState.GetComponent<ArcheryState>().maxCountArrow);
+    }
+    public void NextStage() 
+    {
+        stage++;
     }
     public void ResetCoroutine()
     {
