@@ -2,6 +2,7 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -32,6 +33,7 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] private SoundEffect prepareSpearSE;
     [SerializeField] private SoundEffect runSpearSE;
     public SoundEffect hitSpearSE;
+    AudioSource runAudio = null;
     [SerializeField] private SoundEffect standInPoseSE;
     public SoundEffect legsSE;
     private bool isRushSound;
@@ -49,7 +51,7 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] public GoplitRecoveryState recoveryState;
     [SerializeField] private GoplitAttackState attackState;
     public GoplitState currentState { get; private set; }
-     public bool isRush;
+    public bool isRush;
     public bool attack { get; set; }
 
     private bool isEndAttack;
@@ -78,6 +80,7 @@ public class Goplit : Enemy, IDamagable
     }
     private void Awake()
     {
+        
         health = maxHealth;
 
         target = null;
@@ -186,30 +189,26 @@ public class Goplit : Enemy, IDamagable
         isRush = true;
         
     }
-    public void Rush() {
-        StartCoroutine("RushSoundCoroutine");
-        time -= Time.deltaTime;
-        if (time <= 0)
-        {
-            isRush = false;
-            isRushSound = false;
-        }
-        
-        
-    }
-    private IEnumerator RushSoundCoroutine() 
+    public void Rush() 
     {
         if (!isRushSound)
         {
             isRushSound = true;
-            AudioManager.instance.PlaySoundEffect(runSpearSE, rb.position);
-            yield return new WaitForSeconds(timeAttack);
+            runAudio = AudioManager.instance.GetSoundEffectAS(runSpearSE);
+        }
+        time -= Time.deltaTime;
+        if (time <= 0)
+        {
+            Destroy(runAudio);
+            isRush = false;
+            isRushSound = false;
         }
     }
     public void EndAttack() 
     {
         if (isEndAttack)
             return;
+        Destroy(runAudio);
         isRushSound = false;
         isRush = false;
         StartCoroutine("EndAttackCoroutine");
