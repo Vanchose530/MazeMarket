@@ -18,6 +18,7 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
 
     private float recoveryTime;
 
+
     public override void Init()
     {
         isFinished = false;
@@ -67,7 +68,14 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
 
             if (distanceToPlayer < distanceRecoverAttack)
             {
+                bronzeHeracles.target = Player.instance.transform;
+
+                bronzeHeracles.targetOnAim = true;
+
+                bronzeHeracles.ExecutePath();
+
                 bronzeHeracles.RecoverAttack();
+
             }
         }
     }

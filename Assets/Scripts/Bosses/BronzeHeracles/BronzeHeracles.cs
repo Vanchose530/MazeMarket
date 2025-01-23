@@ -638,6 +638,8 @@ public class BronzeHeracles : Enemy, IDamagable
             attackState.Remove(callOfGoplitsState);
         }
 
+        bodyAnimator.SetTrigger("Default");
+
         if (stage == 3 && isFirstAttack)
         {
             isFirstAttack = false;
@@ -700,6 +702,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         bodyAnimator.SetTrigger("Default");
         stand = false;
+        targetOnAim = false;
         isRecoverAttack = false;
     }
     public void Death()

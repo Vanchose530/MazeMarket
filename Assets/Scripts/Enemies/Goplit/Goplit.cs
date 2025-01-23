@@ -34,6 +34,7 @@ public class Goplit : Enemy, IDamagable
     [HideInInspector] public bool stay;
     public float alivingTime;
     bool aliving;
+    bool invulnerability;
 
     [Header("Goplit States")]
     public GoplitSpawnState spawnState;
@@ -83,6 +84,8 @@ public class Goplit : Enemy, IDamagable
         aliving = false;
 
         stay = stayOnAwake;
+
+        invulnerability = true;
 
         SetAnimationSettings();
 
@@ -235,11 +238,14 @@ public class Goplit : Enemy, IDamagable
 
         EffectsManager.instance.PlaySoundEffect(alivingSoundPrefab, rb.position, 3f, 0.9f, 1.1f);
 
+
         SetState(passiveState);
 
         effect.GetComponent<Animator>().SetFloat("Speed", 2 / alivingTime);
         effect.GetComponent<Animator>().Play("Disappear");
         Destroy(effect, alivingTime);
+
+        invulnerability = false;
 
         aliving = false;
     }
@@ -270,11 +276,13 @@ public class Goplit : Enemy, IDamagable
         effect.GetComponent<Animator>().Play("Disappear");
         Destroy(effect, spawningTime / 2);
 
+        invulnerability = false;
+
         spawning = false;
     }
     public void TakeDamage(int damage, Transform attack = null)
     {
-        if (spawning)
+        if (invulnerability)
             return;
 
         if (currentState == stayState)
