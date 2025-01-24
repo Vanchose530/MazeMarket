@@ -967,7 +967,7 @@ MonoBehaviour:
   - {fileID: 666670146399836563, guid: e6926493cd9505242aa8e9a87297f9e4, type: 3}
   addHorizontalEndRoomVariant: 0
   endRoomHorizontalPrefabs: []
-  pathfinder: {fileID: 0}
+  pathfinder: {fileID: 741320633}
 --- !u!1 &1435785300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,6 +1326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
+      propertyPath: levelMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 87522f3b6a51eae4aa6667f12330fd62, type: 3}
     - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
       propertyPath: playerStart
       value: 

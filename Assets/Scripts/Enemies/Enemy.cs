@@ -65,12 +65,17 @@ public abstract class Enemy : MonoBehaviour
         protected set { _rb = value; } 
     }
 
+    private bool death = false;
     public event Action onEnemyDeath;
-
     protected void EnemyDeathEvent()
     {
+        if (death)
+            return;
+
         if (onEnemyDeath != null)
             onEnemyDeath();
+
+        death = true;
     }
 
     public virtual void ExecutePath(bool aStar = true)
@@ -126,4 +131,5 @@ public abstract class Enemy : MonoBehaviour
     protected abstract void PlayerDeath();
 
     public abstract void Spawn();
+
 }

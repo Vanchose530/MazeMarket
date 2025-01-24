@@ -279,7 +279,10 @@ public class Zombie : Enemy, IDamagable
 
         yield return new WaitForSeconds(spawningTime);
 
-        SetState(passiveState);
+        if (agressive)
+            SetState(agressiveState);
+        else
+            SetState(passiveState);
 
         EffectsManager.instance.PlaySoundEffect(EffectsStorage.instance.enemySpawnSound, 3f, 0.9f, 1.1f);
 

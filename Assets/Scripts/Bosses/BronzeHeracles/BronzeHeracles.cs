@@ -160,6 +160,7 @@ public class BronzeHeracles : Enemy, IDamagable
     {
         currentState.Run();
     }
+
     public void SetState(BronzeHeraclesState state)
     {
         try

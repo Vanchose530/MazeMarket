@@ -182,7 +182,10 @@ public class Statue : Enemy, IDamagable
 
         EffectsManager.instance.PlaySoundEffect(alivingSoundPrefab, rb.position, 3f, 0.9f, 1.1f);
 
-        SetState(walkState);
+        if (agressive)
+            SetState(agressiveState);
+        else
+            SetState(walkState);
 
         effect.GetComponent<Animator>().SetFloat("Speed", 2 / alivingTime);
         effect.GetComponent<Animator>().Play("Disappear");
