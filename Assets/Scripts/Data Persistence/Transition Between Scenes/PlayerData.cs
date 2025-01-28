@@ -6,6 +6,8 @@ public class PlayerData
 {
 
     // Player
+    public int maxHealth;
+    public float maxStamina;
     public int heath;
     public Vector2 nextLevelStartPosition;
 

@@ -19,7 +19,19 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     public Transform followCameraPoint { get { return _followCameraPoint; } }
 
     [Header("Health")]
-    public int maxHealth;
+    [SerializeField] private int startMaxHealth = 200;
+    int _maxHealth;
+    public int maxHealth
+    {
+        get => _maxHealth;
+        set
+        {
+            int dif = value - _maxHealth;
+            _maxHealth = value;
+            health += dif;
+            MainUIM.instance.baseStates.SetMaxHealth(_maxHealth);
+        }
+    }
 
     private int _health;
     public int health
@@ -33,6 +45,41 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 _health = 0;
             else
                 _health = value;
+        }
+    }
+
+    [Header("Stamina")]
+    [SerializeField] private int startMaxStamina;
+    float _maxStamina;
+    public float maxStamina { get => _maxStamina;
+        set
+        {
+            float dif = value - _maxStamina;
+            _maxStamina = value;
+            stamina += dif;
+            MainUIM.instance.baseStates.SetMaxStamina(_maxStamina);
+        }
+    }
+    public float staminaRecoverySpeed = 1f;
+    float _stamina;
+    float stamina
+    {
+        get { return _stamina; }
+        set
+        {
+            if (value <= 0)
+            {
+                _stamina = 0;
+                canUseStamina = false;
+                //StartCoroutine(StaminaZero());
+            }
+            else if (value >= maxStamina)
+            {
+                _stamina = maxStamina;
+                canUseStamina = true;
+            }
+            else
+                _stamina = value;
         }
     }
 
@@ -75,6 +122,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [Header("Dashing")]
     public float dashForce;
     public float dashingTime;
+    [SerializeField] private int staminaToDash;
     private float _dashingTimeBuffer;
     private float dashingTimeBuffer
     {
@@ -103,37 +151,13 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     }
     private bool dashing;
 
-    [Header("Stamina")]
-    public float maxStamina = 1f;
-    public float staminaRecoverySpeed = 1f;
-    float _stamina;
-    float stamina
-    {
-        get { return _stamina; }
-        set
-        {
-            if (value <= 0)
-            {
-                _stamina = 0;
-                canUseStamina = false;
-                //StartCoroutine(StaminaZero());
-            }
-            else if (value >= maxStamina)
-            {
-                _stamina = maxStamina;
-                canUseStamina = true;
-            }
-            else
-                _stamina = value;
-        }
-    }
-
     [SerializeField] private float timeToStaminaUp = 0.1f;
     private float timeToStaminaUpBuffer;
 
     bool _canUseStamina = true;
     bool isHeal = false;
 
+    // Поля связанные с броском гранаты и с лечениев лучше вынести в отдельный скрипт!!
     [Header("Grenade")]
     [SerializeField] private GameObject grenadePrefab;
     [SerializeField] private float forceGrenade = 300f;
@@ -243,8 +267,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Start()
     {
-        MainUIM.instance.baseStates.SetMaxHealth(maxHealth);
-        MainUIM.instance.baseStates.SetMaxStamina(maxStamina);
+        maxHealth = startMaxHealth;
+        maxStamina = startMaxStamina;
     }
 
 
@@ -326,6 +350,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         PlayerData newData = new PlayerData();
 
+        newData.maxHealth = maxHealth;
+        newData.maxStamina = maxStamina;
         newData.heath = health;
         newData.nextLevelStartPosition = nextLevelStartPosition;
 
@@ -352,6 +378,8 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     {
         PlayerData dataToLoad = PlayerDataKeeper.instance.playerData;
 
+        maxStamina = dataToLoad.maxStamina;
+        maxHealth = dataToLoad.maxHealth;
         health = dataToLoad.heath;
         transform.position = dataToLoad.nextLevelStartPosition;
 
@@ -639,7 +667,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
 
     private void Dash()
     {
-        if (canUseStamina && stamina >= maxStamina / 2 && !weaponsManager.reloadingProccess && !isHeal)
+        if (canUseStamina && stamina >= staminaToDash && !weaponsManager.reloadingProccess && !isHeal)
         {
             if (InputManager.instance.moveDirection.magnitude != 0)
             {
@@ -655,7 +683,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             AudioManager.instance.PlaySoundEffect(dashSE, dashingTime);
 
             dashingTimeBuffer = dashingTime;
-            stamina--;
+            stamina = 0;
         }
     }
 

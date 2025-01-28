@@ -115,11 +115,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1453561361176990044}
+  - component: {fileID: 1150591177777956421}
   - component: {fileID: 6478703560876903739}
   - component: {fileID: 7731025014503262350}
   - component: {fileID: 2702732625081450782}
   - component: {fileID: 276162137507265740}
-  - component: {fileID: 1150591177777956421}
   m_Layer: 15
   m_Name: Player
   m_TagString: Player
@@ -150,6 +150,75 @@ Transform:
   - {fileID: 6575761141109912812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1150591177777956421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896684471220896308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b26a771a9f59b541a00ecffd977657d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _followCameraPoint: {fileID: 3853626404910376152}
+  startMaxHealth: 200
+  startMaxStamina: 100
+  staminaRecoverySpeed: 90
+  normalSpeed: 3.2
+  turnSmoothTime: 0.1
+  runSpeedModifier: 1.5
+  runBoostModifier: 1.5
+  timeToRunBoost: 2.2
+  runStaminaWaste: 20
+  enableDamageObjectWhileBoost: 1
+  bodyDamage: 15
+  dashForce: 20
+  dashingTime: 0.07
+  staminaToDash: 50
+  timeToStaminaUp: 0.55
+  grenadePrefab: {fileID: 8314972605054049927, guid: 0ea0c991740ccac4099f372e2217fdeb, type: 3}
+  forceGrenade: 3
+  hpToHeal: 60
+  timeToHeal: 3
+  attackPoint: {fileID: 6939753730445181469}
+  secondAttackPoint: {fileID: 1042710718863370343}
+  hideObjectLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackRange: 0.5
+  attackCooldown: 0.2
+  seriesAttackTime: 0.5
+  damage: 5
+  autoReloading: 0
+  autoreloading: 0
+  bodyAnimator: {fileID: 7731025014503262350}
+  legs: {fileID: 561000445666535089}
+  damageEffect: {fileID: 649758871316472102, guid: e488db0c5c47b024eb70ec7157b5590c, type: 3}
+  dashTrail: {fileID: 8758755446985658079}
+  punchSound: {fileID: 8797459062646210151, guid: 45b6ffc994fa8a64c8ff99e7d20d5123, type: 3}
+  damageSound: {fileID: 5341204480864620632, guid: af9548430dd567840b9e4fc804a35376, type: 3}
+  dashSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  grenadeThrowSE:
+    sound: {fileID: 8300000, guid: 1871b2ccc9a0ba74493b02456c6f0bf4, type: 3}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1.2
+  healSE:
+    sound: {fileID: 8300000, guid: 17a5c3a62199fec4382ddf0bdaab32a4, type: 3}
+    volume: 0.5
+    minPitch: 0.7
+    maxPitch: 0.7
+  _rb: {fileID: 2702732625081450782}
+  startPosition: {x: 0, y: 0}
+  levelName: 
+  _weaponsManager: {fileID: 2209038242152407981}
+  _interactableObjectsDetector: {fileID: 983159606032103209}
 --- !u!212 &6478703560876903739
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -285,74 +354,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.35
---- !u!114 &1150591177777956421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1896684471220896308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b26a771a9f59b541a00ecffd977657d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _followCameraPoint: {fileID: 3853626404910376152}
-  maxHealth: 200
-  normalSpeed: 3.2
-  turnSmoothTime: 0.1
-  runSpeedModifier: 1.5
-  runBoostModifier: 1.5
-  timeToRunBoost: 2.2
-  runStaminaWaste: 0.2
-  enableDamageObjectWhileBoost: 1
-  bodyDamage: 15
-  dashForce: 20
-  dashingTime: 0.07
-  maxStamina: 1
-  staminaRecoverySpeed: 0.9
-  timeToStaminaUp: 0.55
-  grenadePrefab: {fileID: 8314972605054049927, guid: 0ea0c991740ccac4099f372e2217fdeb, type: 3}
-  forceGrenade: 3
-  hpToHeal: 60
-  timeToHeal: 3
-  attackPoint: {fileID: 6939753730445181469}
-  secondAttackPoint: {fileID: 1042710718863370343}
-  hideObjectLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  attackRange: 0.5
-  attackCooldown: 0.2
-  seriesAttackTime: 0.5
-  damage: 5
-  autoReloading: 0
-  autoreloading: 0
-  bodyAnimator: {fileID: 7731025014503262350}
-  legs: {fileID: 561000445666535089}
-  damageEffect: {fileID: 649758871316472102, guid: e488db0c5c47b024eb70ec7157b5590c, type: 3}
-  dashTrail: {fileID: 8758755446985658079}
-  punchSound: {fileID: 8797459062646210151, guid: 45b6ffc994fa8a64c8ff99e7d20d5123, type: 3}
-  damageSound: {fileID: 5341204480864620632, guid: af9548430dd567840b9e4fc804a35376, type: 3}
-  dashSE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
-  grenadeThrowSE:
-    sound: {fileID: 8300000, guid: 1871b2ccc9a0ba74493b02456c6f0bf4, type: 3}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1.2
-  healSE:
-    sound: {fileID: 8300000, guid: 17a5c3a62199fec4382ddf0bdaab32a4, type: 3}
-    volume: 0.5
-    minPitch: 0.7
-    maxPitch: 0.7
-  _rb: {fileID: 2702732625081450782}
-  startPosition: {x: 0, y: 0}
-  levelName: 
-  _weaponsManager: {fileID: 2209038242152407981}
-  _interactableObjectsDetector: {fileID: 983159606032103209}
 --- !u!1 &3123425842530604282
 GameObject:
   m_ObjectHideFlags: 0

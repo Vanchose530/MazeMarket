@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,9 @@ public class ConcreteBaseStatesUIM : BaseStatesUIM
 
     [Header("Setup")]
     [SerializeField] private Slider hpSlider;
+    [SerializeField] private TextMeshProUGUI hpTMP;
     [SerializeField] private Slider staminaSlider;
+    [SerializeField] private TextMeshProUGUI staminaTMP;
 
     [Header("Animations")]
     [SerializeField] private Animator staminaSliderAnimator;
@@ -62,6 +65,11 @@ public class ConcreteBaseStatesUIM : BaseStatesUIM
             hpSlider.value = currentHealth / maxHealth;
         else
             hpSlider.value = 0;
+
+        if (hpTMP != null)
+        {
+            hpTMP.text = $"{(int)currentHealth} / {(int)maxHealth}";
+        }
     }
 
     void UpdateStaminaSlider()
@@ -70,5 +78,10 @@ public class ConcreteBaseStatesUIM : BaseStatesUIM
             staminaSlider.value = currentStamina / maxStamina;
         else
             staminaSlider.value = 0;
+
+        if (staminaTMP != null)
+        {
+            staminaTMP.text = $"{(int)currentStamina} / {(int)maxStamina}";
+        }
     }
 }
