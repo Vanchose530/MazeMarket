@@ -8,10 +8,13 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
     [Header("Behaviour")]
     [SerializeField] private float distanceFromPlayer;
     [SerializeField] private float distanceRecoverAttack;
+    [SerializeField] private float coolDownRecoverAttackTime;
     [SerializeField] private float minRecoveryTime;
     [SerializeField] private float maxRecoveryTime;
     [SerializeField] private float minWalkInOneTurnTime;
     [SerializeField] private float maxWalkInOneTurnTime;
+    private float _coolDownRecoverAttackTime;
+    private bool coolDownRecoverAttack;
     public float recoverAttackTime;
     float walkInOneTurnTime;
     bool rightTurn;
@@ -26,6 +29,9 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
         bronzeHeracles.stand = false;
 
         bronzeHeracles.targetOnAim = false;
+        _coolDownRecoverAttackTime = coolDownRecoverAttackTime;
+
+        coolDownRecoverAttack = false;
 
         recoveryTime = Random.Range(minRecoveryTime, maxRecoveryTime);
 
@@ -63,10 +69,10 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
             }
 
             bronzeHeracles.movementDirection = moveVector;
-
+            CoolDownRecoverAttackVariables();
             CountTimeVariables();
 
-            if (distanceToPlayer < distanceRecoverAttack)
+            if (distanceToPlayer < distanceRecoverAttack && !coolDownRecoverAttack)
             {
                 bronzeHeracles.target = Player.instance.transform;
 
@@ -75,6 +81,9 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
                 bronzeHeracles.ExecutePath();
 
                 bronzeHeracles.RecoverAttack();
+
+                _coolDownRecoverAttackTime = coolDownRecoverAttackTime;
+                coolDownRecoverAttack = true;
 
             }
         }
@@ -92,7 +101,14 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
         if (walkInOneTurnTime > 0)
             walkInOneTurnTime -= Time.deltaTime;
     }
-
+    private void CoolDownRecoverAttackVariables() {
+        if (_coolDownRecoverAttackTime > 0)
+            _coolDownRecoverAttackTime -= Time.deltaTime;
+        else if (_coolDownRecoverAttackTime <= 0) 
+        {
+            coolDownRecoverAttack = false;
+        }
+    }
     private void ResetTimeToWalkInOneTurn()
     {
         walkInOneTurnTime = Random.Range(minWalkInOneTurnTime, maxWalkInOneTurnTime);

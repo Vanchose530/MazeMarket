@@ -238,11 +238,12 @@ MonoBehaviour:
   bronzeHeracles: {fileID: 0}
   distanceFromPlayer: 5
   distanceRecoverAttack: 2.29
+  coolDownRecoverAttackTime: 1
   minRecoveryTime: 2
   maxRecoveryTime: 5
   minWalkInOneTurnTime: 2
   maxWalkInOneTurnTime: 4
-  recoverAttackTime: 3
+  recoverAttackTime: 1.5
 --- !u!114 &7694149193686125257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +744,7 @@ MonoBehaviour:
   thirdPhaseHP: 0
   interactSpriteGlow: {fileID: 5606537867339462621}
   isFirstAttack: 1
-  isThirdPhase: 0
+  stage: 1
   bossManager: {fileID: 0}
   numberGoplit: 0
   archeryState: {fileID: 2555664646802664863}
