@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevelMusic: {fileID: 6858674888068200139}
+  audioMixerMusic: {fileID: 24100000, guid: 7c74e23c5296c104b99135534fc12b48, type: 2}
   mixerGroupSFX: {fileID: -8015634422576820324, guid: 7c74e23c5296c104b99135534fc12b48, type: 2}
   _normalSnapshot: {fileID: 24500006, guid: 7c74e23c5296c104b99135534fc12b48, type: 2}
   _inMenuSnapshot: {fileID: 2973231386207966954, guid: 7c74e23c5296c104b99135534fc12b48, type: 2}
@@ -61,7 +62,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2673221355407383201, guid: 7c74e23c5296c104b99135534fc12b48, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3cee9c6be7d4d004085f5e3fa99b09a0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1fa5635f2dd6080479dbeb46677a57e7, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.3
   m_Pitch: 1

@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
     const string PATH_TO_SINGLETON_PREFAB = "Singletons\\Audio Manager";
 
     [SerializeField] private AudioSource currentLevelMusic;
+    [SerializeField] private AudioMixer audioMixerMusic;
     [SerializeField] private AudioMixerGroup mixerGroupSFX;
 
     [Header("Music Snapshots")]
@@ -43,6 +44,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerSnapshot _battleSnapshot;
     public AudioMixerSnapshot battleSnapshot { get { return _battleSnapshot; } }
 
+    private void Update()
+    {
+        Debug.Log(currentLevelMusic);
+    }
     public void PlaySoundEffect(SoundEffect soundEffect, float soundEffectExistTime = 20f)
     {
         if (soundEffect.sound == null)
@@ -123,7 +128,9 @@ public class AudioManager : MonoBehaviour
         if (restartIfMatch || currentLevelMusic.clip != music)
         {
             currentLevelMusic.clip = music;
+            currentLevelMusic.volume = 0;
             currentLevelMusic.Play();
+            StartCoroutine(FadeInCoroutine(currentLevelMusic, 30f));
         }
     }
 
@@ -131,5 +138,35 @@ public class AudioManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(time);
         Destroy(obj);
+    }
+
+
+    private IEnumerator FadeInCoroutine(AudioSource music ,float duration)
+    {
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            music.volume = Mathf.Lerp(0, 1, time / duration);
+            yield return null;
+        }
+
+        music.volume = 1;
+    }
+
+    private IEnumerator FadeOutCoroutine(AudioSource music,float duration)
+    {
+        float time = 0;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            music.volume = Mathf.Lerp(1, 0, time / duration);
+            yield return null;
+        }
+
+        music.volume = 0;
+
     }
 }

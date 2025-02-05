@@ -18,7 +18,6 @@ public class PlayerConditionsManager : MonoBehaviour
             return _instance;
         }
     }
-
     private PlayerConditions _currentCondition;
     public PlayerConditions currentCondition
     {
@@ -33,8 +32,15 @@ public class PlayerConditionsManager : MonoBehaviour
             _currentCondition = value;
         }
     }
-
-    bool onBattle;
+    private bool _onBattle;
+    public bool onBattle 
+    {
+        get { return _onBattle; }
+        set 
+        {
+            _onBattle = value;
+        }
+    }
 
     // Gaming Conditions (Игровые состояния) - состояния, в которых
     // игрок непосредственно играет в игру (бегает по уровню, стреляет и т.п.) 

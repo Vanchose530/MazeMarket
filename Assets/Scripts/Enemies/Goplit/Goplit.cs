@@ -331,7 +331,7 @@ public class Goplit : Enemy, IDamagable
     {
         if (movementDirection == Vector2.zero && !targetOnAim)
             return;
-
+        
         if (targetOnAim)
         {
             // Vector2 dir = ((Vector2)target.transform.position - rb.position).normalized;
