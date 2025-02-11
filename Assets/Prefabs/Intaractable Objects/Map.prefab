@@ -211,10 +211,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactSpriteGlow: {fileID: 5849607762883954668}
   interactSE:
-    sound: {fileID: 0}
-    volume: 0.5
+    sound: {fileID: 8300000, guid: dd74dcca28d7a6f4cad39a69fa69d663, type: 3}
+    volume: 1
     minPitch: 1
     maxPitch: 1
+  sourceLight: {fileID: 1328954353735473812}
 --- !u!1 &4999743992439229097
 GameObject:
   m_ObjectHideFlags: 0

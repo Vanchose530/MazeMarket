@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1720745303056553719}
   - component: {fileID: 3894106557503169174}
   - component: {fileID: 2307867439994386412}
+  - component: {fileID: 7431152819418563}
   m_Layer: 0
   m_Name: Player Legs
   m_TagString: Untagged
@@ -106,6 +107,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7431152819418563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561000445666535089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85dfaabd087dbb44998870e80d9bb2d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transform: {fileID: 1720745303056553719}
+  stepSE:
+    sound: {fileID: 8300000, guid: 40fc2324ec4562b49bc6b87dd1e17813, type: 3}
+    volume: 0.05
+    minPitch: 0.85
+    maxPitch: 1.15
 --- !u!1 &1896684471220896308
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,11 +218,6 @@ MonoBehaviour:
   dashTrail: {fileID: 8758755446985658079}
   punchSound: {fileID: 8797459062646210151, guid: 45b6ffc994fa8a64c8ff99e7d20d5123, type: 3}
   damageSound: {fileID: 5341204480864620632, guid: af9548430dd567840b9e4fc804a35376, type: 3}
-  dashSE:
-    sound: {fileID: 0}
-    volume: 0.5
-    minPitch: 1
-    maxPitch: 1
   grenadeThrowSE:
     sound: {fileID: 8300000, guid: 1871b2ccc9a0ba74493b02456c6f0bf4, type: 3}
     volume: 0.5
@@ -214,6 +228,16 @@ MonoBehaviour:
     volume: 0.5
     minPitch: 0.7
     maxPitch: 0.7
+  runBoostSE:
+    sound: {fileID: 8300000, guid: 10b976a970efd1f4aad273997f9679c8, type: 3}
+    volume: 1
+    minPitch: 0.95
+    maxPitch: 1.05
+  dashSE:
+    sound: {fileID: 8300000, guid: 53c0d3b9726fd204e8a650958092ff88, type: 3}
+    volume: 0.8
+    minPitch: 1
+    maxPitch: 1
   _rb: {fileID: 2702732625081450782}
   startPosition: {x: 0, y: 0}
   levelName: 

@@ -210,9 +210,12 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
     [Header("Sound Effects")]
     [SerializeField] private GameObject punchSound;
     [SerializeField] private GameObject damageSound;
-    [SerializeField] private SoundEffect dashSE;
     [SerializeField] private SoundEffect grenadeThrowSE;
     [SerializeField] private SoundEffect healSE;
+
+    [SerializeField] private SoundEffect runBoostSE;
+    bool boostStart = false;
+    [SerializeField] private SoundEffect dashSE;
 
     [Header("Physics")]
     [SerializeField] private Rigidbody2D _rb;
@@ -465,12 +468,18 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
         {
             if (runBustBuffer >= timeToRunBoost) // действует буст скорости
             {
+                if (!boostStart)
+                {
+                    AudioManager.instance.PlaySoundEffect(runBoostSE, rb.transform.position, 2f);
+                    boostStart = true;
+                }
                 bodyAnimator.SetFloat("Run Multiplier", runBoostModifier);
                 currentSpeed = normalSpeed * runSpeedModifier * runBoostModifier;
                 dashTrail.emitting = true;
             }
             else // буст скорости не действует
             {
+                boostStart = false;
                 bodyAnimator.SetFloat("Run Multiplier", 1f);
                 currentSpeed = normalSpeed * runSpeedModifier;
                 dashTrail.emitting = false;

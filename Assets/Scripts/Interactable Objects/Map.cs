@@ -49,6 +49,9 @@ public class Map : MonoBehaviour, IInteractable
         MiniMapUIM.instance.UseMap();
         HintsManager.instance.ShowPleasureNotice("Карта обновлена!", HINT_TIME);
 
+        if (interactSE != null)
+            AudioManager.instance.PlaySoundEffect(interactSE, 3f);
+
         if (sourceLight != null)
             sourceLight.enabled = false;
 

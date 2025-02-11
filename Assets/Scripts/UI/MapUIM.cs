@@ -191,9 +191,12 @@ public class MapUIM : MonoBehaviour
     {
         if (!isMapBuilded)
             BuildMap();
+
         mapPanel.SetActive(true);
     }
         
     public void HideMap()
-        => mapPanel.SetActive(false);
+    {
+        mapPanel.SetActive(false);
+    }
 }

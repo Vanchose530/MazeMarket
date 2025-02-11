@@ -3620,6 +3620,16 @@ MonoBehaviour:
   roomSizeX: 0.28
   roomSizeY: 0.28
   spaceBetweenRooms: 28
+  mapOpenSE:
+    sound: {fileID: 8300000, guid: 47b2524cd396fd24fa0cbaa765332811, type: 3}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  mapCloseSE:
+    sound: {fileID: 8300000, guid: fe82b504d0da78141adb1580a291d7bc, type: 3}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
   mapRooms: {fileID: 663803190311884861}
   mapPanel: {fileID: 1694807001989185722}
   mapMark: {fileID: 599039853530052721}

@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class Legs : MonoBehaviour
 {
-    [SerializeField] private Goplit goplit;
+    [SerializeField] private Transform transform;
+    [SerializeField] private SoundEffect stepSE;
+
     private void LegsSound()
     {
-        AudioManager.instance.PlaySoundEffect(goplit.legsSE, goplit.rb.position);
+        AudioManager.instance.PlaySoundEffect(stepSE, transform.position);
     }
 }

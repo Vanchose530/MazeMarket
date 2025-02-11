@@ -49,6 +49,10 @@ public class MiniMapUIM : MonoBehaviour
     [SerializeField] private float roomSizeY = 1;
     [SerializeField] private float spaceBetweenRooms = 1;
 
+    [Header("Sound Effects")]
+    [SerializeField] private SoundEffect mapOpenSE;
+    [SerializeField] private SoundEffect mapCloseSE;
+
     [Header("Setup")]
     [SerializeField] private GameObject mapRooms;
     [SerializeField] private GameObject mapPanel;
@@ -215,12 +219,18 @@ public class MiniMapUIM : MonoBehaviour
     {
         mapPanel.SetActive(true);
         mapMark.SetActive(false);
+
+        if (mapOpenSE != null)
+            AudioManager.instance.PlaySoundEffect(mapOpenSE);
     }
 
     public void HideMiniMap()
     {
         mapPanel.SetActive(false);
         mapMark.SetActive(true);
+
+        if (mapCloseSE != null)
+            AudioManager.instance.PlaySoundEffect(mapCloseSE);
     }
 
     public void UseMap()

@@ -36,14 +36,15 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] private DamageParticles damageParticlesPrefab;
     [SerializeField] private GameObject bulletsAftereffects;
     [SerializeField] private GameObject alivingEffect;
+
     [Header("Sound")]
     [SerializeField] private SoundEffect prepareSpearSE;
     [SerializeField] private SoundEffect runSpearSE;
     public SoundEffect hitSpearSE;
     AudioSource runAudio = null;
     [SerializeField] private SoundEffect standInPoseSE;
-    public SoundEffect legsSE;
     private bool isRushSound;
+
     [Header("Statue stay/alive")]
     public bool stayOnAwake;
     [HideInInspector] public bool stay;

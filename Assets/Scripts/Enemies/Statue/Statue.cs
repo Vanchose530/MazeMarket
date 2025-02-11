@@ -27,7 +27,6 @@ public class Statue : Enemy, IDamagable
     [Header("Sound Effects")]
     [SerializeField] private GameObject damageSoundPrefab;
     [SerializeField] private SoundEffect shootSE;
-    public SoundEffect legsSE;
     [SerializeField] private GameObject alivingEffectSoundPrefab;
     [SerializeField] private GameObject alivingSoundPrefab;
 
