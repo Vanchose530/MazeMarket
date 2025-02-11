@@ -17,9 +17,9 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private float dropDistance = 2.0f;
     [SerializeField] private float dropDelayTimer = 2f;
-    private bool isDropDelay = false;
+    public bool isDropDelay { get; private set; } = false;
 
-    private int weaponInventoryId = 0;
+    public int weaponInventoryId { get; private set; } = 0;
 
     private IEnumerator reloadingCoroutine;
 
@@ -296,11 +296,11 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
 
     public void RemoveWeapon()
     {
-        if (currentWeapon != null && Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
-        {
-            HintsManager.instance.ShowDefaultNotice("Не могу выбросить здесь", 3f);
-            return;
-        }
+        //if (currentWeapon != null && Player.instance.CheckObstacles(dropDistance + 0.1f, cantDropWeaponLayer))
+        //{
+        //    HintsManager.instance.ShowDefaultNotice("Не могу выбросить здесь", 3f);
+        //    return;
+        //}
 
         if (isDropDelay)
             return;
@@ -343,7 +343,7 @@ public class PlayerWeaponsManager : MonoBehaviour, IDataPersistence
     {
         Instantiate(Resources.Load<GameObject>(PATH_TO_WEAPON_PREFABS + currentWeapon.name.Replace("(Clone)", " ") + "Item"),
             player.transform.position + (Vector3)InputManager.instance.lookDirection * dropDistance,
-            player.transform.rotation);
+            Quaternion.identity);
     }
 
     private IEnumerator DropDelay()

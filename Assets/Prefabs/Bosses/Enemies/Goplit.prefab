@@ -229,8 +229,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3247662160191079325}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7206661, w: 0.6932823}
-  m_LocalPosition: {x: 21.04, y: 25.91, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -240,7 +240,7 @@ Transform:
   - {fileID: 6397588659826836400}
   - {fileID: 3469054949510900210}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -92.219}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6800585495578418688
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -399,6 +399,7 @@ MonoBehaviour:
   speed: 2.5
   nextWaypointDistance: 1
   targetOnAim: 0
+  turnSmoothTime: 0.1
   attackPoint: {fileID: 2126164683379923393}
   damage: 70
   statesGameObject: {fileID: 4769801514093938888}
@@ -413,6 +414,9 @@ MonoBehaviour:
   timeAttack: 5
   timeAttackEnd: 2
   firingRate: 1
+  aimingTurnSmoothTime: 0
+  bodyDamage: 35
+  enableBodyRushDamage: 1
   bodyAnimator: {fileID: 6515731758922230993}
   legs: {fileID: 438779133665045033}
   legsAnimator: {fileID: 1825575740844665263}
@@ -423,7 +427,7 @@ MonoBehaviour:
     maxPitch: 1.15
   alivingEffectSoundPrefab: {fileID: 971622264450682791, guid: aff6f8f80db46d0429dd21fa2df0fa3f, type: 3}
   alivingSoundPrefab: {fileID: 7390544046064625189, guid: 01d0288251327fd45b5073fb78a306fa, type: 3}
-  damageEffect: {fileID: 2642225804590499521, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
+  damageParticlesPrefab: {fileID: -1775596372002483787, guid: 76dbd96df154142439cf04b8b6929ad4, type: 3}
   bulletsAftereffects: {fileID: 7120575172948533449, guid: 17dddbd611370b5428b4fa5da6a7ed19, type: 3}
   alivingEffect: {fileID: 9046454777077198889, guid: 08071334ab1692c47a49c8ad61f78f8e, type: 3}
   stayOnAwake: 1

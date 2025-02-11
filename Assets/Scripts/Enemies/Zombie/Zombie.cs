@@ -22,7 +22,8 @@ public class Zombie : Enemy, IDamagable
     [SerializeField] private Animator legsAnimator;
 
     [Header("Effects")]
-    [SerializeField] private GameObject damageEffect;
+    //[SerializeField] private GameObject damageEffect;
+    [SerializeField] private DamageParticles damageParticlesPrefab;
 
     [Header("Sound Effects")]
     [SerializeField] private GameObject damageSoundPrefab;
@@ -160,8 +161,9 @@ public class Zombie : Enemy, IDamagable
         if (currentState != agressiveState) SetState(agressiveState); 
         if (attack != null)
         {
-            var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
-            Destroy(effect, 1f);
+            var dp = Instantiate(damageParticlesPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
+            Destroy(dp, 1f);
+            dp.Play(damage, attack);
         }
         if (health <= 0)
         {

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6552198008786354777}
   - component: {fileID: 6552198008786354758}
   - component: {fileID: 73322641}
+  - component: {fileID: 7601500309466707227}
   m_Layer: 12
   m_Name: Handgun Item
   m_TagString: Untagged
@@ -57,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -145,7 +146,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.01531148, y: 0.028070688}
@@ -180,6 +181,7 @@ MonoBehaviour:
     minPitch: 0.9
     maxPitch: 1.1
   gunSO: {fileID: 11400000, guid: 46c8d814680f6f74e9908b6d103ec815, type: 2}
+  interactSpriteGlow: {fileID: 7601500309466707227}
 --- !u!95 &73322641
 Animator:
   serializedVersion: 5
@@ -201,6 +203,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7601500309466707227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552198008786354780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0, g: 0.009835582, b: 0.836478, a: 1}
+  glowBrightness: 1
+  outlineWidth: 10
+  alphaThreshold: 0
+  drawOutside: 1
+  enableInstancing: 0
 --- !u!1 &6552198009881973170
 GameObject:
   m_ObjectHideFlags: 0

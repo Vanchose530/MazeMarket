@@ -297,6 +297,7 @@ MonoBehaviour:
   speed: 3.7
   nextWaypointDistance: 1
   targetOnAim: 0
+  turnSmoothTime: 0.1
   attackPoint: {fileID: 5498902330142026270}
   damage: 35
   statesGameObject: {fileID: 5498902329225003899}
@@ -310,10 +311,11 @@ MonoBehaviour:
   rootForwardSpeed: 2
   rootStayTime: 0.1
   rootBackSpeed: 3
+  aimingTurnSmoothTime: 0
   bodyAnimator: {fileID: 5498902329585234873}
   legs: {fileID: 5498902330070985063}
   legsAnimator: {fileID: 5498902330070985065}
-  damageEffect: {fileID: 325298484439386981, guid: 994cba1d828ce0446bcacc106f3ccda6, type: 3}
+  damageParticlesPrefab: {fileID: -4864049243667731994, guid: 994cba1d828ce0446bcacc106f3ccda6, type: 3}
   damageSoundPrefab: {fileID: 1956592308131523771, guid: 1aca9158ece92044f9f81abaa86a9030, type: 3}
   rootSoundPrefab: {fileID: 2388739237806118149, guid: bb14eb47536c5124a8a9cbc6d9173c09, type: 3}
   spawnState: {fileID: 6460206326195554706}

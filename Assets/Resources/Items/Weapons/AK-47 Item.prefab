@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2140312897990770056}
   - component: {fileID: 1628926085826534724}
   - component: {fileID: 425085058448509138}
+  - component: {fileID: 6689167246832919492}
   m_Layer: 12
   m_Name: AK-47 Item
   m_TagString: Untagged
@@ -139,7 +140,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +228,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.01531148, y: 0.028070688}
@@ -262,6 +263,7 @@ MonoBehaviour:
     minPitch: 0.9
     maxPitch: 1.1
   gunSO: {fileID: 11400000, guid: 361b2cd2396d55f4ab9792e91d171d24, type: 2}
+  interactSpriteGlow: {fileID: 6689167246832919492}
 --- !u!95 &425085058448509138
 Animator:
   serializedVersion: 5
@@ -283,3 +285,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6689167246832919492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3542211248288511624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8f6d3c6e4250e84192f5b34ce9e71bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0, g: 0.009835582, b: 0.836478, a: 1}
+  glowBrightness: 1
+  outlineWidth: 1
+  alphaThreshold: 0
+  drawOutside: 1
+  enableInstancing: 0

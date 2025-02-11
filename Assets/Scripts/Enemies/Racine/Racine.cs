@@ -21,7 +21,8 @@ public class Racine : Enemy, IDamagable
     [SerializeField] private Animator legsAnimator;
 
     [Header("Effects")]
-    [SerializeField] private GameObject damageEffect;
+    //[SerializeField] private GameObject damageEffect;
+    [SerializeField] private DamageParticles damageParticlesPrefab;
 
     [Header("Sound Effects")]
     [SerializeField] private GameObject damageSoundPrefab;
@@ -238,8 +239,9 @@ public class Racine : Enemy, IDamagable
 
         if (attack != null)
         {
-            var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
-            Destroy(effect, 1f);
+            var dp = Instantiate(damageParticlesPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
+            Destroy(dp, 1f);
+            dp.Play(damage, attack);
         }
 
         if (health <= 0)
