@@ -384,6 +384,11 @@ MonoBehaviour:
     volume: 0.2
     minPitch: 0.7
     maxPitch: 1
+  legsSE:
+    sound: {fileID: 8300000, guid: 9c867780135f91c4eb0630f4ccc85636, type: 3}
+    volume: 0.5
+    minPitch: 0.8
+    maxPitch: 1.2
   alivingEffectSoundPrefab: {fileID: 971622264450682791, guid: aff6f8f80db46d0429dd21fa2df0fa3f, type: 3}
   alivingSoundPrefab: {fileID: 7390544046064625189, guid: 01d0288251327fd45b5073fb78a306fa, type: 3}
   stayOnAwake: 1
