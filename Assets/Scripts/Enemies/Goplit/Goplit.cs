@@ -2,6 +2,7 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -39,7 +40,10 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] private SoundEffect prepareSpearSE;
     [SerializeField] private SoundEffect runSpearSE;
     public SoundEffect hitSpearSE;
+    AudioSource runAudio = null;
     [SerializeField] private SoundEffect standInPoseSE;
+    public SoundEffect legsSE;
+    private bool isRushSound;
     [Header("Statue stay/alive")]
     public bool stayOnAwake;
     [HideInInspector] public bool stay;
@@ -54,7 +58,7 @@ public class Goplit : Enemy, IDamagable
     [SerializeField] public GoplitRecoveryState recoveryState;
     [SerializeField] private GoplitAttackState attackState;
     public GoplitState currentState { get; private set; }
-     public bool isRush;
+    public bool isRush;
     public bool attack { get; set; }
 
     private bool isEndAttack;
@@ -83,6 +87,7 @@ public class Goplit : Enemy, IDamagable
     }
     private void Awake()
     {
+        
         health = maxHealth;
 
         target = null;
@@ -94,6 +99,8 @@ public class Goplit : Enemy, IDamagable
         aliving = false;
 
         stay = stayOnAwake;
+
+        isRushSound = false;
 
         SetAnimationSettings();
 
@@ -203,18 +210,27 @@ public class Goplit : Enemy, IDamagable
         isRush = true;
         
     }
-    public void Rush() {
-        
+    public void Rush() 
+    {
+        if (!isRushSound)
+        {
+            isRushSound = true;
+            runAudio = AudioManager.instance.GetSoundEffectAS(runSpearSE);
+        }
         time -= Time.deltaTime;
         if (time <= 0)
         {
+            Destroy(runAudio);
             isRush = false;
+            isRushSound = false;
         }
     }
     public void EndAttack() 
     {
         if (isEndAttack)
             return;
+        Destroy(runAudio);
+        isRushSound = false;
         isRush = false;
         StartCoroutine("EndAttackCoroutine");
     }
@@ -223,6 +239,7 @@ public class Goplit : Enemy, IDamagable
         isEndAttack = true;
         spear.GetComponent<Collider2D>().enabled = false;
         bodyAnimator.SetTrigger("AttackEnd");
+        AudioManager.instance.PlaySoundEffect(standInPoseSE, rb.position, timeAttackEnd);
         yield return new WaitForSeconds(timeAttackEnd);
         bodyAnimator.SetTrigger("Default");
         SetState(recoveryState);

@@ -19,7 +19,7 @@ public class Spear : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        AudioManager.instance.PlaySoundEffect(goplit.hitSpearSE,goplit.rb.position);
+        AudioManager.instance.PlaySoundEffect(goplit.hitSpearSE, goplit.rb.position);
         if (collision.gameObject.CompareTag(ignoreTag))
             return;
 
