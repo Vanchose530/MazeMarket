@@ -17,12 +17,15 @@ public class GameplaySceneInstaller : MonoBehaviour
     [Header("Level Music")]
     [SerializeField] private AudioClip levelMusic;
 
+    
     [Header("Level UI")]
     [SerializeField] private GameObject gameplayCanvasPrefab;
 
     private void Awake()
     {
+       
         AudioManager.instance.SetMusic(levelMusic);
+
         AudioManager.instance.normalSnapshot.TransitionTo(0.1f);
         CursorManager.instance.aimVisible = true;
 

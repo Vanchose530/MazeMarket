@@ -29,10 +29,18 @@ public class AudioManager : MonoBehaviour
     }
 
     const string PATH_TO_SINGLETON_PREFAB = "Singletons\\Audio Manager";
-
+    public AudioClip battleMusic;
     [SerializeField] private AudioSource currentLevelMusic;
+    public AudioSource battleLevelMusic;
     [SerializeField] private AudioMixer audioMixerMusic;
     [SerializeField] private AudioMixerGroup mixerGroupSFX;
+
+    [Header("Music Group")]
+    [SerializeField] private AudioMixerGroup _normalGroup;
+    public AudioMixerGroup normalGroup { get { return _normalGroup; } }
+
+    [SerializeField] private AudioMixerGroup _battleGroup;
+    public AudioMixerGroup battleGroup { get { return _battleGroup; } }
 
     [Header("Music Snapshots")]
     [SerializeField] private AudioMixerSnapshot _normalSnapshot;
@@ -127,10 +135,21 @@ public class AudioManager : MonoBehaviour
     {
         if (restartIfMatch || currentLevelMusic.clip != music)
         {
-            currentLevelMusic.clip = music;
-            currentLevelMusic.volume = 0;
-            currentLevelMusic.Play();
-            StartCoroutine(FadeInCoroutine(currentLevelMusic, 30f));
+            StartCoroutine(TransitionToMusic(music, currentLevelMusic, 0.1f));
+        }
+    }
+    public void SetMusic(AudioClip music, PlayerConditions playerCondition, bool restartIfMatch = false)
+    {
+        if (playerCondition == PlayerConditions.Battle)
+        {
+
+            if (restartIfMatch || battleLevelMusic.clip != music)
+            {
+                battleLevelMusic = gameObject.AddComponent<AudioSource>();
+                battleLevelMusic.clip = music;
+                battleLevelMusic.outputAudioMixerGroup = battleGroup;
+                StartCoroutine(TransitionToMusic(music, battleLevelMusic, 0.1f));
+            }
         }
     }
 
@@ -141,32 +160,31 @@ public class AudioManager : MonoBehaviour
     }
 
 
-    private IEnumerator FadeInCoroutine(AudioSource music ,float duration)
-    {
-        float time = 0;
 
-        while (time < duration)
+    private IEnumerator TransitionToMusic(AudioClip newMusic, AudioSource audio, float duration)
+    {
+
+        audio.clip = newMusic;
+        audio.volume = 0;
+        audio.Play();
+
+
+        while (audio.volume < 1)
         {
-            time += Time.deltaTime;
-            music.volume = Mathf.Lerp(0, 1, time / duration);
+            audio.volume += duration * Time.deltaTime;
             yield return null;
         }
-
-        music.volume = 1;
     }
-
-    private IEnumerator FadeOutCoroutine(AudioSource music,float duration)
+    public IEnumerator DampingToMusic(AudioSource audio, float duration)
     {
-        float time = 0;
 
-        while (time < duration)
+        while (audio.volume > 0)
         {
-            time += Time.deltaTime;
-            music.volume = Mathf.Lerp(1, 0, time / duration);
+            audio.volume -= duration * Time.deltaTime;
             yield return null;
         }
 
-        music.volume = 0;
-
+        audio.clip = null;
+        audio.Stop();
     }
 }

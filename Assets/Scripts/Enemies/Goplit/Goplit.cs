@@ -244,6 +244,7 @@ public class Goplit : Enemy, IDamagable
     {
         aliving = true;
 
+
         var effect = Instantiate(alivingEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), new Quaternion(0, 0, 0, 0));
         effect.GetComponent<Animator>().SetFloat("Speed", 1 / alivingTime);
 

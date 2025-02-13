@@ -18,6 +18,10 @@ public class PlayerConditionsManager : MonoBehaviour
             return _instance;
         }
     }
+    private void Update()
+    {
+        Debug.Log(onBattle);
+    }
     private PlayerConditions _currentCondition;
     public PlayerConditions currentCondition
     {
@@ -39,6 +43,10 @@ public class PlayerConditionsManager : MonoBehaviour
         set 
         {
             _onBattle = value;
+            if (value)
+                AudioManager.instance.SetMusic(AudioManager.instance.battleMusic, PlayerConditions.Battle);
+            else
+                AudioManager.instance.DampingToMusic(AudioManager.instance.battleLevelMusic, 0.1f);
         }
     }
 
@@ -48,12 +56,14 @@ public class PlayerConditionsManager : MonoBehaviour
     public void SetGamingCondition()
     {
         if (onBattle)
+        {
             currentCondition = PlayerConditions.Battle;
+        }
         else
             currentCondition = PlayerConditions.Default;
     }
 
-    void SetConditionParameters(PlayerConditions value)
+    public void SetConditionParameters(PlayerConditions value)
     {
         switch (value)
         {
@@ -66,7 +76,7 @@ public class PlayerConditionsManager : MonoBehaviour
             case PlayerConditions.Battle:
                 onBattle = true;
                 Time.timeScale = 1f;
-                AudioManager.instance.battleSnapshot.TransitionTo(2f);
+                AudioManager.instance.SetMusic(AudioManager.instance.battleMusic, PlayerConditions.Battle);
                 InputManager.instance.UnLockCursor();
                 break;
             case PlayerConditions.Pause:
