@@ -53,6 +53,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-7145582552439037228
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 17229f287bb1afb4e83e9a2c5f0a7c03
+  m_EffectName: Attenuation
+  m_MixLevel: a86740d7e9058914690a6a1b80d637a9
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!245 &-6781679732274164229
 AudioMixerSnapshotController:
   m_ObjectHideFlags: 0
@@ -80,6 +94,25 @@ AudioMixerSnapshotController:
     31af2d3e24adace408143c5f2895dbb6: 0
     2d3bb9ffa5848314ba2077097d3d39bd: 20
   m_TransitionOverrides: {}
+--- !u!243 &-5256317372123197050
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BattleMusic
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 76b0a14361e689e49a1eed072a9093a5
+  m_Children: []
+  m_Volume: 969d366cbea15f04fa024873480857a8
+  m_Pitch: 3f7cb51d087f7d4469c7f1d7b6f129ca
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -7145582552439037228}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &-3146443073393438499
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -107,7 +140,8 @@ AudioMixerGroupController:
   m_Name: Music
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: bce92e928638cb34faed44a47707bd08
-  m_Children: []
+  m_Children:
+  - {fileID: -5256317372123197050}
   m_Volume: 7640494dc0bbece46ac5a594c7ff1fb1
   m_Pitch: 42c43599e72b2084eb1d1d3b3141190b
   m_Send: 00000000000000000000000000000000
@@ -145,9 +179,10 @@ AudioMixerController:
     - bce92e928638cb34faed44a47707bd08
     - 95227a9d345b08a49a4ddd710184f572
     - 5e27ff04f154684499aa987ccffb14dc
+    - 76b0a14361e689e49a1eed072a9093a5
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: -6781679732274164229}
+  m_TargetSnapshot: {fileID: 2973231386207966954}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -259,6 +294,7 @@ AudioMixerSnapshotController:
     42c43599e72b2084eb1d1d3b3141190b: 0.9
     9fc329f9f1e22e64d82f5564d193d88a: 10
     72ff20aa62fa119469c42809172b4c98: 0.22101271
+    969d366cbea15f04fa024873480857a8: -80
     7640494dc0bbece46ac5a594c7ff1fb1: 0.18695575
     31af2d3e24adace408143c5f2895dbb6: 0
     2d3bb9ffa5848314ba2077097d3d39bd: 20
