@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9137224655273526406}
-  - component: {fileID: 426686136320491638}
+  - component: {fileID: 1557070944662341673}
   m_Layer: 0
-  m_Name: Item Sources New
+  m_Name: Item Source Configured
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ Transform:
   - {fileID: 6786602957448637061}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &426686136320491638
+--- !u!114 &1557070944662341673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,10 +48,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3540074765253164208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 54df37a1d9e12094a88c7fad5ea6dcc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 75
+  itemSpawners:
+  - {fileID: 5063540345737532469}
+  - {fileID: 3062878606062272326}
+  - {fileID: 4932204801240339258}
+  - {fileID: 5165287323435672471}
+  - {fileID: 2160418597505864541}
+  - {fileID: 5762239578999571955}
+  - {fileID: 4025678211155326211}
 --- !u!1001 &1108648774236947995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60,45 +67,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9137224655273526406}
     m_Modifications:
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[0].chance
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[1].chance
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[0].element
-      value: 
-      objectReference: {fileID: 3185322763328744952, guid: f71a1979374726c4db8b526629b3cf93, type: 3}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[1].element
-      value: 
-      objectReference: {fileID: 2719928919113107714, guid: 0e8bf4b080662284fa8693788013ff1b, type: 3}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[2].element
-      value: 
-      objectReference: {fileID: 8264815157986204796, guid: 12df35da177580444af0c454716b8d10, type: 3}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[3].element
-      value: 
-      objectReference: {fileID: 8464053631245268722, guid: 65a5896c05fd47c42ac0f6ef13e3d38d, type: 3}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[4].element
-      value: 
-      objectReference: {fileID: 3653324207760266287, guid: a83db17965fdf464ba5e4ce33506e49f, type: 3}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[5].element
-      value: 
-      objectReference: {fileID: 3647364265179919181, guid: 9277282564c93c242b260423322c97cb, type: 3}
-    - target: {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      propertyPath: items.elements.Array.data[6].element
-      value: 
-      objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer) (1)
+      value: Item Spawner Configured 2
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -143,29 +114,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1871540320186513465}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
---- !u!1 &3496143609750215215 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &3062878606062272326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 1108648774236947995}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1871540320186513465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3496143609750215215}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35
 --- !u!4 &4859746504142364864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
@@ -217,7 +178,7 @@ PrefabInstance:
       objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer) (6)
+      value: Item Spawner Configured 7
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -259,32 +220,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2315239341672334837}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
---- !u!1 &3304338976326062186 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &4025678211155326211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 1314247296428117086}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2315239341672334837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3304338976326062186}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35
 --- !u!4 &6786602957448637061 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
@@ -336,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer) (4)
+      value: Item Spawner Configured 5
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -378,32 +330,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6157604943852094411}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
---- !u!1 &575918208291829300 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &2160418597505864541 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 4042095798187518464}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6157604943852094411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 575918208291829300}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35
 --- !u!4 &8361943345623862491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
@@ -455,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer) (2)
+      value: Item Spawner Configured 3
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -497,37 +440,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7775632424656292157}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
 --- !u!4 &3279315751941311676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7030549822738590311}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6807188540036609619 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &4932204801240339258 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7030549822738590311}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7775632424656292157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6807188540036609619}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35
 --- !u!1001 &7083591046912465610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -574,7 +508,7 @@ PrefabInstance:
       objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer) (3)
+      value: Item Spawner Configured 4
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -616,37 +550,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3690082450301422131}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
 --- !u!4 &3341115790019542033 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7083591046912465610}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6749632225855391486 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &5165287323435672471 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7083591046912465610}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3690082450301422131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6749632225855391486}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35
 --- !u!1001 &7180566221470281064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -693,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer)
+      value: Item Spawner Configured 1
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -735,37 +660,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6664517138906979847}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
 --- !u!4 &3437796217599118259 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7180566221470281064}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6647318368831320412 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &5063540345737532469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7180566221470281064}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6664517138906979847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6647318368831320412}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35
 --- !u!1001 &7643918828650085550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -812,7 +728,7 @@ PrefabInstance:
       objectReference: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
     - target: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_Name
-      value: Random Item (Balancer) (5)
+      value: Item Spawner Configured 6
       objectReference: {fileID: 0}
     - target: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
       propertyPath: m_LocalPosition.x
@@ -854,34 +770,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3526710800870196831, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5868527786133818355}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
 --- !u!4 &2740255869333756533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5482006222234904283, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7643918828650085550}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6193256072533418138 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4604502055472143412, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
+--- !u!114 &5762239578999571955 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2730080718753167709, guid: 9b76071b118de1d498ef53a94b607028, type: 3}
   m_PrefabInstance: {fileID: 7643918828650085550}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5868527786133818355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6193256072533418138}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72260e5b6bcec6a4eb0a91b5e9e2b30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e21619308368c24aac5f2c963d819a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 35

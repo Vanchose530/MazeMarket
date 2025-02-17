@@ -12,7 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844d6954ec55bfb43a0848e2d827b605, type: 3}
   m_Name: New Item Config
   m_EditorClassIdentifier: 
-  _itemSourceAppearChance: 50
-  _itemAppearChance: 50
+  _itemSourceAppearChance: 35
+  _itemAppearChance: 65
   items:
-    elements: []
+    elements:
+    - element: {fileID: 8264815157986204796, guid: 12df35da177580444af0c454716b8d10, type: 3}
+      chance: 60
+    - element: {fileID: 3185322763328744952, guid: f71a1979374726c4db8b526629b3cf93, type: 3}
+      chance: 90
+    - element: {fileID: 2719928919113107714, guid: 0e8bf4b080662284fa8693788013ff1b, type: 3}
+      chance: 60
+    - element: {fileID: 8464053631245268722, guid: 65a5896c05fd47c42ac0f6ef13e3d38d, type: 3}
+      chance: 60
+    - element: {fileID: 3653324207760266287, guid: a83db17965fdf464ba5e4ce33506e49f, type: 3}
+      chance: 20
+    - element: {fileID: 7927141983283613331, guid: a45e49ff269623e499f4492e021ef7c9, type: 3}
+      chance: 5

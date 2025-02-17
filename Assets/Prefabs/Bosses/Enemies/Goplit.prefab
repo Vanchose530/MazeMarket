@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 1622124748133939917}
   - component: {fileID: 508489836221532475}
   - component: {fileID: 6515731758922230993}
+  - component: {fileID: 1939065166190731193}
   m_Layer: 0
   m_Name: Goplit
   m_TagString: Enemy
@@ -500,6 +501,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1939065166190731193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247662160191079325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5171a4e6b529b9840843dd91335f88bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
 --- !u!1 &4769801514093938888
 GameObject:
   m_ObjectHideFlags: 0

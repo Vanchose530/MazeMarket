@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 4177631225949639683}
   - component: {fileID: 4177631225949639681}
   - component: {fileID: 4177631225949639682}
+  - component: {fileID: 8605118958274303122}
   m_Layer: 0
   m_Name: Statue
   m_TagString: Enemy
@@ -413,6 +414,19 @@ MonoBehaviour:
   walkState: {fileID: 4177631226498715183}
   agressiveState: {fileID: 4177631226498715181}
   attack: 0
+--- !u!114 &8605118958274303122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177631225949639704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5171a4e6b529b9840843dd91335f88bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
 --- !u!1 &4177631226498715168
 GameObject:
   m_ObjectHideFlags: 0

@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 5498902329585234875}
   - component: {fileID: 5498902329585234872}
   - component: {fileID: 5498902329585234873}
+  - component: {fileID: -685334149202280123}
   m_Layer: 0
   m_Name: Racine
   m_TagString: Enemy
@@ -344,6 +345,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-685334149202280123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498902329585234870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5171a4e6b529b9840843dd91335f88bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
 --- !u!1 &5498902330070985063
 GameObject:
   m_ObjectHideFlags: 0
