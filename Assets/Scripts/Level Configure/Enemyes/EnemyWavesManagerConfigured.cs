@@ -37,10 +37,33 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
     public event Action onPlayerEnterRoom;
     public event Action onPlayerPassRoom;
 
+    [ContextMenu("Check All in children")]
+    private void AllChecks()
+    {
+        CheckEnemySpawnPointsInChildren();
+        CheckLockMiasmasInChildren();
+        CheckEnemyWavesTriggerInChildren();
+    }
+
     [ContextMenu("Check Enemy Spawn Points in children")]
     private void CheckEnemySpawnPointsInChildren()
     {
+        spawnPoints = null;
         spawnPoints = GetComponentsInChildren<EnemySpawnPointConfigured>();
+    }
+
+    [ContextMenu("Check Lock Miasmas in children")]
+    private void CheckLockMiasmasInChildren()
+    {
+        lockMiasmas = null;
+        lockMiasmas = GetComponentsInChildren<LockMiasma>();
+    }
+
+    [ContextMenu("Check Enemy Waves Trigger in children")]
+    private void CheckEnemyWavesTriggerInChildren()
+    {
+        triggers = null;
+        triggers = GetComponentsInChildren<EnemyWavesTrigger>();
     }
 
     private void OnEnable()
@@ -65,6 +88,32 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
         onPlayerPassRoom -= SetDefaultPlayerCondition;
     }
 
+    private IEnumerator Start()
+    {
+        if (EnemyesConfigurator.instance == null)
+            Debug.LogError("There isn't Enemyes Configurator in scene to configure enemyes");
+
+        foreach (var esp in spawnPoints)
+        {
+            esp.wavesManager = this;
+        }
+
+        foreach (var trig in triggers)
+        {
+            trig.roomManager = this;
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        if (!staticCamera)
+        {
+            // virtualCamera.LookAt = Player.instance.followCameraPoint;
+            _virtualCamera.Follow = Player.instance.followCameraPoint;
+        }
+
+        _virtualCamera.enabled = false;
+    }
+
     void EnableVirtualCamera()
         => _virtualCamera.enabled = true;
     void SetBattlePlayerCondition()
@@ -72,20 +121,17 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
     void SetDefaultPlayerCondition()
         => PlayerConditionsManager.instance.currentCondition = PlayerConditions.Default;
 
-    public void UpdateEnemyCount()
+    public void DecrementEnemyCount()
     {
-        // ????
+        enemyCount--;
+        CheckEnemyCount();
+    }
 
-        int enemyCountBuffer = 0;
+    public void IncrementEnemyCount()
+        => enemyCount++;
 
-        //foreach (var wave in enemyWaves)
-        //{
-        //    if (wave.active)
-        //        enemyCountBuffer += wave.enemyCount;
-        //}
-
-        enemyCount = enemyCountBuffer;
-
+    void CheckEnemyCount()
+    {
         if (enemyCount <= enemyesToNextWave && !lastWave)
         {
             StartNextWave();

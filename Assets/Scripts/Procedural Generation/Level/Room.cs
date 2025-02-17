@@ -18,8 +18,8 @@ public class Room : MonoBehaviour
     [SerializeField] private ShopInstaller shopInstaller;
 
     [Header("Enemyes on Room")]
-    [SerializeField] private EnemyWavesManager _enemyWavesManager;
-    public EnemyWavesManager enemyWavesManager { get { return _enemyWavesManager; } }
+    [SerializeField] private EnemyWavesManagerConfigured _enemyWavesManager;
+    public EnemyWavesManagerConfigured enemyWavesManager { get { return _enemyWavesManager; } }
 
     [Header("Camera")]
     [SerializeField] private VirtualCameraTrigger _virtualCameraTrigger;

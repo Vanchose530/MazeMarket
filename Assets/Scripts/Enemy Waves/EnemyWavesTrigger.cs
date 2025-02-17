@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class EnemyWavesTrigger : MonoBehaviour
 {
-    public EnemyWavesManager roomManager { private get; set; }
+    public EnemyWavesManagerConfigured roomManager { private get; set; }
 
 
     private void OnTriggerEnter2D(Collider2D collision)

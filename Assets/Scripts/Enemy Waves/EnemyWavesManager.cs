@@ -78,10 +78,10 @@ public class EnemyWavesManager : MonoBehaviour, IDataPersistence
 
     private IEnumerator Start()
     {
-        foreach (var trirgger in triggers)
-        {
-            trirgger.roomManager = this;
-        }
+        //foreach (var trirgger in triggers)
+        //{
+        //    trirgger.roomManager = this;
+        //}
 
         foreach (var wave in enemyWaves)
         {
