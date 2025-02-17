@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
     {
         Debug.Log(currentLevelMusic);
     }
-    public void PlaySoundEffect(SoundEffect soundEffect, float soundEffectExistTime = 20f)
+    public void PlaySoundEffect(SoundEffect soundEffect, float soundEffectExistTime = 0f)
     {
         if (soundEffect.sound == null)
         {
@@ -57,19 +57,23 @@ public class AudioManager : MonoBehaviour
         }
 
         var audioSource = new GameObject().AddComponent<AudioSource>();
+        var randPitch = Random.Range(soundEffect.minPitch, soundEffect.maxPitch);
 
         audioSource.clip = soundEffect.sound;
-        audioSource.pitch = Random.Range(soundEffect.minPitch, soundEffect.maxPitch);
+        audioSource.pitch = randPitch;
         audioSource.volume = soundEffect.volume;
         audioSource.outputAudioMixerGroup = mixerGroupSFX;
 
         audioSource.Play();
 
+        if (soundEffectExistTime == 0)
+            soundEffectExistTime = soundEffect.sound.length * (1 / randPitch);
+
         StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffectExistTime));
         // Destroy(audioSource.gameObject, soundEffectExistTime);
     }
 
-    public void PlaySoundEffect(SoundEffect soundEffect, Vector2 soundEffectPosition, float soundEffectExistTime = 20f)
+    public void PlaySoundEffect(SoundEffect soundEffect, Vector2 soundEffectPosition, float soundEffectExistTime = 0f)
     {
         if (soundEffect.sound == null)
         {
@@ -78,9 +82,10 @@ public class AudioManager : MonoBehaviour
         }
 
         var audioSource = new GameObject().AddComponent<AudioSource>();
+        var randPitch = Random.Range(soundEffect.minPitch, soundEffect.maxPitch);
 
         audioSource.clip = soundEffect.sound;
-        audioSource.pitch = Random.Range(soundEffect.minPitch, soundEffect.maxPitch);
+        audioSource.pitch = randPitch;
         audioSource.volume = soundEffect.volume;
         audioSource.outputAudioMixerGroup = mixerGroupSFX;
 
@@ -90,6 +95,9 @@ public class AudioManager : MonoBehaviour
         //{
         //    StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffect.sound.length));
         //}
+
+        if (soundEffectExistTime == 0)
+            soundEffectExistTime = soundEffect.sound.length * (1 / randPitch);
 
         StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffectExistTime));
         // Destroy(audioSource.gameObject, soundEffectExistTime);

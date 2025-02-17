@@ -27,7 +27,7 @@ public class MaxHealthOrStaminaItem : Item
         }
 
         if (pickUpSE != null)
-            AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position, 3f);
+            AudioManager.instance.PlaySoundEffect(pickUpSE, transform.position);
         Destroy(gameObject);
     }
 
