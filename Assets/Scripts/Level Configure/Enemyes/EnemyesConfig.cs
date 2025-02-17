@@ -6,7 +6,8 @@ using UnityEngine;
 public class EnemyesConfig : ScriptableObject
 {
     [Header("Enemyes to next wave")]
-    [SerializeField] private int enemyesToNextWave = 0;
+    [SerializeField] private int _enemyesToNextWave = 0;
+    public int enemyesToNextWave { get { return _enemyesToNextWave; } }
 
     [Header("Enemy Waves")]
     [SerializeField] private EnemyWaveConfig[] _enemyWaves;

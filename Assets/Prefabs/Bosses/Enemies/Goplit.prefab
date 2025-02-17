@@ -424,7 +424,7 @@ MonoBehaviour:
   damage: 70
   statesGameObject: {fileID: 4769801514093938888}
   agressive: 0
-  alreadySpawnedOnStart: 1
+  alreadySpawnedOnStart: 0
   spawningTime: 2
   seeker: {fileID: 1622124748133939917}
   _rb: {fileID: 7456330247445833259}
@@ -470,7 +470,7 @@ MonoBehaviour:
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
-  stayOnAwake: 1
+  stayOnAwake: 0
   stay: 0
   alivingTime: 2
   spawnState: {fileID: 1872251374944918333}

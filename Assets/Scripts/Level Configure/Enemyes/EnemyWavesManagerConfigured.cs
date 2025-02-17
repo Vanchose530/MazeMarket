@@ -93,6 +93,8 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
         if (EnemyesConfigurator.instance == null)
             Debug.LogError("There isn't Enemyes Configurator in scene to configure enemyes");
 
+        enemyesToNextWave = EnemyesConfigurator.instance.enemyesToNextWave;
+
         foreach (var esp in spawnPoints)
         {
             esp.wavesManager = this;

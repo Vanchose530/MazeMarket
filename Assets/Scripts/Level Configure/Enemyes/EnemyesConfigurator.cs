@@ -9,6 +9,7 @@ public class EnemyesConfigurator : MonoBehaviour
 
     private List<EnemyWaveConfig> enemyWaveBag = new List<EnemyWaveConfig>();
 
+    public int enemyesToNextWave { get { return enemyesConfig.enemyesToNextWave; } }
     public static EnemyesConfigurator instance { get; private set; }
 
     private void Awake()

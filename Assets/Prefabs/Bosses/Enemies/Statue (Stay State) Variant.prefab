@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4177631225949639682, guid: 99b1622944a90314496713ded9f4de63, type: 3}
+      propertyPath: stayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4177631225949639682, guid: 99b1622944a90314496713ded9f4de63, type: 3}
       propertyPath: alreadySpawnedOnStart
       value: 1
       objectReference: {fileID: 0}
