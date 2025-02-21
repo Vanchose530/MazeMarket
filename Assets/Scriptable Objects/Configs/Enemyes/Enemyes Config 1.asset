@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0025a1f3291f2314fb771e5db3192e18, type: 3}
+  m_Name: Enemyes Config 1
+  m_EditorClassIdentifier: 
+  enemyesToNextWave: 0
+  _enemyWaves:
+  - {fileID: 11400000, guid: 585c70ae97d1dc140842b39ec53c8732, type: 2}
+  - {fileID: 11400000, guid: c314cf30f6de35e4dbcd844674d3ba4f, type: 2}
+  - {fileID: 11400000, guid: 896b4da92cf6f3247aba60f5bd5acf77, type: 2}
+  - {fileID: 11400000, guid: f11b777e6c2ad1445803a2a1873f8566, type: 2}
