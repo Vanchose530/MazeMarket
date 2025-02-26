@@ -48,15 +48,15 @@ public class StoneThrowState : BronzeHeraclesState
         bronzeHeracles.ExecutePath();
         if (countStone > 0)
         {
-            if (!takenStone)
+            if (!takenStone && !bronzeHeracles.isTakeStone)
             {
                 bronzeHeracles.TakeStone();
             }
-            else if (takenStone && !walkStone)
+            else if (takenStone && !walkStone && !bronzeHeracles.isWalkStone)
             {
                 bronzeHeracles.WalkStone();
             }
-            else if (takenStone && walkStone)
+            else if (takenStone && walkStone && !bronzeHeracles.isShootStone)
             {
                 bronzeHeracles.ShootStone();
             }

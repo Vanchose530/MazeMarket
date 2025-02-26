@@ -7,7 +7,7 @@ using UnityEngine;
 public class ArcheryState : BronzeHeraclesState
 {
     [Header("Behavior")]
-    [HideInInspector] public int countArrow;
+    public int countArrow;
     public float timeTakeBow;
     public float timeNewArrow;
     public float timeWalkBow;
@@ -31,6 +31,8 @@ public class ArcheryState : BronzeHeraclesState
 
         bronzeHeracles.stand = true;
 
+        bronzeHeracles.isBowInHand = false;
+
         countArrow = bronzeHeracles.RandomArrow();
     }
     public override void Run()
@@ -38,18 +40,19 @@ public class ArcheryState : BronzeHeraclesState
         bronzeHeracles.ExecutePath();
         if (countArrow > 0)
         {
-            if (!bronzeHeracles.isBowInHand)
+            if (!bronzeHeracles.isBowInHand && !bronzeHeracles.isTakeBow)
                 bronzeHeracles.TakeTheBow();
-            else if (bronzeHeracles.isBowInHand && !bronzeHeracles.stand)
+            else if (bronzeHeracles.isBowInHand && !bronzeHeracles.stand && !bronzeHeracles.isWalkBow)
             {
                 bronzeHeracles.WalkBow();
             }
-            else
+            else if(bronzeHeracles.stand && bronzeHeracles.isBowInHand && !bronzeHeracles.isShootBow)
             {
                 bronzeHeracles.ShootBow();
             }
         }
-        else {
+        else if(countArrow == 0 && !bronzeHeracles.isRemoveBow) 
+        {
             bronzeHeracles.RemoveBow();
             isFinished = true;
         }

@@ -30,15 +30,15 @@ public class MaceAttackState : BronzeHeraclesState
     public override void Run()
     {
         bronzeHeracles.ExecutePath();
-        if (!maceTaken) {
+        if (!maceTaken && !bronzeHeracles.isTakeMace) {
             bronzeHeracles.TakeMace();
         }
-        if (maceTaken && bronzeHeracles.attack) {
+        if (maceTaken && bronzeHeracles.attack && !bronzeHeracles.isAttackMace) {
             float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, bronzeHeracles.rb.position);
             if (CheckPlayer() && distanceToPlayer < attackDistance)
                 bronzeHeracles.MaceAttack();
         }
-        if (!bronzeHeracles.attack) {
+        if (!bronzeHeracles.attack && !bronzeHeracles.isRemoveMace) {
             bronzeHeracles.RemoveMace();
             isFinished = true;
         }

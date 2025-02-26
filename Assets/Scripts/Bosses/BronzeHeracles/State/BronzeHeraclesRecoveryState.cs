@@ -72,7 +72,7 @@ public class BronzeHeraclesRecoveryState : BronzeHeraclesState
             CoolDownRecoverAttackVariables();
             CountTimeVariables();
 
-            if (distanceToPlayer < distanceRecoverAttack && !coolDownRecoverAttack)
+            if (distanceToPlayer < distanceRecoverAttack && !coolDownRecoverAttack && !bronzeHeracles.isRecoverAttack)
             {
                 bronzeHeracles.target = Player.instance.transform;
 

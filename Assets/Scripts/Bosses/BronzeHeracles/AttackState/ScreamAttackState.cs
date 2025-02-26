@@ -2,21 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CallOfGoplits : BronzeHeraclesState
+public class ScreamAttackState : BronzeHeraclesState
 {
-    [Header("Behavior")]
-    public float callGoplitsTime;
+    public float timePreparing;
+    public float timeScream;
+    public float timeDamping;
+    public Vector3 targetSize;
+    public GameObject scream;
+
     public override void Init()
     {
         isFinished = false;
         bronzeHeracles.stand = true;
         bronzeHeracles.targetOnAim = false;
+        scream.SetActive(false);
     }
     public override void Run()
     {
-        if (!bronzeHeracles.isCallOfGoplits)
+        if (!bronzeHeracles.isScreamAttack) 
         {
-            bronzeHeracles.CallOfGoplits();
+            bronzeHeracles.ScreamAttack();
         }
     }
     public override void Exit()

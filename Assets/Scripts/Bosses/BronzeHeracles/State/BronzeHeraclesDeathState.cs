@@ -8,15 +8,17 @@ public class BronzeHeraclesDeathState : BronzeHeraclesState
     public float deathTime;
     public override void Init()
     {
+        bronzeHeracles.targetOnAim = false;
+        bronzeHeracles.stand = true;
         isFinished = false;
     }
     public override void Run()
     {
-        if (bronzeHeracles.isDeath)
+        if (bronzeHeracles.isDeath && !bronzeHeracles.isDeathCoroutine)
         {
             bronzeHeracles.Death();
         }
-        else 
+        else if(!bronzeHeracles.isDeath)
         {
             isFinished = true;
         }

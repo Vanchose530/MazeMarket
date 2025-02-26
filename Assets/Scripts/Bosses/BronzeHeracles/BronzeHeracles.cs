@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class BronzeHeracles : Enemy, IDamagable
 {
@@ -45,9 +46,9 @@ public class BronzeHeracles : Enemy, IDamagable
     public float alivingTime;
 
     [Header("Cooldown")]
-    [SerializeField] private float firstPhaseHP;
-    [SerializeField] private float secondPhaseHP;
-    [SerializeField] private float thirdPhaseHP;
+    private float firstPhaseHP;
+    private float secondPhaseHP;
+    private float thirdPhaseHP;
     [SerializeField] private SpriteGlowEffect interactSpriteGlow;
     [HideInInspector] public bool isCoolDown { get; private set; }
     [HideInInspector] public bool isDeath { get; private set; }
@@ -56,12 +57,13 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public int stage = 1;
     [Header("BossManager")]
     public BossManager bossManager;
-    public int numberGoplit = 0;
+    [HideInInspector] public int numberGoplit = 0;
     [Header("BronzeHeracles AttackStates")]
     [SerializeField] private BronzeHeraclesState archeryState;
     [SerializeField] private BronzeHeraclesState maceAttackState;
     [SerializeField] private BronzeHeraclesState stoneThrowState;
     [SerializeField] private BronzeHeraclesState callOfGoplitsState;
+    [SerializeField] private BronzeHeraclesState screamState;
 
     [Header("BronzeHeracles State")]
     [SerializeField] private BronzeHeraclesStayState stayState;
@@ -83,10 +85,11 @@ public class BronzeHeracles : Enemy, IDamagable
     public Coroutine takeBow;
     public Coroutine walkStone;
     public Coroutine walkBow;
-    public Coroutine coolDownScream;
+    public Coroutine coolDownCoroutine;
     public Coroutine deathCoroutine;
     public Coroutine callOfGoplits;
     public Coroutine recoverAttack;
+    public Coroutine screamAttack;
     //Переменные для корутин
     public bool isShootBow => shootBow != null;
     public bool isRemoveBow => removeBow != null;
@@ -98,11 +101,12 @@ public class BronzeHeracles : Enemy, IDamagable
     public bool isTakeBow => takeBow != null;
     public bool isWalkStone => walkStone != null;
     public bool isWalkBow => walkBow != null;
-    public bool isCoolDownScream => coolDownScream != null;
+    public bool isCoolDownCoroutine => coolDownCoroutine != null;
     public bool isDeathCoroutine => deathCoroutine != null;
     public bool isCallOfGoplits => callOfGoplits != null;
     public bool isRecoverAttack => recoverAttack != null;
-    public bool isBowInHand { get; private set; }
+    public bool isScreamAttack => screamAttack != null;
+    public bool isBowInHand;
     public bool stand = false;
     private bool aliving;
 
@@ -128,6 +132,8 @@ public class BronzeHeracles : Enemy, IDamagable
             stoneThrowState = statesGameObject.GetComponent<StoneThrowState>();
         if (callOfGoplitsState == null)
             callOfGoplitsState = statesGameObject.GetComponent<CallOfGoplits>();
+        if (screamState == null)
+            screamState = statesGameObject.GetComponent<ScreamAttackState>();
         if (recoveryState == null)
             recoveryState = statesGameObject.GetComponent<BronzeHeraclesRecoveryState>();
         if (stayState == null)
@@ -172,11 +178,10 @@ public class BronzeHeracles : Enemy, IDamagable
 
     }
 
-    
+
     private void Update()
     {
         currentState.Run();
-
         Animate();
         RotateBody();
         RotateLegs();
@@ -259,24 +264,37 @@ public class BronzeHeracles : Enemy, IDamagable
         }
         if (health <= firstPhaseHP && stage == 1)
         {
-            isCoolDown = true;
             invulnerability = true;
+            isCoolDown = true;
             NextStage();
+            attackState.Add(screamState);
+            if (screamAttack != null)
+            {
+                screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StopScream();
+            }
             SetState(cooldownState);
         }
         if (health <= secondPhaseHP && stage == 2)
         {
-            isCoolDown = true;
             invulnerability = true;
+            isCoolDown = true;
             NextStage();
             attackState.Add(callOfGoplitsState);
+            if (screamAttack != null)
+            {
+                screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StopScream();
+            }
             SetState(cooldownState);
         }
         if (health <= thirdPhaseHP && stage == 3)
         {
-            isDeath = true;
             invulnerability = true;
+            isDeath = true;
             NextStage();
+            if (screamAttack != null)
+            {
+                screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StopScream();
+            }
             SetState(deathState);
         }
     }
@@ -308,6 +326,9 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetFloat("Death Multiplier", 1 / deathState.deathTime);
         bodyAnimator.SetFloat("CallOfGoplits Multiplier", 1 / callOfGoplitsState.GetComponent<CallOfGoplits>().callGoplitsTime);
         bodyAnimator.SetFloat("RecoverAttack Multiplier", 1 / recoveryState.recoverAttackTime);
+        bodyAnimator.SetFloat("PreparingScreem Multiplier", 1 / screamState.GetComponent<ScreamAttackState>().timePreparing);
+        bodyAnimator.SetFloat("Scream Multiplier", 1 / screamState.GetComponent<ScreamAttackState>().timeScream);
+        bodyAnimator.SetFloat("DampScream Multiplier", 1 / screamState.GetComponent<ScreamAttackState>().timeDamping);
     }
     public void LockRigidbody(bool lockMode)
     {
@@ -348,7 +369,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(0.5f);
 
-        SetState(recoveryState);
+        SetState(RandomState());
 
 
         aliving = false;
@@ -386,6 +407,8 @@ public class BronzeHeracles : Enemy, IDamagable
 
         isBowInHand = true;
         stand = false;
+
+        takeBow = null;
     }
     public void WalkBow() 
     {
@@ -396,6 +419,8 @@ public class BronzeHeracles : Enemy, IDamagable
         yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeWalkBow + archeryState.GetComponent<ArcheryState>().timeNewArrow);
 
         stand = true;
+
+        walkBow = null;
     }
     public void ShootBow() 
     {
@@ -428,6 +453,8 @@ public class BronzeHeracles : Enemy, IDamagable
             ar.transform.localRotation = Quaternion.Euler(0, 0, 95);
         }
         stand = false;
+
+        shootBow = null;
     }
     public void ImpulseArrow()
     {
@@ -466,6 +493,7 @@ public class BronzeHeracles : Enemy, IDamagable
             isFirstAttack = true;
             SetState(recoveryState);
         }
+        removeBow = null;
 
     }
 
@@ -486,7 +514,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         maceAttackState.GetComponent<MaceAttackState>().maceTaken = true;
         stand = false;
-        
+        takeMace = null;
     }
     public void MaceAttack() 
     {
@@ -500,6 +528,7 @@ public class BronzeHeracles : Enemy, IDamagable
         yield return new WaitForSeconds(maceAttackState.GetComponent<MaceAttackState>().timeAttackMace);
         mace.GetComponent<Collider2D>().enabled = false;
         attack = false;
+        attackMace = null;
     }
     public void RemoveMace()
     {
@@ -516,11 +545,13 @@ public class BronzeHeracles : Enemy, IDamagable
         {
             isFirstAttack = false;
             SetState(RandomState());
+            removeMace = null;
         }
         else
         {
             isFirstAttack = true;
             SetState(recoveryState);
+            removeMace = null;
         }
     }
     public void TakeStone() 
@@ -531,7 +562,6 @@ public class BronzeHeracles : Enemy, IDamagable
     }
     public IEnumerator StartTakeStone() 
     {
-
         GameObject st = Instantiate(stonePrefab, stonePoint.transform.position, Quaternion.identity);
         st.transform.SetParent(stonePoint.transform);
         st.transform.localRotation = Quaternion.Euler(0,0,gameObject.transform.rotation.z);
@@ -541,6 +571,7 @@ public class BronzeHeracles : Enemy, IDamagable
         AudioManager.instance.PlaySoundEffect(takeStoneSE,transform.position);
         yield return new WaitForSeconds(stoneThrowState.GetComponent<StoneThrowState>().timeTakeStone);
         stoneThrowState.GetComponent<StoneThrowState>().takenStone = true;
+        takeStone = null;
     }
     public void WalkStone()
     {
@@ -552,6 +583,7 @@ public class BronzeHeracles : Enemy, IDamagable
         yield return new WaitForSeconds(stoneThrowState.GetComponent<StoneThrowState>().timeWalkStone);
         stand = true;
         stoneThrowState.GetComponent<StoneThrowState>().walkStone = true;
+        walkStone = null;
     }
     public void ShootStone()
     {
@@ -580,6 +612,8 @@ public class BronzeHeracles : Enemy, IDamagable
         stoneThrowState.GetComponent<StoneThrowState>().takenStone = false;
         stoneThrowState.GetComponent<StoneThrowState>().walkStone = false;
         stoneThrowState.GetComponent<StoneThrowState>().countStone--;
+
+        shootStone = null;
     }
     public void CallOfGoplits() 
     {
@@ -610,20 +644,20 @@ public class BronzeHeracles : Enemy, IDamagable
             isFirstAttack = true;
             SetState(recoveryState);
         }
+        callOfGoplits = null;
     }
     public void Scream() 
     {
         AudioManager.instance.PlaySoundEffect(screamSE, transform.position);
     }
-    public void CoolDownScream()
+    public void CoolDown()
     {
-
-       coolDownScream = StartCoroutine(CoolDownCouroitine());
+       coolDownCoroutine = StartCoroutine(CoolDownCouroitine());
     }
     private IEnumerator CoolDownCouroitine() {
-        stand = true;
+
         movementDirection = Vector2.zero;
-        targetOnAim = true;
+
         interactSpriteGlow.enabled = true;
         
 
@@ -637,7 +671,8 @@ public class BronzeHeracles : Enemy, IDamagable
         interactSpriteGlow.enabled = false;
         
         ResetCoroutine();
-    
+
+        coolDownCoroutine = null;
     }
     public void RecoverAttack() 
     {
@@ -654,6 +689,8 @@ public class BronzeHeracles : Enemy, IDamagable
         bodyAnimator.SetTrigger("Default");
         stand = false;
         targetOnAim = false;
+
+        recoverAttack = null;
     }
     public void Death()
     {
@@ -662,13 +699,39 @@ public class BronzeHeracles : Enemy, IDamagable
     private IEnumerator DeathCoroutine() 
     {
         targetOnAim = false;
-        stand = true;
         bodyAnimator.Play("Death");
 
         yield return new WaitForSeconds(deathState.deathTime);
 
         Destroy(gameObject);
         isDeath = false;
+
+        deathCoroutine = null;
+    }
+    public void ScreamAttack() 
+    {
+        screamAttack = StartCoroutine(ScreamAttackCoroutine());
+    }
+    private IEnumerator ScreamAttackCoroutine() 
+    {
+        screamState.GetComponent<ScreamAttackState>().scream.SetActive(true);
+        screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StartScreamChange(screamState.GetComponent<ScreamAttackState>().targetSize,
+        screamState.GetComponent<ScreamAttackState>().timePreparing, screamState.GetComponent<ScreamAttackState>().timeScream,
+        screamState.GetComponent<ScreamAttackState>().timeDamping);
+
+        bodyAnimator.Play("PreparingScream");
+        yield return new WaitForSeconds(screamState.GetComponent<ScreamAttackState>().timePreparing);
+        Debug.Log("Scream");
+        bodyAnimator.Play("Scream");
+
+        yield return new WaitForSeconds(screamState.GetComponent<ScreamAttackState>().timeScream);
+
+        yield return new WaitForSeconds(screamState.GetComponent<ScreamAttackState>().timeDamping);
+        screamState.GetComponent<ScreamAttackState>().scream.SetActive(false);
+        bodyAnimator.SetTrigger("Default");
+
+        SetState(recoveryState);
+        screamAttack = null;
     }
     public int RandomStone() 
     {
@@ -695,9 +758,10 @@ public class BronzeHeracles : Enemy, IDamagable
         isBowInHand = false;
         walkStone = null;
         walkBow = null;
-        coolDownScream = null;
+        coolDownCoroutine = null;
         deathCoroutine = null;
         callOfGoplits = null;
         recoverAttack = null;
+        screamAttack = null;
     }
 }
