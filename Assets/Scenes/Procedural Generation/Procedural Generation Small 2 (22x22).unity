@@ -1452,11 +1452,15 @@ PrefabInstance:
     - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
       propertyPath: levelMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 87522f3b6a51eae4aa6667f12330fd62, type: 3}
+      objectReference: {fileID: 8300000, guid: 1fa5635f2dd6080479dbeb46677a57e7, type: 3}
     - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
       propertyPath: playerStart
       value: 
       objectReference: {fileID: 1990336222}
+    - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
+      propertyPath: battleMusicTrack
+      value: 
+      objectReference: {fileID: 8300000, guid: 21550e4770c81134c8aabf4157f8a386, type: 3}
     - target: {fileID: 1858767752491339991, guid: 398bf9be2b830c745b6e92f39f8c49fe, type: 3}
       propertyPath: cameraConfinerShape
       value: 

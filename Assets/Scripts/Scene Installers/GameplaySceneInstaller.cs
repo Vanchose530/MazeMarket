@@ -16,14 +16,25 @@ public class GameplaySceneInstaller : MonoBehaviour
 
     [Header("Level Music")]
     [SerializeField] private AudioClip levelMusic;
+    [SerializeField] private AudioClip battleMusicTrack;
 
     [Header("Level UI")]
     [SerializeField] private GameObject gameplayCanvasPrefab;
 
     private void Awake()
     {
-        AudioManager.instance.SetMusic(levelMusic);
+        if (battleMusicTrack == null)
+        {
+            AudioManager.instance.SetMusic(levelMusic);
+        }
+        else
+        {
+            AudioManager.instance.SetMusic(levelMusic, battleMusicTrack);
+        }
+        
         AudioManager.instance.normalSnapshot.TransitionTo(0.1f);
+        // AudioManager.instance.FastDisableBattleMusicTrack();
+
         CursorManager.instance.aimVisible = true;
 
         if (gameplayCanvasPrefab.GetComponent<Canvas>() != null)

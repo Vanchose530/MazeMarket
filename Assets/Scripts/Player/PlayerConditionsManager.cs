@@ -38,6 +38,7 @@ public class PlayerConditionsManager : MonoBehaviour
         get { return _onBattle; }
         set 
         {
+            // AudioManager.instance.SetBattleMusicTrack(value);
             _onBattle = value;
         }
     }

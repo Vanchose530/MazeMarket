@@ -6884,6 +6884,68 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!1001 &9457163404529131
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1205507636454026162}
+    m_Modifications:
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.921239
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5139491136736345522, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+      propertyPath: m_Name
+      value: Cultists Place Ambience
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+--- !u!4 &3112230215064593089 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3103338418112229162, guid: 472873db232ddd040b295a71ae0933d0, type: 3}
+  m_PrefabInstance: {fileID: 9457163404529131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &123119630658374002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11170,6 +11232,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2678225497051806025, guid: c41b7c10feb71f147a12284aeb821fc9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 873404490800321965}
+    - targetCorrespondingSourceObject: {fileID: 2678225497051806025, guid: c41b7c10feb71f147a12284aeb821fc9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3112230215064593089}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c41b7c10feb71f147a12284aeb821fc9, type: 3}
 --- !u!4 &1205507636454026162 stripped
