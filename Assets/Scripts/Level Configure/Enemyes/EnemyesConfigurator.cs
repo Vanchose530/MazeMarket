@@ -51,6 +51,9 @@ public class EnemyesConfigurator : MonoBehaviour
         return ew;
     }
 
+    public bool GetAppearReward() =>
+        Random.Range(0, 100) <= enemyesConfig.rewardAfterBattle.chanceToReward;
+
     public GameObject GetReward()
     {
         return enemyesConfig.rewardAfterBattle.GetReward();

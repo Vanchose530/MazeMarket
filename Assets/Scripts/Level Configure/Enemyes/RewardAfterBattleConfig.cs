@@ -7,7 +7,12 @@ public class RewardAfterBattleConfig : ScriptableObject
 {
     [Header("Items")]
     [SerializeField] private Balancer<GameObject> items;
+    [Range(0, 100)]
+    [SerializeField] private int _chanceToReward = 60;
+    public int chanceToReward { get { return _chanceToReward; } }
 
     public GameObject GetReward()
-        => items.Get();
+    {
+        return items.Get();
+    }
 }

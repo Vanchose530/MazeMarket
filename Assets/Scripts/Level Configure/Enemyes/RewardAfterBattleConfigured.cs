@@ -6,11 +6,16 @@ public class RewardAfterBattleConfigured : MonoBehaviour
 {
     public void SpawnReward()
     {
-        GameObject reward = EnemyesConfigurator.instance.GetReward();
 
-        var inGame = Instantiate(reward);
+        if (EnemyesConfigurator.instance.GetAppearReward())
+        {
+            GameObject reward = EnemyesConfigurator.instance.GetReward();
 
-        inGame.transform.position = transform.position;
+            var inGame = Instantiate(reward);
+
+            inGame.transform.position = transform.position;
+        }
+        
 
         Destroy(this.gameObject);
     }
