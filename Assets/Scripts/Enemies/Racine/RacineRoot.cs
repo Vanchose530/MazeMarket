@@ -39,7 +39,7 @@ public class RacineRoot : MonoBehaviour
         if (collision.gameObject.CompareTag(ignoreTag))
             return;
 
-        IDamagable obj = collision.GetComponent<IDamagable>();
+        IDamageable obj = collision.GetComponent<IDamageable>();
 
         if (obj != null)
             obj.TakeDamage(damage, transform);

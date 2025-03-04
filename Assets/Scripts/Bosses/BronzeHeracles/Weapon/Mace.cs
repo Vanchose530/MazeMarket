@@ -10,7 +10,7 @@ public class Mace : MonoBehaviour
     [SerializeField] private SoundEffect hitSE;
     private void OnTriggerEnter2D(Collider2D collision)
     { 
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
 
         if (obj != null)
         {

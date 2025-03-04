@@ -63,7 +63,7 @@ public class Bullet : MonoBehaviour
 
             return;
         }
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
         if ( obj != null )
         { 
             obj.TakeDamage(damage, this.transform);
@@ -82,7 +82,7 @@ public class Bullet : MonoBehaviour
         if (collision.isTrigger)
             return;
 
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
 
         if (obj != null) { obj.TakeDamage(damage, this.transform); }
         else

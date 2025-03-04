@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Statue : Enemy, IDamagable
+public class Statue : Enemy, IDamageable
 {
     [Header("Attack (Shoot)")]
     [SerializeField] private float bulletForce;

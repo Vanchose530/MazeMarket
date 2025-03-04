@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 
-public class Goplit : Enemy, IDamagable
+public class Goplit : Enemy, IDamageable
 {
     [Header("Spear")]
     public GameObject spear;
@@ -148,7 +148,7 @@ public class Goplit : Enemy, IDamagable
     {
         if (enableBodyRushDamage && isRush && !collision.gameObject.CompareTag("Enemy"))
         {
-            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            IDamageable damagable = collision.gameObject.GetComponent<IDamageable>();
 
             if (damagable != null)
             {

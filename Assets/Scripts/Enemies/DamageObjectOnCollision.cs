@@ -13,7 +13,7 @@ public class DamageObjectOnCollision : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(OBJECT_TAG))
         {
-            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            IDamageable damagable = collision.gameObject.GetComponent<IDamageable>();
 
             if (damagable != null)
             {

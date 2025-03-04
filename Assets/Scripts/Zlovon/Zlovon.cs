@@ -33,7 +33,7 @@ public class Zlovon : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<IDamagable>().TakeDamage(damage);
+            collision.GetComponent<IDamageable>().TakeDamage(damage);
         }
     }
     

@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class BronzeHeracles : Enemy, IDamagable
+public class BronzeHeracles : Enemy, IDamageable
 {
     [Header("Animators")]
     public Animator bodyAnimator;

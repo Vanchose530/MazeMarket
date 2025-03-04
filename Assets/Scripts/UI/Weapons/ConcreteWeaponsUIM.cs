@@ -165,7 +165,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAmmoInGun(int ammoInGun, int magazineSize)
     {
-        Debug.Log("Set in gun");
+        // Debug.Log("Set in gun");
 
         string text = ammoInGun.ToString() + "/" + magazineSize.ToString();
         ammoInGunTMP.text = text;
@@ -176,7 +176,7 @@ public class ConcreteWeaponsUIM : WeaponsUIM
 
     public override void SetAmmoInGun(int ammoInGun)
     {
-        Debug.Log("Set in gun");
+        // Debug.Log("Set in gun");
 
         string magazineSize = ammoInGunTMP.text.Split('/')[1];
         string text = ammoInGun.ToString() + "/" + magazineSize;

@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class ZombieSpittingBlood : Enemy, IDamagable
+public class ZombieSpittingBlood : Enemy, IDamageable
 {
     [Header("Movement (ZombieSpittingBlood)")]
     public float agressiveSpeed;

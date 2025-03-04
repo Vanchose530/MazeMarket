@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mannequin : MonoBehaviour, IDamagable
+public class Mannequin : MonoBehaviour, IDamageable
 {
     [Header("Setup")]
     [SerializeField] private SoundEffect damageSE;

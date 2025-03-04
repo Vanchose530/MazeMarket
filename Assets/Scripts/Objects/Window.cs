@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Window : MonoBehaviour, IDamagable
+public class Window : MonoBehaviour, IDamageable
 {
     [Header("General")]
     public int startEndurance;
@@ -29,6 +29,12 @@ public class Window : MonoBehaviour, IDamagable
     {
         defaultColor = sr.color;
         endurance = startEndurance;
+
+        // костыль с эффектами стекла
+        if (transform.rotation.eulerAngles.z == 90)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, - 90));
+        }
     }
 
     public void TakeDamage(int damage, Transform attack = null)
@@ -48,13 +54,12 @@ public class Window : MonoBehaviour, IDamagable
         if (attack != null)
         {
             Vector3 effectScale = new Vector3(1, 1, 1);
+            
+            bool condToReverse = GetReverseEffectCondition(attack);
 
-            if (attack.position.y > transform.position.y && (transform.eulerAngles.z == 0 || transform.eulerAngles.z == 180))
+            if (!condToReverse)
                 effectScale = new Vector3(effectScale.x, -1, 1);
-            
-            if (attack.position.x < transform.position.x && (transform.eulerAngles.z == 90 || transform.eulerAngles.z == 270))
-                effectScale = new Vector3(effectScale.x, -1, 1);
-            
+
             var effect = Instantiate(brokeEffectPrefab, transform.position, transform.rotation);
 
             effect.transform.localScale = effectScale;
@@ -66,6 +71,20 @@ public class Window : MonoBehaviour, IDamagable
         }
         
         Destroy(gameObject);
+    }
+
+    bool GetReverseEffectCondition(Transform attack)
+    {
+        var attackRotation = Quaternion.Euler(0, 0, attack.rotation.eulerAngles.z).ToEuler().z;
+
+        var leftAngle = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z - 90).ToEuler().z;
+        var rightAngle = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 90).ToEuler().z;
+
+        bool condToReverse = attackRotation < rightAngle && attackRotation > leftAngle;
+
+        Debug.Log($"Left angle: {leftAngle}, Right angle: {rightAngle}, Attack: {attackRotation}, Condition: {condToReverse}");
+
+        return condToReverse;
     }
 
     private IEnumerator IndicateDamage()

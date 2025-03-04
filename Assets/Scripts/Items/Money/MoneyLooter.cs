@@ -101,7 +101,7 @@ public class MoneyLooter : MonoBehaviour
                 //Debug.Log(r);
                 if (r <= splitChance)
                 {
-                    Debug.Log("Split");
+                    // Debug.Log("Split");
                     List<int> added = GenerateMoneyVariant(res[i], outerSum);
 
                     removeList.Add(res[i]);

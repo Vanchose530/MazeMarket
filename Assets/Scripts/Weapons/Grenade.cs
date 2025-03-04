@@ -71,7 +71,7 @@ public class Grenade : MonoBehaviour
             }
             //hit.gameObject.GetComponent<Rigidbody2D>()?.AddForce(dir * forceGrenadeThrow);
 
-            hit.gameObject.GetComponent<IDamagable>()?.TakeDamage(explotionDamage, transform);
+            hit.gameObject.GetComponent<IDamageable>()?.TakeDamage(explotionDamage, transform);
         }
     }
     IEnumerator ExplosionCoroutine()

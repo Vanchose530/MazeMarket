@@ -23,7 +23,7 @@ public class Spear : MonoBehaviour
         if (collision.gameObject.CompareTag(ignoreTag))
             return;
 
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
         
         if (obj != null) 
             obj.TakeDamage(damage, transform);

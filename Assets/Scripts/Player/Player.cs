@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UIElements;
 
-public class Player : MonoBehaviour, IDamagable, IDataPersistence
+public class Player : MonoBehaviour, IDamageable, IDataPersistence
 {
     public static Player instance { get; private set; }
 
@@ -333,7 +333,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
             && runBustBuffer >= timeToRunBoost /*действует буст к скорости*/
             && collision.gameObject.CompareTag("Object"))
         {
-            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            IDamageable damagable = collision.gameObject.GetComponent<IDamageable>();
             if (damagable != null)
             {
                 damagable.TakeDamage(bodyDamage, this.transform);
@@ -604,7 +604,7 @@ public class Player : MonoBehaviour, IDamagable, IDataPersistence
                 if (obj.gameObject == this.gameObject)
                     continue;
 
-                IDamagable damagedObj = obj.GetComponent<IDamagable>();
+                IDamageable damagedObj = obj.GetComponent<IDamageable>();
 
                 if (damagedObj != null) damagedObj.TakeDamage(damage, transform);
 

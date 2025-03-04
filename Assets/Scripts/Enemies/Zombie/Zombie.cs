@@ -4,7 +4,7 @@ using UnityEngine;
 using Pathfinding;
 using Unity.VisualScripting;
 
-public class Zombie : Enemy, IDamagable
+public class Zombie : Enemy, IDamageable
 {
     [Header("Movement (Zombie)")]
     public float agressiveSpeed;
@@ -135,7 +135,7 @@ public class Zombie : Enemy, IDamagable
         {
             if (obj.gameObject.CompareTag("Enemy")) continue;
 
-            IDamagable damagedObj = obj.GetComponent<IDamagable>();
+            IDamageable damagedObj = obj.GetComponent<IDamageable>();
 
             if (damagedObj != null) damagedObj.TakeDamage(damage, transform);
 

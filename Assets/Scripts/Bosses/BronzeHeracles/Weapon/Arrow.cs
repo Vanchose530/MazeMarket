@@ -14,7 +14,7 @@ public class Arrow : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
 
         if (obj != null)
         {

@@ -18,7 +18,7 @@ public class SmallStone : MonoBehaviour
     {
         if (collision.transform.tag != "Bullet")
         {
-            IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+            IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
 
             if (obj != null)
             {

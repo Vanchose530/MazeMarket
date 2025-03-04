@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MannequinCreetTest : MonoBehaviour, IDamagable
+public class MannequinCreetTest : MonoBehaviour, IDamageable
 {
     [Header("Creet Test")]
     [SerializeField] private SoundEffect creetSE;

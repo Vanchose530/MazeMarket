@@ -51,11 +51,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerSnapshot _battleSnapshot;
     public AudioMixerSnapshot battleSnapshot { get { return _battleSnapshot; } }
 
-    private void Update()
-    {
-        Debug.Log(currentLevelMusic);
-    }
-
     public void PlaySoundEffect(SoundEffect soundEffect, float soundEffectExistTime = 0f)
     {
         if (soundEffect.sound == null)

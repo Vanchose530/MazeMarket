@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Racine : Enemy, IDamagable
+public class Racine : Enemy, IDamageable
 {
     [Header("Root Attack")]
     [SerializeField] private float preparingTime;

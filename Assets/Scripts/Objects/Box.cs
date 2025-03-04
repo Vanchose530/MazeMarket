@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : MonoBehaviour, IDamagable
+public class Box : MonoBehaviour, IDamageable
 {
     public int startEndurance;
     private int endurance;

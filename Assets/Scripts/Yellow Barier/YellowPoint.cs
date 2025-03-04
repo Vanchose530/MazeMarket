@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YellowPoint : MonoBehaviour, IDamagable
+public class YellowPoint : MonoBehaviour, IDamageable
 {
     [Header("HP")]
     [SerializeField] private int maxHP = 100;
