@@ -13,4 +13,17 @@ MonoBehaviour:
   m_Name: New Reward After Battle Config
   m_EditorClassIdentifier: 
   items:
-    elements: []
+    elements:
+    - element: {fileID: 7094852022297186793, guid: cef93430b24372b4fb7f7943605513f0, type: 3}
+      chance: 10
+    - element: {fileID: 3653324207760266287, guid: a83db17965fdf464ba5e4ce33506e49f, type: 3}
+      chance: 10
+    - element: {fileID: 8215026149133363685, guid: 46a3f87328d154644a90a8e7eee1b043, type: 3}
+      chance: 1
+    - element: {fileID: 3647364265179919181, guid: 9277282564c93c242b260423322c97cb, type: 3}
+      chance: 1
+    - element: {fileID: 4099235151447240767, guid: 89d55f7b5c9a7a842b2b729626bbe903, type: 3}
+      chance: 2
+    - element: {fileID: 6174102296403843740, guid: 5278733ebb3376849aa70de1c6c349b1, type: 3}
+      chance: 2
+  _chanceToReward: 60

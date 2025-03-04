@@ -201,7 +201,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 8098439118966431870}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 5b062704e0b1a7445b8d591e15cd8f6c, type: 2}
+  m_Material: {fileID: 6200000, guid: a1ddd8198ef346f4389123106eb2a793, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -251,7 +251,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 80
   minHealth: 50
-  rescanLevelAfterBroke: 0
   brokeEffect: {fileID: 3482333243263768}
   damageParticlesPrefab: {fileID: 7410931447868659496, guid: 52f516207d5595d4480fcc62c988af50, type: 3}
   damageSE:
@@ -278,6 +277,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  uniqueID: 7493640260545422547
+  uniqueID: 7988728184793772731
   updateError: 1
   checkTime: 0.2

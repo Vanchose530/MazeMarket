@@ -29,12 +29,6 @@ public class Window : MonoBehaviour, IDamageable
     {
         defaultColor = sr.color;
         endurance = startEndurance;
-
-        // костыль с эффектами стекла
-        if (transform.rotation.eulerAngles.z == 90)
-        {
-            transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, transform.rotation.y, - 90));
-        }
     }
 
     public void TakeDamage(int damage, Transform attack = null)
@@ -75,16 +69,9 @@ public class Window : MonoBehaviour, IDamageable
 
     bool GetReverseEffectCondition(Transform attack)
     {
-        var attackRotation = Quaternion.Euler(0, 0, attack.rotation.eulerAngles.z).ToEuler().z;
+        float difference = transform.rotation.eulerAngles.z - attack.rotation.eulerAngles.z;
 
-        var leftAngle = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z - 90).ToEuler().z;
-        var rightAngle = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 90).ToEuler().z;
-
-        bool condToReverse = attackRotation < rightAngle && attackRotation > leftAngle;
-
-        Debug.Log($"Left angle: {leftAngle}, Right angle: {rightAngle}, Attack: {attackRotation}, Condition: {condToReverse}");
-
-        return condToReverse;
+        return (difference > -90 && difference <= 90) || (difference > -270 && difference < -550);
     }
 
     private IEnumerator IndicateDamage()
