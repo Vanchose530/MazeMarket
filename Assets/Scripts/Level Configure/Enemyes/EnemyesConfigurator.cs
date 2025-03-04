@@ -50,4 +50,9 @@ public class EnemyesConfigurator : MonoBehaviour
 
         return ew;
     }
+
+    public GameObject GetReward()
+    {
+        return enemyesConfig.rewardAfterBattle.GetReward();
+    }
 }

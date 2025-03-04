@@ -21,8 +21,11 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
     [SerializeField] private float lockExitsTime = 1f;
     [SerializeField] private float unlockExitsTime = 1f;
 
-    [Header("Enemye Spawn Points")]
+    [Header("Enemy Spawn Points")]
     [SerializeField] private EnemySpawnPointConfigured[] spawnPoints;
+
+    [Header("Reward After Battle")]
+    [SerializeField] private RewardAfterBattleConfigured reward;
 
     public int wavesCount = 1;
     private int nextWaveIndex;
@@ -64,6 +67,13 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
     {
         triggers = null;
         triggers = GetComponentsInChildren<EnemyWavesTrigger>();
+    }
+
+    [ContextMenu("Check Reward After Battle in children")]
+    private void CheckRewardAfterBattleInChildren()
+    {
+        reward = null;
+        reward = GetComponentInChildren<RewardAfterBattleConfigured>();
     }
 
     private void OnEnable()
@@ -228,6 +238,15 @@ public class EnemyWavesManagerConfigured : MonoBehaviour
         roomPassed = true;
 
         _virtualCamera.enabled = false;
+
+        if (reward != null)
+        {
+            reward.SpawnReward();
+        }
+        else
+        {
+            Debug.LogWarning("There is no Reward After Battle in Enemy Waves Manager! " + gameObject.name);
+        }
 
         EnemyesConfigurator.instance.GenerateEnemyWavesBag();
     }

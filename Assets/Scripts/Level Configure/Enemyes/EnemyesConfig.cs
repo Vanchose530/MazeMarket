@@ -13,6 +13,10 @@ public class EnemyesConfig : ScriptableObject
     [SerializeField] private EnemyWaveConfig[] _enemyWaves;
     public EnemyWaveConfig[] enemyWaves { get { return _enemyWaves; } }
 
+    [Header("Reward After Battle")]
+    [SerializeField] private RewardAfterBattleConfig _rewardAfterBattle;
+    public RewardAfterBattleConfig rewardAfterBattle { get { return _rewardAfterBattle; } }
+
     public EnemyWaveConfig GetRandomEnemyWave()
     {
         // возвращаем копию конфига с волнами врагов, чтобы не изменять основной конфиг
