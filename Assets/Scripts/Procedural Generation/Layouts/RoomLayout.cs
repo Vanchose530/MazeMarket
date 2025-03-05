@@ -42,12 +42,26 @@ public class RoomLayout : MonoBehaviour
         }
     }
 
+    private bool _havePortal;
+
+    public bool havePortal
+    {
+        get { return _havePortal; }
+        set
+        {
+            if (portalIndicator != null)
+                portalIndicator.SetActive(value);
+            _havePortal = value;
+        }
+    }
+
     [Header("Setup")]
     [SerializeField] private TextMeshProUGUI roomTextTMP;
     [SerializeField] private SpriteRenderer enemyCircle1;
     [SerializeField] private SpriteRenderer enemyCircle2;
     [SerializeField] private SpriteRenderer enemyCircle3;
     [SerializeField] private SpriteRenderer lockMiasmasSprite;
+    [SerializeField] private GameObject portalIndicator;
     [SerializeField] private Color noneMiasmaColor;
     [SerializeField] private Color mintMiasmaColor;
     [SerializeField] private Color redMiasmaColor;

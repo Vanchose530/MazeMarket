@@ -12,6 +12,8 @@ public class RoomTemplate
 
     public RoomLockType lockType;
 
+    public bool havePortal;
+
     private TransitionTemplate _transitionUp;
     private TransitionTemplate _transitionRight;
     private TransitionTemplate _transitionDown;

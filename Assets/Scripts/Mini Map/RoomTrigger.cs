@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine;
 public class RoomTrigger : MonoBehaviour
 {
     public Room room { get; set; }
+
+    public event Action onPlayerEnterRoomFirstTime;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,6 +22,8 @@ public class RoomTrigger : MonoBehaviour
                 MiniMapUIM.instance.ShowRoomsNear(room);
             }
 
+            PlayerEnterRoom();
+
             room.miniMapRoom.playerStatus = MiniMapRoomPlayerStatus.NowIn;
         }
     }
@@ -28,6 +33,15 @@ public class RoomTrigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             room.miniMapRoom.playerStatus = MiniMapRoomPlayerStatus.WasIn;
+        }
+    }
+
+    void PlayerEnterRoom()
+    {
+        if (!room.playerEnterRoomFirstTime)
+        {
+            onPlayerEnterRoomFirstTime?.Invoke();
+            room.playerEnterRoomFirstTime = true;
         }
     }
 }

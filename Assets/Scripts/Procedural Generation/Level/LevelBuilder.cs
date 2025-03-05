@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding;
-using UnityEngine.SceneManagement;
 
 public class LevelBuilder : MonoBehaviour
 {
@@ -126,6 +124,7 @@ public class LevelBuilder : MonoBehaviour
         room.lockType = roomTemplate.lockType;
         room.roomType = roomTemplate.roomType;
         room.positionInLevel = roomTemplate.position;
+        room.havePortal = roomTemplate.havePortal;
     }
 
     void BuildStartRoom(RoomTemplate roomTemplate)
@@ -185,6 +184,8 @@ public class LevelBuilder : MonoBehaviour
         newRoom.roomType = RoomType.Deadlock;
         newRoom.positionInLevel = roomTemplate.position;
         newRoom.miniMapRoom = MiniMapUIM.instance.BuildMiniMapRoom(newRoom);
+
+        newRoom.havePortal = roomTemplate.havePortal;
 
         SetRoomPosition(newRoom, roomTemplate.position);
         RightRotateRoom(newRoom, roomTemplate);

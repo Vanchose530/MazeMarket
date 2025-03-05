@@ -199,6 +199,7 @@ Transform:
   - {fileID: 6923565541065092527}
   - {fileID: 1205507636454026162}
   - {fileID: 3907506318696575180}
+  - {fileID: 231689787798979299}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1607778313324333580
@@ -230,6 +231,7 @@ MonoBehaviour:
   cultistsDecor: {fileID: 5518399432272952419}
   shopInstaller: {fileID: 2396796982055887431}
   _enemyWavesManager: {fileID: 1595272078982618802}
+  portal: {fileID: 7958052680028303567}
   _virtualCameraTrigger: {fileID: 3219269089269443038}
   roomTrigger: {fileID: 7551628534269290373}
 --- !u!1 &4486031121167162451
@@ -11352,6 +11354,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8180368895752610602, guid: ef8c45211565f8a46947b19097b576b1, type: 3}
   m_PrefabInstance: {fileID: 4479460145504900196}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4647565029683484861
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9178007862674007031}
+    m_Modifications:
+    - target: {fileID: 2153484339665561419, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_Name
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+--- !u!4 &231689787798979299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4848221099346352734, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+  m_PrefabInstance: {fileID: 4647565029683484861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7958052680028303567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3319110572433303666, guid: d5a8d2f7c43fe8b40a69c325ad65be97, type: 3}
+  m_PrefabInstance: {fileID: 4647565029683484861}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24519515dd6dbed42abf144f2780ddd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4685902564495384103
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -85,6 +85,7 @@ public class LevelLayoutBuilder : MonoBehaviour
         newRoom.bonusType = room.bonusType;
         newRoom.enemyesOnRoom = room.enemyesOnRoom;
         newRoom.lockType = room.lockType;
+        newRoom.havePortal = room.havePortal;
 
         SetRoomPosition(newRoom, room.position);
     }
@@ -92,12 +93,14 @@ public class LevelLayoutBuilder : MonoBehaviour
     void BuildStartRoom(RoomTemplate startRoom)
     {
         RoomLayout newStartRoom = Instantiate(startRoomPrefab);
+        newStartRoom.havePortal = startRoom.havePortal;
         SetRoomPosition(newStartRoom, startRoom.position);
     }
 
     void BuildEndRoom(RoomTemplate endRoom)
     {
         RoomLayout newEndRoom = Instantiate(endRoomPrefab);
+        newEndRoom.havePortal = endRoom.havePortal;
         SetRoomPosition(newEndRoom, endRoom.position);
     }
 

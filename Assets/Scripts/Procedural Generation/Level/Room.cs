@@ -21,6 +21,9 @@ public class Room : MonoBehaviour
     [SerializeField] private EnemyWavesManagerConfigured _enemyWavesManager;
     public EnemyWavesManagerConfigured enemyWavesManager { get { return _enemyWavesManager; } }
 
+    [Header("Portal")]
+    [SerializeField] private Portal portal;
+
     [Header("Camera")]
     [SerializeField] private VirtualCameraTrigger _virtualCameraTrigger;
     public VirtualCameraTrigger virtualCameraTrigger { get { return _virtualCameraTrigger; } }
@@ -67,6 +70,38 @@ public class Room : MonoBehaviour
             _lockType = value;
         }
     }
+
+    private bool _havePortal;
+    public bool havePortal
+    {
+        get { return _havePortal; }
+        set
+        {
+            SetHavePortal(value);
+            _havePortal = value;
+        }
+    }
+
+    void SetHavePortal(bool value)
+    {
+        if (value)
+        {
+            if (enemyesOnRoom == EnemyesOnRoom.None)
+            {
+                roomTrigger.onPlayerEnterRoomFirstTime += ActivatePortal;
+            }
+            else
+            {
+                enemyWavesManager.onPlayerPassRoom += ActivatePortal;
+            }
+        }
+        else
+        {
+            Destroy(portal.gameObject);
+        }
+    }
+
+    void ActivatePortal() => portal.Activate();
 
     void SetBonus(BonusType bonusType)
     {
@@ -142,4 +177,6 @@ public class Room : MonoBehaviour
     public RoomType roomType { get; set; }
     public Vector2Int positionInLevel { get; set; }
     public MiniMapRoom miniMapRoom { get; set; }
+
+    public bool playerEnterRoomFirstTime { get; set; }
 }
