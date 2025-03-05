@@ -144,6 +144,7 @@ public class BossManager : MonoBehaviour
         roomPassed = true;
 
         virtualCamera.enabled = false;
+       
     }
 
     private void DestroyAllTriggers()

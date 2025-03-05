@@ -57,7 +57,7 @@ public class BronzeHeracles : Enemy, IDamagable
     [HideInInspector] public int stage = 1;
     [Header("BossManager")]
     public BossManager bossManager;
-    [HideInInspector] public int numberGoplit = 0;
+    public int numberGoplit = 0;
     [Header("BronzeHeracles AttackStates")]
     [SerializeField] private BronzeHeraclesState archeryState;
     [SerializeField] private BronzeHeraclesState maceAttackState;
@@ -369,7 +369,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(0.5f);
 
-        SetState(RandomState());
+        SetState(callOfGoplitsState);
 
 
         aliving = false;
@@ -625,7 +625,10 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(callOfGoplitsState.GetComponent<CallOfGoplits>().callGoplitsTime);
 
+
         bossManager.AliveGoplists();
+
+        Debug.Log("da");
 
         if (numberGoplit > bossManager.goplitsList.Count) 
         {
@@ -658,6 +661,8 @@ public class BronzeHeracles : Enemy, IDamagable
 
         movementDirection = Vector2.zero;
 
+        legs.SetActive(false);
+
         interactSpriteGlow.enabled = true;
         
 
@@ -669,7 +674,9 @@ public class BronzeHeracles : Enemy, IDamagable
         isCoolDown = false;
         invulnerability = false;
         interactSpriteGlow.enabled = false;
-        
+
+        legs.SetActive(true);
+
         ResetCoroutine();
 
         coolDownCoroutine = null;
