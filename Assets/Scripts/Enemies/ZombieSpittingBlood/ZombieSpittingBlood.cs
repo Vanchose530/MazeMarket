@@ -33,7 +33,8 @@ public class ZombieSpittingBlood : Enemy, IDamagable
 
     [Header("Sound")]
     [SerializeField] private SoundEffect groahSE;
-    [SerializeField] private SoundEffect attackSE;
+    [SerializeField] private SoundEffect preparingSE;
+    [SerializeField] private SoundEffect spitSE;
     public SoundEffect hitSE;
     public ZombieSpittingBloodState currentState { get; private set; }
     public bool attack = false;
@@ -195,8 +196,8 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         isShoot = true;
         bodyAnimator.SetTrigger("Shoot");
         movementDirection = Vector2.zero;
-        
 
+        AudioManager.instance.PlaySoundEffect(preparingSE, transform.position);
         yield return new WaitForSeconds(timeShoot);
 
         //targetOnAim = false;
@@ -215,7 +216,7 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         Rigidbody2D brb = blood.GetComponent<Rigidbody2D>();
         brb.AddForce(blood.transform.up * forceBlood, ForceMode2D.Impulse);
 
-        AudioManager.instance.PlaySoundEffect(attackSE,transform.position);
+        AudioManager.instance.PlaySoundEffect(spitSE,transform.position);
     }
 
     public override void Spawn()

@@ -32016,6 +32016,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1529892018636778289, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: distanceFromPlayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: hitSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: hitSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: groahSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: groahSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: attackSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: attackSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441615871222774361, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: distanceRun
+      value: 1.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441615871222774361, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: distanceAttack
+      value: 6.38
+      objectReference: {fileID: 0}
     - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.15

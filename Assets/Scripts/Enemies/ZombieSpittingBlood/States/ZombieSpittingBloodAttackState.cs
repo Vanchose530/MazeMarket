@@ -21,6 +21,8 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
     {
         isFinished = false;
 
+        zombieSpittingBlood.targetOnAim = true;
+
         attackCount = Random.Range(minCountShoot, maxCountShoot);
 
         ResetTimeToWalkInOneTurn();
@@ -28,7 +30,7 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
     public override void Run()
     {
-        zombieSpittingBlood.targetOnAim = true;
+
         float distanceToPlayer = Vector2.Distance(Player.instance.rb.position,zombieSpittingBlood.rb.position);
         Vector2 vectorFromPlayer = (zombieSpittingBlood.rb.position - Player.instance.rb.position).normalized;
         Vector2 moveVector = Vector2.zero;
@@ -62,7 +64,7 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
             
         }
-        else if (distanceToPlayer >= distanceRun && distanceToPlayer <= distanceAttack)//2 
+        else if (distanceToPlayer > distanceRun && distanceToPlayer <= distanceAttack)//2 
         {
 
             zombieSpittingBlood.target = Player.instance.transform;
@@ -74,7 +76,7 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
             zombieSpittingBlood.Attack();
 
         }
-        else if (distanceToPlayer >= distanceAttack) //3
+        else if (distanceToPlayer > distanceAttack) //3
         {
 
             zombieSpittingBlood.ExecutePath();
@@ -97,9 +99,11 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
     private void EndAttack() {
 
-        if (attackCount == 0) {
+        if (attackCount == 0)
+        {
             zombieSpittingBlood.agressive = false;
             zombieSpittingBlood.attack = false;
+            zombieSpittingBlood.targetOnAim = false;
             zombieSpittingBlood.SetState(zombieSpittingBlood.recoveryState);
             isFinished = true;
         }

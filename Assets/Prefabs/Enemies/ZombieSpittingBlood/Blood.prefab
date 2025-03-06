@@ -101,10 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageBlood: 20
   hitSE:
-    sound: {fileID: 8300000, guid: 866af9b4238b4ca41a87f3c0fdbd684f, type: 3}
+    sound: {fileID: 8300000, guid: c0250feece553714a815b57c30f40aae, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
 --- !u!58 &634952942880650885
 CircleCollider2D:
   m_ObjectHideFlags: 0
