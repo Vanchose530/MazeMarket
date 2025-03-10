@@ -15,7 +15,43 @@ PrefabInstance:
     - target: {fileID: 349364676877283455, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c5396307169f97c46a129e4ac517db4e, type: 3}
+      objectReference: {fileID: 21300000, guid: e918c53034b9f7644851a307b2bdd02b, type: 3}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3253946750051082273}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TeleportPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PortalSign, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4965420680869592921, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6069171832918943969, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -97,6 +133,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6136768897476779049, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136768897476779049, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 50
       objectReference: {fileID: 0}
@@ -112,9 +152,24 @@ PrefabInstance:
       propertyPath: playerWasNotInRoomColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7823283215926209522, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 56
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8287548000741112841, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+--- !u!114 &3253946750051082273 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6424326535012477569, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
+  m_PrefabInstance: {fileID: 8363076369514236576}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc2d0f688c28bc4b90e45ca523291e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

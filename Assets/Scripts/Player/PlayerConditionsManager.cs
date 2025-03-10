@@ -38,7 +38,9 @@ public class PlayerConditionsManager : MonoBehaviour
         get { return _onBattle; }
         set 
         {
-            // AudioManager.instance.SetBattleMusicTrack(value);
+            if (!_onBattle && value)
+                GameEventsManager.instance.playerConditions.BattleStarts();
+
             _onBattle = value;
         }
     }

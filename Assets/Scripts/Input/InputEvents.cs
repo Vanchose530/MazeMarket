@@ -157,4 +157,7 @@ public class InputEvents
         if (onMapPressed != null)
             onMapPressed();
     }
+
+    public event Action onMapReleased;
+    public void MapReleased() => onMapReleased?.Invoke();
 }

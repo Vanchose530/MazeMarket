@@ -45,6 +45,7 @@ public class InputManager : MonoBehaviour
     private bool pausePressed;
     private bool grenadeAttack;
     private bool healthBottle;
+    private bool mapPressed;
 
     private bool chooseWeapon;
     private bool chooseWeapon2;
@@ -327,7 +328,15 @@ public class InputManager : MonoBehaviour
     {
         if (context.performed)
         {
+            mapPressed = true;
             GameEventsManager.instance.input.MapPressed();
+        }
+        else if (context.canceled)
+        {
+            if (mapPressed)
+                GameEventsManager.instance.input.MapReleased();
+
+            mapPressed = false;
         }
     }
 

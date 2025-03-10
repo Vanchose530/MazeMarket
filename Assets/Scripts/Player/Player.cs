@@ -312,7 +312,11 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
         GameEventsManager.instance.input.onGrenadeAttack += UseGrenade;
         GameEventsManager.instance.input.onHealthBottle += UseHealth;
 
-        GameEventsManager.instance.input.onMapPressed += OpenCloseMap;
+        // GameEventsManager.instance.input.onMapPressed += OpenCloseMap;
+
+        GameEventsManager.instance.input.onMapPressed += OpenMap;
+        GameEventsManager.instance.input.onMapReleased += CloseMap;
+        GameEventsManager.instance.playerConditions.onBattleStarts += CloseMap;
     }
 
     private void OnDisable()
@@ -324,7 +328,11 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
         GameEventsManager.instance.input.onGrenadeAttack -= UseGrenade;
         GameEventsManager.instance.input.onHealthBottle -= UseHealth;
 
-        GameEventsManager.instance.input.onMapPressed -= OpenCloseMap;
+        // GameEventsManager.instance.input.onMapPressed -= OpenCloseMap;
+
+        GameEventsManager.instance.input.onMapPressed -= OpenMap;
+        GameEventsManager.instance.input.onMapReleased -= CloseMap;
+        GameEventsManager.instance.playerConditions.onBattleStarts -= CloseMap;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -580,6 +588,9 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
 
     private void Attack()
     {
+        if (MiniMapUIM.instance.mapEnable)
+            return;
+
         if (runing)
            return;
 
@@ -672,6 +683,18 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
             MiniMapUIM.instance.HideMiniMap();
         else
             MiniMapUIM.instance.ShowMiniMap();
+    }
+
+    private void OpenMap()
+    {
+        if (!PlayerConditionsManager.instance.onBattle)
+            MiniMapUIM.instance.ShowMiniMap();
+    }
+
+    private void CloseMap()
+    {
+        if (MiniMapUIM.instance.mapEnable)
+            MiniMapUIM.instance.HideMiniMap();
     }
 
     private void Dash()

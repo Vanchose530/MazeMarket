@@ -394,6 +394,9 @@ public class Goplit : Enemy, IDamageable
     }
     private void Move()
     {
+        if (rb.bodyType == RigidbodyType2D.Static)
+            return;
+
         if (attack && !isRush)
             rb.velocity = Vector2.zero;
         else if(attack && isRush)

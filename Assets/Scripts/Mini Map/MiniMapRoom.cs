@@ -17,6 +17,9 @@ public class MiniMapRoom : MonoBehaviour
     [SerializeField] private Color redMiasmaColor;
     [SerializeField] private Color mintMiasmaColor;
 
+    [Header("Portal")]
+    [SerializeField] private PortalSign portalSign;
+
     [Header("Another")]
     [SerializeField] private Image nonColoredPart;
     private Color nonColoredPartBaseColor;
@@ -24,8 +27,10 @@ public class MiniMapRoom : MonoBehaviour
     private void Awake()
     {
         nonColoredPartBaseColor = nonColoredPart.color;
+        portalSign.visible = false;
     }
 
+    public bool havePortal { get; set; }
 
     // STATUSES
 
@@ -203,4 +208,26 @@ public class MiniMapRoom : MonoBehaviour
 
     public BonusType bonusType { get; set; }
     public Vector2Int positionInLevel { get; set; }
+
+    public void ActivatePortalSign(Portal portal)
+    {
+        portalSign.portal = portal;
+        portalSign.visible = true;
+    }
+
+    public void SetSiginOnRoom(Sprite sign, float signSize)
+    {
+        Transform signsParent;
+
+        if (havePortal)
+            signsParent = portalSign.transform; // сигна ставится как дочерний объект сигны портала для того, чтобы кнопка портала корректно работала
+        else
+            signsParent = transform;
+
+        Image roomSign = Instantiate(new GameObject(), signsParent).AddComponent<Image>();
+        roomSign.sprite = sign;
+        roomSign.transform.localPosition = new Vector3(0, 0, 5);
+        roomSign.transform.localScale = new Vector3(signSize, signSize, 1);
+        roomSign.transform.rotation = Quaternion.identity;
+    }
 }

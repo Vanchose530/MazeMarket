@@ -67,10 +67,13 @@ public class PauseMenu : MonoBehaviour
         {
             pauseMenuPanel.SetActive(true);
             // Time.timeScale = 0f;
-            StartCoroutine("SelectFirstChoice");
+            if (firstChoice != null)
+                StartCoroutine("SelectFirstChoice");
             GameEventsManager.instance.pause.PauseIn();
             // AudioManager.instance.inMenuSnapshot.TransitionTo(0.5f);
             PlayerConditionsManager.instance.currentCondition = PlayerConditions.Pause;
+
+            CursorManager.instance.cursorState = CursorStates.RealCursor;
         }
         else
         {
@@ -85,6 +88,8 @@ public class PauseMenu : MonoBehaviour
             //    AudioManager.instance.normalSnapshot.TransitionTo(0.5f);
 
             PlayerConditionsManager.instance.SetGamingCondition();
+
+            CursorManager.instance.cursorState = CursorStates.Aim;
         }
 
         this.pause = pause;

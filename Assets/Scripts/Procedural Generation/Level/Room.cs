@@ -101,7 +101,11 @@ public class Room : MonoBehaviour
         }
     }
 
-    void ActivatePortal() => portal.Activate();
+    void ActivatePortal()
+    {
+        portal.Activate();
+        miniMapRoom.ActivatePortalSign(portal);
+    }
 
     void SetBonus(BonusType bonusType)
     {

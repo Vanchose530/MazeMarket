@@ -53,7 +53,7 @@ public class CursorManager : MonoBehaviour
     private const string PATH_TO_AIM_CURSOR_PREFAB = "Cursor\\Aim";
 
     private bool _aimVisible;
-    public bool aimVisible
+    bool aimVisible
     {
         get { return _aimVisible; }
         set
@@ -61,22 +61,25 @@ public class CursorManager : MonoBehaviour
             if (value)
             {
                 aim.SetActive(true);
-                Cursor.lockState = CursorLockMode.Confined;
             }
             else
             {
-                aim.transform.position = new Vector2(-1000000, -100000);
+                // aim.transform.position = new Vector2(-1000000, -100000);
                 aim.SetActive(false);
-                Cursor.lockState = CursorLockMode.Locked;
             }
             _aimVisible = value;
         }
     }
 
-    private void Awake()
+    private CursorStates _cursorStates;
+    public CursorStates cursorState
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        get { return _cursorStates; }
+        set
+        {
+            SetCursorState(value);
+            _cursorStates = value;
+        }
     }
 
     private void OnEnable()
@@ -90,6 +93,11 @@ public class CursorManager : MonoBehaviour
     }
 
     private void Update()
+    {
+        UpdateCursorAimPosition();
+    }
+
+    void UpdateCursorAimPosition()
     {
         if (!aimVisible)
             return;
@@ -110,5 +118,27 @@ public class CursorManager : MonoBehaviour
     private void UpdateAimPosition()
     {
         aim.transform.localPosition = new Vector2(Player.instance.attackPointPosition.x, 0);
+    }
+
+    void SetCursorState(CursorStates value)
+    {
+        switch (value)
+        {
+            case CursorStates.None:
+                Cursor.visible = false;
+                aimVisible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                break;
+            case CursorStates.Aim:
+                Cursor.visible = false;
+                aimVisible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+                break;
+            case CursorStates.RealCursor:
+                Cursor.visible = true;
+                aimVisible = false;
+                Cursor.lockState = CursorLockMode.Confined;
+                break;
+        }
     }
 }

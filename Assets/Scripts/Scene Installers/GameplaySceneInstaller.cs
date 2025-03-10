@@ -35,7 +35,7 @@ public class GameplaySceneInstaller : MonoBehaviour
         AudioManager.instance.normalSnapshot.TransitionTo(0.1f);
         // AudioManager.instance.FastDisableBattleMusicTrack();
 
-        CursorManager.instance.aimVisible = true;
+        CursorManager.instance.cursorState = CursorStates.Aim;
 
         if (gameplayCanvasPrefab.GetComponent<Canvas>() != null)
         {

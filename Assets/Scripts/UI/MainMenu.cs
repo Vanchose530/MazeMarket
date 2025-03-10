@@ -11,9 +11,11 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("SelectFirstChoice");
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (firstChoice != null)
+            StartCoroutine("SelectFirstChoice");
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void PlayButtonPressed()

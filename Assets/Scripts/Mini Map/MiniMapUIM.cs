@@ -58,8 +58,6 @@ public class MiniMapUIM : MonoBehaviour
     [SerializeField] private GameObject mapPanel;
     [SerializeField] private GameObject mapMark;
 
-    public bool isMiniMapActive { get; private set; }
-
     MiniMapRoom[,] miniMapRooms;
 
     public bool mapEnable { get { return mapPanel.active; } }
@@ -108,13 +106,14 @@ public class MiniMapUIM : MonoBehaviour
                 break;
         }
 
-        MiniMapRoom buildedRoom = Instantiate(prefab, mapRooms.transform) as MiniMapRoom;
+        MiniMapRoom buildedRoom = Instantiate(prefab, mapRooms.transform);
 
         //try { buildedRoom.lockType = room.lockType; } catch (NullReferenceException) { }
         //try { buildedRoom.bonusType = room.bonusType; } catch (NullReferenceException) { }
 
         buildedRoom.lockType = room.lockType;
         buildedRoom.bonusType = room.bonusType;
+        buildedRoom.havePortal = room.havePortal;
 
         buildedRoom.positionInLevel = room.positionInLevel;
 
@@ -203,11 +202,7 @@ public class MiniMapUIM : MonoBehaviour
             return;
         }
 
-        Image roomSign = Instantiate(new GameObject(), room.transform).AddComponent<Image>();
-        roomSign.sprite = sign;
-        roomSign.transform.localPosition = new Vector3(0, 0, 5);
-        roomSign.transform.localScale = new Vector3(signSize, signSize, 1);
-        roomSign.transform.rotation = Quaternion.identity;
+        room.SetSiginOnRoom(sign, signSize);
     }
 
     public void SetPlayerInRoomMark(MiniMapRoom miniMapRoom)
@@ -220,6 +215,8 @@ public class MiniMapUIM : MonoBehaviour
         mapPanel.SetActive(true);
         mapMark.SetActive(false);
 
+        CursorManager.instance.cursorState = CursorStates.RealCursor;
+
         if (mapOpenSE != null)
             AudioManager.instance.PlaySoundEffect(mapOpenSE);
     }
@@ -228,6 +225,8 @@ public class MiniMapUIM : MonoBehaviour
     {
         mapPanel.SetActive(false);
         mapMark.SetActive(true);
+
+        CursorManager.instance.cursorState = CursorStates.Aim;
 
         if (mapCloseSE != null)
             AudioManager.instance.PlaySoundEffect(mapCloseSE);

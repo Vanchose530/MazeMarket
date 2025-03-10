@@ -2136,11 +2136,11 @@ RectTransform:
   - {fileID: 5112654038679767791}
   m_Father: {fileID: 4636916528215204814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 220, y: 220}
-  m_Pivot: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000095367, y: 0.0000076294}
+  m_SizeDelta: {x: 440, y: 440}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5053788132003155241
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3605,21 +3605,21 @@ MonoBehaviour:
   LMiniMapRoomPrefab: {fileID: 3155353691028177998, guid: d47f07c4c59085946a1c3fc0a097262b, type: 3}
   TMiniMapRoomPrefab: {fileID: 6901076832690360046, guid: c500bb98e39bcd54e841f7b9f9eb0bb2, type: 3}
   XMiniMapRoomPrefab: {fileID: 465679213340264082, guid: a5365750e573d7c46b19b8330f74707a, type: 3}
-  _startSign: {fileID: 21300000, guid: b3d80eba06e7d584baa0e5fe3f265f74, type: 3}
-  _endSign: {fileID: 21300000, guid: f28d614dfe8ea1b439bf3b762ac79f2a, type: 3}
-  _mapSign: {fileID: 21300000, guid: 4bd36b41527c67044918fe92642132cb, type: 3}
-  _chestSign: {fileID: 21300000, guid: 52e5c77145b407741a994954316d573f, type: 3}
-  _shopSign: {fileID: 21300000, guid: 7a845ad71ef0a3744aab56b3e7cb0022, type: 3}
-  _demonsBloodFountainSign: {fileID: 21300000, guid: 2a9de0170193db443a9a3f8ef708a8eb, type: 3}
-  _sodaMachineSign: {fileID: 21300000, guid: 76ff32f6c096c654c8a3c74d4577f0ea, type: 3}
-  _bossSign: {fileID: 21300000, guid: 9d5889f555d5d0d4db715acb623cc353, type: 3}
+  _startSign: {fileID: 21300000, guid: 10baff8e8cab6724f80cfae9ebdc06a8, type: 3}
+  _endSign: {fileID: 21300000, guid: f0115fdb32ceee545a1de90ff0e1b58a, type: 3}
+  _mapSign: {fileID: 21300000, guid: 0c18226b72854a84db852f9c5afbfcc8, type: 3}
+  _chestSign: {fileID: 21300000, guid: 8b2c73be99afb3241a13d8170c950e0a, type: 3}
+  _shopSign: {fileID: 21300000, guid: 5f020445e370c564a8fdcf19c59de5b5, type: 3}
+  _demonsBloodFountainSign: {fileID: 21300000, guid: 92dc3e491e646d143a541467494e69a0, type: 3}
+  _sodaMachineSign: {fileID: 21300000, guid: 58d30d8c4e994874d871f5be01e5596e, type: 3}
+  _bossSign: {fileID: 21300000, guid: 0157f57876dfa7f46a2b62f5c47a27fe, type: 3}
   signSize: 0.3
   playerInRoomMark: {fileID: 4823161665539559670}
   xOffset: -2.8
   yOffset: -2.8
-  roomSizeX: 0.28
-  roomSizeY: 0.28
-  spaceBetweenRooms: 28
+  roomSizeX: 0.4
+  roomSizeY: 0.4
+  spaceBetweenRooms: 40
   mapOpenSE:
     sound: {fileID: 8300000, guid: 47b2524cd396fd24fa0cbaa765332811, type: 3}
     volume: 0.5
@@ -3868,7 +3868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuPanel: {fileID: 6666878400030650632}
-  firstChoice: {fileID: 3325481930898669787}
+  firstChoice: {fileID: 0}
 --- !u!1 &3272128710038057173
 GameObject:
   m_ObjectHideFlags: 0
@@ -5520,7 +5520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 208.2001, y: 85.50002}
+  m_AnchoredPosition: {x: 548, y: 217.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2508890766554233232
@@ -5551,7 +5551,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e53f25fec93df0044b49c41fa44b1934, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23c4b3e71cd71ba4e8697456e245ef30, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9230,8 +9230,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -12.8, y: -13.1}
-  m_SizeDelta: {x: 21.6724, y: 9.2453}
+  m_AnchoredPosition: {x: -0.0000033379, y: -13.3}
+  m_SizeDelta: {x: 33.4947, y: 9.2453}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &844338184986562551
 CanvasRenderer:
@@ -9261,7 +9261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: M
+  m_text: Tab
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 381b119f3c3f89848b9b4e00e4d0dd40, type: 2}
   m_sharedMaterial: {fileID: -8291484128216952562, guid: 381b119f3c3f89848b9b4e00e4d0dd40, type: 2}
@@ -9625,7 +9625,7 @@ MonoBehaviour:
   m_MoveAction: {fileID: -2059494484707699385, guid: ac5e5ad50b9bb6c41b7949fa82b4c4eb, type: 3}
   m_SubmitAction: {fileID: -6884382579338254910, guid: ac5e5ad50b9bb6c41b7949fa82b4c4eb, type: 3}
   m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 7286972276253454768, guid: ac5e5ad50b9bb6c41b7949fa82b4c4eb, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
   m_ScrollWheelAction: {fileID: 0}
@@ -10876,7 +10876,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4393492334113419772, guid: 06c097f13955e944ab9933fe3479ab6a, type: 3}
   m_PrefabInstance: {fileID: 1359715668962406746}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325481930898669787}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -10885,11 +10885,6 @@ MonoBehaviour:
 --- !u!224 &3325481930898669784 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4393492334113419650, guid: 06c097f13955e944ab9933fe3479ab6a, type: 3}
-  m_PrefabInstance: {fileID: 1359715668962406746}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3325481930898669787 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4393492334113419649, guid: 06c097f13955e944ab9933fe3479ab6a, type: 3}
   m_PrefabInstance: {fileID: 1359715668962406746}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4042313184478305172
