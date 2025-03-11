@@ -32021,11 +32021,27 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: spitSE.sound
+      value: 
+      objectReference: {fileID: 8300000, guid: d973ebb9066fec745978bb5e7e721b50, type: 3}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: hitSE.maxPitch
       value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: hitSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: spitSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: spitSE.minPitch
       value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
@@ -32042,6 +32058,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: attackSE.minPitch
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: preparingSE.sound
+      value: 
+      objectReference: {fileID: 8300000, guid: ad6dbf4110dd9fa4e8b054145bc90ed7, type: 3}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: preparingSE.maxPitch
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: preparingSE.minPitch
       value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6441615871222774361, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}

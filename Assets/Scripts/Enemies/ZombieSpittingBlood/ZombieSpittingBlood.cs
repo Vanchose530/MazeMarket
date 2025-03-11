@@ -40,6 +40,7 @@ public class ZombieSpittingBlood : Enemy, IDamagable
     public bool attack = false;
     // Start is called before the first frame update
     [HideInInspector] public bool isShoot = false;
+    [HideInInspector] public bool isAttack = false;
     private void OnValidate()
     {
         if (rb == null)
@@ -110,10 +111,6 @@ public class ZombieSpittingBlood : Enemy, IDamagable
             if (agressive && !attack)
             {
                 SetState(pursuitState);
-            }
-            else if (agressive && attack)
-            {
-                SetState(attackState);
             }
             else
                 SetState(passiveState);
@@ -186,13 +183,15 @@ public class ZombieSpittingBlood : Enemy, IDamagable
 
     public override void Attack()
     {
-        if (isShoot)
+        
+        if (isAttack)
             return;
         StartCoroutine("StartAttack");
     }
 
-    private IEnumerator StartAttack() 
+    public IEnumerator StartAttack() 
     {
+        isAttack = true;
         isShoot = true;
         bodyAnimator.SetTrigger("Shoot");
         movementDirection = Vector2.zero;
@@ -207,6 +206,7 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         attackState.attackCount--;
         targetOnAim = true;
         isShoot = false;
+        isAttack = false;
     }
 
     private void Shoot()
@@ -272,7 +272,7 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         if (isShoot)
             rb.velocity = Vector2.zero;
         else
-            rb.velocity = movementDirection * currentSpeed;
+            rb.velocity = movementDirection * speed;
     }
 
 }

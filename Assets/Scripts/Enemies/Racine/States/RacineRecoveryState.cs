@@ -32,6 +32,12 @@ public class RacineRecoveryState : RacineState
 
         if (walkInOneTurnTime <= 0 || racine.rb.velocity.magnitude < racine.speed / 3)
         {
+            if (racine.rb.velocity.magnitude < racine.speed / 3)
+            {
+                Debug.Log("Velocity magnitude " + racine.rb.velocity.magnitude);
+                Debug.Log("Speed " + racine.speed / 3);
+
+            }
             ChangeTurn();
             ResetTimeToWalkInOneTurn();
         }

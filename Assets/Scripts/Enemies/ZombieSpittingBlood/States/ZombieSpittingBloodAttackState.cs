@@ -62,7 +62,7 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
                 moveVector.y = vectorFromPlayer.x;
             }
 
-            
+            EndAttack();
         }
         else if (distanceToPlayer > distanceRun && distanceToPlayer <= distanceAttack)//2 
         {
@@ -75,6 +75,8 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
             zombieSpittingBlood.Attack();
 
+            EndAttack();
+
         }
         else if (distanceToPlayer > distanceAttack) //3
         {
@@ -85,10 +87,11 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
 
             zombieSpittingBlood.targetOnAim = true;
 
+            EndAttack();
         }
 
 
-        EndAttack();
+        
     }
 
 
@@ -104,6 +107,7 @@ public class ZombieSpittingBloodAttackState : ZombieSpittingBloodState
             zombieSpittingBlood.agressive = false;
             zombieSpittingBlood.attack = false;
             zombieSpittingBlood.targetOnAim = false;
+            zombieSpittingBlood.isShoot = false;
             zombieSpittingBlood.SetState(zombieSpittingBlood.recoveryState);
             isFinished = true;
         }
