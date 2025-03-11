@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  speed: 3
+  speed: 3.7
   nextWaypointDistance: 2
   targetOnAim: 0
   attackPoint: {fileID: 1570065754961401433}
@@ -394,20 +394,26 @@ MonoBehaviour:
   groahSE:
     sound: {fileID: 8300000, guid: a1d7bc25136fcbc4abcb1dd81f0323c0, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
-  attackSE:
-    sound: {fileID: 8300000, guid: 41943eeea82ab7b4b82c7d2f2054897e, type: 3}
+    minPitch: 0.9
+    maxPitch: 1.1
+  preparingSE:
+    sound: {fileID: 8300000, guid: ad6dbf4110dd9fa4e8b054145bc90ed7, type: 3}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
+  spitSE:
+    sound: {fileID: 8300000, guid: d973ebb9066fec745978bb5e7e721b50, type: 3}
+    volume: 0.5
+    minPitch: 0.9
+    maxPitch: 1.1
   hitSE:
     sound: {fileID: 0}
     volume: 0.5
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 0.9
+    maxPitch: 1.1
   attack: 0
   isShoot: 0
+  isAttack: 0
 --- !u!114 &5040502597737800811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,7 +478,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 8817108505415304598}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a1ddd8198ef346f4389123106eb2a793, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

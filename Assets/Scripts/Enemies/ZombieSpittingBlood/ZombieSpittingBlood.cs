@@ -132,8 +132,6 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         health -= damage;
 
 
-
-        if (currentState != attackState) SetState(attackState);
         if (attack != null)
         {
             var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
@@ -186,6 +184,7 @@ public class ZombieSpittingBlood : Enemy, IDamagable
         
         if (isAttack)
             return;
+
         StartCoroutine("StartAttack");
     }
 

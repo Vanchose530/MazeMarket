@@ -389,11 +389,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5498902329585234879, guid: 46d69280bad17d24a837aafb878ea77e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.529675
+      value: 5.9
       objectReference: {fileID: 0}
     - target: {fileID: 5498902329585234879, guid: 46d69280bad17d24a837aafb878ea77e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 36.793262
+      value: 29.52
       objectReference: {fileID: 0}
     - target: {fileID: 5498902329585234879, guid: 46d69280bad17d24a837aafb878ea77e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1065,6 +1065,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87125635605110244b8358eee95481e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 
+  virtualCamera: {fileID: 0}
+  staticCamera: 0
+  lockMiasmas: []
+  doors: []
+  triggers: []
+  closeDoorsSpeed: 2
+  lockExitsTime: 1
+  unlockExitsTime: 1
+  bronzeHeracles: {fileID: 0}
+  goplitsList: []
+  roomPassed: 0
 --- !u!4 &313246528
 Transform:
   m_ObjectHideFlags: 0
@@ -32022,7 +32034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: speed
-      value: 2
+      value: 3.7
       objectReference: {fileID: 0}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: spitSE.sound
@@ -32072,6 +32084,10 @@ PrefabInstance:
       propertyPath: preparingSE.minPitch
       value: 0.9
       objectReference: {fileID: 0}
+    - target: {fileID: 4381404476324344038, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: a1ddd8198ef346f4389123106eb2a793, type: 2}
     - target: {fileID: 6441615871222774361, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: distanceRun
       value: 1.29
@@ -32080,13 +32096,33 @@ PrefabInstance:
       propertyPath: distanceAttack
       value: 6.38
       objectReference: {fileID: 0}
+    - target: {fileID: 6441615871222774361, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: maxWalkInOneTurnTime
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441615871222774361, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: minWalkInOneTurnTime
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.15
+      value: 7.5309
       objectReference: {fileID: 0}
     - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.6
+      value: 28.0942
       objectReference: {fileID: 0}
     - target: {fileID: 7398910378386612513, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32123,6 +32159,10 @@ PrefabInstance:
     - target: {fileID: 8817108505415304598, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: m_Name
       value: ZombieSpittingBlood
+      objectReference: {fileID: 0}
+    - target: {fileID: 8817108505415304598, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
