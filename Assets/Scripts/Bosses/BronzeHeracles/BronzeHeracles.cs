@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-public class BronzeHeracles : Enemy, IDamagable
+public class BronzeHeracles : Enemy, IDamageable
 {
     [Header("Animators")]
     public Animator bodyAnimator;
@@ -119,7 +119,7 @@ public class BronzeHeracles : Enemy, IDamagable
             rb = GetComponent<Rigidbody2D>();
         if (seeker == null)
             seeker = GetComponent<Seeker>();
-        if (legsAnimator == null)
+        if (legsAnimator == null && legs != null)
             legsAnimator = legs.GetComponent<Animator>();
         if (interactSpriteGlow == null)
             interactSpriteGlow = GetComponent<SpriteGlowEffect>();
@@ -174,8 +174,6 @@ public class BronzeHeracles : Enemy, IDamagable
         firstPhaseHP = maxHealth * 0.66f;
         secondPhaseHP = maxHealth * 0.33f;
         thirdPhaseHP = 0f;
-
-
     }
 
 
@@ -713,7 +711,7 @@ public class BronzeHeracles : Enemy, IDamagable
         Destroy(gameObject);
         isDeath = false;
 
-        deathCoroutine = null;
+        EnemyDeathEvent();
     }
     public void ScreamAttack() 
     {

@@ -12,7 +12,7 @@ public class Scream : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        IDamagable obj = collision.gameObject.GetComponent<IDamagable>();
+        IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
 
         if (obj != null)
         {
