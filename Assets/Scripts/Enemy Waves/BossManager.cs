@@ -13,6 +13,9 @@ public class BossManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private bool staticCamera;
 
+    [Header("Battle Music")]
+    [SerializeField] private AudioClip battleMusic;
+
     [Header("Entering Room")]
     [SerializeField] private LockMiasma[] lockMiasmas;
     [SerializeField] private GlassDoor[] doors; // двери на данный момент не используются в левел дизайне
@@ -99,6 +102,8 @@ public class BossManager : MonoBehaviour
         if (onPlayerEnterRoom != null && !roomPassed)
             onPlayerEnterRoom();
 
+        AudioManager.instance.SetMusic(battleMusic);
+
         virtualCamera.enabled = true;
     }
 
@@ -140,6 +145,8 @@ public class BossManager : MonoBehaviour
 
         if (onPlayerPassRoom != null)
             onPlayerPassRoom();
+
+        GameplaySceneInstaller.instance.SetLevelMusic();
 
         roomPassed = true;
 

@@ -158,10 +158,6 @@ public class BronzeHeracles : Enemy, IDamageable
         invulnerability = false;
 
         mace.GetComponent<Collider2D>().enabled = false;
-
-        interactSpriteGlow.enabled = false;
-        legs.GetComponent<SpriteGlowEffect>().enabled = false;
-
     }
     private void Start()
     {
@@ -170,6 +166,9 @@ public class BronzeHeracles : Enemy, IDamageable
         SetAnimate();
 
         SetState(stayState);
+
+        interactSpriteGlow.enabled = false;
+        legs.GetComponent<SpriteGlowEffect>().enabled = false;
 
         firstPhaseHP = maxHealth * 0.66f;
         secondPhaseHP = maxHealth * 0.33f;

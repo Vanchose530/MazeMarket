@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameplaySceneInstaller : MonoBehaviour
 {
+    public static GameplaySceneInstaller instance { get; private set; }
+
     [Header("Player")]
     [SerializeField] private Player playerPrefab;
     [SerializeField] private Transform playerStart;
@@ -23,15 +25,13 @@ public class GameplaySceneInstaller : MonoBehaviour
 
     private void Awake()
     {
-        if (battleMusicTrack == null)
-        {
-            AudioManager.instance.SetMusic(levelMusic);
-        }
-        else
-        {
-            AudioManager.instance.SetMusic(levelMusic, battleMusicTrack);
-        }
-        
+        if (instance != null)
+            Debug.LogWarning("Find more than one Gameplaye Scene Installer in scene!");
+
+        instance = this;
+
+        SetLevelMusic();
+
         AudioManager.instance.normalSnapshot.TransitionTo(0.1f);
         // AudioManager.instance.FastDisableBattleMusicTrack();
 
@@ -56,6 +56,18 @@ public class GameplaySceneInstaller : MonoBehaviour
         if (cameraConfinerShape != null)
         {
             virtualCameraInGame.GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = cameraConfinerShape;
+        }
+    }
+
+    public void SetLevelMusic()
+    {
+        if (battleMusicTrack == null)
+        {
+            AudioManager.instance.SetMusic(levelMusic);
+        }
+        else
+        {
+            AudioManager.instance.SetMusic(levelMusic, battleMusicTrack);
         }
     }
 }

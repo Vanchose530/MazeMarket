@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bronzeHeracles: {fileID: 0}
-  deathTime: 5
+  deathTime: 3
 --- !u!114 &7106502996205598763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8229190982058718187}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.01, y: -0.0823, z: 0}
   m_LocalScale: {x: 12, y: 12, z: 1}
   m_ConstrainProportionsScale: 0
@@ -652,7 +652,7 @@ Transform:
   - {fileID: 2208156314510061964}
   - {fileID: 4112463740084291241}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8394133683284652072
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -807,10 +807,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994097f9e4f671648a7068051dd0059d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 1500
   speed: 2.8
   nextWaypointDistance: 2
   targetOnAim: 0
+  turnSmoothTime: 0.1
   attackPoint: {fileID: 0}
   damage: 35
   statesGameObject: {fileID: 71147730137860091}
@@ -887,9 +888,6 @@ MonoBehaviour:
   pentogramTime: 3
   stay: 0
   alivingTime: 3
-  firstPhaseHP: 0
-  secondPhaseHP: 0
-  thirdPhaseHP: 0
   interactSpriteGlow: {fileID: 5981652461205383578}
   isFirstAttack: 1
   stage: 1
@@ -920,10 +918,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowColor: {r: 0.454902, g: 0.3019608, b: 0.18039216, a: 1}
-  glowBrightness: 1.5
+  glowBrightness: 1
   outlineWidth: 1
   alphaThreshold: 0.1
-  drawOutside: 0
+  drawOutside: 1
   enableInstancing: 0
 --- !u!95 &4746335063171181786
 Animator:
