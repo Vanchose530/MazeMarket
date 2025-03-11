@@ -6,19 +6,24 @@ using UnityEngine;
 
 public class ArcheryState : BronzeHeraclesState
 {
+    [Header("Behavior")]
     public int countArrow;
+    public float timeTakeBow;
+    public float timeNewArrow;
+    public float timeWalkBow;
+    public float timeAimingBow;
+    public float timeToShootBow;
+    public float timeRemoveBow;
+    public int minCountArrow;
+    public int maxCountArrow;
+    public float forceArrow;
+    public int damageArrow;
 
     public override void Init()
     {
         isFinished = false;
 
         bronzeHeracles.target = Player.instance.transform;
-
-        bronzeHeracles.isTakeBow = false;
-
-        bronzeHeracles.isWalkBow = false;
-
-        bronzeHeracles.isShootBow = false;
 
         bronzeHeracles.targetOnAim = true;
 
@@ -33,22 +38,21 @@ public class ArcheryState : BronzeHeraclesState
     public override void Run()
     {
         bronzeHeracles.ExecutePath();
-        if (!bronzeHeracles.isBowInHand)
-            bronzeHeracles.TakeTheBow();
         if (countArrow > 0)
         {
-            if (!bronzeHeracles.isBowInHand)
+            if (!bronzeHeracles.isBowInHand && !bronzeHeracles.isTakeBow)
                 bronzeHeracles.TakeTheBow();
-            else if (bronzeHeracles.isBowInHand && !bronzeHeracles.stand)
+            else if (bronzeHeracles.isBowInHand && !bronzeHeracles.stand && !bronzeHeracles.isWalkBow)
             {
                 bronzeHeracles.WalkBow();
             }
-            else
+            else if(bronzeHeracles.stand && bronzeHeracles.isBowInHand && !bronzeHeracles.isShootBow)
             {
                 bronzeHeracles.ShootBow();
             }
         }
-        else {
+        else if(countArrow == 0 && !bronzeHeracles.isRemoveBow) 
+        {
             bronzeHeracles.RemoveBow();
             isFinished = true;
         }

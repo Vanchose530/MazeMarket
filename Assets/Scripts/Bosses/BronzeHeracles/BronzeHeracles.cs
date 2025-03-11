@@ -1,11 +1,13 @@
 using Pathfinding;
+using SpriteGlow;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
-public class BronzeHeracles : Enemy, IDamageable
+public class BronzeHeracles : Enemy, IDamagable
 {
     [Header("Animators")]
     public Animator bodyAnimator;
@@ -34,62 +36,77 @@ public class BronzeHeracles : Enemy, IDamageable
     [SerializeField] private SoundEffect maceAttackSE;
     [SerializeField] private SoundEffect takeStoneSE;
     [SerializeField] private SoundEffect shootStoneSE;
+    [SerializeField] private SoundEffect screamSE;
+    [SerializeField] private SoundEffect pentogramSE;
 
     [Header("Alive")]
     public bool stayOnAwake;
+    [SerializeField] private float pentogramTime;
     [HideInInspector] public bool stay;
     public float alivingTime;
 
-    [Header("Bow")]
-    [SerializeField] private float timeTakeBow;
-    [SerializeField] private float timeNewArrow;
-    [SerializeField] private float timeWalkBow;
-    [SerializeField] private float timeAimingBow;
-    [SerializeField] private float timeToShootBow;
-    [SerializeField] private float timeRemoveBow;
-    [SerializeField] private int minCountArrow;
-    [SerializeField] private int maxCountArrow;
-    [SerializeField] private float forceArrow;
-
-    [Header("Mace")]
-    [SerializeField] private float timeTakeMace;
-    [SerializeField] private float timeAttackMace;
-    [SerializeField] private float timeRemoveMace;
-
-    [Header("Stone")]
-    [SerializeField] private float timeTakeStone;
-    [SerializeField] private float timeWalkStone;
-    [SerializeField] private float timeShootStone;
-    [SerializeField] private int minCountStone;
-    [SerializeField] private int maxCountStone;
-    [SerializeField] private float forceStone;
-
-
-
+    [Header("Cooldown")]
+    private float firstPhaseHP;
+    private float secondPhaseHP;
+    private float thirdPhaseHP;
+    [SerializeField] private SpriteGlowEffect interactSpriteGlow;
+    [HideInInspector] public bool isCoolDown { get; private set; }
+    [HideInInspector] public bool isDeath { get; private set; }
+    private bool invulnerability = true;
+    [HideInInspector] public bool isFirstAttack = true;
+    [HideInInspector] public int stage = 1;
+    [Header("BossManager")]
+    public BossManager bossManager;
+    public int numberGoplit = 0;
     [Header("BronzeHeracles AttackStates")]
-    [SerializeField] private ArcheryState archeryState;
-    [SerializeField] private MaceAttackState maceAttackState;
-    [SerializeField] private StoneThrowState stoneThrowState;
+    [SerializeField] private BronzeHeraclesState archeryState;
+    [SerializeField] private BronzeHeraclesState maceAttackState;
+    [SerializeField] private BronzeHeraclesState stoneThrowState;
+    [SerializeField] private BronzeHeraclesState callOfGoplitsState;
+    [SerializeField] private BronzeHeraclesState screamState;
 
     [Header("BronzeHeracles State")]
     [SerializeField] private BronzeHeraclesStayState stayState;
     public BronzeHeraclesRecoveryState recoveryState;
+    [SerializeField] private BronzeHeraclesCooldownState cooldownState;
+    [SerializeField] private BronzeHeraclesDeathState deathState;
 
     [HideInInspector] public List<BronzeHeraclesState> attackState = new List<BronzeHeraclesState>();
     
     public BronzeHeraclesState currentState { get; private set; }
-
-    [HideInInspector] public bool isShootBow = false;
-    [HideInInspector] public bool isRemoveBow = false;
-    [HideInInspector] public bool isTakeMace = false;
-    [HideInInspector] public bool isAttackMace = false;
-    [HideInInspector] public bool isRemoveMace = false;
-    [HideInInspector] public bool isTakeStone = false;
-    [HideInInspector] public bool isShootStone = false;
-    [HideInInspector] public bool isTakeBow = false;
-    [HideInInspector] public bool isBowInHand = false;
-    [HideInInspector] public bool isWalkStone = false;
-    [HideInInspector] public bool isWalkBow = false;
+    //Корутины
+    public Coroutine shootBow;
+    public Coroutine removeBow;
+    public Coroutine takeMace;
+    public Coroutine attackMace;
+    public Coroutine removeMace;
+    public Coroutine takeStone;
+    public Coroutine shootStone;
+    public Coroutine takeBow;
+    public Coroutine walkStone;
+    public Coroutine walkBow;
+    public Coroutine coolDownCoroutine;
+    public Coroutine deathCoroutine;
+    public Coroutine callOfGoplits;
+    public Coroutine recoverAttack;
+    public Coroutine screamAttack;
+    //Переменные для корутин
+    public bool isShootBow => shootBow != null;
+    public bool isRemoveBow => removeBow != null;
+    public bool isTakeMace => takeMace != null;
+    public bool isAttackMace => attackMace != null;
+    public bool isRemoveMace => removeMace != null;
+    public bool isTakeStone => takeStone != null;
+    public bool isShootStone => shootStone != null;
+    public bool isTakeBow => takeBow != null;
+    public bool isWalkStone => walkStone != null;
+    public bool isWalkBow => walkBow != null;
+    public bool isCoolDownCoroutine => coolDownCoroutine != null;
+    public bool isDeathCoroutine => deathCoroutine != null;
+    public bool isCallOfGoplits => callOfGoplits != null;
+    public bool isRecoverAttack => recoverAttack != null;
+    public bool isScreamAttack => screamAttack != null;
+    public bool isBowInHand;
     public bool stand = false;
     private bool aliving;
 
@@ -104,6 +121,8 @@ public class BronzeHeracles : Enemy, IDamageable
             seeker = GetComponent<Seeker>();
         if (legsAnimator == null)
             legsAnimator = legs.GetComponent<Animator>();
+        if (interactSpriteGlow == null)
+            interactSpriteGlow = GetComponent<SpriteGlowEffect>();
 
         if (archeryState == null)
             archeryState = statesGameObject.GetComponent<ArcheryState>();
@@ -111,15 +130,22 @@ public class BronzeHeracles : Enemy, IDamageable
             maceAttackState = statesGameObject.GetComponent<MaceAttackState>();
         if (stoneThrowState == null)
             stoneThrowState = statesGameObject.GetComponent<StoneThrowState>();
+        if (callOfGoplitsState == null)
+            callOfGoplitsState = statesGameObject.GetComponent<CallOfGoplits>();
+        if (screamState == null)
+            screamState = statesGameObject.GetComponent<ScreamAttackState>();
         if (recoveryState == null)
             recoveryState = statesGameObject.GetComponent<BronzeHeraclesRecoveryState>();
         if (stayState == null)
             stayState = statesGameObject.GetComponent<BronzeHeraclesStayState>();
+        if (cooldownState == null)
+            cooldownState = statesGameObject.GetComponent<BronzeHeraclesCooldownState>();
+        if (deathState == null)
+            deathState = statesGameObject.GetComponent<BronzeHeraclesDeathState>();
     }
     private void Awake()
     {
         alreadySpawnedOnStart = false;
-
         target = null;
         attack = false;
         attackState.Add(archeryState);
@@ -129,11 +155,13 @@ public class BronzeHeracles : Enemy, IDamageable
         health = maxHealth;
 
         aliving = false;
+        invulnerability = false;
 
         mace.GetComponent<Collider2D>().enabled = false;
-        
-        
-        
+
+        interactSpriteGlow.enabled = false;
+        legs.GetComponent<SpriteGlowEffect>().enabled = false;
+
     }
     private void Start()
     {
@@ -143,14 +171,17 @@ public class BronzeHeracles : Enemy, IDamageable
 
         SetState(stayState);
 
-        
+        firstPhaseHP = maxHealth * 0.66f;
+        secondPhaseHP = maxHealth * 0.33f;
+        thirdPhaseHP = 0f;
+
+
     }
 
-    
+
     private void Update()
     {
         currentState.Run();
-
         Animate();
         RotateBody();
         RotateLegs();
@@ -160,7 +191,6 @@ public class BronzeHeracles : Enemy, IDamageable
     {
         currentState.Run();
     }
-
     public void SetState(BronzeHeraclesState state)
     {
         try
@@ -219,22 +249,53 @@ public class BronzeHeracles : Enemy, IDamageable
     }
     public void TakeDamage(int damage, Transform attack = null)
     {
-        if (spawning || aliving)
+        if (invulnerability)
             return;
         if (alreadySpawnedOnStart) 
             health -= damage;
         AudioManager.instance.PlaySoundEffect(damageSE, transform.position);
+
+
 
         if (attack != null)
         {
             var effect = Instantiate(damageEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), attack.rotation);
             Destroy(effect, 1f);
         }
-
-        if (health <= 0)
+        if (health <= firstPhaseHP && stage == 1)
         {
-            EnemyDeathEvent();
-            Destroy(gameObject);
+            invulnerability = true;
+            isCoolDown = true;
+            NextStage();
+            attackState.Add(screamState);
+            if (screamAttack != null)
+            {
+                screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StopScream();
+            }
+            SetState(cooldownState);
+        }
+        if (health <= secondPhaseHP && stage == 2)
+        {
+            invulnerability = true;
+            isCoolDown = true;
+            NextStage();
+            attackState.Add(callOfGoplitsState);
+            if (screamAttack != null)
+            {
+                screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StopScream();
+            }
+            SetState(cooldownState);
+        }
+        if (health <= thirdPhaseHP && stage == 3)
+        {
+            invulnerability = true;
+            isDeath = true;
+            NextStage();
+            if (screamAttack != null)
+            {
+                screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StopScream();
+            }
+            SetState(deathState);
         }
     }
     private void Animate()
@@ -248,20 +309,26 @@ public class BronzeHeracles : Enemy, IDamageable
         else
             rb.velocity = movementDirection * speed;
     }
-    private void SetAnimate()
-    {
-        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / timeAimingBow);
-        bodyAnimator.SetFloat("ShootABow Multiplier", 1 / timeToShootBow);
-        bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / timeTakeBow);
-        bodyAnimator.SetFloat("RemoveBow Multiplier", 1 / timeRemoveBow);
-        bodyAnimator.SetFloat("TakeMace Multiplier", 1 / timeTakeMace);
-        bodyAnimator.SetFloat("MaceAttack Multiplier", 1 / timeAttackMace);
-        bodyAnimator.SetFloat("RemoveMace Multiplier", 1 / timeRemoveMace);
+    private void SetAnimate() {
+        bodyAnimator.SetFloat("AimingShootBow Multiplier", 1 / archeryState.GetComponent<ArcheryState>().timeAimingBow);
+        bodyAnimator.SetFloat("ShootABow Multiplier", 1 / archeryState.GetComponent<ArcheryState>().timeToShootBow);
+        bodyAnimator.SetFloat("GetTheBow Multiplier", 1 / archeryState.GetComponent<ArcheryState>().timeTakeBow);
+        bodyAnimator.SetFloat("RemoveBow Multiplier", 1 / archeryState.GetComponent<ArcheryState>().timeRemoveBow);
+        bodyAnimator.SetFloat("TakeMace Multiplier", 1 / maceAttackState.GetComponent<MaceAttackState>().timeTakeMace);
+        bodyAnimator.SetFloat("MaceAttack Multiplier", 1 / maceAttackState.GetComponent<MaceAttackState>().timeAttackMace);
+        bodyAnimator.SetFloat("RemoveMace Multiplier", 1 / maceAttackState.GetComponent<MaceAttackState>().timeRemoveMace);
         bodyAnimator.SetFloat("Alive Multiplier", 1 / alivingTime);
-        bodyAnimator.SetFloat("TakeStone Multiplier", 1 / timeTakeStone);
-        bodyAnimator.SetFloat("ShootStone Multiplier", 1 / timeShootStone);
-        bodyAnimator.SetFloat("WalkStone Multiplier", 1 / timeWalkStone);
-        bodyAnimator.SetFloat("NewArrow Multiplier", 1 / timeNewArrow);
+        bodyAnimator.SetFloat("TakeStone Multiplier", 1 / stoneThrowState.GetComponent<StoneThrowState>().timeTakeStone);
+        bodyAnimator.SetFloat("ShootStone Multiplier", 1 / stoneThrowState.GetComponent<StoneThrowState>().timeShootStone);
+        bodyAnimator.SetFloat("WalkStone Multiplier", 1 / stoneThrowState.GetComponent<StoneThrowState>().timeWalkStone);
+        bodyAnimator.SetFloat("NewArrow Multiplier", 1 / archeryState.GetComponent<ArcheryState>().timeNewArrow);
+        bodyAnimator.SetFloat("Cooldown Multiplier", 1 / cooldownState.cooldownTime);
+        bodyAnimator.SetFloat("Death Multiplier", 1 / deathState.deathTime);
+        bodyAnimator.SetFloat("CallOfGoplits Multiplier", 1 / callOfGoplitsState.GetComponent<CallOfGoplits>().callGoplitsTime);
+        bodyAnimator.SetFloat("RecoverAttack Multiplier", 1 / recoveryState.recoverAttackTime);
+        bodyAnimator.SetFloat("PreparingScreem Multiplier", 1 / screamState.GetComponent<ScreamAttackState>().timePreparing);
+        bodyAnimator.SetFloat("Scream Multiplier", 1 / screamState.GetComponent<ScreamAttackState>().timeScream);
+        bodyAnimator.SetFloat("DampScream Multiplier", 1 / screamState.GetComponent<ScreamAttackState>().timeDamping);
     }
     public void LockRigidbody(bool lockMode)
     {
@@ -276,28 +343,45 @@ public class BronzeHeracles : Enemy, IDamageable
     }
     public void Alive()
     {
-        if (!aliving)
-            StartCoroutine("StartAliving");
+        if (aliving)
+            return;
+
+        StartCoroutine("StartAliving");
     }
 
     private IEnumerator StartAliving()
     {
         aliving = true;
+        invulnerability = true;
+        bodyAnimator.Play("Alive");
 
-        bodyAnimator.SetTrigger("Alive");
-
-        AudioManager.instance.PlaySoundEffect(alivingSE, transform.position);
+        var effect = Instantiate(EffectsStorage.instance.bossSpawnEffect, transform.position, transform.rotation);
+        effect.GetComponent<Animator>().SetFloat("Speed", 1 / pentogramTime);
+        AudioManager.instance.PlaySoundEffect(pentogramSE, transform.position);
 
         yield return new WaitForSeconds(alivingTime);
+        
+        effect.GetComponent<Animator>().SetFloat("Speed", 4 / pentogramTime);
+        effect.GetComponent<Animator>().Play("Disappear");
+        Destroy(effect, pentogramTime / 4);
 
-        SetState(archeryState);
+        bodyAnimator.SetTrigger("Default");
+
+        yield return new WaitForSeconds(0.5f);
+
+        SetState(RandomState());
+
 
         aliving = false;
+        invulnerability = false;
 
         alreadySpawnedOnStart = true;
+
+        
+
     }
 
-    public BronzeHeraclesState RandomState()
+    public BronzeHeraclesState RandomState() 
     {
         return attackState[Random.Range(0, attackState.Count)];
     }
@@ -305,14 +389,10 @@ public class BronzeHeracles : Enemy, IDamageable
     //Методы атак
     public void TakeTheBow()
     {
-        if (isTakeBow)
-            return;
-
-        StartCoroutine("StartTakeTheBow");
+        takeBow = StartCoroutine(StartTakeTheBow());
     }
     private IEnumerator StartTakeTheBow() 
     {
-        isTakeBow = true;
         stand = true;
 
         GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.identity);
@@ -323,62 +403,58 @@ public class BronzeHeracles : Enemy, IDamageable
 
         AudioManager.instance.PlaySoundEffect(takeArrowBowSE,transform.position);
 
-        yield return new WaitForSeconds(timeTakeBow);
+        yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeTakeBow);
 
         isBowInHand = true;
-        isTakeBow = false;
         stand = false;
+
+        takeBow = null;
     }
     public void WalkBow() 
     {
-        if (isWalkBow)
-            return;
-        StartCoroutine("StartWalkBow");
+        walkBow = StartCoroutine(StartWalkBow());
     }
-    private IEnumerator StartWalkBow()
-    {
-        isWalkBow = true;
+    private IEnumerator StartWalkBow() {
 
-        yield return new WaitForSeconds(timeWalkBow + timeNewArrow);
+        yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeWalkBow + archeryState.GetComponent<ArcheryState>().timeNewArrow);
 
-        isWalkBow = false;
         stand = true;
+
+        walkBow = null;
     }
     public void ShootBow() 
     {
-        if (isShootBow)
-            return;
-        StartCoroutine("StartShootBow");
+        shootBow = StartCoroutine(StartShootBow());
     }
     private IEnumerator StartShootBow() 
     {
-        isShootBow = true;
 
         movementDirection = Vector2.zero;
         bodyAnimator.Play("AimingABow");
 
-        AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position, timeAimingBow);
+        AudioManager.instance.PlaySoundEffect(aimingBowSE, transform.position);
 
-        yield return new WaitForSeconds(timeAimingBow);
+        yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeAimingBow);
 
         // bodyAnimator.SetTrigger("ShootABow");
-        AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position, timeToShootBow);
+        AudioManager.instance.PlaySoundEffect(shootBowSE, transform.position);
 
-        yield return new WaitForSeconds(timeToShootBow);
+        yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeToShootBow);
 
-        archeryState.countArrow--;
+        archeryState.GetComponent<ArcheryState>().countArrow--;
 
-        if (archeryState.countArrow > 0)
+        if (archeryState.GetComponent<ArcheryState>().countArrow > 0)
         {
             AudioManager.instance.PlaySoundEffect(takeArrowBowSE, transform.position);
-            yield return new WaitForSeconds(timeNewArrow);
+            yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeNewArrow);
 
             GameObject ar = Instantiate(arrowPrefab, archeryPoint.transform.position, Quaternion.identity);
             ar.transform.SetParent(archeryPoint.transform);
             ar.transform.localRotation = Quaternion.Euler(0, 0, 95);
         }
-        isShootBow = false;
         stand = false;
+
+        shootBow = null;
     }
     public void ImpulseArrow()
     {
@@ -388,100 +464,104 @@ public class BronzeHeracles : Enemy, IDamageable
 
         Rigidbody2D arb = archeryPoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
         archeryPoint.transform.GetChild(0).gameObject.transform.SetParent(null);
-        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+        arb.AddForce(-(arb.transform.position - Player.instance.transform.position).normalized * stoneThrowState.GetComponent<StoneThrowState>().forceStone, ForceMode2D.Impulse);
     }
     public void RemoveBow() 
     {
-        if (isRemoveBow)
-            return;
-        StartCoroutine("StartRemoveBow");
+        removeBow = StartCoroutine(StartRemoveBow());
     }
 
     private IEnumerator StartRemoveBow() 
     {
-        isRemoveBow = true;
 
         bodyAnimator.SetTrigger("RemoveBow");
 
-        yield return new WaitForSeconds(timeRemoveBow);
+        yield return new WaitForSeconds(archeryState.GetComponent<ArcheryState>().timeRemoveBow);
 
         isBowInHand = false;
         stand = false;
 
         bodyAnimator.SetTrigger("Default");
 
-        SetState(recoveryState);
+        if (stage == 3 && isFirstAttack)
+        {
+            isFirstAttack = false;
+            SetState(RandomState());
+        }
+        else
+        {
+            isFirstAttack = true;
+            SetState(recoveryState);
+        }
+        removeBow = null;
 
-        isRemoveBow = false;
     }
 
     public void TakeMace()
     {
-        if (isTakeMace)
-            return;
 
-        StartCoroutine("StartTakeMace");
+        takeMace = StartCoroutine(StartTakeMace());
     }
     private IEnumerator StartTakeMace()
     {
-        isTakeMace = true;
         stand = true;
 
         bodyAnimator.SetTrigger("Mace");
 
         AudioManager.instance.PlaySoundEffect(takeMaceSE, transform.position);
 
-        yield return new WaitForSeconds(timeTakeMace);
+        yield return new WaitForSeconds(maceAttackState.GetComponent<MaceAttackState>().timeTakeMace);
 
-        maceAttackState.maceTaken = true;
+        maceAttackState.GetComponent<MaceAttackState>().maceTaken = true;
         stand = false;
-        
+        takeMace = null;
     }
     public void MaceAttack() 
     {
-        if (isAttackMace)
-            return;
-        StartCoroutine("StartMaceAttack");
+       attackMace = StartCoroutine(StartMaceAttack());
     }
     private IEnumerator StartMaceAttack() 
     {
-        isAttackMace = true;
         bodyAnimator.Play("MaceAttack");
         mace.GetComponent<Collider2D>().enabled = true;
         AudioManager.instance.PlaySoundEffect(maceAttackSE, transform.position);
-        yield return new WaitForSeconds(timeAttackMace);
+        yield return new WaitForSeconds(maceAttackState.GetComponent<MaceAttackState>().timeAttackMace);
         mace.GetComponent<Collider2D>().enabled = false;
         attack = false;
+        attackMace = null;
     }
     public void RemoveMace()
     {
-        if (isRemoveMace)
-            return;
-        StartCoroutine("StartRemoveMace");
+       removeMace = StartCoroutine(StartRemoveMace());
     }
     private IEnumerator StartRemoveMace()
     {
-        isRemoveMace = true;
         stand = true;
-        yield return new WaitForSeconds(timeRemoveMace);
+        yield return new WaitForSeconds(maceAttackState.GetComponent<MaceAttackState>().timeRemoveMace);
         bodyAnimator.SetTrigger("Default");
         stand = false;
-        SetState(recoveryState);
+
+        if (stage == 3 && isFirstAttack)
+        {
+            isFirstAttack = false;
+            SetState(RandomState());
+            removeMace = null;
+        }
+        else
+        {
+            isFirstAttack = true;
+            SetState(recoveryState);
+            removeMace = null;
+        }
     }
     public void TakeStone() 
     {
-        if (isTakeStone)
-            return;
 
-
-        StartCoroutine("StartTakeStone");
-        
+       takeStone = StartCoroutine(StartTakeStone());
 
     }
     public IEnumerator StartTakeStone() 
     {
-        isTakeStone = true;
-
         GameObject st = Instantiate(stonePrefab, stonePoint.transform.position, Quaternion.identity);
         st.transform.SetParent(stonePoint.transform);
         st.transform.localRotation = Quaternion.Euler(0,0,gameObject.transform.rotation.z);
@@ -489,44 +569,33 @@ public class BronzeHeracles : Enemy, IDamageable
         bodyAnimator.SetTrigger("Stone");
 
         AudioManager.instance.PlaySoundEffect(takeStoneSE,transform.position);
-        yield return new WaitForSeconds(timeTakeStone);
-        isTakeStone = false;
-        stoneThrowState.takenStone = true;
+        yield return new WaitForSeconds(stoneThrowState.GetComponent<StoneThrowState>().timeTakeStone);
+        stoneThrowState.GetComponent<StoneThrowState>().takenStone = true;
+        takeStone = null;
     }
     public void WalkStone()
     {
-        if (isWalkStone)
-            return;
-
-        StartCoroutine("StartWalkStone");
+       walkStone = StartCoroutine(StartWalkStone());
     }
     private IEnumerator StartWalkStone()
     {
         stand = false;
-        isWalkStone = true;
-        yield return new WaitForSeconds(timeWalkStone);
-        isWalkStone = false;
+        yield return new WaitForSeconds(stoneThrowState.GetComponent<StoneThrowState>().timeWalkStone);
         stand = true;
-        stoneThrowState.walkStone = true;
+        stoneThrowState.GetComponent<StoneThrowState>().walkStone = true;
+        walkStone = null;
     }
     public void ShootStone()
     {
-        if (isShootStone)
-            return;
-
-
-        StartCoroutine("StartShootStone");
-
-
+        shootStone = StartCoroutine(StartShootStone());
     }
     private IEnumerator StartShootStone()
     {
-        isShootStone = true;
         movementDirection = Vector2.zero;
 
         AudioManager.instance.PlaySoundEffect(shootStoneSE, transform.position);
 
-        yield return new WaitForSeconds(timeShootStone);
+        yield return new WaitForSeconds(stoneThrowState.GetComponent<StoneThrowState>().timeShootStone);
 
 
         stonePoint.transform.GetChild(0).gameObject.GetComponent<Collider2D>().enabled = true;
@@ -535,21 +604,171 @@ public class BronzeHeracles : Enemy, IDamageable
 
         Rigidbody2D srb = stonePoint.transform.GetChild(0).GetComponent<Rigidbody2D>();
         stonePoint.transform.GetChild(0).gameObject.transform.SetParent(null);
-        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * forceStone, ForceMode2D.Impulse);
+        srb.AddForce(-(srb.transform.position - Player.instance.transform.position).normalized * stoneThrowState.GetComponent<StoneThrowState>().forceStone, ForceMode2D.Impulse);
+        
 
         
 
-        isShootStone = false;
-        stoneThrowState.takenStone = false;
-        stoneThrowState.walkStone = false;
-        stoneThrowState.countStone--;
+        stoneThrowState.GetComponent<StoneThrowState>().takenStone = false;
+        stoneThrowState.GetComponent<StoneThrowState>().walkStone = false;
+        stoneThrowState.GetComponent<StoneThrowState>().countStone--;
+
+        shootStone = null;
+    }
+    public void CallOfGoplits() 
+    {
+       callOfGoplits = StartCoroutine(CallOfGoplitsCoroutine());
+    }
+    private IEnumerator CallOfGoplitsCoroutine() {
+        movementDirection = Vector2.zero;
+        bodyAnimator.SetTrigger("CallOfGoplits");
+
+        yield return new WaitForSeconds(callOfGoplitsState.GetComponent<CallOfGoplits>().callGoplitsTime);
+
+
+        bossManager.AliveGoplists();
+
+        Debug.Log("da");
+
+        if (numberGoplit > bossManager.goplitsList.Count) 
+        {
+            attackState.Remove(callOfGoplitsState);
+        }
+
+        bodyAnimator.SetTrigger("Default");
+
+        if (stage == 3 && isFirstAttack)
+        {
+            isFirstAttack = false;
+            SetState(RandomState());
+        }
+        else
+        {
+            isFirstAttack = true;
+            SetState(recoveryState);
+        }
+        callOfGoplits = null;
+    }
+    public void Scream() 
+    {
+        AudioManager.instance.PlaySoundEffect(screamSE, transform.position);
+    }
+    public void CoolDown()
+    {
+       coolDownCoroutine = StartCoroutine(CoolDownCouroitine());
+    }
+    private IEnumerator CoolDownCouroitine() {
+
+        movementDirection = Vector2.zero;
+
+        legs.SetActive(false);
+
+        interactSpriteGlow.enabled = true;
+        
+
+        bodyAnimator.Play("Cooldown");
+        yield return new WaitForSeconds(cooldownState.cooldownTime);
+
+        bodyAnimator.SetTrigger("Default");
+        stand = false;
+        isCoolDown = false;
+        invulnerability = false;
+        interactSpriteGlow.enabled = false;
+
+        legs.SetActive(true);
+
+        ResetCoroutine();
+
+        coolDownCoroutine = null;
+    }
+    public void RecoverAttack() 
+    {
+       recoverAttack = StartCoroutine(RecoverAttackCoroutine());
+    }
+    private IEnumerator RecoverAttackCoroutine() {
+        stand = true;
+        movementDirection = Vector2.zero;
+
+        bodyAnimator.Play("RecoverAttack");
+
+        yield return new WaitForSeconds(recoveryState.recoverAttackTime);
+
+        bodyAnimator.SetTrigger("Default");
+        stand = false;
+        targetOnAim = false;
+
+        recoverAttack = null;
+    }
+    public void Death()
+    {
+       deathCoroutine = StartCoroutine(DeathCoroutine());
+    }
+    private IEnumerator DeathCoroutine() 
+    {
+        targetOnAim = false;
+        bodyAnimator.Play("Death");
+
+        yield return new WaitForSeconds(deathState.deathTime);
+
+        Destroy(gameObject);
+        isDeath = false;
+
+        deathCoroutine = null;
+    }
+    public void ScreamAttack() 
+    {
+        screamAttack = StartCoroutine(ScreamAttackCoroutine());
+    }
+    private IEnumerator ScreamAttackCoroutine() 
+    {
+        screamState.GetComponent<ScreamAttackState>().scream.SetActive(true);
+        screamState.GetComponent<ScreamAttackState>().scream.GetComponent<Scream>().StartScreamChange(screamState.GetComponent<ScreamAttackState>().targetSize,
+        screamState.GetComponent<ScreamAttackState>().timePreparing, screamState.GetComponent<ScreamAttackState>().timeScream,
+        screamState.GetComponent<ScreamAttackState>().timeDamping);
+
+        bodyAnimator.Play("PreparingScream");
+        yield return new WaitForSeconds(screamState.GetComponent<ScreamAttackState>().timePreparing);
+        Debug.Log("Scream");
+        bodyAnimator.Play("Scream");
+
+        yield return new WaitForSeconds(screamState.GetComponent<ScreamAttackState>().timeScream);
+
+        yield return new WaitForSeconds(screamState.GetComponent<ScreamAttackState>().timeDamping);
+        screamState.GetComponent<ScreamAttackState>().scream.SetActive(false);
+        bodyAnimator.SetTrigger("Default");
+
+        SetState(recoveryState);
+        screamAttack = null;
     }
     public int RandomStone() 
     {
-        return Random.Range(minCountStone, maxCountStone);
+        return Random.Range(stoneThrowState.GetComponent<StoneThrowState>().minCountStone, stoneThrowState.GetComponent<StoneThrowState>().maxCountStone);
     }
     public int RandomArrow()
     {
-        return Random.Range(minCountArrow, maxCountArrow);
+        return Random.Range(archeryState.GetComponent<ArcheryState>().minCountArrow, archeryState.GetComponent<ArcheryState>().maxCountArrow);
+    }
+    public void NextStage() 
+    {
+        stage++;
+    }
+    public void ResetCoroutine()
+    {
+        shootBow = null;
+        attackMace = null;
+        removeBow = null;
+        takeMace = null;
+        removeMace = null;
+        takeStone = null;
+        shootStone = null;
+        takeBow = null;
+        isBowInHand = false;
+        walkStone = null;
+        walkBow = null;
+        coolDownCoroutine = null;
+        deathCoroutine = null;
+        callOfGoplits = null;
+        recoverAttack = null;
+        screamAttack = null;
     }
 }

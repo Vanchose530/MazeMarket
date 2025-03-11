@@ -7,7 +7,13 @@ public class MaceAttackState : BronzeHeraclesState
 {
     [Header("Behavior")]
     public float attackDistance;
-    public bool maceTaken;
+    [HideInInspector] public bool maceTaken;
+    public int maceDamage;
+    public float timeTakeMace;
+    public float timeAttackMace;
+    public float timeRemoveMace;
+    [Header("Sound")]
+    [SerializeField] protected SoundEffect hitSE;
     public override void Init()
     {
         isFinished = false;
@@ -16,11 +22,6 @@ public class MaceAttackState : BronzeHeraclesState
 
         bronzeHeracles.targetOnAim = true;
 
-        bronzeHeracles.isTakeMace = false;
-
-        bronzeHeracles.isAttackMace = false;
-
-        bronzeHeracles.isRemoveMace = false;
 
         bronzeHeracles.attack = true;
 
@@ -29,15 +30,15 @@ public class MaceAttackState : BronzeHeraclesState
     public override void Run()
     {
         bronzeHeracles.ExecutePath();
-        if (!maceTaken) {
+        if (!maceTaken && !bronzeHeracles.isTakeMace) {
             bronzeHeracles.TakeMace();
         }
-        if (maceTaken && bronzeHeracles.attack) {
+        if (maceTaken && bronzeHeracles.attack && !bronzeHeracles.isAttackMace) {
             float distanceToPlayer = Vector2.Distance(Player.instance.rb.position, bronzeHeracles.rb.position);
             if (CheckPlayer() && distanceToPlayer < attackDistance)
                 bronzeHeracles.MaceAttack();
         }
-        if (!bronzeHeracles.attack) {
+        if (!bronzeHeracles.attack && !bronzeHeracles.isRemoveMace) {
             bronzeHeracles.RemoveMace();
             isFinished = true;
         }

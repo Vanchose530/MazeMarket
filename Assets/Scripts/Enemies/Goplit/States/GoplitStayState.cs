@@ -14,7 +14,7 @@ public class GoplitStayState : GoplitState
         goplit.LockRigidbody(true);
     }
 
-    public override void Run()
+    public override void Run() 
     {
         if (PlayerConditionsManager.instance.currentCondition == PlayerConditions.Battle)
             return;

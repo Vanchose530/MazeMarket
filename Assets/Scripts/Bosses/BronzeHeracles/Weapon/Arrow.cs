@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : ArcheryState
 {
-    [Header("Behavior")]
-    [SerializeField] private int damageArrow;
     [Header("Sound")]
     [SerializeField] private SoundEffect hitSE;
     private void Start()

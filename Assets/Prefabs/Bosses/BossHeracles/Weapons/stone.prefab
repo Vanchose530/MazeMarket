@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 5912015175352245899}
   - component: {fileID: 6668725655901747130}
   - component: {fileID: 6629049931960359121}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: stone
-  m_TagString: Bullet
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,17 +162,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c380ec64d6b267f46b0ba31375b83eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallStonePrefab: {fileID: 858069896353641262, guid: 459204539ae28dc4fa77cec9ee9bcdfd, type: 3}
-  point: {fileID: 4933796550732573610}
+  bronzeHeracles: {fileID: 0}
+  takenStone: 0
+  walkStone: 0
+  countStone: 0
+  timeTakeStone: 0
+  timeWalkStone: 0
+  timeShootStone: 0
+  minCountStone: 0
+  maxCountStone: 0
+  forceStone: 2
   damageStone: 45
   minCountSmallStone: 1
   maxCountSmallStone: 3
-  forceStone: 2
+  forceSmallStone: 0
+  damageSmallStone: 0
+  timeDestroySmallStone: 0
   hitSE:
     sound: {fileID: 8300000, guid: 7fbb10bd44b6a734fa64265ce314e640, type: 3}
     volume: 0.5
     minPitch: 0.9
     maxPitch: 1.1
+  hitSmallSE:
+    sound: {fileID: 0}
+    volume: 0.5
+    minPitch: 1
+    maxPitch: 1
+  smallStonePrefab: {fileID: 858069896353641262, guid: 459204539ae28dc4fa77cec9ee9bcdfd, type: 3}
+  point: {fileID: 4933796550732573610}
 --- !u!1 &9146349725765962627
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4933796550732573610}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pointPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
