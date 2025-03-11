@@ -369,7 +369,7 @@ public class BronzeHeracles : Enemy, IDamagable
 
         yield return new WaitForSeconds(0.5f);
 
-        SetState(callOfGoplitsState);
+        SetState(RandomState());
 
 
         aliving = false;
