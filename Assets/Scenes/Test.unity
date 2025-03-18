@@ -974,6 +974,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659899c45de6546419853d4e356cd832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCountGrenadeBottle: 0
+  startCountHealthBottle: 0
+  startCountEmptyBottle: 0
 --- !u!1001 &301993774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1075,7 +1078,6 @@ MonoBehaviour:
   lockExitsTime: 1
   unlockExitsTime: 1
   bronzeHeracles: {fileID: 0}
-  roomPassed: 0
 --- !u!4 &313246528
 Transform:
   m_ObjectHideFlags: 0
@@ -18835,6 +18837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659899c45de6546419853d4e356cd832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCountGrenadeBottle: 0
+  startCountHealthBottle: 0
+  startCountEmptyBottle: 0
 --- !u!1001 &955897574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18941,12 +18946,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ad91405fca4be4eb9f53139d55e5cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponInventorySize: 0
   dropDistance: 2
   dropDelayTimer: 2
   cantDropWeaponLayer:
     serializedVersion: 2
     m_Bits: 0
+  player: {fileID: 0}
 --- !u!1001 &976381045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30558,12 +30563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ad91405fca4be4eb9f53139d55e5cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponInventorySize: 0
   dropDistance: 2
   dropDelayTimer: 2
   cantDropWeaponLayer:
     serializedVersion: 2
     m_Bits: 0
+  player: {fileID: 0}
 --- !u!1001 &1648450189
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32039,10 +32044,6 @@ PrefabInstance:
       propertyPath: minWalkInOneTurnTime
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
-      propertyPath: hitSE.sound
-      value: 
-      objectReference: {fileID: 8300000, guid: ee8a553691a7a38498d01cb40b61bb0e, type: 3}
     - target: {fileID: 1867695637245116220, guid: fcb772f400d972c4193158ee2ba0785b, type: 3}
       propertyPath: attackSE.maxPitch
       value: 1.1
