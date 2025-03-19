@@ -23,14 +23,18 @@ public class ConcreteInventoryUIM : InventoryUIM
 
     public override void CloseInventory()
     {
-        inventoryPanel.SetActive(false);
-        inventoryMark.SetActive(true);
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(false);
+        if (inventoryMark != null)
+            inventoryMark.SetActive(true);
     }
 
     public override void OpenInventory()
     {
-        inventoryPanel.SetActive(true);
-        inventoryMark.SetActive(false);
+        if (inventoryPanel != null)
+            inventoryPanel.SetActive(true);
+        if (inventoryMark != null)
+            inventoryMark.SetActive(false);
     }
 
     public override void SetAmmoByType(int count, AmmoTypes type)
