@@ -10,6 +10,9 @@ public class RandomLootSource : MonoBehaviour, IInteractable
     [SerializeField] private Balancer<LootObject> lootPool;
     private LootObject loot;
 
+    [Header("Loot Spawn")]
+    [SerializeField] private Transform lootSpawnPoint;
+
     [Header("Setup")]
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteGlowEffect glow;
@@ -79,19 +82,16 @@ public class RandomLootSource : MonoBehaviour, IInteractable
 
                 HintsManager.instance.ShowLootHint(loot.GetLootString(), HINT_TIME);
 
-                opened = true;
-                glow.enabled = false;
+                Open();
+            }
+            else if (loot is ISpawnable)
+            {
+                var spawnedGO = Instantiate((loot as ISpawnable).GetSpawnGO());
 
-                if (animator != null)
-                    animator.Play("Loot");
+                spawnedGO.transform.position = lootSpawnPoint.position;
+                spawnedGO.transform.rotation = lootSpawnPoint.rotation;
 
-                if (sourceLight != null)
-                    sourceLight.enabled = false;
-
-                if (openSound != null)
-                    AudioManager.instance.PlaySoundEffect(openSound);
-
-                Destroy(this);
+                Open();
             }
             else
             {
@@ -103,5 +103,22 @@ public class RandomLootSource : MonoBehaviour, IInteractable
             }
         }
 
+    }
+
+    private void Open()
+    {
+        opened = true;
+        glow.enabled = false;
+
+        if (animator != null)
+            animator.Play("Loot");
+
+        if (sourceLight != null)
+            sourceLight.enabled = false;
+
+        if (openSound != null)
+            AudioManager.instance.PlaySoundEffect(openSound);
+
+        Destroy(this);
     }
 }

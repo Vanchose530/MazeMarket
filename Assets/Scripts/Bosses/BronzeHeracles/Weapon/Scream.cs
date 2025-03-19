@@ -12,6 +12,11 @@ public class Scream : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.CompareTag("Enemy"))
+        {
+            return;
+        }
+
         IDamageable obj = collision.gameObject.GetComponent<IDamageable>();
 
         if (obj != null)

@@ -478,7 +478,7 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
             {
                 if (!boostStart)
                 {
-                    AudioManager.instance.PlaySoundEffect(runBoostSE, rb.transform.position, 2f);
+                    AudioManager.instance.PlaySoundEffect(runBoostSE, rb.transform.position);
                     boostStart = true;
                 }
                 bodyAnimator.SetFloat("Run Multiplier", runBoostModifier);
@@ -712,7 +712,7 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
 
             bodyAnimator.Play("Dash");
 
-            AudioManager.instance.PlaySoundEffect(dashSE, dashingTime);
+            AudioManager.instance.PlaySoundEffect(dashSE);
 
             dashingTimeBuffer = dashingTime;
             stamina = 0;
@@ -843,7 +843,7 @@ public class Player : MonoBehaviour, IDamageable, IDataPersistence
 
     void PlayHealingSE()
     {
-        AudioManager.instance.PlaySoundEffect(healSE, timeToHeal);
+        AudioManager.instance.PlaySoundEffect(healSE);
     }
 
     private IEnumerator StaminaZero()

@@ -217,6 +217,7 @@ public class Goplit : Enemy, IDamageable
         {
             isRushSound = true;
             runAudio = AudioManager.instance.GetSoundEffectAS(runSpearSE);
+            runAudio.transform.parent = this.transform;
         }
         time -= Time.deltaTime;
         if (time <= 0)

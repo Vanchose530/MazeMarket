@@ -91,6 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreTag: Enemy
+  stopLayerMask:
+    serializedVersion: 2
+    m_Bits: 2688
   damage: 20
   goplit: {fileID: 508489836221532475}
 --- !u!1 &438779133665045033
@@ -215,9 +218,12 @@ MonoBehaviour:
   transform: {fileID: 6397588659826836400}
   stepSE:
     sound: {fileID: 8300000, guid: 9c867780135f91c4eb0630f4ccc85636, type: 3}
-    volume: 0.1
-    minPitch: 0.9
-    maxPitch: 1.1
+    volume: 0.7
+    minPitch: 0.65
+    maxPitch: 0.95
+    minDistance: 1
+    maxDistance: 25
+    volumeRolloff: 1
 --- !u!1 &3247662160191079325
 GameObject:
   m_ObjectHideFlags: 0

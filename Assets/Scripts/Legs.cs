@@ -6,10 +6,10 @@ using UnityEngine;
 public class Legs : MonoBehaviour
 {
     [SerializeField] private Transform transform;
-    [SerializeField] private SoundEffect stepSE;
+    [SerializeField] private SpatialSoundEffect stepSE;
 
     private void LegsSound()
     {
-        AudioManager.instance.PlaySoundEffect(stepSE, transform.position);
+        AudioManager.instance.PlaySpatialSoundEffect(stepSE, transform);
     }
 }

@@ -122,9 +122,12 @@ MonoBehaviour:
   transform: {fileID: 1720745303056553719}
   stepSE:
     sound: {fileID: 8300000, guid: 40fc2324ec4562b49bc6b87dd1e17813, type: 3}
-    volume: 0.05
+    volume: 0.07
     minPitch: 0.85
     maxPitch: 1.15
+    minDistance: 1
+    maxDistance: 15
+    volumeRolloff: 0
 --- !u!1 &1896684471220896308
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,8 +240,8 @@ MonoBehaviour:
   dashSE:
     sound: {fileID: 8300000, guid: 53c0d3b9726fd204e8a650958092ff88, type: 3}
     volume: 0.8
-    minPitch: 1
-    maxPitch: 1
+    minPitch: 2
+    maxPitch: 2
   _rb: {fileID: 2702732625081450782}
   startPosition: {x: 0, y: 0}
   levelName: 

@@ -345,6 +345,7 @@ MonoBehaviour:
   cultistsDecor: {fileID: 0}
   shopInstaller: {fileID: 0}
   _enemyWavesManager: {fileID: 0}
+  portal: {fileID: 0}
   _virtualCameraTrigger: {fileID: 6100272315648579091}
   roomTrigger: {fileID: 4457217144360148177}
 --- !u!1 &2689167593555834717
@@ -7953,15 +7954,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2363287380965711201, guid: 9d2867632db54714bb1874e88f9a8e24, type: 3}
       propertyPath: nextLevelName
-      value: Main Menu
+      value: Bronze Heracles Scene
       objectReference: {fileID: 0}
     - target: {fileID: 2363287380965711201, guid: 9d2867632db54714bb1874e88f9a8e24, type: 3}
       propertyPath: nextLevelStartPosition.x
-      value: 66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2363287380965711201, guid: 9d2867632db54714bb1874e88f9a8e24, type: 3}
       propertyPath: nextLevelStartPosition.y
-      value: 66
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7099239822276821176, guid: 9d2867632db54714bb1874e88f9a8e24, type: 3}
       propertyPath: m_LocalPosition.x

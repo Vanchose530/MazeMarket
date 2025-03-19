@@ -106,45 +106,48 @@ public class AudioManager : MonoBehaviour
         // Destroy(audioSource.gameObject, soundEffectExistTime);
     }
 
-    //public void PlayeSpatialSoundEffect(SoundEffect soundEffect, Transform soundEffectParent, float minDistance, float maxDistance, float soundEffectExistTime = 0f, AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic)
-    //{
-    //    if (soundEffect.sound == null)
-    //    {
-    //        Debug.LogWarning("There is no sound in sound effect. Cant play this");
-    //        return;
-    //    }
+    public void PlaySpatialSoundEffect(SpatialSoundEffect soundEffect, Transform soundEffectParent, float soundEffectExistTime = 0)
+    {
+        if (soundEffect.sound == null)
+        {
+            Debug.LogWarning("There is no sound in sound effect. Cant play this");
+            return;
+        }
 
-    //    var audioSource = new GameObject().AddComponent<AudioSource>();
-    //    var randPitch = Random.Range(soundEffect.minPitch, soundEffect.maxPitch);
+        var audioSource = new GameObject().AddComponent<AudioSource>();
+        var randPitch = Random.Range(soundEffect.minPitch, soundEffect.maxPitch);
 
-    //    audioSource.clip = soundEffect.sound;
-    //    audioSource.pitch = randPitch;
-    //    audioSource.volume = soundEffect.volume;
-    //    audioSource.outputAudioMixerGroup = mixerGroupSFX;
+        audioSource.transform.parent = soundEffectParent;
+        audioSource.transform.localPosition = new Vector3(0, 0, 0);
 
-    //    // Объёмный звук
-    //    audioSource.spatialBlend = 0.5f;
-    //    audioSource.spatialBlend = 1;
-    //    audioSource.spread = 180;
+        audioSource.clip = soundEffect.sound;
+        audioSource.pitch = randPitch;
+        audioSource.volume = soundEffect.volume;
+        audioSource.outputAudioMixerGroup = mixerGroupSFX;
 
-    //    audioSource.rolloffMode = rolloffMode;
-    //    audioSource.minDistance = minDistance;
-    //    audioSource.maxDistance = maxDistance;
-        
+        // Объёмный звук
+        audioSource.spatialBlend = 0.5f;
+        audioSource.spatialBlend = 1;
+        audioSource.spread = 180;
+
+        audioSource.rolloffMode = soundEffect.volumeRolloff;
+        audioSource.minDistance = soundEffect.minDistance;
+        audioSource.maxDistance = soundEffect.maxDistance;
 
 
-    //    audioSource.Play();
 
-    //    //if (soundEffectExistTime == 0)
-    //    //{
-    //    //    StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffect.sound.length));
-    //    //}
+        audioSource.Play();
 
-    //    if (soundEffectExistTime == 0)
-    //        soundEffectExistTime = soundEffect.sound.length * (1 / randPitch);
+        //if (soundEffectExistTime == 0)
+        //{
+        //    StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffect.sound.length));
+        //}
 
-    //    StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffectExistTime));
-    //}
+        if (soundEffectExistTime == 0)
+            soundEffectExistTime = soundEffect.sound.length * (1 / randPitch);
+
+        StartCoroutine(DestroyObjectAfterRealTime(audioSource.gameObject, soundEffectExistTime));
+    }
 
     public AudioSource GetSoundEffectAS(SoundEffect soundEffect)
     {

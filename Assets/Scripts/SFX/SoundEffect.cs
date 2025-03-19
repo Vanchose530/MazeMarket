@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class SoundEffect
 {
+    [Header("Sound Effect")]
     public AudioClip sound;
     [Range(0, 1f)]
     public float volume = 0.5f;
