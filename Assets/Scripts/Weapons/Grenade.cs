@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class Grenade : MonoBehaviour
 {
+
     [Header("Setting Explotion")]
-    [SerializeField] private float explotionRadius;
+    public static float explotionRadiusStatic;
+    public float explotionRadius;
     [SerializeField] private float forceGrenadeThrow;
     [SerializeField] private LayerMask mintMiasmaLayerNumber;
 
@@ -27,6 +29,14 @@ public class Grenade : MonoBehaviour
 
 
     // Start is called before the first frame update
+    private void OnValidate()
+    {
+        explotionRadiusStatic = explotionRadius;
+    }
+    private void Update()
+    {
+        explotionRadius = explotionRadiusStatic;
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

@@ -2,6 +2,7 @@ using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
@@ -59,6 +60,8 @@ public abstract class Enemy : MonoBehaviour
     [Header("Components (setted on validate)")]
     [SerializeField] protected Seeker seeker;
     [SerializeField] protected Rigidbody2D _rb;
+    [HideInInspector] public static GameObject randomAmmo;
+    [HideInInspector] public static float chanceDrop;
     public Rigidbody2D rb
     {
         get { return _rb; }
@@ -67,6 +70,10 @@ public abstract class Enemy : MonoBehaviour
 
     private bool death = false;
     public event Action onEnemyDeath;
+    private void Update()
+    {
+        
+    }
     protected void EnemyDeathEvent()
     {
         if (death)
@@ -76,8 +83,16 @@ public abstract class Enemy : MonoBehaviour
             onEnemyDeath();
 
         death = true;
-    }
 
+    }
+    private void OnDestroy()
+    {
+        float chance = UnityEngine.Random.Range(0f, 1f);
+        if (randomAmmo != null && chance <= chanceDrop)
+        {
+            Instantiate(randomAmmo, transform.position, transform.rotation);
+        }
+    }
     public virtual void ExecutePath(bool aStar = true)
     {
         if (path == null) return;
